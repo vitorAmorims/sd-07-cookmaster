@@ -1,10 +1,23 @@
+const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModel');
 
-const validation = ({ name, email, password }) => {
+const secret = 'anything';
+
+const jwtConfig = {
+  expiresIn: '1h',
+  algorithm: 'HS256',
+};
+
+const validateName = ({ name }, string) => {
+  if (!name) {
+    throw new Error(string);
+  }
+};
+
+const validateEmailAndPassword = ({ email, password }, string) => {
   const regex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-  const ERR_MESSAGE = 'Invalid entries. Try again.';
-  if (!name || !email || !password || !regex.test(email)) {
-    throw new Error(ERR_MESSAGE);
+  if (!email || !regex.test(email) || !password) {
+    throw new Error(string);
   }
 };
 /*
@@ -20,16 +33,34 @@ const getById = async (id) => {
 }; */
 
 const add = async (object) => {
-  validation(object);
+  let ERR_MESSAGE = 'Invalid entries. Try again.';
+  validateName(object, ERR_MESSAGE);
+  validateEmailAndPassword(object, ERR_MESSAGE);
   const { email } = object;
   const user = await userModel.getUserByMail(email);
   
   if (user) {
-    const ERR_MESSAGE = 'Email already registered';
+    ERR_MESSAGE = 'Email already registered';
     throw new Error(ERR_MESSAGE);
   }
 
   return userModel.add(object);
+};
+
+const login = async (object) => {
+  let ERR_MESSAGE = 'All fields must be filled';
+  const { email, password } = object;
+  validateEmailAndPassword(object, ERR_MESSAGE);
+  const user = await userModel.getEmailAndPassword(object);
+  
+  if (!user) {
+    ERR_MESSAGE = 'Incorrect username or password';
+    throw new Error(ERR_MESSAGE);
+  }
+
+  const token = jwt.sign({ email, password }, secret, jwtConfig);
+
+  return { token };
 };
 /*
 const update = (id, name, quantity) => {
@@ -46,4 +77,5 @@ const deleteProduct = async (id) => {
 
 module.exports = {
   add,
+  login,
 };

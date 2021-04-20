@@ -22,7 +22,10 @@ const add = async ({ name, email, password }) => {
 
 const getUserByMail = (string) => connect()
   .then((db) => db.collection('users').findOne({ email: string }));
-/*
+
+const getEmailAndPassword = ({ email, password }) => connect()
+  .then((db) => db.collection('users').findOne({ email, password }));
+  /*
 const update = (id, name, quantity) => {
   const updatedProduct = connect()
     .then(db => db.collection('products').updateOne(
@@ -41,4 +44,5 @@ const deleteProduct = (product) => {
 module.exports = {
   add,
   getUserByMail,
+  getEmailAndPassword,
 };

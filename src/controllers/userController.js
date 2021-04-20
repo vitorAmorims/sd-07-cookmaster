@@ -1,9 +1,10 @@
 const userService = require('../services/userService');
 
-// const OK = 200;
+const OK = 200;
 const CREATE = 201;
 // const UNPROCESS = 422;
 const BAD_REQUEST = 400;
+const UNAUTHORIZED = 401;
 const CONFLICT = 409;
 
 const add = async (req, res) => {
@@ -17,6 +18,23 @@ const add = async (req, res) => {
     const { message } = error;
     if (message.includes('Email')) {
       response = CONFLICT;
+    }
+    res.status(response).json({ message: error.message });
+  }
+};
+
+const login = async (req, res) => {
+  try {
+    const result = await userService.login(req.body);
+
+    res.status(OK).json(result);
+  } catch (error) {
+    console.error(error);
+    let response = BAD_REQUEST;
+    const { message } = error;
+    if (message.includes('fields')
+    || message.includes('username')) {
+      response = UNAUTHORIZED;
     }
     res.status(response).json({ message: error.message });
   }
@@ -117,4 +135,5 @@ const deleteProduct = async (req, res) => {
 
 module.exports = {
   add,
+  login,
 };
