@@ -29,4 +29,8 @@ module.exports = {
     const db = await database.connect();
     return db.collection(recipesCollection).findOne({ _id: id });
   },
+  delete: async (id) => {
+    const db = await database.connect();
+    await db.collection(recipesCollection).deleteOne({ _id: id });
+  },
 };

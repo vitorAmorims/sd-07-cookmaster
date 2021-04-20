@@ -1,7 +1,8 @@
 const RecipeService = require('../services/RecipeService');
-const { SUCCESS, CREATED, ERROR, NOT_FOUND, UNAUTHORIZED } = require('./status');
+const { SUCCESS, CREATED, NO_CONTENT, ERROR, NOT_FOUND, UNAUTHORIZED } = require('./status');
 
 const internalError = 'An internal error has occurred';
+const notFound = 'recipe not found';
 
 module.exports = {
   index: async (req, res) => {
@@ -18,7 +19,7 @@ module.exports = {
       const recipe = await RecipeService.get(id);
 
       if (!recipe) {
-        return res.status(NOT_FOUND).json({ message: 'recipe not found' });
+        return res.status(NOT_FOUND).json({ message: notFound });
       }
 
       return res.status(SUCCESS).json(recipe);
@@ -42,7 +43,7 @@ module.exports = {
       const { _id: userId, role } = req.user;
       
       const recipe = await RecipeService.get(req.params.id);
-      if (!recipe) return res.status(NOT_FOUND).json({ message: 'recipe not found' });
+      if (!recipe) return res.status(NOT_FOUND).json({ message: notFound });
       
       if (recipe.userId !== userId && role !== 'admin') {
         return res.status(UNAUTHORIZED).json({ message: 'user not authorized' });
@@ -52,6 +53,22 @@ module.exports = {
         name, ingredients, preparation,
       });
       return res.status(SUCCESS).json(updatedRecipe);
+    } catch {
+      return res.status(ERROR).json({ message: internalError });
+    }
+  },
+  delete: async (req, res) => {
+    try {
+      const { _id: userId, role } = req.user;
+      const recipe = await RecipeService.get(req.params.id);
+      if (!recipe) return res.status(NOT_FOUND).json({ message: notFound });
+      
+      if (recipe.userId !== userId && role !== 'admin') {
+        return res.status(UNAUTHORIZED).json({ message: 'user not authorized' });
+      }
+      
+      await RecipeService.delete(req.params.id);
+      return res.status(NO_CONTENT).json();
     } catch {
       return res.status(ERROR).json({ message: internalError });
     }
