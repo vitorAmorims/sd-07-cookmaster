@@ -12,6 +12,24 @@ const createUser = async (req, res) => {
     }
 };
 
+const logUser = async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const token = await service.log(email, password);
+        if (!token) {
+ res.status(401).json({
+            message: 'Incorrect username or password',
+        }); 
+}
+        res.status(200).json({
+            token,
+        });
+    } catch (error) {
+        res.status(500).send('We found an error');
+    }
+};
+
 module.exports = {
     createUser,
+    logUser,
 };

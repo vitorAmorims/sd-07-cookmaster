@@ -21,7 +21,21 @@ const getByEmail = async (email) => {
     }
 };
 
+const log = async (email, password) => {
+    try {
+        const user = await getByEmail(email);
+        const { name } = user;
+        if (password === user.password) {
+            return { name, email };
+        }
+        return false;
+    } catch (error) {
+        return false;
+    }
+};
+
 module.exports = {
     create,
     getByEmail,
+    log,
 };
