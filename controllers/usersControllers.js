@@ -2,6 +2,7 @@ const {
     addUsersService,
     userLoginService,
     validateEmailAndPassword,
+    addRecipeService,
 } = require('../service/usersService');
 
 const addUsersController = async (req, res) => {
@@ -11,7 +12,7 @@ const addUsersController = async (req, res) => {
         return res.status(201).json({ user: result });
     } catch (error) {
         const err = JSON.parse(error.message);
-        res.status(err.code).json({
+        return res.status(err.code).json({
             message: err.text,
         });
     }
@@ -23,10 +24,24 @@ const userLoginController = async (req, res) => {
 
         await validateEmailAndPassword(email, password);
         const result = await userLoginService(email, password);
-        res.status(200).json(result);
+        return res.status(200).json(result);
     } catch (error) {
         const err = JSON.parse(error.message);
-        res.status(err.code).json({
+        return res.status(err.code).json({
+            message: err.text,
+        });
+    }
+};
+
+const addRecipesController = async (req, res) => {
+    const { name, ingredients, preparation } = req.body;
+    const token = req.headers.authorization;
+    try {
+        const result = await addRecipeService(name, ingredients, preparation, token);
+        if (result) return res.status(201).json(result);
+    } catch (error) {
+        const err = JSON.parse(error.message);
+        return res.status(err.code).json({
             message: err.text,
         });
     }
@@ -35,4 +50,5 @@ const userLoginController = async (req, res) => {
 module.exports = {
     addUsersController,
     userLoginController,
+    addRecipesController,
 };

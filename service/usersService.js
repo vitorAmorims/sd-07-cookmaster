@@ -4,6 +4,8 @@ const {
     checkDBForEmail,
     addUserModel,
     getUserModel,
+    findUserByName,
+    addRecipeModel,
 } = require('../model/usersModels');
 
 const sete = 7;
@@ -40,7 +42,7 @@ async function userLoginService(email, password) {
         expiresIn: 60 * 20,
         algorithm: 'HS256',
     };
-    const token = jwt.sign({ data: user.username }, secret, jwtConfig);
+    const token = jwt.sign({ data: user.name }, secret, jwtConfig);
     return { token };
 }
 async function validateEmailAndPassword(email, password) {
@@ -52,10 +54,24 @@ async function validateEmailAndPassword(email, password) {
         throw new Error(JSON.stringify({ text: 'Incorrect username or password', code: 401 }));
     }
 }
+async function addRecipeService(name, ingredients, preparation, token) {
+    if (!name || !ingredients || !preparation) {
+        throw new Error(JSON.stringify({ text: 'Invalid entries. Try again.', code: 400 }));
+    }
+    const secret = 'cookmaster';
+    const decoded = jwt.verify(token, secret);
+    const user = await findUserByName(decoded.data);
+    const result = await addRecipeModel(name, ingredients, preparation);
+    const { _id: id } = user;
+    if (result) {
+        return { recipe: { ...result, userId: id } };
+    }
+}
 
 module.exports = {
     addUsersService,
     validateEmail,
     userLoginService,
     validateEmailAndPassword,
+    addRecipeService,
 };

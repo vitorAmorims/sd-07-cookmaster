@@ -31,9 +31,30 @@ async function getUserModel(email) {
         }
     });
 }
+async function findUserByName(name) {
+    return connect().then(async (db) => {
+         try {
+             return db.collection('users').findOne({ name });
+         } catch (error) {
+             return false;
+         }
+     });
+ }
+async function addRecipeModel(name, ingredients, preparation) {
+    const result = await connect().then(async (db) => {
+        try {
+            return db.collection('users').insertOne({ name, ingredients, preparation });
+        } catch (error) {
+            return false;
+        }
+    });
+    return result.ops[0];
+}
 
 module.exports = {
     checkDBForEmail,
     addUserModel,
     getUserModel,
+    addRecipeModel,
+    findUserByName,
 };
