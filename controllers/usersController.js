@@ -17,6 +17,21 @@ const addUser = async (req, res) => {
   }
 };
 
+const userLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const token = await usersServices.newToken(email, password);
+    if (token.message) {
+      return res.status(token.code).json({ message: token.message });
+    }
+    res.status(status.ok).json({ token }); 
+  } catch (error) {
+    console.error(error.message);
+    res.status(status.serverError).json({ message: error.message });
+  }
+};
+
 module.exports = {
   addUser,
+  userLogin,
 };

@@ -6,10 +6,10 @@ const add = async (name, email, password, role) =>
     return newUser.ops[0];
   });
 
-const findEmail = async (email) =>
+const getUser = async (email) =>
   connect().then((db) => db.collection('users').findOne({ email }));
 
 module.exports = {
   add,
-  findEmail,
+  getUser,
 };

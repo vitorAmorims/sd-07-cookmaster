@@ -1,6 +1,27 @@
+const jwt = require('jsonwebtoken');
 const emailValidator = require('email-validator');
 const usersModel = require('../models/usersModels');
 const status = require('../config/statusTable');
+const secret = require('../config/secret');
+
+const jwtConfig = {
+  expiresIn: '7d',
+  algorithm: 'HS256',
+};
+
+const emailNull = (email) => {
+  if (!email) {
+    return true;
+  }
+  return false;
+};
+
+const passwordNull = (password) => {
+  if (!password) {
+    return true;
+  }
+  return false;
+};
 
 const dataRequired = (name, email, password) => {
   if (!name || !email || !emailValidator.validate(email) || !password) {
@@ -10,7 +31,7 @@ const dataRequired = (name, email, password) => {
 };
 
 const emailExists = async (email) => {
-  if (await usersModel.findEmail(email) === null) {
+  if (await usersModel.getUser(email) === null) {
     return false;
   }
   return true;
@@ -35,6 +56,25 @@ const addUserValidation = async (name, email, password, role) => {
   return newUser;
 };
 
+const newToken = async (mail, password) => {
+  if (emailNull(mail) || passwordNull(password)) {
+    return { message: 'All fields must be filled', code: status.unauthorized };
+  }
+  
+  const user = await usersModel.getUser(mail);
+  if (user && user.password === password) {
+    const id = user[Object.keys(user)[0]];
+    const { email, role } = user;
+    const token = jwt.sign({ data: id, email, role }, secret, jwtConfig);
+    return token;
+  }
+  return {
+    message: 'Incorrect username or password',
+    code: status.unauthorized,
+  };
+};
+
 module.exports = {
   addUserValidation,
+  newToken,
 };
