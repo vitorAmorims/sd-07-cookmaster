@@ -12,5 +12,6 @@ app.get('/', (request, response) => {
 
 app.use('/users', require('./src/routes/users'));
 app.use('/login', require('./src/routes/login'));
+app.use('/recipes', require('./src/routes/recipes'));
 
 app.listen(process.env.PORT || PORT, () => { console.log('API rodando na porta 3000'); });
