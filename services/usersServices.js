@@ -65,7 +65,7 @@ const newToken = async (mail, password) => {
   if (user && user.password === password) {
     const id = user[Object.keys(user)[0]];
     const { email, role } = user;
-    const token = jwt.sign({ data: id, email, role }, secret, jwtConfig);
+    const token = jwt.sign({ data: { id, email, role } }, secret, jwtConfig);
     return token;
   }
   return {
