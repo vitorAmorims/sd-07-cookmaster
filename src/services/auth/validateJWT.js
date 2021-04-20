@@ -15,7 +15,7 @@ const checkAdmin = (requireAdmin, decoded) => {
 
 module.exports = (requireAdmin) => async (req, res, next) => {
     const token = req.headers.authorization;
-    if (!token) { res.status(401).json({ message: 'missing auth token' }); }
+    if (!token) return res.status(401).json({ message: 'missing auth token' });
     try {
       const decoded = jwt.verify(token, segredo);
       console.log('decoded: ', decoded, (decoded.data.role !== 'admin'), requireAdmin);
@@ -24,7 +24,7 @@ module.exports = (requireAdmin) => async (req, res, next) => {
         return res.status(403).json(isAdminValid);
       }
       const user = await userModel.getByEmail(decoded.data.email);
-      if (!user) { res.status(401).json({ message: 'Erro ao procurar usuario do token.' }); }
+      if (!user) return res.status(401).json({ message: 'Erro ao procurar usuario do token.' }); 
       req.user = decoded.data;
       next();
     } catch (err) {
