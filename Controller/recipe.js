@@ -28,8 +28,19 @@ const getById = async (req, res) => {
   }
 };
 
+const updateRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await recipe.updateRecipe(req.body, req.user, id);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
 module.exports = {
   create,
   getAllRecipes,
   getById,
+  updateRecipe,
 };

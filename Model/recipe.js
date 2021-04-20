@@ -20,8 +20,18 @@ const getById = async (id) =>
       .findOne(ObjectId(id)))
     .catch((err) => console.error(err));
 
+const updateRecipe = async (name, ingredients, preparation, id) => 
+  connect()
+    .then((db) => db.collection('recipes')
+    .findOneAndUpdate(
+      { _id: ObjectId(id) }, 
+      { $set: { name, ingredients, preparation } },
+      { returnOriginal: false },
+      ));
+
 module.exports = {
   create,
   getAllRecipes,
   getById,
+  updateRecipe,
 };

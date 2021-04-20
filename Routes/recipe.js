@@ -9,6 +9,7 @@ router.route('/recipes')
   .get(recipe.getAllRecipes);
 
 router.route('/recipes/:id')
-  .get(recipe.getById);
+  .get(recipe.getById)
+  .put(validateToken, recipe.updateRecipe);
 
 module.exports = router;
