@@ -1,7 +1,7 @@
 const mongoClient = require('mongodb');
 
 const connection = () => mongoClient
-    .connect('mongodb://mongodb:27017/Cookmaster', {
+    .connect('mongodb://localhost:27017/StoreManager', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
