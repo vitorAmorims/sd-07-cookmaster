@@ -4,11 +4,11 @@ const createUser = async (req, res) => {
     const { email, password, name } = req.body;
     try {
         const data = await service.create(name, email, password);
-        res.status(201).json({
+        return res.status(201).json({
             user: data,
         });
     } catch (error) {
-        res.status(500).send('We found an error');
+        return res.status(500).send('We found an error');
     }
 };
 
@@ -17,11 +17,11 @@ const logUser = async (req, res) => {
     try {
         const token = await service.log(email, password);
         if (!token) {
- res.status(401).json({
+ return res.status(401).json({
             message: 'Incorrect username or password',
         }); 
 }
-        res.status(200).json({
+        return res.status(200).json({
             token,
         });
     } catch (error) {

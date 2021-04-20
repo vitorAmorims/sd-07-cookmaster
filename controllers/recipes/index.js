@@ -17,9 +17,9 @@ const createRecipe = async (req, res) => {
 const getRecipes = async (req, res) => {
     try {
         const data = await service.getAll();
-        res.send(data);
+        return res.send(data);
     } catch (error) {
-        res.status(500).send(ERR_MESSAGE);
+        return res.status(500).send(ERR_MESSAGE);
     }
 };
 
@@ -28,13 +28,13 @@ const getRecipe = async (req, res) => {
     try {
         const recipe = await service.getById(id);
         if (!recipe) {
-            res.status(404).json({
+            return res.status(404).json({
                 message: 'recipe not found',
             });
         }
-        res.send(recipe);
+        return res.send(recipe);
     } catch (error) {
-        res.status(500).send(ERR_MESSAGE);
+        return res.status(500).send(ERR_MESSAGE);
     }
 };
 
