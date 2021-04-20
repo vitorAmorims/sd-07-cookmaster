@@ -10,7 +10,6 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-
 app.use(express.json());
 app.use('/users', user);
 
