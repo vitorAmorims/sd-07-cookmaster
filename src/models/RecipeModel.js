@@ -17,6 +17,14 @@ module.exports = {
     });
     return ops;
   },
+  update: async (id, body) => {
+    const db = await database.connect();
+    await db.collection(recipesCollection).updateOne({
+      _id: id,
+    }, {
+      $set: body,
+    });
+  },
   getById: async (id) => {
     const db = await database.connect();
     return db.collection(recipesCollection).findOne({ _id: id });

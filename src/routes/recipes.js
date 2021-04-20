@@ -5,6 +5,7 @@ const { authenticate } = require('../controllers/AuthController');
 
 routes.get('/', RecipeController.index);
 routes.get('/:id', RecipeController.get);
+routes.put('/:id', authenticate, RecipeMiddleware, RecipeController.update);
 routes.post('/', authenticate, RecipeMiddleware, RecipeController.create);
 
 module.exports = routes;

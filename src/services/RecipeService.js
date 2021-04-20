@@ -19,8 +19,19 @@ async function get(id) {
   }
 }
 
+async function update(id, body) {
+  try {
+    const objectId = ObjectID(id);
+    await RecipeModel.update(objectId, body);
+    return RecipeModel.getById(objectId);
+  } catch {
+    return null;
+  }
+}
+
 module.exports = {
   index,
   create,
   get,
+  update,
 };
