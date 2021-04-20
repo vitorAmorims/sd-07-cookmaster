@@ -18,7 +18,7 @@ const getById = async (id) =>
   connect()
     .then((db) => db.collection('recipes')
       .findOne(ObjectId(id)))
-    .catch((err) => console.error(err));
+    .catch((err) => console.error(err.message));
 
 const updateRecipe = async (name, ingredients, preparation, id) => 
   connect()
@@ -27,7 +27,8 @@ const updateRecipe = async (name, ingredients, preparation, id) =>
       { _id: ObjectId(id) }, 
       { $set: { name, ingredients, preparation } },
       { returnOriginal: false },
-      ));
+      ))
+    .catch((err) => console.error(err.message));
 
 module.exports = {
   create,

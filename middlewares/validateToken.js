@@ -6,9 +6,9 @@ const secret = require('../config/secret');
 const invalidTokenMessage = { message: 'jwt malformed' };
 const teste = { message: 'missing auth token' };
 const validateTokenMiddleware = async (req, res, next) => {
-  const token = req.headers.authorization;
-  if (!token) res.status(401).json(teste);
   try {
+    const token = req.headers.authorization;
+    if (!token) return res.status(401).json(teste);
     const decoded = jwt.verify(token, secret);
     const user = await userModel.getByEmail(decoded.email);
     if (!await user) return res.status(401).json(invalidTokenMessage);
@@ -16,7 +16,7 @@ const validateTokenMiddleware = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    res.status(401).json(invalidTokenMessage);
+    return res.status(401).json(invalidTokenMessage);
   }
 };
 
