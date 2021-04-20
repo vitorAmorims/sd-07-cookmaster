@@ -10,7 +10,7 @@ const loginMiddleware = async (req, res, next) => {
       message: 'All fields must be filled',
     });
   }
-  if (emailValid.email !== email || emailValid.password !== password) {
+  if (!emailValid) {
     return res.status(unauthorized).send({
       message: 'Incorrect username or password',
     });
