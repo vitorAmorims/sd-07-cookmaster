@@ -9,7 +9,7 @@ loginRoute.post('/', async (req, res, next) => {
   try {
     const validateInfo = await loginService.validUserService(email, password);
     if (validateInfo.isError) return next(validateInfo);
-    return res.status(status.SUCCESS).json({ message: 'Login route ok' });
+    return res.status(status.SUCCESS).json({ token: validateInfo });
   } catch (err) {
     throw new Error(err);
   }

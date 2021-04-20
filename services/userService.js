@@ -11,7 +11,7 @@ async function validUserService (name, email, password, role = 'user') {
 
   const getEmail = await userModel.getUserByEmail(email);
   console.log(getEmail)
-  if (getEmail.length > 0) return errorMessages.EMAIL_ALREADY_REGISTERED;
+  if (getEmail) return errorMessages.EMAIL_ALREADY_REGISTERED;
 
   const result = await userModel.createUserModel(name, email, password, role);
   return result;

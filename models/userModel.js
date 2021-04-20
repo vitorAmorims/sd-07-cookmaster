@@ -5,11 +5,7 @@ const getAllUsersModel = async () => connection().then(
 );
 
 const getUserByEmail = async (userEmail) => connection().then(
-  (db) => db.collection('users').find({ email: userEmail }).toArray(),
-);
-
-const getUserByPassword = async (userPassword) => connection().then(
-  (db) => db.collection('users').find({ password: userPassword }).toArray(),
+  (db) => db.collection('users').findOne({ email: userEmail }),
 );
 
 const createUserModel = async (name, email, password, role) => connection().then(
@@ -21,5 +17,4 @@ module.exports = {
   getAllUsersModel,
   createUserModel,
   getUserByEmail,
-  getUserByPassword,
 };

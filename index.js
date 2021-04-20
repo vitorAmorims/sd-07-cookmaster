@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path');
-const { userRoute, loginRoute } = require('./controllers');
+const { userRoute, loginRoute, recipeRoute } = require('./controllers');
 const errorMiddleware = require('./middlewares/errorMiddleware');
+const authMiddleware = require('./middlewares/authMiddleware');
 
 const app = express();
 
@@ -20,6 +21,8 @@ app.use('/images', express.static(path.join(__dirname, 'uploads')));
 app.use('/users', userRoute);
 
 app.use('/login', loginRoute);
+
+app.use('/recipes', authMiddleware, recipeRoute);
 
 app.use(errorMiddleware);
 
