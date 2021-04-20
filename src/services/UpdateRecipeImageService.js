@@ -1,0 +1,1 @@
+const { Recipes } = require('../database/index');
