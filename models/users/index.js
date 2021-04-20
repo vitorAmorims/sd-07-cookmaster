@@ -25,8 +25,9 @@ const log = async (email, password) => {
     try {
         const user = await getByEmail(email);
         const { name } = user;
+        const { _id } = user;
         if (password === user.password) {
-            return { name, email };
+            return { name, email, userId: _id };
         }
         return false;
     } catch (error) {
