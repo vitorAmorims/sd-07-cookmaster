@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const {
   addUsersController,
+  userLoginController,
 } = require('./controllers/usersControllers');
 
 // const multer = require('multer');
@@ -17,6 +18,7 @@ app.get('/', (request, response) => {
 });
 
 app.post('/users', addUsersController);
+app.post('/login', userLoginController);
 
  // daqui pra baixo sei lá
 // app.use(express.static(_dirname + 'uploads/'))
