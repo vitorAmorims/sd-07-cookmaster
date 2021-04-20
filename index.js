@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 
 const usersRoute = require('./routes/usersRoute');
+const { errorMiddleware } = require('./middlewares');
 
 const { PORT } = process.env;
 
@@ -14,6 +15,8 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-app.use('users', usersRoute);
+app.use('/users', usersRoute);
+
+app.use(errorMiddleware);
 
 app.listen(PORT, () => { console.log(`API rodando na porta ${PORT}`); });
