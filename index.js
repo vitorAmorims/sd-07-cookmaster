@@ -1,7 +1,9 @@
 const express = require('express');
 
-const app = express();
+const { logMiddleware, errorMiddleware } = require('./middlewares');
+const { user/* , recipe */ } = require('./resources');
 
+const app = express();
 const PORT = 3000;
 
 // não remova esse endpoint, e para o avaliador funcionar
@@ -9,4 +11,12 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.listen(PORT, () => { console.log('API rodando na porta 3000'); });
+app.use(express.json());
+app.use(logMiddleware);
+app.use(user.route);
+// app.use(recipe.route);
+app.use(errorMiddleware);
+
+app.listen(PORT, () => {
+  console.log(`CookMaster API ready on ${PORT}!`);
+}); 
