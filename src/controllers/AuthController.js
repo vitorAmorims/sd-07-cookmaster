@@ -16,7 +16,7 @@ module.exports = {
       const token = jwt.sign({ user: userInfo });
   
       return res.status(SUCCESS).json({ token });
-    } catch (error) {
+    } catch {
       return res.status(ERROR).json({ message: 'An internal error has occurred' });
     }
   },
@@ -26,7 +26,7 @@ module.exports = {
       const token = jwt.verify(auth);
       req.user = token.user;
       next();
-    } catch (error) {
+    } catch {
       return res.status(UNAUTHORIZED).json({ message: 'jwt malformed' });
     }
   },

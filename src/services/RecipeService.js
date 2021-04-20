@@ -5,6 +5,11 @@ async function create(name, ingredients, preparation, userId) {
   return recipe;
 }
 
+async function index() {
+  return RecipeModel.index();
+}
+
 module.exports = {
+  index,
   create,
 };
