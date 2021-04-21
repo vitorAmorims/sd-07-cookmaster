@@ -6,10 +6,9 @@ const createUsers = async (req, res) => {
   try {
     const usersController = await usersServices.createUsers(req.body);
     const { http, message } = usersController;
-    console.log(usersController);
-    return res.status(http).json(message);
+    res.status(http).json(message);
   } catch (error) {
-    return res.status(serverError).json({ message: error.message });
+     res.status(serverError).json({ message: error.message });
   }
 };
 
