@@ -18,6 +18,11 @@ const createRecipe = ({ name, ingredients, preparation, userId }) =>
     _id: result.insertedId,
   }));
 
+const findAllRecipes = () => 
+  connection()
+  .then((db) => db.collection(RECIPES_COLLECTION).find().toArray());
+
 module.exports = {
   createRecipe,
+  findAllRecipes,
 };
