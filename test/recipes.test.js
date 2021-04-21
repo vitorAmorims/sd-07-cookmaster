@@ -303,7 +303,7 @@ describe('4 - Crie um endpoint para a listagem de receitas', () => {
   });
 });
 
-describe.skip('5 - Crie um endpoint para visualizar uma receita específica', () => {
+describe('5 - Crie um endpoint para visualizar uma receita específica', () => {
   let connection;
   let db;
 
@@ -342,7 +342,7 @@ describe.skip('5 - Crie um endpoint para visualizar uma receita específica', ()
     await connection.close();
   });
 
-  it.skip('Será validado que é possível listar uma receita específica sem estar autenticado', async () => {
+  it('Será validado que é possível listar uma receita específica sem estar autenticado', async () => {
     let resultRecipe;
 
     await frisby
@@ -387,7 +387,7 @@ describe.skip('5 - Crie um endpoint para visualizar uma receita específica', ()
       });
   });
 
-  it.skip('Será validado que é possível listar uma receita específica estando autenticado', async () => {
+  it('Será validado que é possível listar uma receita específica estando autenticado', async () => {
     let resultRecipe;
 
     await frisby
@@ -449,7 +449,7 @@ describe.skip('5 - Crie um endpoint para visualizar uma receita específica', ()
       });
   });
 
-  it.skip('Será validado que não é possível listar uma receita que não existe', async () => {
+  it('Será validado que não é possível listar uma receita que não existe', async () => {
     await frisby
       .post(`${url}/login/`, {
         email: 'erickjacquin@gmail.com',
@@ -504,7 +504,7 @@ describe.skip('5 - Crie um endpoint para visualizar uma receita específica', ()
   });
 });
 
-describe.skip('7 - Crie um endpoint para a edição de uma receita', () => {
+describe('7 - Crie um endpoint para a edição de uma receita', () => {
   let connection;
   let db;
 

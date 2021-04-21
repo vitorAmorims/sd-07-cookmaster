@@ -20,7 +20,18 @@ const getAll = async () => {
   return { code: OK, recipes };
 };
 
+const getById = async (id) => {
+  const validation = await recipesSchema.validateId(id);
+
+  if (validation.message) return validation;
+
+  const recipe = await recipesModel.getById(id);
+  
+  return { code: OK, recipe };
+};
+
 module.exports = {
   getAll,
   add,
+  getById,
 };

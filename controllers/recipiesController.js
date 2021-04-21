@@ -11,25 +11,30 @@ const addrecipe = async (req, res) => {
   const token = req.headers.authorization;
   const secret = 'senha';
   const decoded = jwt.verify(token, secret);
-  const user = await userModel.getUserByEmail(decoded.data.email);
+  const { _id: userId } = await userModel.getUserByEmail(decoded.data.email);
+  const { _id } = recipe;
 
-  res.status(code).json({ 
-    recipe: {
-      name: recipe.name,
-      ingredients: recipe.ingredients,
-      preparation: recipe.preparation,
-      userId: user.id,
-      _id: recipe.id,
-  } });
+  res.status(code).json({ recipe: { name, ingredients, preparation, userId, _id } });
 };
 
 const getAllRecipes = async (_req, res) => {
   const { code, recipes } = await recipeService.getAll();
   
-  return res.status(code).json( recipes );
+  return res.status(code).json(recipes);
+};
+
+const getRecipeById = async (req, res) => {
+  const { id } = req.params;
+
+  const { code, message, recipe } = await recipeService.getById(id);
+  
+  if (!recipe) return res.status(code).json({ message });
+  
+  return res.status(code).json(recipe);
 };
 
 module.exports = {
   addrecipe,
   getAllRecipes,
+  getRecipeById,
 };

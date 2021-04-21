@@ -22,7 +22,20 @@ const getAll = async () => {
   return { code: OK, user };
 };
 
+const addAdmin = async (name, email, password) => {
+  const validationNameAndPassowrd = await userSchema.validateNameAndPassword(name, password);
+  const validationEmail = await userSchema.validateEmail(email);
+
+  if (validationNameAndPassowrd.message) return validationNameAndPassowrd;
+  if (validationEmail.message) return validationEmail;
+
+  const admin = await userModel.add(name, email, password, 'admin');
+
+  return { code: created, admin };
+};
+
 module.exports = {
   getAll,
   add,
+  addAdmin,
 };
