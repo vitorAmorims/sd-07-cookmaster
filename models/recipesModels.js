@@ -26,8 +26,19 @@ const findAllRecipes = () =>
 const findById = (id) => connection()
   .then((db) => db.collection(RECIPES_COLLECTION).findOne({ _id: ObjectId(id) }));
 
+const updateRecipe = ({ name, ingredients, preparation }, id) => connection()
+  .then((db) => db.collection(RECIPES_COLLECTION).updateOne(
+    { _id: ObjectId(id) },
+    { $set: {
+      name,
+      ingredients,
+      preparation,
+    } },
+  ));
+
 module.exports = {
   createRecipe,
   findAllRecipes,
   findById,
+  updateRecipe,
 };

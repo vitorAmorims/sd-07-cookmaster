@@ -28,8 +28,23 @@ const findById = async (id) => {
   return recipe;
 };
 
+const updateRecipe = async (recipe, id) => {
+  const { name, ingredients, preparation } = recipe;
+
+  if (!ObjectId.isValid(id)) {
+    throw new HttpException(messages.recipeNotFound, codes.NOT_FOUND);
+  }
+
+  if (!name || !ingredients || !preparation) {
+    throw new HttpException(messages.invalidEntries, codes.BAD_REQUEST);
+  }
+
+  return recipesModels.updateRecipe(recipe, id);
+};
+
 module.exports = {
   createRecipe,
   findAllRecipes,
   findById,
+  updateRecipe,
 };

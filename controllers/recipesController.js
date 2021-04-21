@@ -35,8 +35,22 @@ const findById = async (req, res) => {
   }
 };
 
+const updateRecipe = async (req, res) => {
+  const recipe = req.body;
+  const { id } = req.params;
+
+  try {
+    const response = await recipesServices.updateRecipe(recipe, id);
+
+    res.status(HttpResponses.codes.OK).json(response);
+  } catch (err) {
+    res.status(HttpResponses.codes.UNAUTHORIZED).json({ message: err.message });
+  }
+};
+
 module.exports = {
   createRecipe,
   findAllRecipes,
   findById,
+  updateRecipe,
 };
