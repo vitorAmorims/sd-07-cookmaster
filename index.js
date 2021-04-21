@@ -12,7 +12,9 @@ app.get('/', (_request, response) => {
 
 const users = require('./routes/usersRoute');
 const login = require('./routes/loginRoute');
+const recipes = require('./routes/recipesRoute');
 
+app.use('/recipes', recipes);
 app.use('/users', users);
 app.use('/login', login);
 
