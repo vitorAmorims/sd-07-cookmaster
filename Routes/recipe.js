@@ -36,5 +36,14 @@ router.put('/recipes/:id/image/', [validateToken, upload.single('image')], async
     return res.status(500).json({ error });
   }
 });
-  
+
+router.get('/images/:id', (req, res) => {
+  try {
+    console.log(`localhost:3000${req.url}`);
+    res.sendFile(req.url, { root: './' });
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+});
+
 module.exports = router;
