@@ -10,4 +10,10 @@ router.post(
   userController.createUser,
 );
 
+router.post(
+  '/login',
+  middlewares.validateLoginMiddleware,
+  userController.loginUser,
+);
+
 module.exports = router;
