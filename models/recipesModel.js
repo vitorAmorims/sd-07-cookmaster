@@ -22,9 +22,14 @@ const findAll = async () =>
     return { _id: id, ...data };
   });
 
+  const deleteOne = async (id) =>
+  connection().then(async (db) =>
+    db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
+
 module.exports = {
   insertRecipe,
   findById,
   findAll,
   updateOne,
+  deleteOne,
 };

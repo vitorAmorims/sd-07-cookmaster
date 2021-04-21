@@ -5,11 +5,14 @@ const {
   getRecipes,
   getRecipeById,
   editRecipe,
+  deleteRecipe,
 } = require('../controllers/recipesController');
 
 const {
   recipeDtataValidation,
 } = require('../middlewares');
+
+const recipesId = '/recipes/:id';
 
 const validateToken = require('../auth/validateToken');
 
@@ -19,8 +22,10 @@ recipesRoute.post('/recipes', recipeDtataValidation, validateToken, createRecipe
 
 recipesRoute.get('/recipes', getRecipes);
 
-recipesRoute.get('/recipes/:id', getRecipeById);
+recipesRoute.get(recipesId, getRecipeById);
 
-recipesRoute.put('/recipes/:id', validateToken, editRecipe);
+recipesRoute.put(recipesId, validateToken, editRecipe);
+
+recipesRoute.delete(recipesId, validateToken, deleteRecipe);
 
 module.exports = recipesRoute;

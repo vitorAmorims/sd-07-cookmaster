@@ -6,6 +6,7 @@ const RecipesModel = require('../models/recipesModel');
 const {
   OK,
   CREATED,
+  NO_CONTENT,
   NOT_FOUND,
   UNAUTHORIZED,
 } = require('../httpStatusCodes');
@@ -56,9 +57,24 @@ const editRecipe = rescue(async (req, res) => {
   return res.status(UNAUTHORIZED).json({ message: 'missing auth token' });
 });
 
+const deleteRecipe = rescue(async (req, res) => {
+  const { _id, role } = req.user;
+  const { id } = req.params;
+
+  const recipe = await RecipesModel.findById(id);
+
+  if (role === 'admin' || recipe.userId.equals(_id)) {
+    await RecipesModel.deleteOne(id);
+    return res.status(NO_CONTENT).json();
+  }
+
+  return res.status(UNAUTHORIZED).json({ message: 'missing auth token' });
+});
+
 module.exports = {
   createRecipe,
   getRecipes,
   getRecipeById,
   editRecipe,
+  deleteRecipe,
 };
