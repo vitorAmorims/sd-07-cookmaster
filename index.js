@@ -4,6 +4,9 @@ const {
   addUsersController,
   userLoginController,
   addRecipesController,
+  getAllRecipesController,
+  getRecipeByIdController,
+  updateRecipeByIdController,
 } = require('./controllers/usersControllers');
 const validateToken = require('./middleware/validateToken');
 
@@ -22,6 +25,9 @@ app.post('/users', addUsersController);
 app.post('/login', userLoginController);
 // recipes
 app.post('/recipes', validateToken, addRecipesController);
+app.get('/recipes', getAllRecipesController);
+app.get('/recipes/:id', getRecipeByIdController);
+app.put('/recipes/:id', validateToken, updateRecipeByIdController);
 
  // daqui pra baixo fica
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });

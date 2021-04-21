@@ -6,10 +6,13 @@ const {
     getUserModel,
     findUserByName,
     addRecipeModel,
+    getAllRecipesModel,
+    getRecipeByIdModel,
 } = require('../model/usersModels');
 
+const secret = 'cookmaster';
 const sete = 7;
-// const bcrypt = require('bcrypt-node');
+
 function validateEmail(email) {
     const regex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
     return regex.test(String(email).toLowerCase());
@@ -37,7 +40,7 @@ async function userLoginService(email, password) {
     if (user.password !== password) {
         throw new Error(JSON.stringify({ text: 'Invalid password', code: 401 }));
     }
-    const secret = 'cookmaster';
+
     const jwtConfig = {
         expiresIn: 60 * 20,
         algorithm: 'HS256',
@@ -58,7 +61,6 @@ async function addRecipeService(name, ingredients, preparation, token) {
     if (!name || !ingredients || !preparation) {
         throw new Error(JSON.stringify({ text: 'Invalid entries. Try again.', code: 400 }));
     }
-    const secret = 'cookmaster';
     const decoded = jwt.verify(token, secret);
     const user = await findUserByName(decoded.data);
     const result = await addRecipeModel(name, ingredients, preparation);
@@ -68,10 +70,28 @@ async function addRecipeService(name, ingredients, preparation, token) {
     }
 }
 
+async function getAllRecipesService() {
+    return getAllRecipesModel();
+}
+
+async function getRecipeByIdService(id) {
+    const recipe = await getRecipeByIdModel(id);
+    if (!recipe) {
+        throw new Error('recipe not found');
+    }
+    return recipe;
+}
+async function updateRecipeByIdService(id) {
+    console.log(id); // FAZER ESSA FUNÇÃO 
+}
+
 module.exports = {
     addUsersService,
     validateEmail,
     userLoginService,
     validateEmailAndPassword,
     addRecipeService,
+    getAllRecipesService,
+    getRecipeByIdService,
+    updateRecipeByIdService,
 };

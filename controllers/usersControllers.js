@@ -3,6 +3,9 @@ const {
     userLoginService,
     validateEmailAndPassword,
     addRecipeService,
+    getAllRecipesService,
+    getRecipeByIdService,
+    updateRecipeByIdService,
 } = require('../service/usersService');
 
 const addUsersController = async (req, res) => {
@@ -47,8 +50,41 @@ const addRecipesController = async (req, res) => {
     }
 };
 
+const getAllRecipesController = async (req, res) => {
+    // const token = req.headers.authorization;
+    try {
+        const recipeList = await getAllRecipesService();
+        return res.status(200).json(recipeList);
+    } catch (err) {
+        return res.status(401).json({ message: err.message });
+    }
+};
+const getRecipeByIdController = async (req, res) => {
+    const { id } = req.params;
+    const token = req.headers.authorization;
+    try {
+        const recipe = await getRecipeByIdService(id, token);
+        res.status(200).json(recipe);
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
+};
+
+const updateRecipeByIdController = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await updateRecipeByIdService(id);
+        res.status(200).json(result);
+    } catch (err) {
+        res.status(401).json({ message: err.message });
+    }
+};
+
 module.exports = {
     addUsersController,
     userLoginController,
     addRecipesController,
+    getAllRecipesController,
+    getRecipeByIdController,
+    updateRecipeByIdController,
 };
