@@ -14,10 +14,13 @@ const storage = multer.diskStorage({
       return;
     }
 
-    const startIndexExtension = file.originalname.search(/\./);
-    const fileExtension = file.originalname.substr(startIndexExtension);
+    // const startIndexExtension = file.originalname.search(/\./);
+    // const fileExtension = file.originalname.substr(startIndexExtension);
 
-    callback(null, `${id}${fileExtension}`);
+    // callback(null, `${id}${fileExtension}`);
+
+    // one more no sense thing
+    callback(null, `${id}.jpeg`);
   },
 });
 

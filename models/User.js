@@ -1,4 +1,4 @@
-const { connection } = require('./connection');
+const { connection } = require('../config/connection');
 
 const login = (email, password) => connection()
   .then((db) => db.collection('users').findOne({ email, password }));
