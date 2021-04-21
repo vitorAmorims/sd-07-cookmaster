@@ -1,9 +1,11 @@
 const express = require('express');
+const { resolve } = require('path');
 
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
+app.use('/images', express.static(resolve(__dirname, 'uploads')));
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {

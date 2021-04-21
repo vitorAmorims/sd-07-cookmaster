@@ -73,4 +73,15 @@ module.exports = {
       return res.status(ERROR).json({ message: internalError });
     }
   },
+  image: async (req, res) => {
+    try {
+      const { filename } = req.file;
+      const recipe = await RecipeService.update(req.params.id, {
+        image: `localhost:3000/images/${filename}`,
+      });
+      return res.status(SUCCESS).json(recipe);
+    } catch {
+      return res.status(ERROR).json({ message: internalError });
+    }
+  },
 };
