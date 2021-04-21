@@ -14,6 +14,12 @@ const newRecipeValidation = async (id, name, ingredients, preparation) => {
   return newRecipe;
 };
 
+const getRecipesValidation = async () => {
+  const recipes = await recipesModels.getRecipes();
+  return recipes;
+};
+
 module.exports = {
   newRecipeValidation,
+  getRecipesValidation,
 };

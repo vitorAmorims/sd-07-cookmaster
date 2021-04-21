@@ -11,6 +11,12 @@ const addRecipe = async (req, res) => {
   res.status(status.created).json({ recipe: newRecipe });
 };
 
+const getRecipes = async (req, res) => {
+  const recipes = await recipesServices.getRecipesValidation();
+  res.status(status.ok).json(recipes);
+};
+
 module.exports = {
   addRecipe,
+  getRecipes,
 };
