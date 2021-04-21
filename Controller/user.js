@@ -1,3 +1,4 @@
+const { restart } = require('nodemon');
 const user = require('../Service/user');
 
 const create = async (req, res) => {
@@ -11,6 +12,18 @@ const create = async (req, res) => {
   }
 };
 
+const createAdmin = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    const { role } = req.user;
+    const result = await user.createAdmin(name, email, password, role);
+    res.status(201).json({ user: result });
+  } catch (error) {
+    res.status(403).json(error);
+  }
+};
+
 module.exports = {
   create,
+  createAdmin,
 };
