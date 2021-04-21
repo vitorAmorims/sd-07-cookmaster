@@ -1,6 +1,7 @@
 const express = require('express');
 const usersRoute = require('./routes/userRoutes');
 const loginRoute = require('./routes/loginRoutes');
+const recipesRoute = require('./routes/recipiesRoutes');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.get('/', (request, response) => {
 
 app.use(usersRoute);
 app.use(loginRoute);
+app.use(recipesRoute);
 
 app.listen(PORT, () => {
   console.log(`App ouvindo na porta ${PORT}`);
