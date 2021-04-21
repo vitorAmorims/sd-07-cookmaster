@@ -1,4 +1,4 @@
-// const { ObjectId } = require('mongodb');
+const { ObjectId } = require('mongodb');
 const connect = require('../../config/connection');
 
 const COLLECTION_RECIPES_NAME = 'recipes';
@@ -16,10 +16,22 @@ const findAll = () =>
     return recipes;
   });
 
+const findById = (id) => 
+connect().then(async (db) => {
+  try {
+    const product = await db.collection(COLLECTION_RECIPES_NAME)
+      .findOne(ObjectId(id));
+    return product;
+  } catch (error) {
+    return null;
+  }
+});
+
   module.exports = {
     create,
     findAll,
-    /* findById,
+    findById,
+    /* 
     update,
     del, */
   };

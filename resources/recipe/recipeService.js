@@ -10,10 +10,16 @@ const findAll = async () => {
   return allRecipes;
 };
 
+const findById = async (id) => {
+  const foundRecipe = await recipeModel.findById(id);
+  return foundRecipe;
+};
+
 module.exports = {
   create,
   findAll,
-  /* findById,
+  findById,
+  /* 
   update,
   del, */
 };

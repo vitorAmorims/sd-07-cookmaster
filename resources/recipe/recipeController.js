@@ -1,4 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
+const { ErrorHandler } = require('../../helpers/error');
 
 const cryptography = require('../../helpers/cryptography');
 const recipeService = require('./recipeService');
@@ -18,7 +19,21 @@ const findAllRecipes = async (_req, res) => {
   res.status(StatusCodes.OK).json(allRecipes);
 };
 
+const findRecipeById = async (req, res) => {
+  const { id } = req.params;
+
+  const foundRecipe = await recipeService.findById(id);
+  if (foundRecipe) {
+    return res.status(StatusCodes.OK).json(foundRecipe);
+  }
+  throw new ErrorHandler(
+    StatusCodes.NOT_FOUND,
+    'recipe not found',
+  );
+};
+
 module.exports = {
   createRecipe,
   findAllRecipes,
+  findRecipeById,
 };
