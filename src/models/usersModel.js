@@ -28,10 +28,12 @@ const loginUser = async (email, password) => {
 const findUser = async (email) => {
     const result = await connection()
         .then((db) => db.collection('users').findOne({ email }));
+    const { _id } = result;
     return {
-        id: result.insertedId,
+        id: _id,
         name: result.name,
         email: result.email,
+        role: result.role,
     };
 };
 
