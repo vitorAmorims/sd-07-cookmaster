@@ -6,6 +6,10 @@ const status = require('../httpStatusCodes');
 
 const validateToken = async (req, res, next) => {
   const { authorization } = req.headers;
+  
+  if (!authorization) {
+    return res.status(status.UNAUTHORIZED).json({ message: 'missing auth token' });
+  }
 
   try {
     const userData = jwt.verify(authorization, process.env.secret);
