@@ -23,7 +23,7 @@ const getAllRecipes = async () => {
     return allRecipes;
   } catch (error) {
     console.error({
-      message: 'Não tem produto com esse nome no banco',
+      message: 'Não tem produto com esse nome no banco!',
     });
   }
 };
@@ -42,8 +42,27 @@ const getRecipe = async (id) => {
   }
 };
 
+const updateRecipe = async (id, body) => {
+  try {
+    const { name, ingredients, preparation } = body;
+    const query = { _id: ObjectID(id) };
+    const update = { $set: { name, ingredients, preparation } };
+    const option = { returnOriginal: false };
+    const db = await connection();
+    const recipes = await db
+      .collection('recipes')
+      .findOneAndUpdate(query, update, option);
+    return recipes;
+  } catch (error) {
+    console.error({
+      message: 'Não tem produto com esse nome no banco',
+    });
+  }
+};
+
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipe,
+  updateRecipe,
 };

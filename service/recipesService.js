@@ -25,8 +25,17 @@ const getRecipe = async (id) => {
     console.error({ ERRO });
   }
 };
+
+const updateRecipe = async (id, body) => {
+  try {
+    return await recipesModel.updateRecipe(id, body);
+  } catch (error) {
+    console.error({ ERRO });
+  }
+};
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipe,
+  updateRecipe,
 };

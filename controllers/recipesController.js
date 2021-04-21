@@ -24,7 +24,7 @@ const getAllRecipes = async (_req, res) => {
     const recipes = await recipesService.getAllRecipes();
     return res.status(STATUS_OK).json(recipes);
   } catch (error) {
-    return res.status(STATUS_UNPROCESSABLE).json({ message: 'Não entrou no controller' });
+    return res.status(STATUS_UNPROCESSABLE).json({ message: 'Não entrou no controller!' });
   }
 };
 
@@ -38,8 +38,20 @@ const getRecipe = async (req, res) => {
     return res.status(STATUS_UNPROCESSABLE).json({ message: 'Não entrou no controller' });
   }
 };
+
+const updateRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const recipe = await recipesService.updateRecipe(id, req.body);
+    console.log(recipe);
+    return res.status(STATUS_OK).json(recipe.value);
+  } catch (err) {
+    return res.status(STATUS_UNPROCESSABLE).json({ message: 'Não entrou no controller' });
+  }
+};
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipe,
+  updateRecipe,
 };
