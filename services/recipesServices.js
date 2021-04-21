@@ -19,7 +19,14 @@ const getRecipesValidation = async () => {
   return recipes;
 };
 
+const recipeByIdValidation = async (id) => {
+  const recipe = await recipesModels.getRecipeById(id);
+  if (!recipe) return { message: 'recipe not found', code: status.notFound };
+  return recipe;
+};
+
 module.exports = {
   newRecipeValidation,
   getRecipesValidation,
+  recipeByIdValidation,
 };
