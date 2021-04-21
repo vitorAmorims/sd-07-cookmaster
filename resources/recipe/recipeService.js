@@ -26,11 +26,17 @@ const update = async ({ id, name, ingredients, preparation, userId, role }) => {
   return null;
 };
 
+const del = async (id, userId, role) => {
+  const foundRecipe = await recipeModel.findById(id);
+  if (foundRecipe.userId === userId || role === 'admin') {
+    await recipeModel.del(id);
+  }
+};
+
 module.exports = {
   create,
   findAll,
   findById,
   update,
-  /* 
-  del, */
+  del,
 };

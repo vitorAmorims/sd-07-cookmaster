@@ -45,9 +45,18 @@ const updateRecipe = async (req, res) => {
   }
 };
 
+const deleteRecipe = async (req, res) => {
+  const { id } = req.params;
+  const token = req.headers.authorization;
+  const { id: userId, role } = cryptography.getDataByToken(token);
+  await recipeService.del(id, userId, role);
+  res.status(StatusCodes.NO_CONTENT).send();
+};
+
 module.exports = {
   createRecipe,
   findAllRecipes,
   findRecipeById,
   updateRecipe,
+  deleteRecipe,
 };

@@ -10,6 +10,7 @@ const {
   findAllRecipes,
   findRecipeById,
   updateRecipe,
+  deleteRecipe,
 } = require('./recipeController');
 
 const recipeValidateMiddleware = require('./recipeValidateMiddleware');
@@ -24,6 +25,6 @@ router.get(`${BASE_ENDPOINT}/:id`, rescue(findRecipeById));
 router.put(`${BASE_ENDPOINT}/:id`,
   [validateTokenMiddleware, recipeValidateMiddleware],
   rescue(updateRecipe));
-// router.delete(BASE_ENDPOINT);
+router.delete(`${BASE_ENDPOINT}/:id`, validateTokenMiddleware, rescue(deleteRecipe));
 
 module.exports = router; 

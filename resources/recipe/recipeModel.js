@@ -29,12 +29,23 @@ connect().then(async (db) => {
 
 const update = (id, name, ingredients, preparation) => 
   connect().then(async (db) => {
-    const { modifiedCount } = await db.collection(COLLECTION_RECIPES_NAME).updateOne(
-      { _id: ObjectId(id) },
-      { $set: { name, ingredients, preparation } },
-    );
+    const { modifiedCount } = await db.collection(COLLECTION_RECIPES_NAME)
+      .updateOne(
+        { _id: ObjectId(id) },
+        { $set: { name, ingredients, preparation } },
+      );
     if (modifiedCount) {
       return findById(id);
+    }
+    return null;
+  });
+
+const del = (id) => 
+  connect().then(async (db) => {
+    const { deletedCount } = await db.collection(COLLECTION_RECIPES_NAME)
+      .deleteOne({ _id: ObjectId(id) });
+    if (deletedCount) {
+      return id;
     }
     return null;
   });
@@ -44,7 +55,5 @@ const update = (id, name, ingredients, preparation) =>
     findAll,
     findById,
     update,
-    /* 
-    
-    del, */
+    del,
   };
