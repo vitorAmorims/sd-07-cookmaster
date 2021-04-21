@@ -9,8 +9,7 @@ const jwtConfig = {
 
 const generateToken = (user) => jwt.sign(
   {
-    // eslint-disable-next-line no-underscore-dangle
-    id: user._id,
+    id: user.id,
     name: user.name,
     email: user.email,
     role: user.role,

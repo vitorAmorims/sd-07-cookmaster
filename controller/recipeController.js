@@ -25,6 +25,13 @@ const getById = async (req, res) => {
   return res.status(200).send(resposta);
 };
 
+const checkEntries = (preparation, ingredients, name) => {
+  if (!preparation || !ingredients || !name) {
+    return false; 
+  }
+  return true;
+};
+
 const editById = async (req, res) => {
   const { name, preparation, ingredients } = req.body;
   const { id } = req.params;
@@ -34,7 +41,8 @@ const editById = async (req, res) => {
   const error = jwt.decodeToken(authorization);
   if (!error) { return res.status(401).send({ message: 'jwt malformed' }); }
 
-  if (!preparation || !ingredients || !name) {
+  const EntriesOK = checkEntries(preparation, ingredients, name);
+  if (!EntriesOK) {
     return res.status(400).send({ message: 'Invalid Entries. Try again.' }); 
   }
   const recipe = await recipeService.editById(id, name, preparation, ingredients);
