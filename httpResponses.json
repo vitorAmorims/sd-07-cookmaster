@@ -11,6 +11,7 @@
     "invalidEntries": "Invalid entries. Try again.",
     "emailAlreadyExists": "Email already registered",
     "loginFieldBlank": "All fields must be filled",
-    "incorrectLogin": "Incorrect username or password"
+    "incorrectLogin": "Incorrect username or password",
+    "recipeNotFound": "recipe not found"
   }
 }

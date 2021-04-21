@@ -21,6 +21,8 @@ app.post('/login', loginControllers.validateLogin);
 
 app.post('/recipes', authMiddleware, recipesControllers.createRecipe);
 
+app.get('/recipes/:id', recipesControllers.findById);
+
 app.get('/recipes', recipesControllers.findAllRecipes);
 
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });
