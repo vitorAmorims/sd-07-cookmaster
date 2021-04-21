@@ -3,13 +3,13 @@ const database = require('../database');
 const usersCollection = 'users';
 
 module.exports = {
-  create: async (name, email, password) => {
+  create: async (name, email, password, role) => {
     const db = await database.connect();
     const { ops } = await db.collection(usersCollection).insertOne({
       name,
       email,
       password,
-      role: 'user',
+      role,
     });
     return ops;
   },
