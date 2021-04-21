@@ -2,6 +2,8 @@ const express = require('express');
 require('dotenv').config();
 
 const usersRoute = require('./routes/usersRoute');
+const recipesRoute = require('./routes/recipesRoute');
+
 const { errorMiddleware } = require('./middlewares');
 
 const { PORT } = process.env;
@@ -15,7 +17,9 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-app.use('/users', usersRoute);
+app.use('/', usersRoute);
+
+app.use('/', recipesRoute);
 
 app.use(errorMiddleware);
 

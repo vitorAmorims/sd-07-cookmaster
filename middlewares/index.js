@@ -3,6 +3,7 @@ const checkDuplicate = require('./checkDuplicate');
 const errorMiddleware = require('./errorMiddleware');
 const checkLoginData = require('./checkLoginData');
 const loginDataValidation = require('./loginDataValidation');
+const recipeDtataValidation = require('./recipeDataValidation');
 
 module.exports = {
   userDataValidation,
@@ -10,4 +11,5 @@ module.exports = {
   errorMiddleware,
   checkLoginData,
   loginDataValidation,
+  recipeDtataValidation,
 };
