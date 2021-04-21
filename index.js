@@ -1,6 +1,10 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const userController = require('./routes/user/userController');
+const loginController = require('./routes/login/loginController');
 
 const app = express();
+app.use(bodyParser.json());
 
 const PORT = 3000;
 
@@ -9,4 +13,7 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.listen(PORT, () => { console.log('API rodando na porta 3000'); });
+app.use('/users', userController);
+app.use('/login', loginController);
+
+app.listen(PORT, () => { console.log(`API rodando na porta ${PORT}`); });
