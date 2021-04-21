@@ -1,16 +1,18 @@
 const express = require('express');
 const usersController = require('../controllers/usersController');
 const {
-  validationUser,
+  validationName,
   validationPassword,
+  validationEmail,
 } = require('../middleware/userValidation');
 
 const router = express.Router();
 
 router.post(
   '/users',
-  validationUser,
+  validationName,
   validationPassword,
+  validationEmail,
   usersController.createUsers,
 );
 
