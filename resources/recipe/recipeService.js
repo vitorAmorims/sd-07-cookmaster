@@ -5,10 +5,15 @@ const create = async (name, ingredients, preparation, userId) => {
   return newRecipe;
 };
 
+const findAll = async () => {
+  const allRecipes = await recipeModel.findAll();
+  return allRecipes;
+};
+
 module.exports = {
   create,
-  /* findById,
   findAll,
+  /* findById,
   update,
   del, */
 };
