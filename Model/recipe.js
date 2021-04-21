@@ -30,9 +30,16 @@ const updateRecipe = async (name, ingredients, preparation, id) =>
       ))
     .catch((err) => console.error(err.message));
 
+const deleteRecipe = async (id) => 
+  connect()
+    .then((db) => db.collection('recipes')
+      .findOneAndDelete({ _id: ObjectId(id) }))
+    .catch((err) => console.error(err));
+
 module.exports = {
   create,
   getAllRecipes,
   getById,
   updateRecipe,
+  deleteRecipe,
 };
