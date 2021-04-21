@@ -1,7 +1,7 @@
 const userModel = require('./userModels');
 const userService = require('./userServices');
+const userCrypt = require('./userCrypt');
 
-// const OK = 200;
 const CREATED = 201;
 const BADREQUEST = 400;
 const CONFLICT = 409;
@@ -11,8 +11,9 @@ const createUser = async (req, res) => {
     const { name, email, password } = req.body;
     const validateNewUser = await userService.validateNewUser(name, email, password);
     if (validateNewUser) throw new Error(validateNewUser);
-    
-    const newUser = await userModel.createUser(name, email, password);
+
+    const cryptPassword = userCrypt.cryptPass(password);
+    const newUser = await userModel.createUser(name, email, cryptPassword);
     res.status(CREATED).json({ user: newUser });
   } catch (error) {
     if (error.message === 'Invalid entries. Try again.') {
@@ -21,7 +22,7 @@ const createUser = async (req, res) => {
 
     res.status(CONFLICT).json({ message: error.message });
   }
-};
+}; // req. 1
 
 module.exports = {
   createUser,
