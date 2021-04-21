@@ -1,0 +1,13 @@
+{
+  "codes": {
+    "BAD_REQUEST": 400,
+    "CREATED": 201,
+    "OK": 200,
+    "NOT_FOUND": 404,
+    "CONFLICT": 409
+  },
+  "messages": {
+    "invalidEntries": "Invalid entries. Try again.",
+    "emailAlreadyExists": "Email already registered"
+  }
+}
