@@ -2,6 +2,7 @@ const express = require('express');
 
 const app = express();
 const usersControllers = require('./controllers/usersControllers');
+const loginControllers = require('./controllers/loginController');
 
 const PORT = 3000;
 
@@ -13,5 +14,7 @@ app.get('/', (request, response) => {
 });
 
 app.post('/users', usersControllers.createUser);
+
+app.post('/login', loginControllers.validateLogin);
 
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });
