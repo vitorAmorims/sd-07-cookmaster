@@ -1,7 +1,7 @@
 const route = require('./recipeRoute');
-// const service = require('./recipeService');
+const service = require('./recipeService');
 
 module.exports = {
   route,
-  // service,
+  service,
 };

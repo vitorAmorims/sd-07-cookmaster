@@ -12,17 +12,23 @@ const encryptText = (plainText) => {
 
 const cryptCompare = (plainText, encryptedText) => bcrypt.compareSync(plainText, encryptedText);
 
-const generateUserToken = (email) => {
+const generateUserToken = (email, id) => {
   const jwtConfig = {
     expiresIn: 60 * 5,
     algorithm: 'HS256',
   };
 
-  return jwt.sign({ data: email }, SECRET, jwtConfig);
+  return jwt.sign({ data: { email, id } }, SECRET, jwtConfig);
+};
+
+const getDataByToken = (token) => {
+  const decoded = jwt.verify(token, SECRET);
+  return decoded.data;
 };
 
 module.exports = {
   encryptText,
   cryptCompare,
   generateUserToken,
+  getDataByToken,
 };

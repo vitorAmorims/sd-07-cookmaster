@@ -1,5 +1,5 @@
 const userModel = require('./userModel');
-const cryptography = require('../../helpers/cryptography');
+// const cryptography = require('../../helpers/cryptography');
 
 const create = async (name, email, password) => {
   const existUser = await userModel.findByEmail(email);
@@ -7,9 +7,9 @@ const create = async (name, email, password) => {
     throw new Error('Email already registered');
   } 
 
-  const encryptedPassord = cryptography.encryptText(password);
+  // const encryptedPassord = cryptography.encryptText(password);
 
-  const newUser = await userModel.create(name, email, encryptedPassord, 'user');
+  const newUser = await userModel.create(name, email, password/* encryptedPassord */, 'user');
   delete newUser.password;
   return newUser;
 };

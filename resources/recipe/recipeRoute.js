@@ -1,14 +1,24 @@
 const express = require('express');
-// const rescue = require('express-rescue');
+const rescue = require('express-rescue');
+
+const { validateTokenMiddleware } = require('../../middlewares');
 
 const router = express.Router();
 
-const BASE_ENDPOINT = '/recipe';
+const { 
+  createRecipe,
+} = require('./recipeController');
 
-router.post(BASE_ENDPOINT);
-router.get(BASE_ENDPOINT);
-router.get(BASE_ENDPOINT);
-router.put(BASE_ENDPOINT);
-router.delete(BASE_ENDPOINT);
+const recipeValidateMiddleware = require('./recipeValidateMiddleware');
+
+const BASE_ENDPOINT = '/recipes';
+
+router.post(BASE_ENDPOINT,
+  [validateTokenMiddleware, recipeValidateMiddleware], 
+  rescue(createRecipe));
+// router.get(BASE_ENDPOINT);
+// router.get(BASE_ENDPOINT);
+// router.put(BASE_ENDPOINT);
+// router.delete(BASE_ENDPOINT);
 
 module.exports = router; 
