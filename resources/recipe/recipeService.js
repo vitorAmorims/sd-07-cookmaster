@@ -15,11 +15,22 @@ const findById = async (id) => {
   return foundRecipe;
 };
 
+const update = async ({ id, name, ingredients, preparation, userId, role }) => {
+  const foundRecipe = await recipeModel.findById(id);
+
+  if (foundRecipe.userId === userId || role === 'admin') {
+    const updatedRecipe = await recipeModel.update(id, name, ingredients, preparation);
+    return updatedRecipe;
+  }
+  
+  return null;
+};
+
 module.exports = {
   create,
   findAll,
   findById,
-  /* 
   update,
+  /* 
   del, */
 };

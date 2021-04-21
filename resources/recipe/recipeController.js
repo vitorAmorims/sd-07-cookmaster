@@ -32,8 +32,22 @@ const findRecipeById = async (req, res) => {
   );
 };
 
+const updateRecipe = async (req, res) => {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const token = req.headers.authorization;
+  const { id: userId, role } = cryptography.getDataByToken(token);
+
+  const updatedRecipe = await recipeService
+    .update({ id, name, ingredients, preparation, userId, role });
+  if (updatedRecipe) {
+    res.status(StatusCodes.OK).json(updatedRecipe);
+  }
+};
+
 module.exports = {
   createRecipe,
   findAllRecipes,
   findRecipeById,
+  updateRecipe,
 };

@@ -19,19 +19,32 @@ const findAll = () =>
 const findById = (id) => 
 connect().then(async (db) => {
   try {
-    const product = await db.collection(COLLECTION_RECIPES_NAME)
+    const recipe = await db.collection(COLLECTION_RECIPES_NAME)
       .findOne(ObjectId(id));
-    return product;
+    return recipe;
   } catch (error) {
     return null;
   }
 });
 
+const update = (id, name, ingredients, preparation) => 
+  connect().then(async (db) => {
+    const { modifiedCount } = await db.collection(COLLECTION_RECIPES_NAME).updateOne(
+      { _id: ObjectId(id) },
+      { $set: { name, ingredients, preparation } },
+    );
+    if (modifiedCount) {
+      return findById(id);
+    }
+    return null;
+  });
+
   module.exports = {
     create,
     findAll,
     findById,
-    /* 
     update,
+    /* 
+    
     del, */
   };

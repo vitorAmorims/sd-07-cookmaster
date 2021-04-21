@@ -9,6 +9,7 @@ const {
   createRecipe,
   findAllRecipes,
   findRecipeById,
+  updateRecipe,
 } = require('./recipeController');
 
 const recipeValidateMiddleware = require('./recipeValidateMiddleware');
@@ -20,7 +21,9 @@ router.post(BASE_ENDPOINT,
   rescue(createRecipe));
 router.get(BASE_ENDPOINT, rescue(findAllRecipes));
 router.get(`${BASE_ENDPOINT}/:id`, rescue(findRecipeById));
-// router.put(BASE_ENDPOINT);
+router.put(`${BASE_ENDPOINT}/:id`,
+  [validateTokenMiddleware, recipeValidateMiddleware],
+  rescue(updateRecipe));
 // router.delete(BASE_ENDPOINT);
 
 module.exports = router; 

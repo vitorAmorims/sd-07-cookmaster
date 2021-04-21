@@ -10,8 +10,8 @@ const login = async (email, password) => {
       throw new Error();
     }
 
-    const { _id: id } = foundUser;
-    return cryptography.generateUserToken(email, id);
+    const { _id: id, role } = foundUser;
+    return cryptography.generateUserToken(email, id, role);
   } catch (error) {
     throw new Error('Incorrect username or password');
   }
