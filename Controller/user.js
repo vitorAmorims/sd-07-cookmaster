@@ -1,4 +1,3 @@
-const { restart } = require('nodemon');
 const user = require('../Service/user');
 
 const create = async (req, res) => {
