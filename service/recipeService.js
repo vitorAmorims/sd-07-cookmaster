@@ -10,6 +10,10 @@ const getById = async (id) => {
   return recipe;
 };
 
+const deleteById = async (id) => {
+  await recipeModel.deleteById(id);
+};
+
 const editById = async (id, name, preparation, ingredients) => {
   const recipe = await recipeModel.editById(id, name, preparation, ingredients);
   return recipe;
@@ -20,4 +24,4 @@ const getAll = async () => {
   return recipes;
 };
 
-module.exports = { create, getAll, getById, editById };
+module.exports = { create, getAll, getById, editById, deleteById };

@@ -12,10 +12,11 @@ routes.post(('/users'), userValidation, userController.create);
 routes.post(('/users/admin'), userValidation, userController.createAdmin);
 routes.post(('/login'), userController.login);
 
+const recipeId = '/recipes/:id';
 routes.post(('/recipes'), checkRecipeInputs, checkToken, recipeController.create);
-routes.get(('/recipes/:id'), recipeController.getById);
+routes.get((recipeId), recipeController.getById);
 routes.get(('/recipes'), recipeController.getAll);
-
-routes.put(('/recipes/:id'), recipeController.editById);
+routes.put((recipeId), recipeController.editById);
+routes.delete((recipeId), recipeController.deleteById);
 
 module.exports = routes;

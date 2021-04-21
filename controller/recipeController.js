@@ -49,4 +49,13 @@ const editById = async (req, res) => {
   return res.status(200).send(recipe);
 };
 
-module.exports = { create, getAll, getById, editById };
+const deleteById = async (req, res) => {
+  const { id } = req.params;
+  const { authorization } = req.headers;
+  // Se der errado da merda
+  if (!authorization) return res.status(401).send({ message: 'missing auth token' });
+  // se tudo ok
+  await recipeService.deleteById(id);
+  return res.status(204).send();
+};
+module.exports = { create, getAll, getById, editById, deleteById };

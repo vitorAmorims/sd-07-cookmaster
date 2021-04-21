@@ -21,6 +21,12 @@ const getById = async (id) => {
   return null;
 };
 
+const deleteById = async (id) => {
+  if (ObjectID.isValid(id)) {
+    await connection().then((db) => db.collection('recipes').deleteOne({ _id: new ObjectID(id) }));
+  }
+};
+
 const editById = async (id, name, preparation, ingredients) => {
   await connection().then((db) => db.collection('recipes').findOneAndUpdate(
       { _id: ObjectID(id) },
@@ -30,4 +36,4 @@ const editById = async (id, name, preparation, ingredients) => {
     return recipe;
 };
 
-module.exports = { create, getAll, getById, editById };
+module.exports = { create, getAll, getById, editById, deleteById };
