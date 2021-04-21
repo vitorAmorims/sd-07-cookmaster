@@ -7,7 +7,8 @@ const {
   RECIPE_NOT_FOUND, NOT_ALLOWED,
 } = require('../helpers/errorMessages');
 
-const { SERVER_DOMAIN = 'localhost', PORT = 3000 } = process.env;
+const SERVER_DOMAIN = 'localhost';
+const PORT = 3000;
 
 const addImageAndGetUpdatedRecipe = async (id, image, recipe, user) => {
   const { userRole } = user;
