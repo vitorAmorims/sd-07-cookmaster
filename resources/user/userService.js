@@ -14,6 +14,22 @@ const create = async (name, email, password) => {
   return newUser;
 };
 
+const createAdmin = async (name, email, password, role) => {
+  if (role !== 'admin') {
+    throw new Error('Only admins can register new admins');
+  }
+  const existUser = await userModel.findByEmail(email);
+  if (existUser) {
+    throw new Error('Email already registered');
+  } 
+
+  // const encryptedPassord = cryptography.encryptText(password);
+
+  const newUser = await userModel.create(name, email, password/* encryptedPassord */, 'admin');
+  delete newUser.password;
+  return newUser;
+};
+
 const findByEmail = async (email) => {
   const foundUser = await userModel.findByEmail(email);
   if (!foundUser) {
@@ -24,9 +40,6 @@ const findByEmail = async (email) => {
 
 module.exports = {
   create,
+  createAdmin,
   findByEmail,
-  /* findById,
-  findAll,
-  update,
-  del, */
 };
