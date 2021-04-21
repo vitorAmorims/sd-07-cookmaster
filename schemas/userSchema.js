@@ -15,13 +15,15 @@ function validatingEmail(email) {
   return re.test(email);
 }
 
-const validatePost1 = async (name, email, password) => {
-  if (!name || !email || !password) return { code: badRequest, message: errors.noNameOrEmailField };
+const validateNameAndPassword = async (name, password) => {
+  if (!name || !password) return { code: badRequest, message: errors.noNameOrEmailField };
 
   return {};
 };
 
-const validatePost2 = async (email) => {
+const validateEmail = async (email) => {
+  if (!email) return { code: badRequest, message: errors.noNameOrEmailField };
+
   const userEmail = await userModel.getUserByEmail(email);
 
   if (!validatingEmail(email)) return { code: badRequest, message: errors.noNameOrEmailField };
@@ -32,6 +34,6 @@ const validatePost2 = async (email) => {
 };
 
 module.exports = {
-  validatePost1,
-  validatePost2,
+  validateNameAndPassword,
+  validateEmail,
 };
