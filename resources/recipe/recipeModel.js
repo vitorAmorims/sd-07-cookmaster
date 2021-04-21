@@ -40,6 +40,19 @@ const update = (id, name, ingredients, preparation) =>
     return null;
   });
 
+  const updateImage = (id, image) => 
+  connect().then(async (db) => {
+    const { modifiedCount } = await db.collection(COLLECTION_RECIPES_NAME)
+      .updateOne(
+        { _id: ObjectId(id) },
+        { $set: { image } },
+      );
+    if (modifiedCount) {
+      return findById(id);
+    }
+    return null;
+  });
+
 const del = (id) => 
   connect().then(async (db) => {
     const { deletedCount } = await db.collection(COLLECTION_RECIPES_NAME)
@@ -56,4 +69,5 @@ const del = (id) =>
     findById,
     update,
     del,
+    updateImage,
   };

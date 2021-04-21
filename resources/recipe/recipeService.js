@@ -26,6 +26,16 @@ const update = async ({ id, name, ingredients, preparation, userId, role }) => {
   return null;
 };
 
+const updateImage = async (id, imagePath, userId, role) => {
+  const foundRecipe = await recipeModel.findById(id);
+  if (foundRecipe.userId === userId || role === 'admin') {
+    const updatedRecipe = await recipeModel.updateImage(id, imagePath);
+    return updatedRecipe;
+  }
+  
+  return null;
+};
+
 const del = async (id, userId, role) => {
   const foundRecipe = await recipeModel.findById(id);
   if (foundRecipe.userId === userId || role === 'admin') {
@@ -39,4 +49,5 @@ module.exports = {
   findById,
   update,
   del,
+  updateImage,
 };

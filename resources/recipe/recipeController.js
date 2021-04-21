@@ -53,10 +53,29 @@ const deleteRecipe = async (req, res) => {
   res.status(StatusCodes.NO_CONTENT).send();
 };
 
+const uploadImage = async (req, res) => {
+  const { id } = req.params;
+  const token = req.headers.authorization;
+  const { id: userId, role } = cryptography.getDataByToken(token);
+  const { filename } = req.file;
+
+  const updatedRecipe = await recipeService
+    .updateImage(id, `localhost:3000/images/${filename}`, userId, role);
+  if (updatedRecipe) {
+    res.status(StatusCodes.OK).json(updatedRecipe);
+  }
+};
+
+const findImageById = (req, res) => {
+  res.sendFile(req.url, { root: './' });
+};
+
 module.exports = {
   createRecipe,
   findAllRecipes,
   findRecipeById,
   updateRecipe,
   deleteRecipe,
+  uploadImage,
+  findImageById,
 };
