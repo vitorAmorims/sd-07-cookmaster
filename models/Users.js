@@ -1,8 +1,9 @@
 const connect = require('../config/conn');
 
-const addUser = async (name, email, password) => {  
+const add = async (name, email, password, role) => {  
   const newUser = await connect().then(async (db) => {
-    const user = await db.collection('users').insertOne({ name, email, password, role: 'user' });
+    console.log(name);
+    const user = await db.collection('users').insertOne({ name, email, password, role });
 
     return user.ops[0];
   });
@@ -17,7 +18,7 @@ const findUser = async (email, password) =>
   connect().then((db) => db.collection('users').findOne({ email, password }));
 
 module.exports = {
-  addUser,
+  add,
   getByEmail,
   findUser,
 };

@@ -4,9 +4,10 @@ const secret = require('../utils/env');
 
 const add = async (name, email, password) => {
   const sameUser = await Users.getByEmail(email);
-  
+  const role = 'user';
+
   if (!sameUser) {
-    const user = Users.addUser(name, email, password);
+    const user = Users.add(name, email, password, role);
 
     return user;
   } 

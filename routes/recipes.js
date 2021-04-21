@@ -19,12 +19,14 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-recipes.post('/recipes', [auth, middlewareRecipe.existAllFields], recipeController.add);
+recipes.post('/recipes', [auth.allUser, middlewareRecipe.existAllFields], recipeController.add);
 recipes.get(commomPath, recipeController.getRecipe);
 recipes.get('/recipes', recipeController.listAll);
-recipes.put(commomPath, [auth], recipeController.update);
-recipes.delete(commomPath, [auth], recipeController.remove);
-recipes.put(`${commomPath}/image`, [auth, upload.single('image')], recipeController.addImage);
+recipes.put(commomPath, [auth.allUser], recipeController.update);
+recipes.delete(commomPath, [auth.allUser], recipeController.remove);
+recipes.put(`${commomPath}/image`, [
+  auth.allUser, 
+  upload.single('image')], recipeController.addImage);
 recipes.get('/images/:id', recipeController.getImage);
 
 module.exports = recipes;
