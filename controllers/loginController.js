@@ -5,10 +5,9 @@ const validateLogin = async (req, res) => {
 
   try {
     const response = await loginServices.validateLogin(login);
-    console.log(response);
+
     res.status(response.status).json({ token: response.token });
   } catch (err) {
-    console.log(err);
     res.status(err.status).json({ message: err.message });
   }
 };
