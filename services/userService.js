@@ -6,11 +6,19 @@ const getAllUserService = async () => {
   return result;
 };
 
-async function validUserService (name, email, password, role = 'user') {
-  if (!name || !email || !password || !validEmailFormat(email)) return errorMessages.INVALID_ENTRIES;
+const isValid = (name, email, password) => {
+  if (!name || !email || !password || !validEmailFormat(email)) {
+    // return errorMessages.INVALID_ENTRIES;
+    return false;
+  }
+  return true;
+};
 
+const validUserService = async (name, email, password, role = 'user') => {
+  if (!isValid(name, email, password)) return errorMessages.INVALID_ENTRIES;
+  
   const getEmail = await userModel.getUserByEmail(email);
-  console.log(getEmail)
+  console.log(getEmail);
   if (getEmail) return errorMessages.EMAIL_ALREADY_REGISTERED;
 
   const result = await userModel.createUserModel(name, email, password, role);

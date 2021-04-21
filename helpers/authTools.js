@@ -1,8 +1,4 @@
-// const loginModel = require('../models/loginModel');
 const jwt = require('jsonwebtoken');
-
-//  const result = await loginModel.getAllUsersModel();
-//  return result;
 
 const secret = 'xablau';
 

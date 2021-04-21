@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const { userRoute, loginRoute, recipeRoute } = require('./controllers');
 const errorMiddleware = require('./middlewares/errorMiddleware');
-const authMiddleware = require('./middlewares/authMiddleware');
 
 const app = express();
 
@@ -22,7 +21,7 @@ app.use('/users', userRoute);
 
 app.use('/login', loginRoute);
 
-app.use('/recipes', authMiddleware, recipeRoute);
+app.use('/recipes', recipeRoute);
 
 app.use(errorMiddleware);
 
