@@ -6,7 +6,7 @@ const checkFormatEmail = (req, res, next) => {
     const { email } = req.body;
 
     if (!validateEmail(email)) {
-        res.status(codes.badRequest).json({
+      return res.status(codes.badRequest).json({
             message: 'Invalid entries. Try again.',
         });
     }

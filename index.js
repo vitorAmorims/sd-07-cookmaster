@@ -7,7 +7,9 @@ const recipes = require('./src/routes/recipesRouter');
 const PORT = 3000;
 app.use(express.json());
 // não remova esse endpoint, e para o avaliador funcionar
-app.use(express.static('uploads/'))
+
+app.use('/images', express.static('uploads/'));
+
 app.use('/', users);
 app.use('/', recipes);
 

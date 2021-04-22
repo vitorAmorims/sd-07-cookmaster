@@ -1,9 +1,7 @@
 const codes = require('./codes');
 const recipes = require('../models/recipesModel');
 
-
 const messageNOtFound = 'recipe not found';
-
 
 const getAllRecipes = async () => {
     const result = await recipes.getAllRecipes();
@@ -37,7 +35,7 @@ const addImageRecipe = async (id, image) => {
     const result = await recipes.addImageRecipe(id, image);
     if (!result) return { statusCode: codes.notFound, message: messageNOtFound };
     return result;
-}
+};
 
 module.exports = {
     registerRecipe,

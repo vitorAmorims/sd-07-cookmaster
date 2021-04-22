@@ -1,7 +1,6 @@
 const codes = require('../services/codes');
 const users = require('../models/usersModel');
 const recipes = require('../services/recipesService');
-const update = require('../services/uploadImage');
 
 const getAllRecipes = async (_req, res) => {
     try {
@@ -80,13 +79,12 @@ const registerRecipe = async (req, res) => {
 const addImageRecipe = async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await recipes.addImageRecipe(id, `http://localhost:3000/${id}.jpeg`);
-        return res.status(codes.sucess).json(result)
+        const result = await recipes.addImageRecipe(id, `${req.hostname}:3000/images/${id}.jpeg`);
+        return res.status(codes.sucess).json(result);
     } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
     }
-
-}
+};
 
 module.exports = {
     registerRecipe,

@@ -5,6 +5,7 @@ const checkFieldsLogin = require('./checkFieldsLogin');
 const checkRegisterRecipes = require('./checkFieldsRecipes');
 const authentication = require('./auth');
 const autthUser = require('./authUser');
+const authAdmin = require('./authAdmin');
 
 module.exports = {
     error,
@@ -14,4 +15,5 @@ module.exports = {
     authentication,
     checkRegisterRecipes,
     autthUser,
+    authAdmin,
 };

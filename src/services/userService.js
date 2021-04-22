@@ -1,7 +1,7 @@
 const users = require('../models/usersModel');
 const codes = require('./codes');
 
-const createUser = async (email, password, name, role = 'user') => {
+const createUser = async (email, password, name, role) => {
     const result = await users.createUser(email, password, name, role);
     if (!result) return { statusCode: codes.conflict, message: 'Email already registered' };
 

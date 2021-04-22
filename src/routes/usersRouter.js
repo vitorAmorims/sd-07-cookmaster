@@ -12,5 +12,6 @@ router.post('/users',
 router.post('/login',
     middleares.checkFieldsLogin,
     users.loginUser);
+router.post('/users/admin', middleares.authentication, middleares.authAdmin, users.createUser);
 
 module.exports = router;

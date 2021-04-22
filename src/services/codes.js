@@ -6,6 +6,7 @@ const conflict = 409;
 const badRequest = 400;
 const unauthorized = 401;
 const notContent = 204;
+const forbidden = 403;
 const secret = 'ORatoRoeouARoupaDoReiDeRoma';
 
 module.exports = {
@@ -18,4 +19,5 @@ module.exports = {
   unauthorized,
   secret,
   notContent,
+  forbidden,
 };

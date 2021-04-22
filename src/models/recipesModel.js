@@ -70,9 +70,10 @@ const addImageRecipe = async (id, image) => {
     if (!resultCheck) return null;
 
     await connection()
-        .then((db) => db.collection('recipes').updateOne({ _id: ObjectId(id) }, { $set: { image: image } }))
+        .then((db) => db.collection('recipes')
+            .updateOne({ _id: ObjectId(id) }, { $set: { image } }));
     return { ...resultCheck, image };
-}
+};
 
 module.exports = {
     registerRecipe,

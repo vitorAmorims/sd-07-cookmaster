@@ -7,19 +7,20 @@ const jwtConfing = {
     algorithm: 'HS256',
 };
 const createUser = async (req, res) => {
-    const { email, password, name, role } = req.body;
+    const { email, password, name } = req.body;
     try {
+        const role = req.path === '/users/admin' ? 'admin' : 'user';
         const result = await users.createUser(email, password, name, role);
         if (result.statusCode) {
- return res.status(result.statusCode).json({
-            message: result.message,
-        }); 
-}
-       return res.status(codes.update).json({
+            return res.status(result.statusCode).json({
+                message: result.message,
+            });
+        }
+        return res.status(codes.update).json({
             user: result,
         });
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
     }
 };
 
@@ -28,13 +29,13 @@ const loginUser = async (req, res) => {
         const { email, password } = req.body;
         const user = await users.loginUser(email, password);
         if (user.statusCode) {
- return res.status(user.statusCode).json({
-            message: user.message,
-        }); 
-}
+            return res.status(user.statusCode).json({
+                message: user.message,
+            });
+        }
         const token = jwt.sign({ data: { username: user.email } }, codes.secret, jwtConfing);
 
-       return res.status(codes.sucess).json({
+        return res.status(codes.sucess).json({
             token,
         });
     } catch (error) {

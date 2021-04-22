@@ -1,8 +1,10 @@
 const express = require('express');
+
 const router = express.Router();
 const middleares = require('../middlewares');
+
 const recipes = require('../controllers/recipesController');
-const upload = require('../services/uploadImage')
+const upload = require('../services/uploadImage');
 
 const routerRecipe = '/recipes/:id';
 
@@ -22,7 +24,7 @@ router.put(routerRecipe,
     recipes.editRecipe);
 
 router.put('/recipes/:id/image', middleares.authentication,
-    middleares.autthUser,upload.single('image'), recipes.addImageRecipe)
+    middleares.autthUser, upload.single('image'), recipes.addImageRecipe);
 
 router.delete(routerRecipe,
     middleares.authentication,
