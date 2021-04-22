@@ -23,18 +23,26 @@ const createRecipeModel = async (name, ingredients, preparation, userId) => conn
     })),
 );
 
-const updateRecipeByIdModel = async (id, data, userId) => 
-   connection().then(
-    (db) => db.collection('recipes').findOneAndUpdate({ _id: ObjectId(id) }, 
-    { $set: 
-      { 
-        name: data.name,
-        ingredients: data.ingredients,
-        preparation: data.preparation,
-        userId, 
-      },
-    }),
+const updateRecipeByIdModel = async (id, data, userId) =>
+  connection().then(
+    (db) => db.collection('recipes').findOneAndUpdate({ _id: ObjectId(id) },
+      {
+        $set:
+        {
+          name: data.name,
+          ingredients: data.ingredients,
+          preparation: data.preparation,
+          userId,
+        },
+      }),
   );
+
+const deleteRecipeByIdModel = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+  return connection().then(
+    (db) => db.collection('recipes').deleteOne({ _id: ObjectId(id) }),
+  );
+};
 
 module.exports = {
   getAllRecipesModel,
@@ -42,4 +50,5 @@ module.exports = {
   getRecipesByUserId,
   getRecipeByIdModel,
   updateRecipeByIdModel,
+  deleteRecipeByIdModel,
 };

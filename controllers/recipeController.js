@@ -54,4 +54,16 @@ recipeRoute.put('/:id', authMiddleware, async (req, res, next) => {
   }
 });
 
+recipeRoute.delete('/:id', authMiddleware, async (req, res, next) => {
+  const { id } = req.params;
+  const { user } = req;
+  try {
+    const result = await recipeService.deleteRecipeByIdService(id, user);
+    if (result.isError) return next(result);
+    return res.status(status.NO_CONTENT).json();
+  } catch (err) {
+    throw new Error(err);
+  }
+});
+
 module.exports = recipeRoute;

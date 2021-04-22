@@ -48,9 +48,31 @@ const updateRecipeByIdService = async (id, data, user) => {
 /*   console.log('conse log do verify', verifyId.userId);
   console.log('console log do user data', user._id); */
 
+const deleteRecipeByIdService = async (id, user) => {
+  const { _id: userId } = user;
+  const verifyId = await recipeModel.getRecipeByIdModel(id);
+  if (!verifyId) {
+    return {
+      isError: true,
+      status: status.NOT_FOUND,
+      message: 'Recipe not Found',
+    };
+  }
+  if (user.role !== 'admin' && userId.toString() !== verifyId.userId.toString()) {
+    return {
+      isError: true,
+      status: status.UNAUTHORIZED,
+      message: 'Você não é admin coroio',
+    };
+  }
+  const result = await recipeModel.deleteRecipeByIdModel(id);
+  return result;
+};
+
 module.exports = {
   validRecipeService,
   getAllRecipesService,
   getRecipeByIdService,
   updateRecipeByIdService,
+  deleteRecipeByIdService,
 };
