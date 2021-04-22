@@ -5,7 +5,7 @@ const secret = 'minhasenhaforte';
 
 const validateToken = async (req, res, next) => {
   if (!req.headers.authorization) {
-    return res.status(401).json({ error: 'Token não encontrado ou informado' });
+    return res.status(401).json({ message: 'missing auth token' });
   }
 
   try {
