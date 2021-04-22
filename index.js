@@ -13,4 +13,6 @@ app.get('/', (request, response) => {
 
 app.use('/', require('./controller/userController'));
 
+// teste
+
 app.listen(PORT, () => { console.log('API rodando na porta 3000 - ', Date()); });
