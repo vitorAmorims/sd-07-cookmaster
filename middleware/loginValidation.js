@@ -20,6 +20,7 @@ const loginPassword = (req, res, next) => {
 
 const loginEmail = (req, res, next) => {
   const { email } = req.body;
+
   const ValidEmail = regexEmail.test(email);
 
   if (!ValidEmail || email === undefined) {

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt-nodejs');
 const { UNAUTHORIZED, OK } = require('../controllers/statusCode');
 const usersModel = require('../models/usersModels');
 
@@ -21,7 +21,8 @@ const loginUser = async (email, password) => {
     return customAnswer(userPasswordMessage);
   }
   const isMatch = bcrypt.compareSync(password, user.password);
-
+  
+  console.log(isMatch);
   if (!isMatch) {
     return customAnswer(userPasswordMessage);
   }
