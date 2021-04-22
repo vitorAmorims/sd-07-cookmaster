@@ -13,7 +13,7 @@ const validateLogin = async (email, password) => {
 
   if (!email || !password) return { code: unauthorized, message: errors.emptyField };
 
-  if (password.length < 7) return { code: unauthorized, message: errors.icorrectEmailOrPassword };
+  if (password.length < 5) return { code: unauthorized, message: errors.icorrectEmailOrPassword };
 
   if (!userEmail) return { code: unauthorized, message: errors.icorrectEmailOrPassword };
 

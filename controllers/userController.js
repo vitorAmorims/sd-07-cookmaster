@@ -26,7 +26,7 @@ const addAdmin = async (req, res) => {
   if (!admin) return res.status(code).json({ message });
   
   res.status(code).json({ 
-    user: { name: admin.name, email: admin.email, role: admin.role, _id: admin.id,
+    user: { name: admin.name, email: admin.email, role: 'admin', _id: admin.id,
   } });
 };
 

@@ -29,7 +29,7 @@ const addAdmin = async (name, email, password) => {
   if (validationNameAndPassowrd.message) return validationNameAndPassowrd;
   if (validationEmail.message) return validationEmail;
 
-  const admin = await userModel.add(name, email, password, 'admin');
+  const admin = await userModel.add(name, email, password);
 
   return { code: created, admin };
 };
