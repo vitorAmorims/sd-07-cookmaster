@@ -18,10 +18,10 @@ const createRecipe = async (req, res) => {
 const getAllRecipes = async (_req, res) => {
   try {
     const results = await Recipe.getAll();
-    res.status(code.OK).json(results);
+    return res.status(code.OK).json(results);
   } catch (err) {
     console.error(err);
-    res.status(code.SERVER).json(msg.defaultErr);
+    return res.status(code.SERVER).json(msg.defaultErr);
   }
 };
 
@@ -29,10 +29,10 @@ const getRecipeById = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await recipeService.getByIdService(id);
-    res.status(result.status).json(result.msg);
+    return res.status(result.status).json(result.msg);
   } catch (err) {
     console.error(err);
-    res.status(code.SERVER).json(msg.defaultErr);
+    return res.status(code.SERVER).json(msg.defaultErr);
   }
 };
 
@@ -42,10 +42,18 @@ const updateRecipe = async (req, res) => {
     const { name, ingredients, preparation } = req.body;
     const { _id } = req.user;
     const params = { id, name, ingredients, preparation, _id };
-    console.log(params);
     const result = await Recipe.update(params);
-    console.log(result);
     return res.status(code.OK).json(result);
+  } catch (err) {
+    console.error(err);
+    return res.status(code.SERVER).json(msg.defaultErr);
+  }
+};
+const deleteRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Recipe.exclude(id);  
+    return res.status(code.NO_CONTENT).json();
   } catch (err) {
     console.error(err);
     return res.status(code.SERVER).json(msg.defaultErr);
@@ -57,4 +65,5 @@ module.exports = {
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };
