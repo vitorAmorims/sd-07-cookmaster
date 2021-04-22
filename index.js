@@ -7,9 +7,11 @@ const {
   getAllRecipesController,
   getRecipeByIdController,
   updateRecipeByIdController,
+  deleteRecipeByIdController,
 } = require('./controllers/usersControllers');
 const validateToken = require('./middleware/validateToken');
 
+const recipeID = '/recipes/:id';
 // const multer = require('multer');
 
 const app = express();
@@ -26,7 +28,8 @@ app.post('/login', userLoginController);
 // recipes
 app.post('/recipes', validateToken, addRecipesController);
 app.get('/recipes', getAllRecipesController);
-app.get('/recipes/:id', getRecipeByIdController);
-app.put('/recipes/:id', validateToken, updateRecipeByIdController);
+app.get(recipeID, getRecipeByIdController);
+app.put(recipeID, validateToken, updateRecipeByIdController);
+app.delete(recipeID, validateToken, deleteRecipeByIdController);
 
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });

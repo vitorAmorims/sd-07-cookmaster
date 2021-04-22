@@ -79,9 +79,19 @@ async function updateRecipeByIdModel(id, body) {
             return db.collection('recipes').updateOne({ _id: ObjectId(id) }, {
                 $set: { name, ingredients, preparation },
             });
-} catch (error) {
-    return false;
+        } catch (error) {
+            return false;
+        }
+    });
 }
+async function deleteRecipeByIdModel(id) {
+    console.log('no model');
+    return connect().then(async (db) => {
+        try {
+            return db.collection('recipes').deleteOne({ _id: ObjectId(id) });
+        } catch (error) {
+            return false;
+        }
     });
 }
 
@@ -94,4 +104,5 @@ module.exports = {
     getAllRecipesModel,
     getRecipeByIdModel,
     updateRecipeByIdModel,
+    deleteRecipeByIdModel,
 };

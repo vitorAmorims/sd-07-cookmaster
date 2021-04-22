@@ -6,6 +6,7 @@ const {
     getAllRecipesService,
     getRecipeByIdService,
     updateRecipeByIdService,
+    deleteRecipeByIdService,
 } = require('../service/usersService');
 
 const addUsersController = async (req, res) => {
@@ -72,13 +73,25 @@ const updateRecipeByIdController = async (req, res) => {
     const { id } = req.params;
     const { body } = req;
     const token = req.headers.authorization;
-    if (!token) {
-        return res.status(401).json('missing auth token');
-    }
+    if (!token) return res.status(401).json('missing auth token');
     try {
         const result = await updateRecipeByIdService(id, body, token);
         if (result) return res.status(200).json(result);
     } catch (err) {
+        return res.status(401).json({ message: err.message });
+    }
+};
+
+const deleteRecipeByIdController = async (req, res) => {
+    const { id } = req.params;
+    const token = req.headers.authorization;
+    if (!token) return res.status(401).json('missing auth token');
+    try {
+        const result = await deleteRecipeByIdService(id, token);
+        console.log(result);
+        if (result) return res.status(204).send();
+    } catch (err) {
+        console.log(err);
         return res.status(401).json({ message: err.message });
     }
 };
@@ -90,4 +103,5 @@ module.exports = {
     getAllRecipesController,
     getRecipeByIdController,
     updateRecipeByIdController,
+    deleteRecipeByIdController,
 };

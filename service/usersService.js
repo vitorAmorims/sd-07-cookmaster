@@ -9,6 +9,7 @@ const {
     getAllRecipesModel,
     getRecipeByIdModel,
     updateRecipeByIdModel,
+    deleteRecipeByIdModel,
 } = require('../model/usersModels');
 
 const secret = 'cookmaster';
@@ -115,6 +116,24 @@ async function updateRecipeByIdService(id, body, token) {
     return false;
 }
 
+async function deleteRecipeByIdService(id, token) {
+    console.log('no service');
+    const decoded = jwt.verify(token, secret);
+    const { name: nome, role } = decoded.data;
+    const user = await findUserByName(nome);
+    const recipe = await getRecipeByIdModel(id);
+    const { userId } = recipe;
+    const { _id: ID } = user;
+    if (JSON.stringify(userId) === JSON.stringify(ID) || role === 'admin') {
+        const deleteSuccessful = await deleteRecipeByIdModel(id);
+
+        if (deleteSuccessful) {
+            return true;
+        }
+    }
+    return false;
+}
+
 module.exports = {
     addUsersService,
     validateEmail,
@@ -124,4 +143,5 @@ module.exports = {
     getAllRecipesService,
     getRecipeByIdService,
     updateRecipeByIdService,
+    deleteRecipeByIdService,
 };
