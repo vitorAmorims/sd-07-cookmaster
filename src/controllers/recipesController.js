@@ -3,6 +3,7 @@ const recipesService = require('../services/recipesService');
 const STATUS_BAD_REQUEST = 400;
 const STATUS_CREATED = 201;
 const STATUS_OK = 200;
+const STATUS_NOT_FOUND = 404;
 
 const createRecipe = async (req, res) => {
   const { name, ingredients, preparation } = req.body;
@@ -27,4 +28,16 @@ const getAllRecipes = async (req, res) => {
   res.status(STATUS_OK).json(result);
 };
 
-module.exports = { createRecipe, getAllRecipes };
+const getRecipeById = async (req, res) => {
+  const { id } = req.params;
+
+  const result = await recipesService.getRecipeById(id);
+
+  if (typeof result === 'string') {
+    res.status(STATUS_NOT_FOUND).json({ message: result });
+  } else {
+    res.status(STATUS_OK).json(result);
+  }
+};
+
+module.exports = { createRecipe, getAllRecipes, getRecipeById };
