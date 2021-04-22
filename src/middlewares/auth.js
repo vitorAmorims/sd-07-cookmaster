@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const usersModel = require('../models/usersModel');
 
+const STATUS_UNAUTHORIZED = 401;
 const secret = 'abc';
 
 const authMiddleware = async (req, res, next) => {
@@ -15,7 +16,7 @@ const authMiddleware = async (req, res, next) => {
     
     next();
   } catch (error) {
-    res.status(401).json({ message: error.message });
+    res.status(STATUS_UNAUTHORIZED).json({ message: error.message });
   }
 };
 
