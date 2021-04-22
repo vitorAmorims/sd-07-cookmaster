@@ -11,7 +11,7 @@ async function checkDBForEmail(email) {
     });
 }
 
-async function addUserModel(name, email, password) {
+async function addUser(name, email, password, role) {
     const newUser = await connect().then(async (db) => {
         try {
             return db.collection('users').insertOne({
@@ -21,8 +21,24 @@ async function addUserModel(name, email, password) {
             return false;
         }
     });
-    return { name, email, _id: newUser.insertedId, role: 'user' };
+    return { name, email, _id: newUser.insertedId, role };
 }
+
+async function addUserModel(name, email, password) {
+    return addUser(name, email, password, 'user');
+}
+// async function addUserModel(name, email, password) {
+//     const newUser = await connect().then(async (db) => {
+//         try {
+//             return db.collection('users').insertOne({
+//                 name, email, password,
+//             });
+//         } catch (error) {
+//             return false;
+//         }
+//     });
+//     return { name, email, _id: newUser.insertedId, role: 'user' };
+// }
 async function getUserModel(email) {
     return connect().then(async (db) => {
         try {
@@ -105,6 +121,10 @@ async function addPhotoToRecipeModel(id) {
     return toReturn;
 }
 
+async function addAdminModel(name, email, password) {
+    return addUser(name, email, password, 'admin');
+}
+
 module.exports = {
     checkDBForEmail,
     addUserModel,
@@ -116,4 +136,5 @@ module.exports = {
     updateRecipeByIdModel,
     deleteRecipeByIdModel,
     addPhotoToRecipeModel,
+    addAdminModel,
 };

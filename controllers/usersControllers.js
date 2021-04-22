@@ -8,6 +8,7 @@ const {
     updateRecipeByIdService,
     deleteRecipeByIdService,
     addPhotoToRecipeService,
+    addAdminService,
 } = require('../service/usersService');
 
 const addUsersController = async (req, res) => {
@@ -107,6 +108,23 @@ const addPhotoToRecipeController = async (req, res) => {
     }
 };
 
+const addAdminController = async (req, res) => {
+    const { body } = req;
+    const token = req.headers.authorization;
+    try {
+        const adminUser = await addAdminService(body, token);
+        if (!adminUser) {
+ return res.status(403).json({
+            message: 'Only admins can register new admins',
+        }); 
+}
+        console.log(adminUser);
+        return res.status(201).json({ user: adminUser });
+    } catch (err) {
+        return res.status(404).json({ message: err.message });
+    }
+};
+
 module.exports = {
     addUsersController,
     userLoginController,
@@ -116,5 +134,5 @@ module.exports = {
     updateRecipeByIdController,
     deleteRecipeByIdController,
     addPhotoToRecipeController,
-
+    addAdminController,
 };

@@ -10,7 +10,9 @@ const {
   updateRecipeByIdController,
   deleteRecipeByIdController,
   addPhotoToRecipeController,
+  addAdminController,
 } = require('./controllers/usersControllers');
+
 const validateToken = require('./middleware/validateToken');
 
 const router = express.Router();
@@ -50,5 +52,7 @@ app.put('/recipes/:id/image/',
   addPhotoToRecipeController);
 // app.get('/images/:id.jpeg', getImageByRecipeIdController)
 app.use('/images', express.static(path.join(__dirname, 'images')));
+// bonus
+app.post('/users/admin', validateToken, addAdminController);
 
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });

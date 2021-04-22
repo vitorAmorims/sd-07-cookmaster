@@ -11,6 +11,7 @@ const {
     updateRecipeByIdModel,
     deleteRecipeByIdModel,
     addPhotoToRecipeModel,
+    addAdminModel,
 } = require('../model/usersModels');
 
 const secret = 'cookmaster';
@@ -138,6 +139,16 @@ async function addPhotoToRecipeService(id) {
     return addPhotoToRecipeModel(id);
 }
 
+async function addAdminService(body, token) {
+    const { name, email, password } = body;
+    const decoded = jwt.verify(token, secret);
+    const { role } = decoded.data;
+    if (role === 'admin') {
+        return addAdminModel(name, email, password);
+    }
+    return false;
+}
+
 module.exports = {
     addUsersService,
     validateEmail,
@@ -149,5 +160,6 @@ module.exports = {
     updateRecipeByIdService,
     deleteRecipeByIdService,
     addPhotoToRecipeService,
+    addAdminService,
 
 };
