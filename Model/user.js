@@ -13,15 +13,7 @@ const create = async (name, email, password, role) =>
       .findOne({ email }))
     .catch((error) => console.error(error.message));
 
-const createAdmin = async (name, email, password, role) => 
-  connect()
-    .then((db) => db.collection('users')
-      .insertOne({ name, email, password, role }))
-    .then((result) => result.ops[0])
-    .catch((err) => console.log(err.message));
-
 module.exports = {
   create,
   getByEmail,
-  createAdmin,
 };

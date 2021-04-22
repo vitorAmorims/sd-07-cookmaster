@@ -1,15 +1,6 @@
 const Joi = require('joi');
 const user = require('../Model/user');
 
-const message = {
-  emptyField: {
-    message: 'All fields must be filled',
-  },
-  invalidEmailOrPassword: {
-    message: 'Incorrect username or password',
-  },
-};
-
 const emailAndLoginFilled = (data) =>
   Joi.object({
     email: Joi.string().email().required(),
@@ -24,7 +15,6 @@ const validEmailAndPassword = async (email, password) => {
 };
 
 module.exports = {
-  message,
   emailAndLoginFilled,
   validEmailAndPassword,
 };

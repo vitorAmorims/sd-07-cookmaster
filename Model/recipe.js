@@ -6,13 +6,14 @@ const create = async (name, ingredients, preparation, userId) =>
     .then((db) => db.collection('recipes')
       .insertOne({ name, ingredients, preparation, userId }))
     .then((result) => result.ops[0])
-    .catch((err) => console.error(err));
+    .catch((err) => console.error(err.message));
 
 const getAllRecipes = async () => 
   connect()
     .then((db) => db.collection('recipes')
       .find()
-      .toArray());
+      .toArray())
+    .catch((err) => console.log(err.message));
 
 const getById = async (id) => 
   connect()

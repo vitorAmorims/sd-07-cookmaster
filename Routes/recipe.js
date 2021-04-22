@@ -26,6 +26,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
+
 router.put('/recipes/:id/image/', [validateToken, upload.single('image')], async (req, res) => {
   try {
     const result = await recipeService

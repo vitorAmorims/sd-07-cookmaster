@@ -1,20 +1,27 @@
 const recipe = require('../Service/recipe');
+const { 
+  CREATED, 
+  BAD_REQUEST, 
+  OK, 
+  INTERAL_SERVER_ERROR, 
+  NOT_FOUND, 
+  NO_CONTENT } = require('./statusCodes');
 
 const create = async (req, res) => {
   try {
     const result = await recipe.create(req.body, req.user);
-    res.status(201).json({ recipe: result });
+    res.status(CREATED).json({ recipe: result });
   } catch (error) {
-    res.status(400).json(error);
+    res.status(BAD_REQUEST).json(error);
   }
 };
 
 const getAllRecipes = async (req, res) => {
   try {
     const recipes = await recipe.getAllRecipes();
-    res.status(200).json(recipes);
+    res.status(OK).json(recipes);
   } catch (error) {
-    res.status(500).json(error.message);
+    res.status(INTERAL_SERVER_ERROR).json(error.message);
   }
 };
 
@@ -22,9 +29,9 @@ const getById = async (req, res) => {
   try {
     const { id } = req.params;
     const recipes = await recipe.getById(id);
-    res.status(200).json(recipes);
+    res.status(OK).json(recipes);
   } catch (error) {
-    res.status(404).json(error);
+    res.status(NOT_FOUND).json(error);
   }
 };
 
@@ -32,9 +39,9 @@ const updateRecipe = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await recipe.updateRecipe(req.body, req.user, id);
-    res.status(200).json(result);
+    res.status(OK).json(result);
   } catch (error) {
-    res.status(400).json(error);
+    res.status(BAD_REQUEST).json(error);
   }
 };
 
@@ -42,9 +49,9 @@ const deleteRecipe = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await recipe.deleteRecipe(id);
-    res.status(204).json(result);
+    res.status(NO_CONTENT).json(result);
   } catch (error) {
-    res.status(500).json({ message: 'Algo deu errado.' });
+    res.status(INTERAL_SERVER_ERROR).json({ message: 'Algo deu errado.' });
   }
 };
 
