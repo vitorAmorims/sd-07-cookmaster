@@ -8,11 +8,23 @@ const {
   getRecipeByIdController,
   updateRecipeByIdController,
   deleteRecipeByIdController,
+  addPhotoToRecipeController
 } = require('./controllers/usersControllers');
+const multer = require("multer");
 const validateToken = require('./middleware/validateToken');
+const router = express.Router();
+router.use(express.static(__dirname + "uploads/"));
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, 'uploads/');
+  },
+  filename: (req, file, callback) => {
+    callback(null, file.originalname)
+  }
+});
+const upload = multer({ storage });
 
 const recipeID = '/recipes/:id';
-// const multer = require('multer');
 
 const app = express();
 const PORT = 3000;
@@ -31,5 +43,8 @@ app.get('/recipes', getAllRecipesController);
 app.get(recipeID, getRecipeByIdController);
 app.put(recipeID, validateToken, updateRecipeByIdController);
 app.delete(recipeID, validateToken, deleteRecipeByIdController);
+app.put('/recipes/:id/image/',
+  [validateToken, upload.single("file")],
+  addPhotoToRecipeController);
 
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });
