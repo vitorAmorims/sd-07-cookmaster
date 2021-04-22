@@ -1,18 +1,14 @@
 const connection = require('../Config/connection');
 
-const loginUser = async (email, password) => {
-  return connection()
+const loginUser = async (email) => connection()
     .then((db) => db.collection('users').findOne({ email }))
-    .then((user) => user)
-};
+    .then((user) => user);
 
-const searchEmailAndPass = async (email, password) => {
-  return connection()
+const searchEmailAndPass = async (email, password) => connection()
   .then((db) => db.collection('users').findOne({ email, password }))
-  .then((user) => console.log(user))
-};
+  .then((user) => user);
 
 module.exports = {
   loginUser,
-  searchEmailAndPass
-}
+  searchEmailAndPass,
+};
