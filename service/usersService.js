@@ -10,6 +10,7 @@ const {
     getRecipeByIdModel,
     updateRecipeByIdModel,
     deleteRecipeByIdModel,
+    addPhotoToRecipeModel,
 } = require('../model/usersModels');
 
 const secret = 'cookmaster';
@@ -67,11 +68,11 @@ async function validateEmailAndPassword(email, password) {
     checkEmailAndPassword(email, password);
     const isValid = await validateEmail(email);
     if (!isValid) {
-        throwUserNameError(); 
-}
+        throwUserNameError();
+    }
     if (password !== 'admin' && password.length < sete) {
-        throwUserNameError(); 
-}
+        throwUserNameError();
+    }
 }
 async function addRecipeService(name, ingredients, preparation, token) {
     if (!name || !ingredients || !preparation) {
@@ -134,6 +135,10 @@ async function deleteRecipeByIdService(id, token) {
     return false;
 }
 
+async function addPhotoToRecipeService(id) {
+    return addPhotoToRecipeModel(id);
+}
+
 module.exports = {
     addUsersService,
     validateEmail,
@@ -144,4 +149,5 @@ module.exports = {
     getRecipeByIdService,
     updateRecipeByIdService,
     deleteRecipeByIdService,
+    addPhotoToRecipeService,
 };

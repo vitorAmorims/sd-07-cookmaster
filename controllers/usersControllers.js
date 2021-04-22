@@ -7,8 +7,8 @@ const {
     getRecipeByIdService,
     updateRecipeByIdService,
     deleteRecipeByIdService,
+    addPhotoToRecipeService,
 } = require('../service/usersService');
-
 
 const addUsersController = async (req, res) => {
     try {
@@ -99,15 +99,15 @@ const deleteRecipeByIdController = async (req, res) => {
 const addPhotoToRecipeController = async (req, res) => {
     const { id } = req.params;
     try {
-        const result = await addPhotoToRecipeService();
+        const result = await addPhotoToRecipeService(id);
         res.status(200).json(result);
     } catch (error) {
         res.status(500).json({
-            message: "Erro ao enviar as imagens",
-            error: error.message
-        })
+            message: 'Erro ao enviar as imagens',
+            error: error.message,
+        });
     }
-}
+};
 
 module.exports = {
     addUsersController,
@@ -117,5 +117,5 @@ module.exports = {
     getRecipeByIdController,
     updateRecipeByIdController,
     deleteRecipeByIdController,
-    addPhotoToRecipeController
+    addPhotoToRecipeController,
 };

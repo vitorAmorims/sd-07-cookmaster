@@ -94,6 +94,17 @@ async function deleteRecipeByIdModel(id) {
         }
     });
 }
+async function addPhotoToRecipeModel(id) {
+    const url = `localhost:3000/images/${id}.jpeg`;
+    await connect().then(async (db) => {
+        try {
+            return db.collection('recipes').updateOne({ _id: ObjectId(id) },
+                { $set: { image: url } });
+        } catch (error) { return false; }
+    });
+    const toReturn = await getRecipeByIdModel(id);
+    return toReturn;
+}
 
 module.exports = {
     checkDBForEmail,
@@ -105,4 +116,5 @@ module.exports = {
     getRecipeByIdModel,
     updateRecipeByIdModel,
     deleteRecipeByIdModel,
+    addPhotoToRecipeModel,
 };
