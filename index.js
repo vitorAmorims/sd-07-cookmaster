@@ -12,6 +12,7 @@ app.use(express.json());
 app.get('/', (request, response) => {
   response.send();
 });
+app.use(express.static(`${__dirname}/images`));
 
 app.use(user);
 app.use(recipes);
