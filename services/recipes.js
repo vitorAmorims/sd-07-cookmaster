@@ -38,19 +38,20 @@ const getRecipeById = async (id) => {
   return recipe;
 };
 
-const updateRecipe = async (idRecipe, name, ingredients, preparation) => {
-  await modelRecipes.editdata(idRecipe, name, ingredients, preparation);
+const updateRecipe = async (objParams) => {
+  await modelRecipes.editdata(objParams);
   const updatedRecipe = {
-    _id: idRecipe,
-    name,
-    ingredients,
-    preparation,
+    _id: objParams.idRecipe,
+    name: objParams.name,
+    ingredients: objParams.ingredients,
+    preparation: objParams.preparation,
+    userId: objParams.userId,
   };
   return updatedRecipe;
 };
 
 const deleteRecipe = async (id) => {
-  return await modelRecipes.deletedata(id);
+  await modelRecipes.deletedata(id);
 };
 
 module.exports = {

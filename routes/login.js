@@ -5,7 +5,7 @@ const router = express.Router();
 const {
     // getAllUsers,
     // getUserById,
-    checkLogin
+    checkLogin,
     // putUser,
     // deleteUser,
   } = require('../controllers/login');

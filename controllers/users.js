@@ -2,8 +2,6 @@ const modelUsers = require('../models/users');
 
 const serviceUsers = require('../services/users');
 
-// const {status, errors} = require('../utils/status');
-
 const OK = 200;
 const CREATE = 201;
 const UNPROCESS = 422;
@@ -12,22 +10,22 @@ const CONFLICT = 409;
 const objError = {
   err: {
     code: 'invalid_data',
-    message: ''
-  }
+    message: '',
+  },
 };
 
 const postUser = async (request, response) => {
   try {
-    const { name, email, password} = request.body;
+    const { name, email, password } = request.body;
     const result = await serviceUsers.createUser(name, email, password);
 
-    return response.status(CREATE).json({user: result});
+    return response.status(CREATE).json({ user: result });
   } catch (error) {
     console.error(error);
 
     const { message } = error;
     if (message.includes('registered')) {
-      return response.status(CONFLICT).json({message: message})
+      return response.status(CONFLICT).json({ message });
     }
     response.status(ERROR).json({ message: error.message });
   }
@@ -36,10 +34,10 @@ const postUser = async (request, response) => {
 const getAllUsers = async (request, response) => {
   try {
     const data = await serviceUsers.getAllUsers();
-    return response.status(status.ok).json(data);
+    return response.status(OK).json(data);
   } catch (error) {
     console.error(error);
-    return res.status(ERROR).json({ message: error.message });
+    return response.status(ERROR).json({ message: error.message });
   }
 };
 
@@ -48,20 +46,16 @@ const getUserById = async (request, response) => {
     const { id } = request.params;
     const data = await serviceUsers.getProductsId(id);
     if (!data) {
-      return response.status(UNPROCESS).json({
-        err: {
-          code: 'invalid_data',
-          message: 'Wrong id format'
-        }
-      });
+      objError.err.message = 'Wrong id format';
+      return response.status(UNPROCESS).json(objError);
     }
-    return response.status(status.ok).json(data);
+    return response.status(OK).json(data);
   } catch (error) {
     console.error(error);
     const { message } = error;
     if (message.includes('id')) {
       objError.err.message = error.message;
-      return res.status(UNPROCESS).json(objError);
+      return response.status(UNPROCESS).json(objError);
     }
     return response.status(ERROR).json({ message: error.message });
   }
@@ -71,31 +65,31 @@ const putUser = async (request, response) => {
   const { id } = request.params;
   const { name, quantity } = request.body;
   const data = await serviceUsers.updateUser(id, name, quantity);
-  return response.status(status.ok).json(data);
+  return response.status(OK).json(data);
 };
 
 const deleteUser = async (request, response) => {
-  const responseOK = 200;
+  const responseOK = 204;
   const responseError = 422;
   try {
     const { id } = request.params;
-    const product = await modelUsers.getById(id);
-    
-    if (!product) throw { code: 'invalid_data', message: 'Wrong id format' };
+    const user = await modelUsers.getById(id);
+    const { _id } = user;
+    if (!user) throw new Error({ code: 'invalid_data', message: 'Wrong id format' });
 
-    await serviceUsers.deleteUser(product._id);
+    await serviceUsers.deleteUser(_id);
 
-    return response.status(responseOK).json(product);
+    return response.status(responseOK).json(user);
   } catch (error) {
     console.log(error);
-    return response.status(responseError).json({ err: error});
+    return response.status(responseError).json({ err: error });
   }
 };
 
 module.exports = {
-    getAllUsers,
-    getUserById,
-    postUser,
-    putUser,
-    deleteUser
+  getAllUsers,
+  getUserById,
+  postUser,
+  putUser,
+  deleteUser,
 };

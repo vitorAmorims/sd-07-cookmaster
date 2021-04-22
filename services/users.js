@@ -2,7 +2,7 @@ const modelUser = require('../models/users');
 
 const ERR_MESSAGE = 'Invalid entries. Try again.';
 
-const validateName = (name) => {
+const validateName = (name) => {  
   if (!name) {
     throw new Error(ERR_MESSAGE);
   }
@@ -28,19 +28,19 @@ const validatePassword = (password) => {
 
 const checkingEmailExists = async (email) => {
   const exists = await modelUser.getByEmail(email);
-  const ERR_MESSAGE = "Email already registered";
+  const MESSAGE = 'Email already registered';
   if (exists) {
-    throw new Error(ERR_MESSAGE);
+    throw new Error(MESSAGE);
   }
 };
 
 const createUser = async (name, email, password) => {
-    validateName(name);
-    validateEmail(email);
-    validatePassword(password);
-    await checkingEmailExists(email);
-    const result = await modelUser.postdata(name, email, password);
-    return result;
+  validateName(name);
+  validateEmail(email);
+  validatePassword(password);
+  await checkingEmailExists(email);
+  const result = await modelUser.postdata(name, email, password);
+  return result;
 };
 
 const getAllUsers = async () => {
@@ -61,13 +61,13 @@ const updateUser = async (id, name, quantity) => {
   const updatedProduct = {
     _id: id,
     name,
-    quantity
+    quantity,
   };
   return updatedProduct;
 };
 
 const deleteUser = async (id) => {
-  return await modelUser.deletedata(id);
+  await modelUser.deletedata(id);
 };
 
 module.exports = {
@@ -75,5 +75,5 @@ module.exports = {
   getAllUsers,
   getUserById,
   updateUser,
-  deleteUser
+  deleteUser,
 };

@@ -9,16 +9,17 @@ const DB_NAME = 'Cookmaster';
 // const DB_NAME = 'Cookmaster';
 
 const connection = () => {
-  return MongoClient
+  const result = MongoClient
     .connect(MONGO_DB_URL, {
       urlNewParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     })
     .then((conn) => conn.db(DB_NAME))
     .catch((err) => {
       console.error(err);
       process.exit();
     });
+  return result;
 };
 
 module.exports = connection;

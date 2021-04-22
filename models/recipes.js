@@ -1,50 +1,50 @@
-const connection = require('./connection');
-
 const { ObjectId } = require('mongodb');
 
+const connection = require('./connection');
+
 const getAll = async () => {
-  return await connection().then((db) =>
-    db.collection('recipes').find().toArray()
-  );
+  const result = await connection().then((db) =>
+    db.collection('recipes').find().toArray());
+  return result; 
 };
 
 const getById = async (id) => {
   // if (ObjectId.isValid(id)) return null;
-  return await connection().then((db) =>
-    db.collection('recipes').findOne(ObjectId(id))
-  );
+  const result = await connection().then((db) =>
+    db.collection('recipes').findOne(ObjectId(id)));
+  return result;
 };
 
 const getByName = async (string) => {
-  return await connection().then((db) =>
-    db.collection('recipes').findOne({ name: string })
-  );
+  const result = await connection().then((db) =>
+    db.collection('recipes').findOne({ name: string }));
+  return result;
 };
 
 const postdata = async (id, name, ingredients, preparation) => {
   const recipe = await connection().then((db) =>
-    db.collection('recipes').insertOne({ name, ingredients, preparation, userId: id })
-  );
+    db
+      .collection('recipes')
+      .insertOne({ name, ingredients, preparation, userId: id }));
 
   return { _id: recipe.insertedId, name, ingredients, preparation, userId: id };
 };
 
-const editdata = async (id, name, ingredients, preparation) => {
+const editdata = async (objParams) => {
+  const { userId, id, name, ingredients, preparation } = objParams;
   const updatedRecipe = await connection().then((db) =>
     db
       .collection('recipes')
       .updateOne(
         { _id: ObjectId(id) },
-        { $set: { name, ingredients, preparation } }
-      )
-  );
+        { $set: { userId, name, ingredients, preparation } },
+      ));
   return updatedRecipe;
 };
 
 const deletedata = async (id) => {
-  return await connection().then((db) =>
-    db.collection('recipes').deleteOne({ _id: ObjectId(id) })
-  );
+  await connection().then((db) =>
+    db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
 };
 
 module.exports = {

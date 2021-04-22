@@ -3,25 +3,23 @@ const authConfig = require('../config/auth.json');
 const modelUser = require('../models/users');
 
 const validateToken = async (req, res, next) => {
-    const token = req.headers["authorization"];
-    if (!token) {
+  const token = req.headers.authorization;
+  if (!token) {
+    const ERROR = 401;
+    return res.status(ERROR).json({ message: 'missing auth token' });
+  }
+  try {
+    const decoded = jwt.verify(token, authConfig.secret);
+    const user = await modelUser.getById(decoded.id);
+    if (!user) {
       const ERROR = 401;
-      return res.status(ERROR).json({ message: 'missing auth token' });
+      res.status(ERROR).json({ message: 'missing auth token' });
     }
-    try {
-      const decoded = jwt.verify(token, authConfig.secret);
-      // console.log(decoded);
-      const user = await modelUser.getById(decoded.id)
-      if (!user) {
-        const ERROR = 401;
-        res.status(ERROR).json({ message: 'missing auth token'});
-      }
-      req.user = user;
-      return next();
-    } catch (error) {
-    //   console.error(error);
-      return res.status(401).json({ message: error.message });
-    }
-  };
-  
-  module.exports = validateToken;
+    req.user = user;
+    return next();
+  } catch (error) {
+    return res.status(401).json({ message: error.message });
+  }
+};
+
+module.exports = validateToken;

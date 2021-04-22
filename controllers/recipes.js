@@ -4,17 +4,9 @@ const serviceRecipes = require('../services/recipes');
 
 const OK = 200;
 const CREATE = 201;
-const UNPROCESS = 422;
 const ERROR = 400;
 const ERRORBYID = 404;
 const ERRORUPDATE = 401;
-const CONFLICT = 409;
-const objError = {
-  err: {
-    code: 'invalid_data',
-    message: '',
-  },
-};
 
 const postRecipe = async (req, res) => {
   const { _id } = req.user;
@@ -32,7 +24,7 @@ const postRecipe = async (req, res) => {
     console.error(error);
 
     const { message } = error;
-    res.status(ERROR).json({ message: error.message });
+    res.status(ERROR).json({ message });
   }
 };
 
@@ -48,76 +40,69 @@ const getAllRecipes = async (request, response) => {
 };
 
 const getRecipesById = async (request, response) => {
-    // console.log(request)
+  // console.log(request)
   try {
     const { id } = request.params;
-    const data = await modelRecipes.getById(id)
+    const data = await modelRecipes.getById(id);
     if (!data) {
-        ERR_MESSAGE = 'recipe not found'
-        throw new Error(ERR_MESSAGE);
+      const ERR_MESSAGE = 'recipe not found';
+      throw new Error(ERR_MESSAGE);
     }
     return response.status(OK).json(data);
   } catch (error) {
     // console.error(error);
     let { message } = error;
     if (message.includes('Argument passed in must be a single String')) {
-        message = 'recipe not found';
-        return response.status(ERRORBYID).json({ message: message });    
+      message = 'recipe not found';
+      return response.status(ERRORBYID).json({ message });
     }
-    return response.status(ERRORBYID).json({ message: message });
+    return response.status(ERRORBYID).json({ message });
   }
 };
 
-const putRecipe = async (request, response) => { 
+const putRecipe = async (request, response) => {
   try {
     const { id } = request.params;
-
     const { _id } = request.user;
-    
     const { name, ingredients, preparation } = request.body;
-
-    const recipe = await modelRecipes.getById(id)
-    
-    const { userId } = recipe;
-
-    if (String(userId) === String(_id) || String(request.user.role) === 'admin') {
-      const data = await serviceRecipes.updateRecipe(
-        recipe._id,
-        name,
-        ingredients,
-        preparation
-      );
+    const recipe = await modelRecipes.getById(id);
+    const { userId, _id: idRecipe } = recipe;
+    if (String(userId) === String(_id)
+      || String(request.user.role) === 'admin') {
+      const objParams = { _id, idRecipe, name, ingredients, preparation };
+      const data = await serviceRecipes.updateRecipe(objParams);
       return response.status(OK).json(data);
     }
   } catch (error) {
     console.log(error);
-    return response.status(ERRORUPDATE).json({message: error.message});
+    return response.status(ERRORUPDATE).json({ message: error.message });
   }
 };
 
 const deleteRecipe = async (request, response) => {
+  const ERRORDELETE = 401;
   try {
-    const OK = 204;
-    const responseError = 401;
-
+    const DELETEOK = 204;
     const { id } = request.params;
-  // console.log(id);
-
-  const { _id } = request.user;
-  // console.log(_id)
-
-  const recipe = await modelRecipes.getById(id);
-  const { userId } = recipe;
-  // console.log(userId);
-
-    if (String(userId) === String(_id) || String(request.user.role) === "admin") {
+    const { _id } = request.user;
+    const recipe = await modelRecipes.getById(id);
+    const { userId } = recipe;
+    if (String(userId) === String(_id)
+      || String(request.user.role) === 'admin') {
       const data = await serviceRecipes.deleteRecipe(id);
-      return response.status(OK).json(data);
+      return response.status(DELETEOK).json(data);
     }
   } catch (error) {
     console.log(error);
-    return response.status(responseError).json({ message: message });
+    const { message } = error;
+    return response.status(ERRORDELETE).json({ message });
   }
+};
+
+const addImgRecipe = async (request, response) => {
+  console.log(request);
+  console.log('entrou aqui');
+  response.status(200).send('show addImgRecipe');
 };
 
 module.exports = {
@@ -126,4 +111,5 @@ module.exports = {
   postRecipe,
   putRecipe,
   deleteRecipe,
+  addImgRecipe,
 };
