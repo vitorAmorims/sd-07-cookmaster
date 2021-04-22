@@ -1,5 +1,5 @@
 const recipesModel = require('../models/recipesModels');
-const { UNAUTHORIZED, OK } = require('../controllers/statusCode');
+const { UNAUTHORIZED, SUCCESS } = require('../controllers/statusCode');
 
 const customAnswer = (message, http = UNAUTHORIZED) => ({
   http,
@@ -14,7 +14,7 @@ const createRecipes = async (name, ingredients, preparation, user) => {
     preparation,
     _id,
   );
-  return customAnswer(createdRecipe, OK);
+  return customAnswer(createdRecipe, SUCCESS);
 };
 
 module.exports = {

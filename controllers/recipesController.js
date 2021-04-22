@@ -15,7 +15,7 @@ const createRecipe = async (req, res) => {
   } catch (error) {
     return res
       .status(500)
-      .json({ message: 'Erro interno', error: error.message });
+      .json({ message: 'Erro interno', err: error.message });
   }
 };
 
