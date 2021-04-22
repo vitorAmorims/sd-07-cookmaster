@@ -45,7 +45,6 @@ recipeRouter.put('/:id', authMiddleware, async (req, res) => {
     const { id } = req.params;
     const { name, ingredients, preparation } = req.body;
     const recipeData = await recipeService.updateRecipe(name, ingredients, preparation, id);
-    if (!recipeData) return res.status(NOT_FOUND).json(recipeNotFound);
     res.status(OK).json(recipeData);
   } catch (err) {
     res.status(OH_NO).json(err);
