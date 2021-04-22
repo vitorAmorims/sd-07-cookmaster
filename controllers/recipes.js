@@ -31,7 +31,6 @@ const postRecipe = async (req, res) => {
 const getAllRecipes = async (request, response) => {
   try {
     const data = await serviceRecipes.getAllRecipes();
-    // console.log(data);
     return response.status(OK).json(data);
   } catch (error) {
     console.error(error);
