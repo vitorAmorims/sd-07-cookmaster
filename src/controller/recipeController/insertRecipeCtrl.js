@@ -16,4 +16,4 @@ insertRecipeCtrl.post('/', async (req, res, next) => {
   }
 });
 
-module.exports = { insertRecipeCtrl };
+module.exports = insertRecipeCtrl;

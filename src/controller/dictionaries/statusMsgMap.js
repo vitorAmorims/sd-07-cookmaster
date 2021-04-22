@@ -11,6 +11,12 @@ const statusMsgMap = {
   Created: {
     status: 201,
   },
+  'email not registered': {
+    status: 401, message: 'Incorrect username or password',
+  },
+  'All fields must be filled': {
+    status: 401, message: 'All fields must be filled',
+  },
 };
 
 module.exports = statusMsgMap;

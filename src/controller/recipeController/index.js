@@ -1,5 +1,3 @@
-const { insertRecipeCtrl } = require('./insertRecipeCtrl');
+const insertRecipeCtrl = require('./insertRecipeCtrl');
 
-module.exports = {
-  insertRecipeCtrl,
-};
+module.exports = insertRecipeCtrl;

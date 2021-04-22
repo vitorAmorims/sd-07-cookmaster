@@ -1,3 +1,6 @@
-const inputsValidator = require('./inputsValidator');
+const { emailInDb, inputsValidator } = require('./inputsValidator');
 
-module.exports = inputsValidator;
+module.exports = {
+  emailInDb,
+  inputsValidator,
+};

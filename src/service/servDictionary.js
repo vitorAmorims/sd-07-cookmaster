@@ -14,6 +14,8 @@ const servDictionary = {
     pointsForContainingSymbol: 20,
   },
   EMAIL_TAKEN: 'email in database',
+  USER_NOT_FOUND: 'email not registered',
+  MISSING_FIELDS: 'All fields must be filled',
 };
 
 module.exports = servDictionary;
