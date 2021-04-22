@@ -23,7 +23,7 @@ const createRecipeModel = async (name, ingredients, preparation, userId) => conn
     })),
 );
 
-const updateRecipeByIdModel = async (id, data, user) => 
+const updateRecipeByIdModel = async (id, data, userId) => 
    connection().then(
     (db) => db.collection('recipes').findOneAndUpdate({ _id: ObjectId(id) }, 
     { $set: 
@@ -31,7 +31,7 @@ const updateRecipeByIdModel = async (id, data, user) =>
         name: data.name,
         ingredients: data.ingredients,
         preparation: data.preparation,
-        userId: user._id, 
+        userId, 
       },
     }),
   );

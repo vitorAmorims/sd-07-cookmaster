@@ -20,12 +20,13 @@ const getRecipeByIdService = async (id) => {
 };
 
 const validRecipeService = async (name, ingredients, preparation, user) => {
-  const userId = user._id;
+  const { _id: userId } = user;
   const result = await recipeModel.createRecipeModel(name, ingredients, preparation, userId);
   return result;
 };
 
 const updateRecipeByIdService = async (id, data, user) => {
+  const { _id: userId } = user;
   const verifyId = await recipeModel.getRecipeByIdModel(id);
   if (!verifyId) {
     return {
@@ -34,15 +35,14 @@ const updateRecipeByIdService = async (id, data, user) => {
       message: 'Recipe not Found',
     };
   }
-  if (user.role !== 'admin' && user._id.toString() !== verifyId.userId.toString()) {
- return {
+  if (user.role !== 'admin' && userId.toString() !== verifyId.userId.toString()) {
+    return {
       isError: true,
       status: status.UNAUTHORIZED,
       message: 'Você não é admin coroio',
-    }; 
-}
-  const result = await recipeModel.updateRecipeByIdModel(id, data, user);
-  console.log(result);
+    };
+  }
+  const result = await recipeModel.updateRecipeByIdModel(id, data, userId);
   return result;
 };
 /*   console.log('conse log do verify', verifyId.userId);

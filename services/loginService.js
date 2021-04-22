@@ -1,15 +1,23 @@
+// const joi = require('joi');
 const userModel = require('../models/userModel');
-const { errorMessages, validEmailFormat, authTools } = require('../helpers');
+const { errorMessages, authTools } = require('../helpers');
 
-const isValid = (email, password) => {
+/* const validData = (body) => {
+  joi.object({
+    email: joi.string().email().required(),
+    password: joi.required(),
+  }).validate(body);
+}; */
+
+/* const isValid = (email, password) => {
   if (!email || !password || !validEmailFormat(email)) {
     // return errorMessages.ALL_FIELDS_MUST_BE_FIELD;
     return false;
   }
   return true;
-};
+}; */
 async function validUserService(email, password) {
-  if (!isValid(email, password)) return errorMessages.ALL_FIELDS_MUST_BE_FIELD;
+  /* if (!isValid(email, password)) return errorMessages.ALL_FIELDS_MUST_BE_FIELD; */
 
   const user = await userModel.getUserByEmail(email);
 
