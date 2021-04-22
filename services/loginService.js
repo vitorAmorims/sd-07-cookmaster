@@ -30,8 +30,7 @@ const loginUser = async (email, password) => {
     algorithm: 'HS256',
   };
   const token = jwt.sign({ data: user.email }, secret, jwtConfig);
-  
-  console.log(user, isMatch, user.password);
+
   return customAnswer(token, OK);
 };
 

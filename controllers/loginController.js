@@ -4,7 +4,6 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const userlogged = await loginService.loginUser(email, password);
-    console.log(userlogged);
     const { http, message } = userlogged;
     res.status(http).json(message);
   } catch (error) {
