@@ -7,7 +7,7 @@ const {
     getRecipesById,
     postRecipe,
     putRecipe,
-    // deleteRecipe,
+    deleteRecipe,
   } = require('../controllers/recipes');
 
 const midvalidateToken = require('../middlewares/doneToken');
@@ -21,6 +21,6 @@ const midvalidateToken = require('../middlewares/doneToken');
   
   router.put('/:id', midvalidateToken, putRecipe);
   
-//   router.delete('/:id', deleteRecipe);
+  router.delete('/:id', midvalidateToken, deleteRecipe);
   
   module.exports = router;

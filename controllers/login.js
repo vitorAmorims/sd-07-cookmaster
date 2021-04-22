@@ -21,13 +21,9 @@ const objError = {
 const checkLogin = async (request, response) => {
   try {
     const { email, password } = request.body;
+
     const result = await serviceLogin.validations(email, password);
-    // console.log(result);
-    // { _id: 607f591f7a286a27ac6ab255,
-    //   name: 'Erick Jacquin',
-    //   email: 'erickjacquin@gmail.com',
-    //   password: '12345678',
-    //   role: 'user' }
+    
     if (result) {
       const jwtConfig = {
         expiresIn: 60 * 60,

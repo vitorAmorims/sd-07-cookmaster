@@ -48,7 +48,7 @@ const getAllRecipes = async (request, response) => {
 };
 
 const getRecipesById = async (request, response) => {
-    console.log(request)
+    // console.log(request)
   try {
     const { id } = request.params;
     const data = await modelRecipes.getById(id)
@@ -96,20 +96,27 @@ const putRecipe = async (request, response) => {
 };
 
 const deleteRecipe = async (request, response) => {
-  const responseOK = 200;
-  const responseError = 422;
   try {
+    const OK = 204;
+    const responseError = 401;
+
     const { id } = request.params;
-    const product = await modelRecipes.getById(id);
+  // console.log(id);
 
-    if (!product) throw { code: 'invalid_data', message: 'Wrong id format' };
+  const { _id } = request.user;
+  // console.log(_id)
 
-    await serviceRecipes.deleteRecipe(product._id);
+  const recipe = await modelRecipes.getById(id);
+  const { userId } = recipe;
+  // console.log(userId);
 
-    return response.status(responseOK).json(product);
+    if (String(userId) === String(_id) || String(request.user.role) === "admin") {
+      const data = await serviceRecipes.deleteRecipe(id);
+      return response.status(OK).json(data);
+    }
   } catch (error) {
     console.log(error);
-    return response.status(responseError).json({ err: error });
+    return response.status(responseError).json({ message: message });
   }
 };
 
@@ -118,5 +125,5 @@ module.exports = {
   getRecipesById,
   postRecipe,
   putRecipe,
-//   deleteRecipe,
+  deleteRecipe,
 };
