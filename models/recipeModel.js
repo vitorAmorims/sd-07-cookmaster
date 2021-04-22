@@ -16,14 +16,21 @@ const getById = async (id) => {
   return recipe;
 };
 
-const update = async (id, name, ingredients, preparation) => {
+const update = async (id, name, ingredients, preparation, _id) => {
   if (!ObjectId.isValid(id)) return null;
-  const recipe = await connection().then((db) =>
-    db
-      .collection('recipes')
-      .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } }));
+  await connection().then((db) => db.collection('recipes')
+    .updateOne(
+      { _id: ObjectId(id) },
+      { $set: { name, ingredients, preparation, userId: _id } },
+    ));
 
-  return recipe;
+  return {
+    _id: id,
+    name,
+    ingredients,
+    preparation,
+    userId: _id,
+  };
 };
 
 module.exports = {

@@ -8,7 +8,7 @@ const secret = 'cookmastersecret';
 const validateToken = async (req, res, next) => {
   const token = req.headers.authorization;
 
-  if (!token) return res.status(code.UNAUTHORIZED).json(msg.wrongToken);
+  if (!token) return res.status(code.UNAUTHORIZED).json(msg.missAuth);
 
   try {
     const decoded = jwt.verify(token, secret);

@@ -6,6 +6,7 @@ const msg = {
   wrongToken: { message: 'jwt malformed' },
   noRecipe: { message: 'recipe not found' },
   defaultErr: { message: 'something went wrong' },
+  missAuth: { message: 'missing auth token' },
 };
 
 module.exports = msg;
