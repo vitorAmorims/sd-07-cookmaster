@@ -1,10 +1,14 @@
 const recipesModel = require('../models/recipesModels');
-const { UNAUTHORIZED, SUCCESS, OK } = require('../controllers/statusCode');
+const { UNAUTHORIZED, SUCCESS, OK, NOT_FOUND } = require('../controllers/statusCode');
 
 const customAnswer = (message, http = UNAUTHORIZED) => ({
   http,
   message,
 });
+
+const notFoundMessage = {
+  message: 'recipe not found',
+};
 
 const createRecipes = async (name, ingredients, preparation, user) => {
   const { _id } = user;
@@ -22,7 +26,17 @@ const getAllRecipes = async () => {
   return customAnswer(allRecipes, OK);
 };
 
+const getRecipeById = async (id) => {
+    const results = await recipesModel.getRecipeById(id);
+
+    if (!results) {
+      return customAnswer(notFoundMessage, NOT_FOUND);
+    }
+
+    return customAnswer(results, OK);
+  };
 module.exports = {
   createRecipes,
   getAllRecipes,
+  getRecipeById,
 };

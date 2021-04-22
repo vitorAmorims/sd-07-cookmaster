@@ -1,5 +1,6 @@
 const recipesService = require('../services/recipesService');
 
+const internalError = 'Erro interno';
 const createRecipe = async (req, res) => {
   try {
     const { name, ingredients, preparation, user } = req.body;
@@ -14,7 +15,7 @@ const createRecipe = async (req, res) => {
   } catch (error) {
     return res
       .status(500)
-      .json({ message: 'Erro interno', err: error.message });
+      .json({ message: internalError, err: error.message });
   }
 };
 
@@ -26,11 +27,26 @@ const getAllRecipes = async (req, res) => {
   } catch (error) {
     return res
       .status(500)
-      .json({ message: 'Erro interno', err: error.message });
+      .json({ message: internalError, err: error.message });
+  }
+};
+
+const getRecipeById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getRecipe = await recipesService.getRecipeById(id);
+    console.log(getRecipe);
+    const { http, message } = getRecipe;
+    res.status(http).json(message);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: internalError, err: error.message });
   }
 };
 
 module.exports = {
   createRecipe,
   getAllRecipes,
+  getRecipeById,
 };

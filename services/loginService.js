@@ -23,7 +23,6 @@ const loginUser = async (email, password) => {
   if (!user) {
     return customAnswer(userPasswordMessage);
   }
-  console.log(user);
   const isMatch = password === user.password || bcrypt.compareSync(password, user.password);
   
   if (!isMatch) {
