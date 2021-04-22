@@ -3,6 +3,7 @@ const recipeService = require('./recipeServices');
 
 const OK = 200;
 const CREATED = 201;
+const NOCONTENT = 204;
 const BADREQUEST = 400;
 const NOTFOUND = 404;
 
@@ -42,8 +43,14 @@ const updateRecipe = async (req, res) => {
   const { id } = req.params;
   const { name, ingredients, preparation } = req.body;
   const updated = await recipeModle.updateRecipe(id, name, ingredients, preparation);
-  console.log(updated);
+  
   res.status(OK).json(updated);
+};
+
+const deleteRecipe = async (req, res) => {
+  const { id } = req.params;
+  await recipeModle.deleteRecipe(id);
+  res.status(NOCONTENT).end();
 };
 
 module.exports = {
@@ -51,4 +58,5 @@ module.exports = {
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };
