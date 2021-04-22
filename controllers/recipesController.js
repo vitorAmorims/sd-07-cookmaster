@@ -1,5 +1,6 @@
 const rescue = require('express-rescue');
 
+const MissingTokenError = require('../errors/MissingTokenError');
 const RecipesModel = require('../models/recipesModel');
 
 const {
@@ -7,7 +8,6 @@ const {
   CREATED,
   NO_CONTENT,
   NOT_FOUND,
-  UNAUTHORIZED,
 } = require('../httpStatusCodes');
 
 const createRecipe = rescue(async (req, res) => {
@@ -53,7 +53,7 @@ const editRecipe = rescue(async (req, res) => {
     return res.status(OK).json(editedRecipe);
   }
 
-  return res.status(UNAUTHORIZED).json({ message: 'missing auth token' });
+  throw new MissingTokenError();
 });
 
 const deleteRecipe = rescue(async (req, res) => {
@@ -67,7 +67,7 @@ const deleteRecipe = rescue(async (req, res) => {
     return res.status(NO_CONTENT).json();
   }
 
-  return res.status(UNAUTHORIZED).json({ message: 'missing auth token' });
+  throw new MissingTokenError();
 });
 
 module.exports = {

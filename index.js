@@ -1,10 +1,11 @@
 const express = require('express');
+const rescue = require('express-rescue');
 // require('dotenv').config();
 
+const status = require('./httpStatusCodes');
+const MissingTokenError = require('./errors/MissingTokenError');
 const usersRoute = require('./routes/usersRoute');
 const recipesRoute = require('./routes/recipesRoute');
-
-const { errorMiddleware } = require('./middlewares');
 
 const PORT = 3000;
 
@@ -21,6 +22,8 @@ app.use('/', usersRoute);
 
 app.use('/', recipesRoute);
 
-app.use(errorMiddleware);
+app.use(rescue.from(MissingTokenError, (_err, _req, res, _next) => {
+  res.status(status.UNAUTHORIZED).json({ message: 'missing auth token' });
+}));
 
 app.listen(PORT, () => { console.log(`API rodando na porta ${PORT}`); });
