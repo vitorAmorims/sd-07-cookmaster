@@ -1,7 +1,7 @@
 const mongoClient = require('mongodb');
 
-const local = 'mongodb://mongodb:27017/Cookmaster';
-// const local = 'mongodb://localhost:27017/Cookmaster';
+// const local = 'mongodb://mongodb:27017/Cookmaster';
+const local = 'mongodb://localhost:27017/Cookmaster';
 
 const connection = () => mongoClient
     .connect(local, {

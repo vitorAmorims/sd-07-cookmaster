@@ -1,10 +1,10 @@
 const userModel = require('../../models/userModel');
 
 const userLogin = async (req, res, next) => {
-  const { username, password } = req.body;
-  if (!username || !password) return res.status(401).json({});
-  const user = await userModel.findUser(username);
-  if (!user) return res.status(400).json({ message: 'Invalid entries. Try again.' });
+  const { email, password } = req.body;
+  if (!email || !password) return res.status(401).json({ message: 'All fields must be filled' });
+  const user = await userModel.findUserByEmail(email);
+  if (!user) return res.status(401).json({ message: 'Incorrect username or password' });
   next();
 };
 
@@ -22,7 +22,6 @@ const userCreate = async (req, res, next) => {
   if (gotEmail) {
     return res.status(409).json({ message: 'Email already registered' });
   }
-  console.log('is valid');
   next();
 };
 
