@@ -1,6 +1,7 @@
 const recipeModle = require('./recipeModels');
 const recipeService = require('./recipeServices');
 
+const OK = 200;
 const CREATED = 201;
 const BADREQUEST = 400;
 
@@ -20,6 +21,12 @@ const createRecipe = async (req, res) => {
   }
 };
 
+const getAllRecipes = async (_req, res) => {
+    const allRecipes = await recipeModle.getAllRecipes();
+    res.status(OK).json(allRecipes);
+};
+
 module.exports = {
   createRecipe,
+  getAllRecipes,
 };
