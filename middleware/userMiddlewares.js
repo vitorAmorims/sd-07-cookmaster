@@ -1,10 +1,9 @@
 const Joi = require('joi');
-require('dotenv/config');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../model/UserModel');
 
-const { JWT_SECRET } = process.env;
+const JWT_SECRET = 'secret';
 
 const {
   BadRequestException,
