@@ -6,7 +6,7 @@ const userModel = require('../models/userModel');
 const userVerify = require('../Middleware/Verify/userVerify');
 
 const router = express.Router();
-const secret = 'aoifuh98e3our-031irkfkmcqp';
+const secret = 'aoifuh98e3our-031irkffkmcqp';
 const jwtConfig = {
   expiresIn: 60 + 5,
   algorithm: 'HS256',
