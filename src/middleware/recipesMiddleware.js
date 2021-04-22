@@ -8,17 +8,14 @@ const NO_TOKEN = 'jwt malformed';
 const ENTRIES = 'Invalid entries. Try again.';
 
 const checkToken = async (request, response, next) => {
-  const token = request.headers['authorization'];
-  console.log('token:', token)
+  const token = request.headers.authorization;
   if (!token) {
     return response.status(status.UNAUTHORIZED)
     .json({ message: NO_TOKEN });
   }
   try {
-    const decoded = JWT.verify(token,secret)
+    const decoded = JWT.verify(token, secret);
     const user = await userModel.findByEmail(decoded.data.email);
-    console.log('decoded', decoded)
-  
     if (!user) {
       return response.status(status.UNAUTHORIZED)
         .json({ message: NO_TOKEN });
@@ -29,7 +26,7 @@ const checkToken = async (request, response, next) => {
     .json({ message: NO_TOKEN });
   }
   next();
-}
+};
 
 const checkRecipeBody = (request, response, next) => {
   const { name, ingredients, preparation } = request.body;
@@ -42,5 +39,5 @@ const checkRecipeBody = (request, response, next) => {
 
 module.exports = {
   checkToken,
-  checkRecipeBody
+  checkRecipeBody,
 };

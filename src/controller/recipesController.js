@@ -6,7 +6,7 @@ const createRecipes = async (request, response) => {
     const { _id } = request.user;
     const { name, ingredients, preparation } = request.body;
     const recipe = await recipesModel.createRecipes(name, ingredients, preparation, _id);
-    response.status(status.CREATED).json(recipe)
+    response.status(status.CREATED).json(recipe);
   } catch (error) {
     console.error(error);
     response.status(status.INTERNAL_SERVER_ERROR)
@@ -15,5 +15,5 @@ const createRecipes = async (request, response) => {
 };
 
 module.exports = {
-  createRecipes
-}
+  createRecipes,
+};
