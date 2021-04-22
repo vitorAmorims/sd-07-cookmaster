@@ -17,9 +17,16 @@ const validateUserInput = (name, email, password) => {
   }
 };
 
+const isEmailExist = async (email) => {
+  const emailResult = await usersModel.getByEmail(email);
+  if (emailResult) {
+    throw new InvalidEntries('Email already registered', 409);
+  }
+};
+
 const createUser = async (name, email, password) => {
   validateUserInput(name, email, password);
-
+  await isEmailExist(email);
   const newUser = await usersModel.createUser(name, email, password);
   return ({ user: { ...newUser } });
 };
