@@ -5,6 +5,10 @@ const {
   validationPassword,
   validationEmail,
 } = require('../middleware/userValidation');
+const {
+  loginPassword,
+  loginEmail,
+} = require('../middleware/loginValidation');
 
 const router = express.Router();
 
@@ -13,6 +17,13 @@ router.post(
   validationName,
   validationPassword,
   validationEmail,
+  usersController.createUsers,
+);
+
+router.post(
+  '/login',
+  loginPassword,
+  loginEmail,
   usersController.createUsers,
 );
 

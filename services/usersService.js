@@ -10,12 +10,14 @@ const customAnswer = (message, http = UNPROCESSABLE) => ({
     message: 'Email already registered',
   };
 
-const createUsers = async (data) => {
-  const validEmail = await usersModel.existsEmail(data.email);
+const createUsers = async (name, email, password) => {
+  const validEmail = await usersModel.existsEmail(email);
+
   if (validEmail) {
     return customAnswer(emailMessage, CONFLICT);
   }
-  const userService = await usersModel.createUsers(data);
+  
+  const userService = await usersModel.createUsers(name, email, password);
   return customAnswer(userService, SUCCESS);
 };
 
