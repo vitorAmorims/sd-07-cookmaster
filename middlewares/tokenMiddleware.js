@@ -8,6 +8,10 @@ const validateToken = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
 
+    if (!token) {
+      return res.status(Unauthorized).json({ message: 'missing auth token' });
+    }
+
     const decoded = jwt.verify(token, JWT_SECRET);
     const user = await usersModel.getUserEmail(decoded.email);
 

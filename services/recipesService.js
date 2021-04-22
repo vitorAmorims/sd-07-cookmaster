@@ -18,7 +18,16 @@ const getRecipeById = async (id) => {
   return recipeById;
 };
 
+const deleteRecipe = async (id) => {
+  const deletedRecipe = await recipesModel.deleteRecipe(id);
+  
+  if (!deletedRecipe) return { notFound: 'recipe not found' };
+
+  return deletedRecipe;
+};
+
 module.exports = {
   createRecipe,
   getRecipeById,
+  deleteRecipe,
 };
