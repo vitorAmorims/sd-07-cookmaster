@@ -1,12 +1,12 @@
 const express = require('express');
-require('dotenv').config();
+// require('dotenv').config();
 
 const usersRoute = require('./routes/usersRoute');
 const recipesRoute = require('./routes/recipesRoute');
 
 const { errorMiddleware } = require('./middlewares');
 
-const { PORT } = process.env || 3000;
+const PORT = 3000;
 
 const app = express();
 

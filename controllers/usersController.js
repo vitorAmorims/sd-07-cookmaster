@@ -1,6 +1,6 @@
 const rescue = require('express-rescue');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
+// require('dotenv').config();
 
 const UsersModel = require('../models/usersModel');
 // const UserService = require('../service/usersService');
@@ -21,7 +21,7 @@ const createUser = rescue(async (req, res) => {
 });
 
 const userLogin = rescue(async (req, res) => {
-  const { secret } = process.env;
+  const secret = 'anySecretWorks';
 
   const jwtConfig = {
     expiresIn: '1d',

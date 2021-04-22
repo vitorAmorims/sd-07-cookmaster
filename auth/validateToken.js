@@ -1,18 +1,19 @@
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
+// require('dotenv').config();
 
 const UsersModel = require('../models/usersModel');
 const status = require('../httpStatusCodes');
 
 const validateToken = async (req, res, next) => {
   const { authorization } = req.headers;
+  const secret = 'anySecretWorks';
 
   if (!authorization) {
     return res.status(status.UNAUTHORIZED).json({ message: 'missing auth token' });
   }
 
   try {
-    const userData = jwt.verify(authorization, process.env.secret);
+    const userData = jwt.verify(authorization, secret);
 
     const user = await UsersModel.findUserByEmail(userData.email);
 
