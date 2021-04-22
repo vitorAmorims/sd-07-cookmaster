@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const multer = require('multer');
 const { status, errorMessages } = require('../helpers');
 const { authMiddleware } = require('../middlewares');
 
@@ -61,6 +62,28 @@ recipeRoute.delete('/:id', authMiddleware, async (req, res, next) => {
     const result = await recipeService.deleteRecipeByIdService(id, user);
     if (result.isError) return next(result);
     return res.status(status.NO_CONTENT).json();
+  } catch (err) {
+    throw new Error(err);
+  }
+});
+
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => { callback(null, 'uploads'); },
+  filename: (req, file, callback) => { callback(null, `${req.params.id}.jpeg`); },
+});
+
+const upload = multer({ storage });
+// const newUpload = upload.single('image');
+
+recipeRoute.post('/:id/image', authMiddleware, upload.single('image'), async (req, res, next) => {
+  const { id } = req.params;
+  const { user } = req;
+  const teste = req.file;
+  console.log('teste', teste);
+  try {
+    const result = await recipeService.insertImageRecipeByIdService(id, user);
+    if (result.isError) return next(result);
+    return res.status(status.SUCCESS).json();
   } catch (err) {
     throw new Error(err);
   }

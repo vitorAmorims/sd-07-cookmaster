@@ -62,10 +62,31 @@ const deleteRecipeByIdService = async (id, user) => {
     return {
       isError: true,
       status: status.UNAUTHORIZED,
-      message: 'Você não é admin coroio',
+      message: 'Você não é admin',
     };
   }
   const result = await recipeModel.deleteRecipeByIdModel(id);
+  return result;
+};
+
+const insertImageRecipeByIdService = async (id, user) => {
+  const { _id: userId } = user;
+  const findRecipeById = await recipeModel.getRecipeByIdModel(id);
+  if (!findRecipeById) {
+    return {
+      isError: true,
+      status: status.NOT_FOUND,
+      message: 'Not Found',
+    };
+  }
+  if (user.role !== 'admin' && userId.toString() !== findRecipeById.userId.toString()) {
+    return {
+      isError: true,
+      status: status.UNAUTHORIZED,
+      message: 'Você não é admin',
+    };
+  }
+  const result = await recipeModel.insertImageRecipeByIdModel(id);
   return result;
 };
 
@@ -75,4 +96,5 @@ module.exports = {
   getRecipeByIdService,
   updateRecipeByIdService,
   deleteRecipeByIdService,
+  insertImageRecipeByIdService,
 };
