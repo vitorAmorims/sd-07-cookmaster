@@ -4,6 +4,7 @@ const recipeService = require('./recipeServices');
 const OK = 200;
 const CREATED = 201;
 const BADREQUEST = 400;
+const NOTFOUND = 404;
 
 const createRecipe = async (req, res) => {
   try {
@@ -26,7 +27,22 @@ const getAllRecipes = async (_req, res) => {
     res.status(OK).json(allRecipes);
 };
 
+const getRecipeById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const validadeId = recipeService.validadeId(id);
+    if (validadeId) throw Error(validadeId);
+
+    const recipe = await recipeModle.getRecipeById(id);
+
+    res.status(OK).json(recipe);
+  } catch (error) {
+    res.status(NOTFOUND).json({ message: error.message });
+  }
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
+  getRecipeById,
 };
