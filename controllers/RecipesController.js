@@ -69,7 +69,7 @@ const remove = async (req, res) => {
 const addImage = async (req, res) => {
   try {
     const { id } = req.params;
-    const path = `http://localhost:3000/images/${id}.jpeg`;
+    const path = `localhost:3000/images/${id}.jpeg`;
 
     const recipe = await recipeService.updateWithImage(id, path);
 

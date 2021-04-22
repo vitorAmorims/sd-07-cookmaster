@@ -25,7 +25,7 @@ recipes.get('/recipes', recipeController.listAll);
 recipes.put(commomPath, [auth.allUser], recipeController.update);
 recipes.delete(commomPath, [auth.allUser], recipeController.remove);
 recipes.put(`${commomPath}/image`, [
-  auth.allUser, 
+  auth.allUser,   
   upload.single('image')], recipeController.addImage);
 recipes.get('/images/:id', recipeController.getImage);
 
