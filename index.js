@@ -29,5 +29,4 @@ app.get('/recipes', getAllRecipesController);
 app.get('/recipes/:id', getRecipeByIdController);
 app.put('/recipes/:id', validateToken, updateRecipeByIdController);
 
- // daqui pra baixo fica
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });

@@ -24,7 +24,6 @@ const addUsersController = async (req, res) => {
 const userLoginController = async (req, res) => {
     try {
         const { email, password } = req.body;
-
         await validateEmailAndPassword(email, password);
         const result = await userLoginService(email, password);
         return res.status(200).json(result);
@@ -51,7 +50,6 @@ const addRecipesController = async (req, res) => {
 };
 
 const getAllRecipesController = async (req, res) => {
-    // const token = req.headers.authorization;
     try {
         const recipeList = await getAllRecipesService();
         return res.status(200).json(recipeList);
@@ -72,11 +70,16 @@ const getRecipeByIdController = async (req, res) => {
 
 const updateRecipeByIdController = async (req, res) => {
     const { id } = req.params;
+    const { body } = req;
+    const token = req.headers.authorization;
+    if (!token) {
+        return res.status(401).json('missing auth token');
+    }
     try {
-        const result = await updateRecipeByIdService(id);
-        res.status(200).json(result);
+        const result = await updateRecipeByIdService(id, body, token);
+        if (result) return res.status(200).json(result);
     } catch (err) {
-        res.status(401).json({ message: err.message });
+        return res.status(401).json({ message: err.message });
     }
 };
 

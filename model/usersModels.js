@@ -41,10 +41,12 @@ async function findUserByName(name) {
         }
     });
 }
-async function addRecipeModel(name, ingredients, preparation) {
+async function addRecipeModel(name, ingredients, preparation, userId) {
     const result = await connect().then(async (db) => {
         try {
-            return db.collection('recipes').insertOne({ name, ingredients, preparation });
+            return db.collection('recipes').insertOne({
+                name, userId, ingredients, preparation,
+            });
         } catch (error) {
             return false;
         }
@@ -61,14 +63,26 @@ async function getAllRecipesModel() {
     });
 }
 async function getRecipeByIdModel(id) {
-    const result = await connect().then(async (db) => {
+    return connect().then(async (db) => {
         try {
             return db.collection('recipes').findOne({ _id: ObjectId(id) });
         } catch (error) {
             return false;
         }
     });
-    return result;
+}
+
+async function updateRecipeByIdModel(id, body) {
+    const { name, ingredients, preparation } = body;
+    return connect().then(async (db) => {
+        try {
+            return db.collection('recipes').updateOne({ _id: ObjectId(id) }, {
+                $set: { name, ingredients, preparation },
+            });
+} catch (error) {
+    return false;
+}
+    });
 }
 
 module.exports = {
@@ -79,4 +93,5 @@ module.exports = {
     findUserByName,
     getAllRecipesModel,
     getRecipeByIdModel,
+    updateRecipeByIdModel,
 };

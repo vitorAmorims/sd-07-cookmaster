@@ -8,6 +8,7 @@ const {
     addRecipeModel,
     getAllRecipesModel,
     getRecipeByIdModel,
+    updateRecipeByIdModel,
 } = require('../model/usersModels');
 
 const secret = 'cookmaster';
@@ -45,15 +46,20 @@ async function userLoginService(email, password) {
         expiresIn: 60 * 20,
         algorithm: 'HS256',
     };
-    const token = jwt.sign({ data: user.name }, secret, jwtConfig);
+    const { name, id, role } = user;
+    const token = jwt.sign({ data: { name, id, role } }, secret, jwtConfig);
     return { token };
 }
-async function validateEmailAndPassword(email, password) {
+function checkEmailAndPassword(email, password) {
     if (!email || !password) {
         throw new Error(JSON.stringify({ text: 'All fields must be filled', code: 401 }));
     }
+}
+
+async function validateEmailAndPassword(email, password) {
+    checkEmailAndPassword(email, password);
     const isValid = await validateEmail(email);
-    if (!isValid || password.length < sete) {
+    if (!isValid || password.length < sete || password !== 'admin') {
         throw new Error(JSON.stringify({ text: 'Incorrect username or password', code: 401 }));
     }
 }
@@ -62,11 +68,11 @@ async function addRecipeService(name, ingredients, preparation, token) {
         throw new Error(JSON.stringify({ text: 'Invalid entries. Try again.', code: 400 }));
     }
     const decoded = jwt.verify(token, secret);
-    const user = await findUserByName(decoded.data);
-    const result = await addRecipeModel(name, ingredients, preparation);
-    const { _id: id } = user;
+    const user = await findUserByName(decoded.data.name);
+    const { _id: userId } = user;
+    const result = await addRecipeModel(name, ingredients, preparation, userId);
     if (result) {
-        return { recipe: { ...result, userId: id } };
+        return { recipe: result };
     }
 }
 
@@ -81,8 +87,21 @@ async function getRecipeByIdService(id) {
     }
     return recipe;
 }
-async function updateRecipeByIdService(id) {
-    console.log(id); // FAZER ESSA FUNÇÃO 
+async function updateRecipeByIdService(id, body, token) {
+    const decoded = jwt.verify(token, secret);
+    const { name: nome, role } = decoded.data;
+    const user = await findUserByName(nome);
+    const recipe = await getRecipeByIdModel(id);
+    const { userId } = recipe;
+    const { _id: ID } = user;
+    const { name, ingredients, preparation } = body;
+    if (JSON.stringify(userId) === JSON.stringify(ID) || role === 'admin') {
+        const update = await updateRecipeByIdModel(id, body);
+        if (update) {
+            return { name, ingredients, preparation, _id: id, userId };
+        }
+    }
+    return false;
 }
 
 module.exports = {
