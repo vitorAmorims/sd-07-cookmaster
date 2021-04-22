@@ -8,6 +8,7 @@ const statusCodes = {
   BAD_REQUEST: 400,
   CONFLICT: 409,
   UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
 };
 
 module.exports = statusCodes;

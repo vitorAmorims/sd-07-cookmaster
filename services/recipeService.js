@@ -1,4 +1,3 @@
-// const bcrypt = require('bcrypt-nodejs');
 const Recipe = require('../models/recipeModel');
 const code = require('../utils/code');
 const msg = require('../utils/msg');

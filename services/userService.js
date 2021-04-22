@@ -1,4 +1,3 @@
-// const bcrypt = require('bcrypt-nodejs');
 const User = require('../models/userModel');
 const code = require('../utils/code');
 const msg = require('../utils/msg');
@@ -26,12 +25,23 @@ const createUser = async (name, email, password, role) => {
       msg: msg.emailExists,
     };
   }
-  // const salt = bcrypt.genSaltSync(5);
-  // const newPassword = bcrypt.hashSync(password, salt);
+  const newUser = await User.create(name, email, password, role);
+  return { status: code.CREATED, msg: newUser };
+};
+
+const createAdmin = async (params) => {  
+  const { name, email, password, role, ownRole } = params;
+  if (ownRole !== 'admin') {
+    return {
+      status: code.FORBIDDEN,
+      msg: msg.noAdmin,
+    };
+  }
   const newUser = await User.create(name, email, password, role);
   return { status: code.CREATED, msg: newUser };
 };
 
 module.exports = {
   createUser,
+  createAdmin,
 };

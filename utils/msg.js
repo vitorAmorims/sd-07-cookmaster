@@ -7,6 +7,7 @@ const msg = {
   noRecipe: { message: 'recipe not found' },
   defaultErr: { message: 'something went wrong' },
   missAuth: { message: 'missing auth token' },
+  noAdmin: { message: 'Only admins can register new admins' },
 };
 
 module.exports = msg;
