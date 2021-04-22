@@ -25,7 +25,18 @@ const validUserService = async (name, email, password, role = 'user') => {
   return result;
 };
 
+const createAdminUser = async (name, email, password, user) => {
+  console.log('Dados', name, email, password, user);
+  if (!user || user.role !== 'admin') {
+    return errorMessages.ONLY_ADMINS;
+  }
+  const role = 'admin';
+  const result = await userModel.createUserModel(name, email, password, role);
+  return result;
+};
+
 module.exports = {
   validUserService,
   getAllUserService,
+  createAdminUser,
 };

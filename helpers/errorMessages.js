@@ -36,7 +36,11 @@ const errorMessages = {
     status: status.UNAUTHORIZED,
     message: 'missing auth token',
   },
-
+  ONLY_ADMINS: {
+    isError: true,
+    status: status.FORBIDDEN,
+    message: 'Only admins can register new admins',
+  },
 };
 
 module.exports = errorMessages;
