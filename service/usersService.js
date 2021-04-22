@@ -118,7 +118,6 @@ async function updateRecipeByIdService(id, body, token) {
 }
 
 async function deleteRecipeByIdService(id, token) {
-    console.log('no service');
     const decoded = jwt.verify(token, secret);
     const { name: nome, role } = decoded.data;
     const user = await findUserByName(nome);
@@ -150,4 +149,5 @@ module.exports = {
     updateRecipeByIdService,
     deleteRecipeByIdService,
     addPhotoToRecipeService,
+
 };

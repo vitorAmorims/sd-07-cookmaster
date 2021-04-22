@@ -89,10 +89,8 @@ const deleteRecipeByIdController = async (req, res) => {
     if (!token) return res.status(401).json('missing auth token');
     try {
         const result = await deleteRecipeByIdService(id, token);
-        console.log(result);
         if (result) return res.status(204).send();
     } catch (err) {
-        console.log(err);
         return res.status(401).json({ message: err.message });
     }
 };
@@ -118,4 +116,5 @@ module.exports = {
     updateRecipeByIdController,
     deleteRecipeByIdController,
     addPhotoToRecipeController,
+
 };

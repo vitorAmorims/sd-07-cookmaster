@@ -48,5 +48,7 @@ app.delete(recipeID, validateToken, deleteRecipeByIdController);
 app.put('/recipes/:id/image/',
   [validateToken, upload.single('image')],
   addPhotoToRecipeController);
+// app.get('/images/:id.jpeg', getImageByRecipeIdController)
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });

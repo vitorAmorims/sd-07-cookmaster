@@ -85,7 +85,6 @@ async function updateRecipeByIdModel(id, body) {
     });
 }
 async function deleteRecipeByIdModel(id) {
-    console.log('no model');
     return connect().then(async (db) => {
         try {
             return db.collection('recipes').deleteOne({ _id: ObjectId(id) });
