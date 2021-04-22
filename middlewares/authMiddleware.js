@@ -1,17 +1,18 @@
 const jwt = require('jsonwebtoken');
 const userModel = require('../routes/user/userModel');
 const { UNAUTHORIZED } = require('../helpers/status');
+const { invalidToken } = require('../helpers/errorMessage');
 
 const secret = 'manodoceumeajuda';
 
 module.exports = async (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) {
-    return res.status(UNAUTHORIZED).json({ error: 'jwt malformed' });
+    return res.status(UNAUTHORIZED).json(invalidToken);
   }
   try {
     const decoded = jwt.verify(token, secret);
-    const user = await userModel.getByEmail(decoded.payload.email);
+    const user = await userModel.getByEmail(decoded.email);
 
     if (!user) {
       return res
