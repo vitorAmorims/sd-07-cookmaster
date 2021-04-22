@@ -1,5 +1,7 @@
 const express = require('express');
 const rescue = require('express-rescue');
+const path = require('path');
+
 // require('dotenv').config();
 
 const status = require('./httpStatusCodes');
@@ -13,6 +15,8 @@ const PORT = 3000;
 const app = express();
 
 app.use(express.json());
+
+app.use('/images', express.static(path.join(__dirname, 'uploads')));
 
 // não remova esse endpoint, é para o avaliador funcionar
 app.get('/', (_request, response) => {

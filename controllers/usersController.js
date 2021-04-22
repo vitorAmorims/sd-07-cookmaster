@@ -30,7 +30,7 @@ const userLogin = rescue(async (req, res) => {
 
   const token = jwt.sign(req.body, secret, jwtConfig);
 
-  res.status(OK).json({ token });
+  return res.status(OK).json({ token });
 });
 
 module.exports = {

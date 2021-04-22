@@ -70,10 +70,28 @@ const deleteRecipe = rescue(async (req, res) => {
   throw new MissingTokenError();
 });
 
+const addImage = rescue(async (req, res) => {
+  const { _id, role } = req.user;
+  const { id } = req.params;
+  const { filename } = req.file;
+  const image = `localhost:3000/images/${filename}`;
+
+  const recipe = await RecipesModel.findById(id);
+  const newRecipe = { ...recipe, image };
+
+  if (role === 'admin' || recipe.userId.equals(_id)) {
+    await RecipesModel.updateOne(id, newRecipe);
+    return res.status(OK).json(newRecipe);
+  }
+
+  throw new MissingTokenError();
+});
+
 module.exports = {
   createRecipe,
   getRecipes,
   getRecipeById,
   editRecipe,
   deleteRecipe,
+  addImage,
 };
