@@ -2,6 +2,7 @@ const Joi = require('joi');
 const { Router } = require('express');
 const { status, errorMessages } = require('../helpers');
 const { userService } = require('../services');
+const { authMiddleware } = require('../middlewares');
 
 const userRoute = Router();
 
@@ -31,5 +32,9 @@ userRoute.post('/', async (req, res, next) => {
     throw new Error(err);
   }
 });
+
+userRoute.post('/admin', async (req, res, next) => {
+
+})
 
 module.exports = userRoute;
