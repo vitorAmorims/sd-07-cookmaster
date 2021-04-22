@@ -6,7 +6,7 @@ const recipesRoute = require('./routes/recipesRoute');
 
 const { errorMiddleware } = require('./middlewares');
 
-const { PORT } = process.env;
+const { PORT } = process.env || 3000;
 
 const app = express();
 
