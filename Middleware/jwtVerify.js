@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const secret = 'aoifuh98e3our-031irkffkmcqp';
+const secret = 'aoifuh98e3our-031irkffkmcq';
 
 function verifyJWT(req, res, next) {
   const token = req.headers.authorization;
