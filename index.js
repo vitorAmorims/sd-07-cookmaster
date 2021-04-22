@@ -5,7 +5,7 @@ const error = require('./middleware/error');
 
 const app = express();
 
-const { PORT } = process.env;
+const PORT = 3000;
 app.use(express.json());
 
 app.use(userRouter);

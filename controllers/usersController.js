@@ -1,9 +1,10 @@
 const Joi = require('joi');
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 // const bcrypt = require('bcrypt-nodejs');
 const rescue = require('express-rescue');
 const usersService = require('../service/usersService');
 
+const secret = 'minhasenhaforte';
 const SUCCESS = 201;
 // const OK = 200;
 
@@ -14,7 +15,7 @@ const registerUser = rescue(async (req, res, next) => {
     email: Joi.string(),
     roles: Joi.string(),
   }).validate(req.body);
-  // name, password, email, role
+
   if (error) return next(error);
 
   const { name, email, password, role } = req.body;
@@ -22,10 +23,27 @@ const registerUser = rescue(async (req, res, next) => {
   const newUser = await usersService.registerUser(name, email, password, role);
 
   if (newUser.message) return next(newUser);
-  // console.log(newUser.message);
+
   res.status(SUCCESS).json(newUser);
+});
+
+const login = rescue(async (req, res, next) => {
+  const { name, email, password } = req.body;
+
+  const loginUser = await usersService.login(name, email, password);
+  if (loginUser.message) return next(loginUser);
+
+  const jwtConfig = {
+    expiresIn: 60 * 5,
+    algorithm: 'HS256',
+  };
+
+  const token = jwt.sign({ data: loginUser, email }, secret, jwtConfig);
+
+  res.status(200).json({ token });
 });
 
 module.exports = {
   registerUser,
+  login,
 };

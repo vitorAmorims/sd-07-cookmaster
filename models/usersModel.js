@@ -16,7 +16,14 @@ const registerUser = async (name, email, password, role = 'user') => {
 const findEmail = async (email) =>
   connect().then((db) => db.collection('users').findOne({ email }));
 
+const findUser = async (name) => {
+  const user = await connect().then((db) =>
+    db.collection('users').findOne({ name }));
+  return user;
+};
+
 module.exports = {
   registerUser,
   findEmail,
+  findUser,
 };

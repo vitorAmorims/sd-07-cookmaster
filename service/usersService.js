@@ -25,6 +25,17 @@ const validateEmail = async (email) => {
   return {};
 };
 
+const loginValidateEmailAndPassword = (email, password) => {
+  if (!email || email === undefined || password === undefined || !password) {
+    return {
+      code: 401,
+      message: 'All fields must be filled',
+    };
+  }
+
+  return {};
+};
+
 const registerUser = async (name, email, password, role) => {
   const emailExists = await validateEmail(email);
 
@@ -35,6 +46,20 @@ const registerUser = async (name, email, password, role) => {
   return user;
 };
 
+const login = async (name, email, password) => {
+  const validateUser = loginValidateEmailAndPassword(email, password);
+  if (validateUser.message) return validateUser;
+  const user = await userModel.findEmail(email);
+  if (!user || user.password !== password) {
+    return {
+      code: 401,
+      message: 'Incorrect username or password',
+    };
+  }
+  return user;
+};
+
 module.exports = {
   registerUser,
+  login,
 };

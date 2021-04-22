@@ -12,7 +12,7 @@ module.exports = (err, _req, res, _next) => {
     invalidData: 422,
     notFound: 400,
   };
-
+  console.log(err);
   const status = err.code || statusByErrorCode.notFound;
 
   res.status(status).json({ message: err.message });
