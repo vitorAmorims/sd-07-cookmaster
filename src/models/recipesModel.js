@@ -59,8 +59,20 @@ const registerRecipe = async (name, ingredients, preparation, userId) => {
         name,
         ingredients,
         preparation,
+
     };
 };
+
+const addImageRecipe = async (id, image) => {
+    if (!ObjectId.isValid(id)) return null;
+    const resultCheck = await connection()
+        .then((db) => db.collection('recipes').findOne(new ObjectId(id)));
+    if (!resultCheck) return null;
+
+    await connection()
+        .then((db) => db.collection('recipes').updateOne({ _id: ObjectId(id) }, { $set: { image: image } }))
+    return { ...resultCheck, image };
+}
 
 module.exports = {
     registerRecipe,
@@ -68,4 +80,5 @@ module.exports = {
     getById,
     editRecipe,
     deleteRecipe,
+    addImageRecipe,
 };
