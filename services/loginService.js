@@ -15,7 +15,7 @@ const login = async (email, password) => {
   }
 
   const jwtConfig = {
-    expiresIn: 300,
+    expiresIn: 60 * 60,
     algorithm: 'HS256',
   };
 
