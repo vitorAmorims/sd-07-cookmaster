@@ -1,6 +1,4 @@
-const {
-  UNAUTHORIZED,
-} = require('../controllers/statusCode');
+const { UNAUTHORIZED } = require('../controllers/statusCode');
 
 const fieldsMessage = {
   message: 'All fields must be filled',
@@ -12,7 +10,7 @@ const loginPassword = (req, res, next) => {
   const { password } = req.body;
 
   if (!password || password === '') {
-    res.status(UNAUTHORIZED).json(fieldsMessage);
+    return res.status(UNAUTHORIZED).json(fieldsMessage);
   }
 
   next();
@@ -24,7 +22,7 @@ const loginEmail = (req, res, next) => {
   const ValidEmail = regexEmail.test(email);
 
   if (!ValidEmail || email === undefined) {
-    res.status(UNAUTHORIZED).json(fieldsMessage);
+    return res.status(UNAUTHORIZED).json(fieldsMessage);
   }
 
   next();

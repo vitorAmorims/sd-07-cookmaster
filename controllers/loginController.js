@@ -5,7 +5,7 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     const userLogged = await loginService.loginUser(email, password);
     const { http, message } = userLogged;
-    res.status(http).json(message);
+    return res.status(http).json(message);
   } catch (error) {
     console.log(error);
     return res

@@ -11,11 +11,9 @@ const createRecipe = async (req, res) => {
       user,
     );
     const { http, message } = createdRecipe;
-    res.status(http).json(message);
+    return res.status(http).json(message);
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: internalError, err: error.message });
+    return res.status(500).json({ message: internalError, err: error.message });
   }
 };
 
@@ -23,11 +21,9 @@ const getAllRecipes = async (req, res) => {
   try {
     const allRecipes = await recipesService.getAllRecipes();
     const { http, message } = allRecipes;
-    res.status(http).json(message);
+    return res.status(http).json(message);
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: internalError, err: error.message });
+    return res.status(500).json({ message: internalError, err: error.message });
   }
 };
 
@@ -37,11 +33,9 @@ const getRecipeById = async (req, res) => {
     const getRecipe = await recipesService.getRecipeById(id);
     console.log(getRecipe);
     const { http, message } = getRecipe;
-    res.status(http).json(message);
+    return res.status(http).json(message);
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: internalError, err: error.message });
+    return res.status(500).json({ message: internalError, err: error.message });
   }
 };
 

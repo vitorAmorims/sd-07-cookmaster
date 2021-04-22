@@ -11,9 +11,9 @@ const createUsers = async (req, res) => {
     passwordEncrypted = bcrypt.hashSync(password, salt);
     const usersController = await usersServices.createUsers(name, email, passwordEncrypted);
     const { http, message } = usersController;
-    res.status(http).json(message);
+    return res.status(http).json(message);
   } catch (error) {
-     res.status(serverError).json({ message: error.message });
+    return res.status(serverError).json({ message: error.message });
   }
 };
 
