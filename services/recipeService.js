@@ -39,7 +39,7 @@ const updateRecipeByIdService = async (id, data, user) => {
     return {
       isError: true,
       status: status.UNAUTHORIZED,
-      message: 'Você não é admin coroio',
+      message: 'Not Admin',
     };
   }
   const result = await recipeModel.updateRecipeByIdModel(id, data, userId);
@@ -69,7 +69,7 @@ const deleteRecipeByIdService = async (id, user) => {
   return result;
 };
 
-const insertImageRecipeByIdService = async (id, user) => {
+const insertImageRecipeByIdService = async (id, user, pathImage) => {
   const { _id: userId } = user;
   const findRecipeById = await recipeModel.getRecipeByIdModel(id);
   if (!findRecipeById) {
@@ -86,8 +86,8 @@ const insertImageRecipeByIdService = async (id, user) => {
       message: 'Você não é admin',
     };
   }
-  const result = await recipeModel.insertImageRecipeByIdModel(id);
-  return result;
+  const result = await recipeModel.insertImageRecipeByIdModel(id, pathImage);
+  return { ...result.value, image: pathImage };
 };
 
 module.exports = {

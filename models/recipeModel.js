@@ -44,6 +44,11 @@ const deleteRecipeByIdModel = async (id) => {
   );
 };
 
+const insertImageRecipeByIdModel = async (id, pathImage) => connection('recipes').then(
+  (db) => db.collection('recipes')
+  .findOneAndUpdate({ _id: ObjectId(id) }, { $set: { image: pathImage } }),
+);
+
 module.exports = {
   getAllRecipesModel,
   createRecipeModel,
@@ -51,4 +56,5 @@ module.exports = {
   getRecipeByIdModel,
   updateRecipeByIdModel,
   deleteRecipeByIdModel,
+  insertImageRecipeByIdModel,
 };
