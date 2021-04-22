@@ -35,9 +35,20 @@ const updateByIdValidation = async (id, newData, userId, role) => {
   return { message: 'no have permission', code: status.unauthorized };
 };
 
+const excludeRecipeValidation = async (id, userId, role) => {
+  const recipe = await recipesModels.getRecipeById(id);
+  if (recipe.userId === userId || role === 'admin') {
+    const exclude = await recipesModels.excludeRecipeById(id);
+    return exclude;
+  }
+
+  return { message: 'no have permission', code: status.unauthorized };
+};
+
 module.exports = {
   newRecipeValidation,
   getRecipesValidation,
   recipeByIdValidation,
   updateByIdValidation,
+  excludeRecipeValidation,
 };

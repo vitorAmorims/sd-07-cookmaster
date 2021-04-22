@@ -16,7 +16,6 @@ const getRecipeById = async (id) => {
   return connect().then((db) => db.collection('recipes').findOne(ObjectId(id)));
 };
 
-// const updateRecipeById = async (id, name, ingredients, preparation, userId) => 
 const updateRecipeById = async (id, newData, userId) => 
   connect().then(async (db) => {
     await db.collection('recipes')
@@ -34,9 +33,18 @@ const updateRecipeById = async (id, newData, userId) =>
       };
   });
 
+const excludeRecipeById = async (id) => {
+  connect().then(async (db) => db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
+
+  return {
+    _id: id,
+  };
+};
+
 module.exports = {
   addRecipe,
   getRecipes,
   getRecipeById,
   updateRecipeById,
+  excludeRecipeById,
 };
