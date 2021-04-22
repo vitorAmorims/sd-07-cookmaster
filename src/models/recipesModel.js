@@ -11,6 +11,10 @@ const createRecipe = async (name, ingredients, preparation, userId) => conn()
     return recipe.ops[0];
   });
 
+const getAllRecipes = async () => conn()
+  .then(async (db) => db.collection('recipes').find().toArray());
+
 module.exports = {
   createRecipe,
+  getAllRecipes,
 };
