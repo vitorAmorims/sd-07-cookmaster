@@ -1,5 +1,5 @@
 const express = require('express');
-const { addUser, login } = require('../controllers/usersController');
+const { login, users } = require('../controllers');
 const {
   checkUserData,
   checkedEmailExists,
@@ -7,7 +7,7 @@ const {
 
 const router = express.Router();
 
-router.post('/users', [checkUserData, checkedEmailExists], addUser);
+router.post('/users', [checkUserData, checkedEmailExists], users);
 router.post('/login', [checkLoginDataExistsMD], login);
 
 module.exports = router;
