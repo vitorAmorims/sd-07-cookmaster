@@ -2,6 +2,7 @@ const express = require('express');
 
 const usersRoute = require('./src/routes/usersRoute');
 const loginRoute = require('./src/routes/loginRoute');
+const recipesRoute = require('./src/routes/recipesRoute');
 const errorMiddleware = require('./src/middlewares/error');
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(express.json());
 
 app.use(usersRoute);
 app.use(loginRoute);
+app.use(recipesRoute);
 
 app.use(errorMiddleware);
 
