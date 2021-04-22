@@ -16,9 +16,7 @@ const createRecipe = async (req, res) => {
     const newRecipe = await recipeModle.createRecipe(name, ingredients, preparation, _id);
     res.status(CREATED).json({ recipe: newRecipe });
   } catch (error) {
-    if (error.message === 'Invalid entries. Try again.') {
-      return res.status(BADREQUEST).json({ message: error.message });
-    }
+    res.status(BADREQUEST).json({ message: error.message });
   }
 };
 
@@ -34,15 +32,23 @@ const getRecipeById = async (req, res) => {
     if (validadeId) throw Error(validadeId);
 
     const recipe = await recipeModle.getRecipeById(id);
-
     res.status(OK).json(recipe);
   } catch (error) {
     res.status(NOTFOUND).json({ message: error.message });
   }
 };
 
+const updateRecipe = async (req, res) => {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const updated = await recipeModle.updateRecipe(id, name, ingredients, preparation);
+  console.log(updated);
+  res.status(OK).json(updated);
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
+  updateRecipe,
 };

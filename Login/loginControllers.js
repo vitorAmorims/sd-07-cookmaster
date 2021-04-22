@@ -9,7 +9,7 @@ const makeLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
     const validadeLogin = loginService.validateLogin(email, password);
-    if (validadeLogin) throw Error(validadeLogin);
+    if (validadeLogin) throw new Error(validadeLogin);
 
     const user = await loginModel.findUser(email);
     const token = loginToken.createToken(user);
