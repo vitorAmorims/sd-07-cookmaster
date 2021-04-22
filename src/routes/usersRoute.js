@@ -3,7 +3,7 @@ const rescue = require('express-rescue');
 
 const usersController = require('../controllers/usersController');
 
-const router = express.router();
+const router = express.Router();
 
 router.post('/users', rescue(usersController.createUser));
 
