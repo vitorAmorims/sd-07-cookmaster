@@ -5,15 +5,18 @@ const getAll = async () => connect().then((db) => db.collection('users').find({}
 
 const addUser = async (name, email, password) => 
   connect().then(async (db) => {
-    await db.collection('users').insertOne({ name, email, password });
-    return {
-      name,
-      email,
-      password,
-    };
+    const user = await db.collection('users').insertOne({ name, email, password, role: 'user' });
+    return user.ops[0];
+  });
+
+const replyEmail = async (email) => 
+  connect().then(async (db) => {
+    const verifyEmail = await db.collection('users').findOne({ email });
+    return verifyEmail;
   });
 
 module.exports = {
   getAll,
   addUser,
+  replyEmail,
 };

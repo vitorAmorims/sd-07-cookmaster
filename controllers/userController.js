@@ -3,12 +3,9 @@ const UserModel = require('../models/userModel');
 
 const getAll = async (req, resp) => {
   try {
-    const { code, message, userResponse } = await UserModel.getAll();
-    if (message) {
-      return resp.json(message);
-    }
+    const users = await UserModel.getAll();
 
-    resp.status(200).json({ userResponse });
+    resp.status(200).json(users);
   } catch (error) {
     console.error(error.message);
   resp.status(500).json({ message: error.message });
@@ -18,8 +15,8 @@ const getAll = async (req, resp) => {
 const addUser = async (req, resp) => {
   try {
     const { name, email, password } = req.body;
-    const user = await UserService.addUser(name, email, password);
-    return resp.status(200).json(user);
+    const { code, user } = await UserService.addUser(name, email, password);
+    return resp.status(code).json({ user });
   } catch (error) {
     console.error(error.message);
     resp.status(500).json({ message: error.message });
