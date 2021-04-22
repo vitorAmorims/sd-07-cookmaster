@@ -27,8 +27,9 @@ app.use('/', usersRoute);
 
 app.use('/', recipesRoute);
 
-app.use(rescue.from(MissingTokenError, (err, _req, res, _next) => 
-  res.status(status.UNAUTHORIZED).json({ message: 'missing auth token' })));
+app.use(rescue.from(MissingTokenError, (err, _req, res, _next) => {
+  res.status(status.UNAUTHORIZED).json({ message: err.message });
+}));
 
 app.use(rescue.from(jwt.JsonWebTokenError, (err, _req, res, _next) => {
   res.status(status.UNAUTHORIZED).json({ message: err.message });
