@@ -32,11 +32,16 @@ async function addUsersService(name, email, password) {
     // const newPassword = bcrypy.hashSync(password,salt);
     return addUserModel(name, email, password);
 }
+function throwUserNameError() {
+    throw new Error(JSON.stringify({
+        text: 'Incorrect username or password', code: 401,
+    }));
+}
 
 async function userLoginService(email, password) {
     const user = await getUserModel(email);
     if (!user) {
-        throw new Error(JSON.stringify({ text: 'Incorrect username or password', code: 401 }));
+        throwUserNameError();
     }
     if (user.password !== password) {
         throw new Error(JSON.stringify({ text: 'Invalid password', code: 401 }));
@@ -50,6 +55,7 @@ async function userLoginService(email, password) {
     const token = jwt.sign({ data: { name, id, role } }, secret, jwtConfig);
     return { token };
 }
+
 function checkEmailAndPassword(email, password) {
     if (!email || !password) {
         throw new Error(JSON.stringify({ text: 'All fields must be filled', code: 401 }));
@@ -59,13 +65,18 @@ function checkEmailAndPassword(email, password) {
 async function validateEmailAndPassword(email, password) {
     checkEmailAndPassword(email, password);
     const isValid = await validateEmail(email);
-    if (!isValid || password.length < sete || password !== 'admin') {
-        throw new Error(JSON.stringify({ text: 'Incorrect username or password', code: 401 }));
-    }
+    if (!isValid) {
+        throwUserNameError(); 
+}
+    if (password !== 'admin' && password.length < sete) {
+        throwUserNameError(); 
+}
 }
 async function addRecipeService(name, ingredients, preparation, token) {
     if (!name || !ingredients || !preparation) {
-        throw new Error(JSON.stringify({ text: 'Invalid entries. Try again.', code: 400 }));
+        throw new Error(JSON.stringify({
+            text: 'Invalid entries. Try again.', code: 400,
+        }));
     }
     const decoded = jwt.verify(token, secret);
     const user = await findUserByName(decoded.data.name);
