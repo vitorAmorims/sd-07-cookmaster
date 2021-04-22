@@ -1,4 +1,4 @@
-const { login } = require('../services/loginServices')
+const { login } = require('../services/loginServices');
 
 const ERROR = 500;
 

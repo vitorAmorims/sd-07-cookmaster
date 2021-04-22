@@ -7,7 +7,7 @@ const newUser = async (req, res) => {
     const { name, email, password } = req.body;
     const { http, message } = await createNewUser(name, email, password);
     return res.status(http).json(message);
-  } catch(error) {
+  } catch (error) {
     return res.status(ERROR).send({ message: error });
   }
 };

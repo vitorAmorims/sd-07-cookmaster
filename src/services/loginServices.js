@@ -1,5 +1,5 @@
-const { getUserByEmail } = require('../models/usersModels');
 const jwt = require('jsonwebtoken');
+const { getUserByEmail } = require('../models/usersModels');
 
 const secret = 'projetoMuitoDificilMeuDeus';
 
@@ -25,18 +25,18 @@ const validatesTheData = async (email, password) => {
   return false;
 };
 
-const login = async (email, password) => {
-  const parametersIsNotValid = validatedParameters(email, password);
+const login = async (emailParam, passwordParam) => {
+  const parametersIsNotValid = validatedParameters(emailParam, passwordParam);
   if (parametersIsNotValid) return parametersIsNotValid;
 
-  const unauthorized = await validatesTheData(email, password);
+  const unauthorized = await validatesTheData(emailParam, passwordParam);
   if (unauthorized) return unauthorized;
 
-  const user = await getUserByEmail(email);
+  const { _id: id, email, role } = await getUserByEmail(emailParam);
   const data = {
-    id: user._id,
-    user: user.email,
-    role: user.role,
+    id,
+    email,
+    role,
   };
 
   const token = jwt.sign(data, secret);
