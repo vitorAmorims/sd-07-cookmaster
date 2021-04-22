@@ -2,7 +2,7 @@ const Joi = require('joi');
 const { Router } = require('express');
 const { status, errorMessages } = require('../helpers');
 const { userService } = require('../services');
-const { authMiddleware } = require('../middlewares');
+// const { authMiddleware } = require('../middlewares');
 
 const userRoute = Router();
 
@@ -33,8 +33,14 @@ userRoute.post('/', async (req, res, next) => {
   }
 });
 
-userRoute.post('/admin', async (req, res, next) => {
+/* userRoute.post('/admin', authMiddleware, async (req, res, next) => {
+  const { user } = req;
 
-})
-
+  try {
+    
+  } catch (err) {
+    throw new Error(err);
+  }
+});
+ */
 module.exports = userRoute;
