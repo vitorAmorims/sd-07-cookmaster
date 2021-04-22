@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const recipe = require('../Controller/recipe');
+const recipe = require('../controller/recipe');
 const validateToken = require('../middlewares/validateToken');
 const recipeService = require('../Service/recipe');
 

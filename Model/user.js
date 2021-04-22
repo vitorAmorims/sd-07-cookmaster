@@ -1,4 +1,4 @@
-const connect = require('../config/Connect');
+const connect = require('../config/connect');
 
 const create = async (name, email, password, role) => 
   connect()
