@@ -1,10 +1,9 @@
-const { BAD_REQUEST_400, CONFLICT_409 } = require('../valuesGlobal');
+const {
+  BAD_REQUEST_400,
+  CONFLICT_409,
+  UNAUTHORIZED_401,
+  checkedEmail } = require('../util');
 const usersModel = require('../models/usersModel');
-
-const checkedEmail = (email) => {
-  const regex = /\S+@\S+\.\S+/;
-  return regex.test(email);
-};
 
 const checkedEmailExists = async (req, res, next) => {
   try {
@@ -36,7 +35,22 @@ const checkUserData = (req, res, next) => {
   }
 };
 
+const checkLoginDataExistsMD = (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    console.log(email, password);
+    if (!email || !password) {
+      throw new Error();
+    }
+    next();
+  } catch (err) {
+    console.error(err.message);
+    res.status(UNAUTHORIZED_401).send({ message: 'All fields must be filled' });
+  }
+};
+
 module.exports = {
   checkUserData,
   checkedEmailExists,
+  checkLoginDataExistsMD,
 };
