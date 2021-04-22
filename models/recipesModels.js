@@ -2,7 +2,7 @@ const connection = require('../config/connections');
 
 const createRecipe = async (name, ingredients, preparation, userId) => {
   const createdRecipe = await connection().then((db) =>
-    db.collection('users').insertOne({
+    db.collection('recipes').insertOne({
       name,
       ingredients,
       preparation,

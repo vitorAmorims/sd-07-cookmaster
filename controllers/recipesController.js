@@ -9,6 +9,7 @@ const createRecipe = async (req, res) => {
       preparation,
       user,
     );
+    console.log(createdRecipe);
     const { http, message } = createdRecipe;
     res.status(http).json(message);
   } catch (error) {

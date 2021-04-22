@@ -23,6 +23,7 @@ const validateToken = async (req, res, next) => {
     req.body.user = user;
     next();
   } catch (error) {
+    console.log('entrou no catch do token', req.body, req.headers);
     return res.status(UNAUTHORIZED).json(tokenMessage);
   }
 };
