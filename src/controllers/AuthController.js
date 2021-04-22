@@ -1,25 +1,33 @@
-const bcrypt = require('bcrypt');
 const { SUCCESS, UNAUTHORIZED, ERROR } = require('./status');
 const UserService = require('../services/UserService');
 const jwt = require('../config/jwt');
 
 module.exports = {
   login: async (req, res) => {
-    try {    
-      const user = await UserService.get(req.body.email);    
-      const passwordMatch = bcrypt.compareSync(req.body.password, user?.password ?? '');
+    try {
+      const { email, password: providedPass } = req.body;
+      const user = await UserService.get(email);
 
-      if (!user || !passwordMatch) {
+      if (!user || providedPass !== user.password) {
         return res.status(UNAUTHORIZED).json({ message: 'Incorrect username or password' });
       }
 
-      const { password, ...secureUser } = user;
-      const token = jwt.sign({ user: secureUser });
+      const { password, name, ...userInfo } = user;
+      const token = jwt.sign({ user: userInfo });
 
       return res.status(SUCCESS).json({ token });
-    } catch (error) {
-      console.log(error);
+    } catch {
       return res.status(ERROR).json({ message: 'An internal error has occurred' });
+    }
+  },
+  authenticate: async (req, res, next) => {
+    try {
+      const auth = req.headers?.authorization;
+      const token = jwt.verify(auth);
+      req.user = token.user;
+      next();
+    } catch {
+      return res.status(UNAUTHORIZED).json({ message: 'jwt malformed' });
     }
   },
 };
