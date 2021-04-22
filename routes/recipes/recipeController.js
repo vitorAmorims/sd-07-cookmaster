@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { OH_NO, CREATED, OK, NOT_FOUND } = require('../../helpers/status');
+const { OH_NO, CREATED, OK, NOT_FOUND, NO_CONTENT } = require('../../helpers/status');
 const recipeService = require('./recipeService');
 const { authMiddleware, recipeMiddleware } = require('../../middlewares');
 const recipeModel = require('./recipeModel');
@@ -35,6 +35,28 @@ recipeRouter.get('/:id', async (req, res) => {
     const recipeData = await recipeModel.getById(id);
     if (!recipeData) return res.status(NOT_FOUND).json(recipeNotFound);
     res.status(OK).json(recipeData);
+  } catch (err) {
+    res.status(OH_NO).json(err);
+  }
+});
+
+recipeRouter.put('/:id', authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, ingredients, preparation } = req.body;
+    const recipeData = await recipeService.updateRecipe(name, ingredients, preparation, id);
+    if (!recipeData) return res.status(NOT_FOUND).json(recipeNotFound);
+    res.status(OK).json(recipeData);
+  } catch (err) {
+    res.status(OH_NO).json(err);
+  }
+});
+
+recipeRouter.delete('/:id', authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await recipeModel.removeRecipe(id);
+    res.status(NO_CONTENT).json();
   } catch (err) {
     res.status(OH_NO).json(err);
   }

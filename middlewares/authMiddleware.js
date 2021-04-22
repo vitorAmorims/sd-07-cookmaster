@@ -1,14 +1,14 @@
 const jwt = require('jsonwebtoken');
 const userModel = require('../routes/user/userModel');
 const { UNAUTHORIZED } = require('../helpers/status');
-const { invalidToken } = require('../helpers/errorMessage');
+const { invalidToken, missingToken } = require('../helpers/errorMessage');
 
 const secret = 'manodoceumeajuda';
 
 module.exports = async (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) {
-    return res.status(UNAUTHORIZED).json(invalidToken);
+    return res.status(UNAUTHORIZED).json(missingToken);
   }
   try {
     const decoded = jwt.verify(token, secret);
@@ -22,6 +22,6 @@ module.exports = async (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
-    return res.status(401).json({ message: err.message });
+    return res.status(UNAUTHORIZED).json(invalidToken);
   }
 };
