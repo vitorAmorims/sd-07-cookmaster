@@ -1,9 +1,18 @@
 const express = require('express');
 
-const { NotFoundException } = require('./exception');
-
 const route = express.Router();
 
-module.exports = route;
+const {
+    validateUserMiddleware,
+    validateUniqueUserMiddleware,
+} = require('./middleware/userMiddlewares');
 
-route.get('/error', (req, res, next) => { if ('xablau' === 'xablau') throw new NotFoundException('recipeNotFound'); next(); }, (_req, res) => { res.send('xablau'); });
+const { createUserController } = require('./controller/userController');
+
+route.use(express.static(`${__dirname}recipeImages/`));
+
+route.post('/users', validateUserMiddleware, validateUniqueUserMiddleware, createUserController);
+
+route.post('/users/login', (_req, res) => res.json('Login de usuários'));
+
+module.exports = route;
