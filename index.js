@@ -5,7 +5,7 @@ const routes = require('./src/routes');
 
 const uploadConfig = require('./src/config/upload');
 const errorHandling = require('./src/middlewares/errorHandling');
-const { auditInitialRequest } = require('./src/utils/audit.js'); 
+const audit = require('./src/utils/audit'); 
 
 const app = express();
 const port = 3000;
@@ -14,7 +14,7 @@ app.use(express.json());
 
 app.use('/images', express.static(uploadConfig.directory));
 
-app.use(auditInitialRequest);
+app.use(audit);
 
 app.get('/', (_req, res) => {
   res.send();
