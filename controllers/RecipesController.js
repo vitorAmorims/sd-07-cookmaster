@@ -1,4 +1,4 @@
-// const fs = require('fs').promises;
+const fs = require('fs').promises;
 const recipeService = require('../services/RecipesService');
 const recipeModel = require('../models/Recipes');
 const errorMsg = require('../utils/errorMsg');
@@ -79,11 +79,14 @@ const addImage = async (req, res) => {
   }
 };
 
-const getImage = async (_req, _res) => {
-  // const { id } = req.params;
-  // const image = `http://localhost:3000/images/${id}.jpeg`;
-  // res.writeHead('200', { 'Content-type': 'image/jpeg' });
-  // res.end(image);
+// Um oferecimento Stackoverflow
+// https://stackoverflow.com/questions/5823722/how-to-serve-an-image-using-nodejs
+const getImage = async (req, res) => {
+  const { id } = req.params;
+  const image = await fs.readFile(`${__dirname}/../images/${id}`);
+  
+  res.writeHead('200', { 'Content-type': 'image/jpeg' });
+  res.end(image, 'binary');
 };
 
 module.exports = {
