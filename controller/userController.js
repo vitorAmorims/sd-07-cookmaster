@@ -1,11 +1,7 @@
-// const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-require('dotenv/config');
 const User = require('../model/UserModel');
-// const { UnprocessableException, NotFound } = require('../utils/errorHandler');
 
-// const SUCCESS = 200;
-// const { JWT_SECRET } = process.env;
+const SUCCESS = 200;
 const CREATED = 201;
 const INTERNAL_SERVER_ERROR = 500;
 
@@ -29,6 +25,19 @@ const createUserController = async (req, res) => {
     }
 };
 
+const loginUserController = async (req, res) => {
+  try {
+    const { token } = req.body;
+    res.status(SUCCESS).json({ token });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Internal server error.',
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
     createUserController,
+    loginUserController,
 };
