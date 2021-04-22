@@ -9,8 +9,19 @@ const createRecipe = async (req, res) => {
       preparation,
       user,
     );
-    console.log(createdRecipe);
     const { http, message } = createdRecipe;
+    res.status(http).json(message);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: 'Erro interno', err: error.message });
+  }
+};
+
+const getAllRecipes = async (req, res) => {
+  try {
+    const allRecipes = await recipesService.getAllRecipes();
+    const { http, message } = allRecipes;
     res.status(http).json(message);
   } catch (error) {
     return res
@@ -21,4 +32,5 @@ const createRecipe = async (req, res) => {
 
 module.exports = {
   createRecipe,
+  getAllRecipes,
 };

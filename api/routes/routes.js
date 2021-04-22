@@ -46,5 +46,9 @@ router.post(
   validateToken,
   recipeController.createRecipe,
 );
+router.get(
+  '/recipes',
+  recipeController.getAllRecipes,
+);
 
 module.exports = router;

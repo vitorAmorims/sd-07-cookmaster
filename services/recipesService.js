@@ -1,5 +1,5 @@
 const recipesModel = require('../models/recipesModels');
-const { UNAUTHORIZED, SUCCESS } = require('../controllers/statusCode');
+const { UNAUTHORIZED, SUCCESS, OK } = require('../controllers/statusCode');
 
 const customAnswer = (message, http = UNAUTHORIZED) => ({
   http,
@@ -17,6 +17,12 @@ const createRecipes = async (name, ingredients, preparation, user) => {
   return customAnswer(createdRecipe, SUCCESS);
 };
 
+const getAllRecipes = async () => {
+  const allRecipes = await recipesModel.getAllRecipes();
+  return customAnswer(allRecipes, OK);
+};
+
 module.exports = {
   createRecipes,
+  getAllRecipes,
 };
