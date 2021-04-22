@@ -3,10 +3,10 @@ const rescue = require('express-rescue');
 // require('dotenv').config();
 
 const MissingTokenError = require('../errors/MissingTokenError');
+const MalformedToken = require('../errors/MalformedToken');
 const UsersModel = require('../models/usersModel');
-const status = require('../httpStatusCodes');
 
-const validateToken = rescue(async (req, res, next) => {
+const validateToken = rescue(async (req, _res, next) => {
   const { authorization } = req.headers;
   const secret = 'anySecretWorks';
 
@@ -14,17 +14,17 @@ const validateToken = rescue(async (req, res, next) => {
     throw new MissingTokenError();
   }
 
-  try {
-    const userData = jwt.verify(authorization, secret);
+  const userData = jwt.verify(authorization, secret);
 
-    const user = await UsersModel.findUserByEmail(userData.email);
+  const user = await UsersModel.findUserByEmail(userData.email);
 
-    req.user = user;
-
-    next();
-  } catch (error) {
-    return res.status(status.UNAUTHORIZED).json({ message: 'jwt malformed' });
+  if (!user) {
+    throw new MalformedToken();
   }
+
+  req.user = user;
+
+  next();
 });
 
 module.exports = validateToken;
