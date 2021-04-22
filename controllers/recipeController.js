@@ -41,7 +41,9 @@ const updateRecipe = async (req, res) => {
     const { id } = req.params;
     const { name, ingredients, preparation } = req.body;
     const { _id } = req.user;
-    const result = await Recipe.update(id, name, ingredients, preparation, _id);
+    const params = { id, name, ingredients, preparation, _id };
+    console.log(params);
+    const result = await Recipe.update(params);
     console.log(result);
     return res.status(code.OK).json(result);
   } catch (err) {

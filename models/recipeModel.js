@@ -16,7 +16,8 @@ const getById = async (id) => {
   return recipe;
 };
 
-const update = async (id, name, ingredients, preparation, _id) => {
+const update = async (params) => {
+  const { id, name, ingredients, preparation, _id } = params;
   if (!ObjectId.isValid(id)) return null;
   await connection().then((db) => db.collection('recipes')
     .updateOne(
