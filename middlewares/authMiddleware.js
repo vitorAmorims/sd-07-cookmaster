@@ -16,6 +16,7 @@ const authMiddleware = (req, res, next) => {
   try {
   const payload = jwt.verify(token, JWT_SECRET);
   req.user = payload;
+  console.log(req.user);
   } catch (error) {
     return res.status(unauthorized).json({
       message: 'jwt malformed',

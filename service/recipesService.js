@@ -33,9 +33,28 @@ const updateRecipe = async (id, body) => {
     console.error({ ERRO });
   }
 };
+
+const deleteRecipe = async (id) => {
+  try {
+    return await recipesModel.deleteRecipe(id);
+  } catch (error) {
+    console.error({ ERRO });
+  }
+};
+
+const insertImageRecipe = async (id, image) => {
+  try {
+    return await recipesModel.insertImageRecipe(id, image);
+  } catch (error) {
+    console.error({ ERRO });
+  }
+};
+
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipe,
   updateRecipe,
+  deleteRecipe,
+  insertImageRecipe,
 };

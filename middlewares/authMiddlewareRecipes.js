@@ -6,8 +6,6 @@ const JWT_SECRET = 'meuSegredo';
 
 const authMiddlewareRecipes = (req, res, next) => {
   const token = req.headers.authorization;
-  console.log(token);
-
   if (!token) {
     return res.status(unauthorized).json({
       message: 'missing auth token',

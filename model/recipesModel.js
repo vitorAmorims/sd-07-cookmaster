@@ -1,6 +1,8 @@
 const { ObjectID } = require('mongodb');
 const connection = require('../config/connection');
 
+const ERRO = 'Sem conexão com o banco';
+
 const createRecipes = async (name, ingredients, preparation, id) => {
   try {
     const db = await connection();
@@ -12,7 +14,7 @@ const createRecipes = async (name, ingredients, preparation, id) => {
     });
     return recipes;
   } catch (error) {
-    console.error({ message: 'Sem conexão com o banco' });
+    console.error({ message: ERRO });
   }
 };
 
@@ -23,7 +25,7 @@ const getAllRecipes = async () => {
     return allRecipes;
   } catch (error) {
     console.error({
-      message: 'Não tem produto com esse nome no banco!',
+      message: ERRO,
     });
   }
 };
@@ -37,7 +39,7 @@ const getRecipe = async (id) => {
     return recipes;
   } catch (error) {
     console.error({
-      message: 'Não tem produto com esse nome no banco',
+      message: ERRO,
     });
   }
 };
@@ -55,7 +57,38 @@ const updateRecipe = async (id, body) => {
     return recipes;
   } catch (error) {
     console.error({
-      message: 'Não tem produto com esse nome no banco',
+      message: ERRO,
+    });
+  }
+};
+
+const deleteRecipe = async (id) => {
+  try {
+    const db = await connection();
+    const recipes = await db
+      .collection('recipes')
+      .findOneAndDelete({ _id: ObjectID(id) });
+    return recipes;
+  } catch (error) {
+    console.error({
+      message: ERRO,
+    });
+  }
+};
+
+const insertImageRecipe = async (id, image) => {
+  try {
+    const query = { _id: ObjectID(id) };
+    const update = { $set: { image } };
+    const option = { returnOriginal: false };
+    const db = await connection();
+    const recipes = await db
+      .collection('recipes')
+      .findOneAndUpdate(query, update, option);
+    return recipes;
+  } catch (error) {
+    console.error({
+      message: ERRO,
     });
   }
 };
@@ -65,4 +98,6 @@ module.exports = {
   getAllRecipes,
   getRecipe,
   updateRecipe,
+  deleteRecipe,
+  insertImageRecipe,
 };
