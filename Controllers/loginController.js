@@ -13,6 +13,7 @@ const loginUser = async (req, res) => {
     const payload = {
       id: ObjectID(user.id),
       email: user.email,
+      password: user.password,
       role: user.role,
     };
 
