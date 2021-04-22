@@ -4,6 +4,6 @@ const { checkUserToLogin, checkUserAndPass } = require('../middleware/loginMiddl
 
 const router = express.Router();
 
-router.post('/login', [checkUserToLogin, checkUserAndPass], loginController.onLogin);
+router.post('/login', checkUserToLogin, checkUserAndPass, loginController.onLogin);
 
 module.exports = router;

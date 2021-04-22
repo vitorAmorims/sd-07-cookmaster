@@ -14,7 +14,7 @@ const onLogin = async (request, response) => {
       algorithm: 'HS256',
     };
 
-    const token = JWT.sign({ data: user.email }, secret, JWTConfig);
+    const token = JWT.sign({ data: user }, secret, JWTConfig);
     response.status(status.OK).json({ token });
   } catch (error) {
     console.error(error);
