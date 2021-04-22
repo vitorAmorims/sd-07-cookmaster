@@ -4,9 +4,4 @@ module.exports = (err, _req, res, _next) => {
             message: err.message,
         });
     }
-    if (err.fileValidationError) {
-        return res.status(401).json({
-            message: err.message,
-        });
-    }
 };

@@ -1,30 +1,44 @@
 const express = require('express');
-const userController = require('../controllers/usersController');
-const middlewares = require('../middlewares');
+
+const {
+  error,
+  userFieldsValidation,
+  emailValidation,
+  loginFieldsValidation,
+  loginEmailValidation,
+  loginPasswordValidation,
+  validateAdm,
+  validateToken,
+} = require('../middlewares');
+
+const {
+  addAdmin,
+  addUser,
+} = require('../controllers/usersController');
 
 const router = express.Router();
 
 router.post(
   '/users',
-  middlewares.userFieldsValidation,
-  middlewares.emailValidation,
-  userController.addUser,
+  userFieldsValidation,
+  emailValidation,
+  addUser,
 );
 
 router.post(
   '/login',
-  middlewares.loginFieldsValidation,
-  middlewares.loginEmailValidation,
-  middlewares.loginPasswordValidation,
+  loginFieldsValidation,
+  loginEmailValidation,
+  loginPasswordValidation,
 );
 
 router.post(
   '/users/admin',
-  middlewares.validateToken,
-  middlewares.validateAdm,
-  userController.addAdmin,
+  validateToken,
+  validateAdm,
+  addAdmin,
 );
 
-router.use(middlewares.error);
+router.use(error);
 
 module.exports = router;
