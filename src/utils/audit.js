@@ -3,4 +3,4 @@ const auditInitialRequest = (req, _res, next) => {
   next();
 };
 
-module.exports = auditInitialRequest;
+module.exports = { auditInitialRequest };
