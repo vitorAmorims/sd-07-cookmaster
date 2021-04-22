@@ -41,7 +41,7 @@ const updateRecipe = async (req, res) => {
 
   try {
     const response = await recipesServices.updateRecipe(recipe, id);
-
+    console.log(response);
     res.status(HttpResponses.codes.OK).json(response);
   } catch (err) {
     res.status(HttpResponses.codes.UNAUTHORIZED).json({ message: err.message });
