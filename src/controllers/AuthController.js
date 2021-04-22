@@ -23,6 +23,9 @@ module.exports = {
   authenticate: async (req, res, next) => {
     try {
       const auth = req.headers?.authorization;
+      if (!auth) {
+        return res.status(UNAUTHORIZED).json({ message: 'missing auth token' });
+      }
       const token = jwt.verify(auth);
       req.user = token.user;
       next();
