@@ -17,7 +17,7 @@ app.use('/users', routersUsers);
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });
 
 // referencias
-// 
+// Zambeli
 // router/index - routerProd/Sale - controllersProd/sales - servideProd/sale - modelsProd
 // https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status
 // https://expressjs.com/pt-br/guide/routing.html

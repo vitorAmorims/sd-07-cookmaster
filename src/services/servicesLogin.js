@@ -3,8 +3,8 @@ const authConfig = require('../config/auth.json');
 const { ObjectId } = require('mongodb');
 const modelsUsers = require('../models/modelsUsers');
 
-const createLogin = async (email, password) => {
-
+// rules for login
+const rulesForLogin = async (email, password) => {
   if (!email || !password) {
     throw {
       code: 'invalid_user',
@@ -18,6 +18,15 @@ const createLogin = async (email, password) => {
       message: 'Incorrect username or password',
     };
   }
+  return true;
+};
+
+const createLogin = async (email, password) => {
+  const rules = await rulesForLogin(email, password);
+  if (!rules) {
+    return false;
+  };
+  const validatedLogin = await modelsUsers.getByEmail(email);
   return validatedLogin;
 };
 
