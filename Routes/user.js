@@ -8,6 +8,6 @@ router.route('/users')
   .post(user.create);
 
 router.route('/users/admin')
-  .post(validateToken, user.createAdmin);
+  .post(() => validateToken, user.createAdmin);
 
 module.exports = router;
