@@ -1,5 +1,6 @@
 const express = require('express');
 const usersController = require('../controllers/usersController');
+const loginController = require('../controllers/loginController');
 const {
   validationName,
   validationPassword,
@@ -24,7 +25,7 @@ router.post(
   '/login',
   loginPassword,
   loginEmail,
-  usersController.createUsers,
+  loginController.login,
 );
 
 module.exports = router;
