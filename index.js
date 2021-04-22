@@ -1,6 +1,7 @@
 const express = require('express');
 
 const usersRoute = require('./src/routes/usersRoute');
+const loginRoute = require('./src/routes/loginRoute');
 const errorMiddleware = require('./src/middlewares/error');
 
 const app = express();
@@ -13,6 +14,8 @@ app.get('/', (request, response) => {
 app.use(express.json());
 
 app.use(usersRoute);
+app.use(loginRoute);
+
 app.use(errorMiddleware);
 
 const PORT = 3000;

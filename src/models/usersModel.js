@@ -1,4 +1,13 @@
+// const { ObjectId } = require('mongodb');
+
 const connection = require('../config/connection');
+
+// prettier-ignore
+const getUserByEmail = async (email) => {
+  const user = await connection().then((db) =>
+    db.collection('users').findOne({ email }, { name: 0, password: 0 }));
+  return user;
+};
 
 // prettier-ignore
 const getAllUsers = async () => {
@@ -16,4 +25,4 @@ const createUser = async (name, email, password) => {
   return { _id: product.insertedId, name, email, role: 'user' };
 };
 
-module.exports = { createUser, getAllUsers };
+module.exports = { createUser, getAllUsers, getUserByEmail };
