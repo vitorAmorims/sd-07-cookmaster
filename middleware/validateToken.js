@@ -1,4 +1,4 @@
-/* const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const userModel = require('../models/usersModel');
 
 const secret = 'minhasenhaforte';
@@ -9,15 +9,15 @@ const validateToken = async (req, res, next) => {
   }
 
   try {
-    // const decoded = jwt.verify(req.headers.authorization, secret);
-    if (true) {
+    const decoded = jwt.verify(req.headers.authorization, secret);
+    const user = await userModel.findEmail(decoded.email);
+    if (!user) {
       return res
         .status(401)
         .json({ message: 'Erro ao procurar usuario do token.' });
     }
 
-    // req.user = user;
-
+    req.user = user;
     next();
   } catch (error) {
     res.status(401).json({ message: error.message });
@@ -25,4 +25,3 @@ const validateToken = async (req, res, next) => {
 };
 
 module.exports = validateToken;
- */

@@ -6,7 +6,7 @@ const usersService = require('../service/usersService');
 
 const secret = 'minhasenhaforte';
 const SUCCESS = 201;
-// const OK = 200;
+const OK = 200;
 
 const registerUser = rescue(async (req, res, next) => {
   const { error } = Joi.object({
@@ -37,10 +37,10 @@ const login = rescue(async (req, res, next) => {
     expiresIn: 60 * 5,
     algorithm: 'HS256',
   };
+  const { _id, role } = loginUser;
+  const token = jwt.sign({ data: _id, email, role }, secret, jwtConfig);
 
-  const token = jwt.sign({ data: loginUser, email }, secret, jwtConfig);
-
-  res.status(200).json({ token });
+  res.status(OK).json({ token });
 });
 
 module.exports = {
