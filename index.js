@@ -18,4 +18,4 @@ app.use('/users', userController);
 app.use('/login', loginController);
 app.use('/recipes', recipeController);
 
-app.listen(PORT, () => { console.log(`API rodando na porta ${PORT}`); });
+app.listen(PORT, () => { console.log('API rodando na porta 3000'); });
