@@ -1,11 +1,11 @@
 const express = require('express');
 const rescue = require('express-rescue');
 const path = require('path');
+const jwt = require('jsonwebtoken');
 
 // require('dotenv').config();
 
 const status = require('./httpStatusCodes');
-const MalformedToken = require('./errors/MalformedToken');
 const MissingTokenError = require('./errors/MissingTokenError');
 const usersRoute = require('./routes/usersRoute');
 const recipesRoute = require('./routes/recipesRoute');
@@ -27,12 +27,11 @@ app.use('/', usersRoute);
 
 app.use('/', recipesRoute);
 
-app.use(rescue.from(MissingTokenError, (_err, _req, res, _next) => {
-  res.status(status.UNAUTHORIZED).json({ message: 'missing auth token' });
-}));
+app.use(rescue.from(MissingTokenError, (err, _req, res, _next) => 
+  res.status(status.UNAUTHORIZED).json({ message: 'missing auth token' })));
 
-app.use(rescue.from(MalformedToken, (_err, _req, res, _next) => {
-  res.status(status.UNAUTHORIZED).json({ message: 'jwt malformed' });
+app.use(rescue.from(jwt.JsonWebTokenError, (err, _req, res, _next) => {
+  res.status(status.UNAUTHORIZED).json({ message: err.message });
 }));
 
 app.listen(PORT, () => { console.log(`API rodando na porta ${PORT}`); });
