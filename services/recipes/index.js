@@ -16,8 +16,20 @@ const getById = async (id) => {
     return recipe;
 };
 
+const edit = async (id, name, ingredients, preparations) => {
+    const data = await model.edit(id, name, ingredients, preparations);
+    return data;
+};
+
+const exclude = async (id, name, ingredients, preparations) => {
+    const success = await model.exclude(id, name, ingredients, preparations);
+    return success;
+};
+
 module.exports = {
     create,
     getAll,
     getById,
+    edit,
+    exclude,
 };

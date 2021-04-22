@@ -35,8 +35,21 @@ const log = async (email, password) => {
     }
 };
 
+const isAdmin = async (id) => {
+    try {
+        const db = await connection();
+        const user = await db.collection('users').findOne({ _id: id });
+        const { role } = user;
+        if (role === 'admin') return true;
+        return false;
+    } catch (error) {
+        return false;
+    }
+};
+
 module.exports = {
     create,
     getByEmail,
     log,
+    isAdmin,
 };

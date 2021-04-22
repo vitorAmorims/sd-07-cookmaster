@@ -29,8 +29,34 @@ const getById = async (id) => {
     }
 };
 
+const edit = async (id, name, ingredients, preparation) => {
+    try {
+        if (!ObjectId(id)) return false;
+        const db = await connection();
+    await db
+        .collection('recipes').updateOne({ _id: id }, { $set: { name, ingredients, preparation } });
+    return { _id: id, name, ingredients, preparation };
+    } catch (error) {
+        return false;
+    }
+};
+
+const exclude = async (id, name, ingredients, preparation) => {
+    try {
+        if (!ObjectId(id)) return false;
+        const db = await connection();
+    await db
+        .collection('recipes').deleteOne({ _id: id }, { $set: { name, ingredients, preparation } });
+    return true;
+    } catch (error) {
+        return false;
+    }
+};
+
 module.exports = {
     create,
     getAll,
     getById,
+    edit,
+    exclude,
 };
