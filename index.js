@@ -6,8 +6,10 @@ const loginControllers = require('./controllers/loginController');
 const recipesControllers = require('./controllers/recipesController');
 const authMiddleware = require('./middlewares/auth');
 const authUpdateMiddleware = require('./middlewares/updateRecipAuth');
+const deleteMiddleware = require('./middlewares/deleteMiddleware');
 
 const PORT = 3000;
+const RECIPES_PATH = '/recipes';
 
 app.use(express.json());
 
@@ -22,9 +24,11 @@ app.post('/login', loginControllers.validateLogin);
 
 app.post('/recipes', authMiddleware, recipesControllers.createRecipe);
 
-app.get('/recipes/:id', recipesControllers.findById);
+app.get(`${RECIPES_PATH}/:id`, recipesControllers.findById);
 
-app.put('/recipes/:id', authUpdateMiddleware, recipesControllers.updateRecipe);
+app.put(`${RECIPES_PATH}/:id`, authUpdateMiddleware, recipesControllers.updateRecipe);
+
+app.delete(`${RECIPES_PATH}/:id`, deleteMiddleware, recipesControllers.deleteRecipe);
 
 app.get('/recipes', recipesControllers.findAllRecipes);
 

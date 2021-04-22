@@ -48,9 +48,22 @@ const updateRecipe = async (req, res) => {
   }
 };
 
+const deleteRecipe = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await recipesServices.deleteRecipe(id);
+
+    res.status(HttpResponses.codes.NO_CONTENT).json();
+  } catch (err) {
+    res.status(HttpResponses.codes.UNAUTHORIZED).json({ message: err.message });
+  }
+};
+
 module.exports = {
   createRecipe,
   findAllRecipes,
   findById,
   updateRecipe,
+  deleteRecipe,
 };
