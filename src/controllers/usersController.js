@@ -13,6 +13,20 @@ const createUser = async (req, res) => {
   }
 };
 
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const token = await usersService.login(email, password);
+    res.status(200).json({ token });
+  } catch (error) {
+    const { message, code } = error;
+    res.status(code).json({
+      message,
+    });
+  }
+};
+
 module.exports = {
   createUser,
+  login,
 };

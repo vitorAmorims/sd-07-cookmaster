@@ -1,6 +1,9 @@
 const joi = require('joi');
+const jwt = require('jsonwebtoken');
 const usersModel = require('../models/usersModel');
 const InvalidEntries = require('../customErrors/invalidEntries');
+
+const { secret } = require('../auth/secret.json');
 
 const validateUserInput = (name, email, password) => {
   const schema = joi.object({
@@ -11,7 +14,6 @@ const validateUserInput = (name, email, password) => {
     password: joi.string().required(),
   });
   const { error } = schema.validate({ name, email, password });
-  console.log(error);
   if (error) {
     throw new InvalidEntries('Invalid entries. Try again.', 400);
   }
@@ -31,6 +33,24 @@ const createUser = async (name, email, password) => {
   return ({ user: { ...newUser } });
 };
 
+const login = async (emailInput, passwordInput) => {
+  if (!emailInput || !passwordInput) {
+    throw new InvalidEntries('All fields must be filled', 401);
+  }
+
+  const user = await usersModel.getByEmail(emailInput);
+  if (!user || user.password !== passwordInput) {
+    throw new InvalidEntries('Incorrect username or password', 401);
+  } 
+
+  const { _id, email, role } = user;
+  const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
+  const token = jwt.sign({ _id, email, role }, secret, jwtConfig);
+
+  return token;
+};
+
 module.exports = {
   createUser,
+  login,
 };
