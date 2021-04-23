@@ -32,7 +32,7 @@ router.post('/recipes', [verifyJWT, verify.createRecipe], async (req, res) => {
 
 router.get('/images/:id', async (req, res) => res.status(200).sendFile(process.cwd() + req.url));
 
-router.put('/recipes/:id/image/', [verifyJWT, upload.single('image')], async (req, res) => {
+router.put('/recipes/:id/image/', [verify.uploadImg, upload.single('image')], async (req, res) => {
   try {
     const { id } = req.params;
     const result = await insertImage(req.params.id, `${req.hostname}:3000/images/${id}.jpeg`);
