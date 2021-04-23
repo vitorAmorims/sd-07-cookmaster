@@ -6,7 +6,7 @@ const addUser = async (req, res) => {
     const user = req.body;
     const response = await userService.createUser(user);
     if (response.err) {
-      res.status(response.err_code).send({ message: response.err });
+      return res.status(response.err_code).send({ message: response.err });
     }
     res.status(status.CREATED).json({ user: response });
   } catch (err) {
