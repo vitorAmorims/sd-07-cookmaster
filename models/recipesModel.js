@@ -18,8 +18,21 @@ async function getById(id) {
   return connect().then((db) => db.collection('recipes').findOne(ObjectId(id)));
 }
 
+async function update(id, name, ingredients, preparation) {
+  return connect().then(async (db) => {
+    await db
+      .collection('recipes')
+      .updateOne(
+        { _id: ObjectId(id) },
+        { $set: { name, ingredients, preparation } },
+      );
+    return { _id: id, name, ingredients, preparation };
+  });
+}
+
 module.exports = {
   addNewRecipe,
   getAllRecipes,
   getById,
+  update,
 };

@@ -8,6 +8,8 @@ const loginFailure = { code: 401, message: 'Incorrect username or password' };
 
 const invalidToken = { code: 401, message: 'jwt malformed' };
 
+const missingToken = { code: 401, message: 'missing auth token' };
+
 const invalidID = { code: 404, message: 'recipe not found' };
 
 module.exports = {
@@ -17,4 +19,5 @@ module.exports = {
   loginFailure,
   invalidToken,
   invalidID,
+  missingToken,
 };

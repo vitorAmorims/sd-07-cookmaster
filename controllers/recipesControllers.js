@@ -7,7 +7,12 @@ async function addNewRecipe(req, res) {
     const { name, ingredients, preparation } = req.body;
     const { _id: id } = req.user;
     if (!name || !ingredients || !preparation) throw errors.invalidEntries;
-    const recipe = await recipeService.addRecipe(name, ingredients, preparation, id);
+    const recipe = await recipeService.addRecipe(
+      name,
+      ingredients,
+      preparation,
+      id,
+    );
     res.status(responseOK).json({ recipe });
   } catch (err) {
     res.status(err.code).json({
@@ -39,8 +44,25 @@ async function getRecipesById(req, res) {
   }
 }
 
+async function changeRecipes(req, res) {
+  const responseOK = 200;
+  try {
+    const { id } = req.params;
+    const { name, ingredients, preparation } = req.body;
+    const { _id: userID } = req.user;
+    const recipeToChange = { id, name, ingredients, preparation, userID };
+    const recipe = await recipeService.updateRecipe(recipeToChange);
+    res.status(responseOK).json(recipe);
+  } catch (err) {
+    res.status(err.code).json({
+      message: err.message,
+    });
+  }
+}
+
 module.exports = {
   addNewRecipe,
   getAllRecipes,
   getRecipesById,
+  changeRecipes,
 };
