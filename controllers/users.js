@@ -6,6 +6,7 @@ const OK = 200;
 const CREATE = 201;
 const UNPROCESS = 422;
 const ERROR = 400;
+const ERRORADMIN = 403;
 const CONFLICT = 409;
 const objError = {
   err: {
@@ -96,7 +97,7 @@ const addAdmin = async (request, response) => {
     }
   } catch (error) {
     console.log(error);
-    response.status(ERROR).json({ message: error.message });
+    response.status(ERRORADMIN).json({ message: 'Only admins can register new admins' });
   }
 };
 
