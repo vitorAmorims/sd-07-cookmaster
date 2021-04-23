@@ -46,10 +46,23 @@ const excludeRecipeById = async (req, res) => {
   res.status(status.noContent).end();
 };
 
+const uploadRecipeImage = async (req, res) => {
+  const userId = req.data.id;
+  const { role } = req.data;
+  const { id } = req.params;
+  const { fileName } = req;
+  const recipe = await recipesServices.uploadImageValidation(id, userId, role, fileName);
+  if (recipe.message) {
+    return res.status(recipe.code).json({ message: recipe.message });
+  }
+  res.status(status.ok).json(recipe);
+};
+
 module.exports = {
   addRecipe,
   getRecipes,
   getRecipeById,
   updateRecipeById,
   excludeRecipeById,
+  uploadRecipeImage,
 };

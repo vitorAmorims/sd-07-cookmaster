@@ -41,10 +41,26 @@ const excludeRecipeById = async (id) => {
   };
 };
 
+const uploadRecipeImage = async (id, imagePath, recipeData) =>
+  connect().then(async (db) => {
+    await db.collection('recipes')
+      .updateOne({ _id: ObjectId(id) }, { $set: { image: imagePath } });
+
+      return {
+        _id: id,
+        name: recipeData.name,
+        ingredients: recipeData.ingredients,
+        preparation: recipeData.preparation,
+        userId: recipeData.userId,
+        image: imagePath,
+      };
+  });
+
 module.exports = {
   addRecipe,
   getRecipes,
   getRecipeById,
   updateRecipeById,
   excludeRecipeById,
+  uploadRecipeImage,
 };
