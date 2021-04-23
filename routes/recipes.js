@@ -11,6 +11,7 @@ const {
   putRecipe,
   deleteRecipe,
   addImgRecipe,
+  // queryRecipeImage,
 } = require('../controllers/recipes');
 
 const midvalidateToken = require('../middlewares/doneToken');
@@ -25,6 +26,8 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
+
+// router.get('/images/:img', queryRecipeImage);
 
 router.get('/', getAllRecipes);
 
