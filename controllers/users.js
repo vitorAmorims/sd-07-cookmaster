@@ -95,10 +95,10 @@ const addAdmin = async (request, response) => {
       const data = await serviceUsers.createUserAdmin(name, email, password, role);
     return response.status(CREATE).json({ user: data });
     }
-    throw new Error('Only admins can register new admins')
+    throw new Error('Only admins can register new admins');
   } catch (error) {
     console.log(error);
-    response.status(ERRORADMIN).json({ message: 'Only admins can register new admins' });
+    response.status(ERRORADMIN).json({ message: error.message });
   }
 };
 
