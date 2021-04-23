@@ -10,13 +10,13 @@ const { createRecipe,
   insertImage } = require('../models/recipesModel');
 
 const storage = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, 'images/');
+    destination: (req, file, callback) => {
+      callback(null, 'images/');
     },
-  filename: (req, file, callback) => {
-    callback(null, `${req.params.id}.jpeg`);
-  },
-});
+    filename: (req, file, callback) => {
+      callback(null, `${req.params.id}.jpeg`);
+    },
+  });
 
 const upload = multer({ storage });
 
@@ -35,6 +35,7 @@ router.get('/images/:id', async (req, res) => res.status(200).sendFile(process.c
 router.put('/recipes/:id/image/', [verify.uploadImg, upload.single('image')], async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(`${req.hostname}:3000/images/${id}.jpeg`);
     const result = await insertImage(req.params.id, `${req.hostname}:3000/images/${id}.jpeg`);
     return res.status(200).json(result.value);
   } catch (error) {
