@@ -21,7 +21,9 @@ const updateRecipe = async (id, name, ingredients, preparation) => connection()
     { _id: ObjectID(id) },
     { $set: { name, ingredients, preparation } },
     { returnOriginal: false },
-    ));
+    ))
+    .then((result) => result.value)
+    .catch((err) => err.message);
 
 module.exports = {
   createRecipes,

@@ -6,14 +6,14 @@ const senha = 'swordfish';
 
 const validateTokenMidd = async (req, res, next) => {
   const token = req.headers.authorization;
-  if (!token) throw missingToken;
-    try {
+  try {
+      if (!token) throw missingToken;
       const decript = jwt.verify(token, senha);
       const userData = await userModel.searchEmail(decript.email);
       req.user = userData;
       next();
     } catch (error) {
-      res.status(401).json({ message: error.message });
+      res.status(401).json(error);
     }
 };
 
