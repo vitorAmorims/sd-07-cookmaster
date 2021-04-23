@@ -11,6 +11,17 @@ const userRegistration = async (request, response) => {
   }
 };
 
+const userLogin = async (request, response) => {
+  try {
+    const { email, password } = request.body;
+    const result = await usersService.userLogin(email, password);
+    response.status(STATUS_CODE.SUCCESS).json(result);
+  } catch (error) {
+    response.status(error.status).json({ message: error.message });
+  }
+};
+
 module.exports = {
   userRegistration,
+  userLogin,
 };
