@@ -1,14 +1,14 @@
 const status = require('../status');
 const recipesModel = require('../models/recipesModel');
 
-const MSG_NOT_FOUND = "recipe not found";
+const MSG_NOT_FOUND = 'recipe not found';
 
 const createRecipes = async (request, response) => {
   try {
     const { _id } = request.user;
     const { name, ingredients, preparation } = request.body;
     const recipe = await recipesModel.createRecipes(name, ingredients, preparation, _id);
-    response.status(status.CREATED).json({recipe});
+    response.status(status.CREATED).json({ recipe });
   } catch (error) {
     console.error(error);
     response.status(status.INTERNAL_SERVER_ERROR)
@@ -34,7 +34,7 @@ const getById = async (request, response) => {
 
     if (!result) {
       return response.status(status.NOT_FOUND)
-        .json({message: MSG_NOT_FOUND});
+        .json({ message: MSG_NOT_FOUND });
     }
     response.status(status.OK).json(result);
   } catch (error) {
@@ -44,20 +44,22 @@ const getById = async (request, response) => {
   }
 };
 
-
 const update = async (request, response) => {
   try {
-    const { id } = request.params;
-    const { name, ingredients, preparation } = request.body;
-    const result = await productModel.update(id, name, ingredients, preparation);
-
+    const { _id } = request.user;
+    const recipe = { 
+      id: request.params.id, 
+      name: request.body.name, 
+      ingredients: request.body.ingredients, 
+      preparation: request.body.preparation,
+    };
+    const result = await recipesModel.update(recipe, _id);
     if (!result) {
       return response.status(status.NOT_FOUND)
-        .json({message: MSG_NOT_FOUND});
+        .json({ message: MSG_NOT_FOUND });
     }
     response.status(status.OK).json(result);
   } catch (error) {
-    console.error(error);
     response.status(status.INTERNAL_SERVER_ERROR)
       .json({ message: error.message });
   }
@@ -67,4 +69,5 @@ module.exports = {
   createRecipes,
   getAll,
   getById,
+  update,
 };

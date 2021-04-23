@@ -13,7 +13,7 @@ const createUser = async (request, response) => {
     }
 
     const user = await userModel.createUser(name, email, password);
-    response.status(status.CREATED).json({user});
+    response.status(status.CREATED).json({ user });
   } catch (error) {
     console.error(error);
     response.status(status.INTERNAL_SERVER_ERROR)

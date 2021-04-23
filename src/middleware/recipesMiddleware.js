@@ -1,6 +1,5 @@
 const JWT = require('jsonwebtoken');
 const status = require('../status');
-const userModel = require('../models/userModel');
 
 const secret = 'cookmasterSecret';
 
@@ -37,7 +36,8 @@ const checkTokenToUpdade = async (request, response, next) => {
     return response.status(status.UNAUTHORIZED)
       .json({ message: MALFORMED });
   }
-}
+  next();
+};
 
 const checkRecipeBody = (request, response, next) => {
   const { name, ingredients, preparation } = request.body;
