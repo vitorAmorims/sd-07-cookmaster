@@ -1,47 +1,50 @@
 const CODE_ERROR = 400;
 const ERRO_CODE = 409;
-const OBJECT_RESPONSE = { message: 'Invalid entries. Try again.' };
-const EMAIL_REGEX = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
-const MIN_SIZE = 5;
+const EMAIL_EXIST = 'Email already registered';
+const OBJECT_RESPONSE = 'Invalid entries. Try again.';
+const EMAIL_REGEX = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]/i;
 
 const { getUserByEmailService } = require('../../Services/userService');
 
 const isName = (name) => {
-  if (!name || typeof name !== 'string') {
-    return true;
-  }
-  return false;
-};
-
-const isValid = async (email) => {
-  const result = await getUserByEmailService(email);
-  console.log(`Result in middleware: ${await result}`);
-  if (result === email) {
+  if (name === undefined) {
+    console.log('entrou aqui!');
     return true;
   }
 };
 
 const isEmail = async (email) => {
+  const result = await getUserByEmailService(email);
   if (!EMAIL_REGEX.test(email)) {
-    return true;
+    return { code: CODE_ERROR, message: OBJECT_RESPONSE };
   }
-  isValid(email);  
+  if (email === undefined || email === null) {
+    return { code: CODE_ERROR, message: OBJECT_RESPONSE };
+  }
+  if (result === email) {
+    return { code: ERRO_CODE, message: EMAIL_EXIST };
+  }
 };
 
 const isPass = (password) => {
-  if (password.lenght <= MIN_SIZE) {
+  if (password === undefined) {
     return true;
   }
-  return false;
 };
 
 const middlewareCreateUser = async (req, res, next) => {
   const { name, email, password } = req.body;
-
   try {
-    if (isEmail(email)) res.status(CODE_ERROR).json(OBJECT_RESPONSE); 
-    if (isName(name)) res.status(CODE_ERROR).json(OBJECT_RESPONSE);
-    if (isPass(password)) res.status(CODE_ERROR).json(OBJECT_RESPONSE);
+    console.log(`Return is email: ${(await isEmail(email)) !== undefined}`);
+    if (isName(name) === true) return res.status(CODE_ERROR).json({ message: OBJECT_RESPONSE });
+    if (isPass(password) !== undefined) {
+      return res.status(CODE_ERROR)
+    .json({ message: OBJECT_RESPONSE }); 
+    }
+    if ((await isEmail(email)) !== undefined) {
+      const result = await isEmail(email);
+      return res.status(result.code).json({ message: result.message });
+    }
   } catch (error) {
     console.log(`Error in data validation user: ${error}`);
   }
