@@ -11,9 +11,7 @@ const loginCtrl = Router();
 loginCtrl.post('/', async (req, res, next) => {
   try {
     const { body } = req;
-    console.log(body)
     const loginRes = await loginServ(body);
-    console.log(loginRes)
     if (loginRes.err) {
       return next(loginRes);
     }
@@ -21,7 +19,8 @@ loginCtrl.post('/', async (req, res, next) => {
     return statusMsgMap[`${status}`].message
       ? res.status(statusMsgMap[`${status}`].status)
         .json({ message: statusMsgMap[`${status}`].message })
-      : res.status(statusMsgMap[`${status}`].status).json({ user: loginRes.user });
+      : res.status(statusMsgMap[`${status}`].status)
+        .json({ token: loginRes.token });
   } catch (error) {
     console.log(error);
     return next({ error, status: serverErr['Internal Server Error'] });

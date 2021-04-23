@@ -16,6 +16,11 @@ const servDictionary = {
   EMAIL_TAKEN: 'email in database',
   USER_NOT_FOUND: 'email not registered',
   MISSING_FIELDS: 'All fields must be filled',
+  WRONG_PASSWORD: 'Wrong password',
+  JWT_CONFIG: {
+    expiresIn: '7d',
+    algorithm: 'HS256',
+  },
 };
 
 module.exports = servDictionary;

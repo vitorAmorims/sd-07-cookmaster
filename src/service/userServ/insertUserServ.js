@@ -1,25 +1,25 @@
-const validator = require('validator');
+const bcrypt = require('bcrypt');
 const { emailInDb, inputsValidator } = require('../validation/inputsValidator');
 const { insertUser } = require('../../model/userModel');
-const { EMAIL_TAKEN, BAD_INPUT } = require('../servDictionary');
+const { EMAIL_TAKEN } = require('../servDictionary');
 
 const insertUserServ = async (body) => {
+  const saltRounds = 10;
   const inputsInvalid = inputsValidator(body);
   if (inputsInvalid) {
     return inputsInvalid;
-  }
-  const validName = validator.isAlpha(body.name.replace(/ /g, ''));
-  if (!validName) {
-    return { status: BAD_INPUT };
   }
   const emailTaken = await emailInDb(body.email);
   if (emailTaken) {
     return { status: EMAIL_TAKEN };
   }
-  const userData = body.role ? { ...body } : { ...body, role: 'user' };
+  const { email, name, password } = body;
+  const hash = bcrypt.hashSync(password, saltRounds);
+  console.log(hash)
+  const userData = { email, name, role: body.role || 'user', password: hash };
   const [userInsRes] = await insertUser(userData);
-
-  return { user: userInsRes, status: 'Created' };
+  const safeToReturn = { ...userInsRes, password };
+  return { user: safeToReturn, status: 'Created' };
   };
 
 module.exports = insertUserServ;
