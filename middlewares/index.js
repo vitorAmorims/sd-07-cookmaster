@@ -4,6 +4,7 @@ const loginValidate = require('./loginValidate');
 const authValidate = require('./authValidate');
 const recipesValidate = require('./recipesValidate');
 const tokenValidate = require('./tokenValidate');
+const idRecipeValidate = require('./idRecipeValidate');
 const isSigned = require('./isSigned');
 
 module.exports = {
@@ -14,4 +15,5 @@ module.exports = {
   authValidate,
   recipesValidate,
   tokenValidate,
+  idRecipeValidate,
 };

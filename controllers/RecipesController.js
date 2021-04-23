@@ -1,5 +1,5 @@
 const RecipesModel = require('../models/RecipesModel');
-const { CREATED, SUCCESS } = require('../utils/statusCode.json');
+const { CREATED, SUCCESS, NOT_FOUND } = require('../utils/statusCode.json');
 
 const create = async (req, res) => {
   const { name, ingredients, preparation } = req.body;
@@ -12,7 +12,23 @@ const getAll = async (_req, res) => {
   return res.status(SUCCESS).json(recipes);
 };
 
+const getById = async (req, res) => {
+  const { id } = req.params;
+
+  const recipe = await RecipesModel
+    .getById(id);
+
+  if (!recipe) {
+    const err = new Error();
+    err.code = 'not_found';
+    err.message = 'recipe not found';
+    return res.status(NOT_FOUND).json({ err });
+  }
+  return res.status(SUCCESS).json(recipe);
+};
+
 module.exports = {
   create,
   getAll,
+  getById,
 };
