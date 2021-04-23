@@ -6,7 +6,6 @@ const status = require('../status');
 const ZERO = 0;
 const verifyRegisteredEmail = async (email) => {
   const registeredEmail = await userModel.countByEmail(email);
-  console.log('countByEmail', registeredEmail);
   if (registeredEmail > ZERO) return true;
   return false;
 };
@@ -34,7 +33,7 @@ const createUser = async (user) => {
   }
 
   const registeredEmail = await verifyRegisteredEmail(user.email);
-  
+
   if (registeredEmail) {
     return alreadyRegistered;
   }
