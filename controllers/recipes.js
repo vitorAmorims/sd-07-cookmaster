@@ -102,6 +102,7 @@ const addImgRecipe = async (request, response) => {
   const { id } = request.params;
   const { _id } = request.user;
   const img = request.file;
+  console.log(img)
   try {
     const recipe = await modelRecipes.getById(id);
     const { userId } = recipe;

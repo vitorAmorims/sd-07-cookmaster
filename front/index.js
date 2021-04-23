@@ -11,14 +11,11 @@ form.append('image', stream);
 const formHeaders = form.getHeaders();
 
 axios
-  .put('http://localhost:3000/recipes/6082e94f4a15bc17099fb127/image', form, {
+  .put('http://localhost:3000/recipes/6082f505a1c53b2bbf8b0206/image', form, {
     headers: {
       ...formHeaders,
       Authorization:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODJlOGJiNTdhMDEzMTVl'
-        + 'OWNlMTZmMiIsImVtYWlsIjoiZXJpY2tqYWNxdWluQGdtYWlsLmNvbSIsInJvbGUiOiJ1'
-        + 'c2VyIiwiaWF0IjoxNjE5MTkyMDQzLCJleHAiOjE2MTkxOTU2NDN9.ZK49UPN-wpyXqE6Y'
-        + '7Vyw0_sXj8K2h8hNQZ9tH5eTvDY',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODJmM2I5ODdlYTQ1MjljNmFhZjRhYSIsImVtYWlsIjoiZXJpY2tqYWNxdWluQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjE5MTk1MDE3LCJleHAiOjE2MTkxOTg2MTd9.3wci4JL-U2d230I_Keyoh-JkKoL-102THBHJG4slMHY',
     },
   })
   .then((response) => console.log(response))
