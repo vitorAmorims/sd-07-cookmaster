@@ -12,8 +12,14 @@ const countByEmail = async (userEmail) => {
   db.collection('users').countDocuments({ email: userEmail }));
   return userQuantity;
 };
+const findByEmail = async (userEmail) => {
+  const user = await connect().then((db) =>
+  db.collection('users').findOne({ email: userEmail }));
+  return user;
+};
 
 module.exports = {
   create,
   countByEmail,
+  findByEmail,
 };
