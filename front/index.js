@@ -15,7 +15,10 @@ axios
     headers: {
       ...formHeaders,
       Authorization:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODJmM2I5ODdlYTQ1MjljNmFhZjRhYSIsImVtYWlsIjoiZXJpY2tqYWNxdWluQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjE5MTk1MDE3LCJleHAiOjE2MTkxOTg2MTd9.3wci4JL-U2d230I_Keyoh-JkKoL-102THBHJG4slMHY',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwODJmM2I5ODdlYTQ1MjljNm'
+        + 'FhZjRhYSIsImVtYWlsIjoiZXJpY2tqYWNxdWluQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2Vy'
+        + 'IiwiaWF0IjoxNjE5MTk1MDE3LCJleHAiOjE2MTkxOTg2MTd9.3wci4JL-U2d230I_Keyoh-'
+        + 'JkKoL-102THBHJG4slMHY',
     },
   })
   .then((response) => console.log(response))
