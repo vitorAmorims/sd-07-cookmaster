@@ -55,10 +55,22 @@ const deleteRecipe = async (req, res) => {
   }
 };
 
+const insertImage = async (req, res) => {
+  try {
+    const result = await recipe
+      .insertImage(req.params.id, `localhost:3000/${req.file.path}`);
+    return res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error });
+  }
+};
+
 module.exports = {
   create,
   getAllRecipes,
   getById,
   updateRecipe,
   deleteRecipe,
+  insertImage,
 };

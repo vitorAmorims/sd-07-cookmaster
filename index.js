@@ -1,7 +1,5 @@
 const express = require('express');
-const userRoutes = require('./Routes/user');
-const loginRoutes = require('./Routes/login');
-const recipeRoutes = require('./Routes/recipe');
+const { imageRoute, loginRoute, recipeRoute, userRoute } = require('./Routes');
 
 const app = express();
 app.use(express.json());
@@ -13,8 +11,9 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.use(userRoutes);
-app.use(loginRoutes);
-app.use(recipeRoutes);
+app.use(userRoute);
+app.use(loginRoute);
+app.use(recipeRoute);
+app.use(imageRoute);
 
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });
