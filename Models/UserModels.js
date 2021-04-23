@@ -8,6 +8,7 @@ const add = async (name, email, password) =>{
   });
 };
 
+
 const getEmailUser = async (email) => {
   return await connect().then((db) => db.collection('users').findOne({email}));
 }
