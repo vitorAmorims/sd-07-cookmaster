@@ -65,10 +65,17 @@ const deleteRecipe = async (id) => {
   return deletedRecipe;
 };
 
+const postPhoto = async (id, path) => {
+  await recipesModel.postPhoto(id, path);
+  const recipe = await recipesModel.getRecipeById(id);
+  return recipe;
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  postPhoto,
 };
