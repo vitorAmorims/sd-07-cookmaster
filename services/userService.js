@@ -1,4 +1,8 @@
+const bcrypt = require('bcrypt-nodejs');
+const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
+
+const secret = 'tatranquilotafavoravel';
 
 const requiredField = (field) => {
   if (field === undefined || field === null) return null;
@@ -41,6 +45,42 @@ const verifyUserInput = async (name, email, password) => {
   return null;
 };
 
+const verifyLoginInput = (email, password) => {
+  if (!requiredField(email)
+  || !requiredField(password)) {
+   return 'All fields must be filled';
+  }
+  return null;
+};
+
+const generateToken = (user) => {
+  const jwtConfig = {
+    expiresIn: 60 * 5,
+    algorithm: 'HS256',
+  };
+
+  const token = jwt.sign({ data: user.email }, secret, jwtConfig);
+  return token;
+};
+
+const verifyUserMatch = async (email, password) => {
+  const user = await User.getUserByEmail(email);
+  if (user) {
+    const isMatch = bcrypt.compareSync(password, user.password);
+    if (isMatch) return generateToken(user);
+  } else {
+    return 'Incorrect username or password';
+  }
+};
+
+const loginFieldsCheck = (email, password) => {
+  const inputIsValid = verifyLoginInput(email, password);
+  const userIsValid = verifyUserMatch(email, password);
+  if (inputIsValid) return inputIsValid;
+  return userIsValid;
+};
+
 module.exports = {
   verifyUserInput,
+  loginFieldsCheck,
 };
