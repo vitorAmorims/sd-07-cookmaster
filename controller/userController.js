@@ -1,11 +1,41 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
 const userService = require('../service/userService');
 const userModel = require('../model/userModel');
 
 const router = express.Router();
 
 const secret = 'seusecretdetoken';
+
+router.use(express.static(`${__dirname}uploads/`));
+
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+      callback(null, 'uploads/');
+  },
+  filename: (req, file, callback) => {
+      callback(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
+router.post('/recipes/:id/image/', upload.array('file', 1), (req, res) => {
+  const token = req.headers.authorization;
+  if (!token) return res.status(401).json({ message: 'missing auth token' });
+
+  // try {
+  //     res.status(200).json({ message: 'Imagens enviadas com sucesso!' });
+  // } catch (error) {
+  //     res.status(500).json({
+  //         message: 'Erro ao enviar as imagens',
+  //         error: error.message,
+  //     });
+  // }
+
+  res.status(200).json('ok');
+});
 
 const jwtConfig = {
   expiresIn: '7d',
