@@ -5,7 +5,7 @@ const app = express();
 const PORT = 3000;
 app.use(express.json());
 
-// não remova esse endpoint, e para o avaliador funcionar
+// base do projeto retirada do passado com as devidas mudanças
 app.get('/', (request, response) => {
   response.send();
 });

@@ -14,7 +14,7 @@ const newR = async (req, res) => {
   res.status(resp.status ? resp.status : 201).json(resp);
 };
 
-const list = async (req, res) => {
+const list = async (_req, res) => {
   model.listRecipes().then((resp) => res.json(resp));
 };
 
