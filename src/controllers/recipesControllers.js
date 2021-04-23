@@ -2,6 +2,7 @@ const {
   handleNewRecipe,
   handleRecipeById,
   handleUpdateRecipeById,
+  handleDeleteRecipeById,
 } = require('../services/recipesServices');
 const { allRecipes } = require('../models/recipesModels');
 
@@ -42,7 +43,7 @@ const updateRecipeById = async (req, res) => {
   try {
     const { id } = req.params;
     const token = req.headers.authorization;
-    const bodyParams = req.body
+    const bodyParams = req.body;
     const { http, message } = await handleUpdateRecipeById(id, token, bodyParams);
     return res.status(http).json(message);
   } catch (error) {

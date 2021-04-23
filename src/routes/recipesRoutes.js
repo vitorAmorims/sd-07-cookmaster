@@ -9,10 +9,15 @@ const {
 
 const router = express.Router();
 
-router.post('/recipes', saveRecipe);
-router.get('/recipes', getAllRecipes);
-router.get('/recipes/:id', getRecipeById);
-router.put('/recipes/:id', updateRecipeById);
-router.delete('/recipes/:id', deleteRecipeById);
+router
+  .route('/recipes')
+  .post(saveRecipe)
+  .get(getAllRecipes);
+
+router
+  .route('/recipes/:id')
+  .get(getRecipeById)
+  .put(updateRecipeById)
+  .delete(deleteRecipeById);
 
 module.exports = router;

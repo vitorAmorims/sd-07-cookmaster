@@ -4,6 +4,7 @@ const {
   getRecipeByName,
   getRecipeById,
   updateRecipeById,
+  deleteRecipeById,
 } = require('../models/recipesModels');
 
 const secret = 'projetoMuitoDificilMeuDeus';
@@ -79,11 +80,24 @@ const handleUpdateRecipeById = async (recipeId, token, bodyParams) => {
 };
 
 const handleDeleteRecipeById = async (recipeId, token) => {
-
+  if (!token) return errorJWTMissing;
+  try {
+    const { id, role } = jwt.verify(token, secret);
+    const { authorId } = await getRecipeById(recipeId);
+    if (!role === 'admin' || !id === authorId) return errorJWTInvalid;
+    await deleteRecipeById(recipeId);
+    return {
+      http: 204,
+      message: null,
+    };
+  } catch (error) {
+    return errorJWTInvalid;
+  }
 };
 
 module.exports = {
   handleNewRecipe,
   handleRecipeById,
   handleUpdateRecipeById,
+  handleDeleteRecipeById,
 };
