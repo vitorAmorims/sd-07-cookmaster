@@ -24,17 +24,12 @@ const createUserValidation = async (name, email, password) => {
     return validationObject;
   }
   const userByEmail = await findUserByEmail(email);
-  console.log('*******************');
-  console.log('name: ', name, 'email: ', email, 'password: ', password);
-  console.log('Usuario encontrado', userByEmail);
   if (userByEmail !== null && userByEmail.email === email) {
     validationObject = {
       message: 'Email already registered',
       status: 409,
     };
   }
-  console.log('Erro gerado: ', validationObject);
-  console.log('*******************');
   return validationObject;
 };
 
@@ -50,6 +45,12 @@ const validateLoginCamps = (email, password) => {
 
 const validateEmailAndPasswordLogin = async (email, password) => {
   const user = await findUserByEmail(email);
+  if (user === null) {
+      return {
+        message: 'Incorrect username or password',
+        status: 401,
+      };
+  }
   if (
     user.email !== email 
     || user.password !== password 

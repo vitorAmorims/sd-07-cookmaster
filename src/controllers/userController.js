@@ -1,7 +1,7 @@
 const rescue = require('express-rescue');
 const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModel');
-const { createUserValidation } = require('../services/userService');
+const { createUserValidation, loginUserValidation } = require('../services/userService');
 
 const secret = 'minhaSenhaUltraSecreta';
 
@@ -24,7 +24,11 @@ const addNewUser = rescue(async (req, res) => {
 });
 
 const login = rescue(async (req, res) => {
-    const { email: reqEmail } = req.body;
+    const { email: reqEmail, password } = req.body;
+    const validation = await loginUserValidation(reqEmail, password);
+    if (validation.message) {
+        return res.status(validation.status).json({ message: validation.message });
+    }
     try {
         const user = await userModel.findUserByEmail(reqEmail);
         const jwtConfig = {
