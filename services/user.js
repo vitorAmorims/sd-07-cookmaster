@@ -6,6 +6,13 @@ const errInvalidEntries = {
 const errEmailAlreadyRegistered = {
   conflict: 409,
 };
+const errFieldsMustBeFilled = {
+  FieldsMustBeFilled: 'All fields must be filled',
+};
+
+const errIncorrectUserNameOrPassword = {
+  IncorrectUserNameOrPassword: 'Incorrect username or password',
+};
 
 const verifyName = (name) => {
   if (!name || typeof name !== 'string') return false;
@@ -23,7 +30,19 @@ const verifyEmail = (email) => {
 
   return true;
 };
+const verifyEmailLogin = (email) => {
+  const reg = /\S+@\S+\.\S+/;
+  if (!email || typeof email !== 'string') return errFieldsMustBeFilled;
+  if (!reg.test(email)) return errIncorrectUserNameOrPassword; 
 
+  return true;
+};
+const verifyPasswordLogin = (password) => {
+  if (!password) return errFieldsMustBeFilled;
+  if (typeof password !== 'string') return errIncorrectUserNameOrPassword;
+
+  return true;
+};
 const verifyPassword = (password) => {
   if (!password || typeof password !== 'string') return false;
 
@@ -41,6 +60,41 @@ const isValid = async (email, password, name) => {
   if (!verifyPassword(password)) return errInvalidEntries;
   if (result !== null) return errEmailAlreadyRegistered;
 
+  return true;
+};
+const validateLogin = async (email, password) => {
+  const resultverifyEmailLogin = verifyEmailLogin(email);
+  const resultverifyPasswordLogin = verifyPasswordLogin(password);
+  if (resultverifyEmailLogin !== true) return resultverifyEmailLogin;
+  if (resultverifyPasswordLogin !== true) return resultverifyPasswordLogin;
+  
+  return true;
+};
+const verifyNameRecipe = (name) => {
+  if (!name) return errInvalidEntries;
+
+  return true;
+};
+
+const verifyIngredientsRecipe = (ingredients) => {
+  if (!ingredients) return errInvalidEntries;
+
+  return true;
+};
+
+const verifyPreparationRecipe = (preparation) => {
+  if (!preparation) return errInvalidEntries;
+
+  return true;
+};
+const validateRecipe = async (name, ingredients, preparation) => {
+  const resultverifyNameRecipe = verifyNameRecipe(name);
+  const resultverifyIngredientsRecipe = verifyIngredientsRecipe(ingredients);
+  const resultverifyPreparationRecipe = verifyPreparationRecipe(preparation);
+  if (resultverifyNameRecipe !== true) return resultverifyNameRecipe;
+  if (resultverifyIngredientsRecipe !== true) return resultverifyIngredientsRecipe;
+  if (resultverifyPreparationRecipe !== true) return resultverifyPreparationRecipe;
+  
   return true;
 };
 
@@ -63,11 +117,43 @@ const isValid = async (email, password, name) => {
     
   };
 };
+const getAllRecipes = async () => {
+  const recipes = await user.getAllRecipes();
+  return recipes;
+};
+const getUserId = async (nameUser) => {
+  const userData = await user.findByUser(nameUser);
+  return userData;
+};
+const createRecipes = async (name, ingredients, preparation, userName) => {
+  const InvalidEntries = await validateRecipe(name, ingredients, preparation);
+
+  if (typeof InvalidEntries === 'object') return InvalidEntries;
+
+  const userData = await getUserId(userName);
+    // eslint-disable-next-line no-underscore-dangle
+  const id = userData._id.toString();
+  const { insertedId } = await user.createRecipes(name, ingredients, preparation, id);
+  return {    
+      recipes: {
+        name,
+        ingredients,
+        preparation,
+        userId: id,
+        _id: insertedId,
+      },
+    
+  };
+};
 
 module.exports = {
   // updateById,
   // deleteProduct,
   // getAll,
   // findById,
+  getAllRecipes,
+  createRecipes,  
+  isEmailAlreadyExist,
+  validateLogin,
   create,
 };

@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const user = require('./controllers/user');
+const validateJWT = require('./auth/validateJWT');
+const validateUser = require('./middlewares/validateUser');
+const validateGetAllRecipes = require('./auth/validateGetAllRecipes');
 
 const app = express();
 app.use(bodyParser.json());
@@ -13,5 +16,8 @@ app.get('/', (request, response) => {
 });
 
 app.post('/users', user.create);
+app.post('/login', validateUser, user.login);
+app.post('/recipes', validateJWT, user.createRecipes);
+app.get('/recipes', validateGetAllRecipes, user.getAllRecipes);
 
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });
