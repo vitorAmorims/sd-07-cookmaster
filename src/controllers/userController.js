@@ -1,6 +1,9 @@
 const rescue = require('express-rescue');
+const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModel');
 const { createUserValidation } = require('../services/userService');
+
+const secret = 'minhaSenhaUltraSecreta';
 
 const addNewUser = rescue(async (req, res) => {
     const { name: newName, email: newEmail, password } = req.body;
@@ -20,6 +23,23 @@ const addNewUser = rescue(async (req, res) => {
     }
 });
 
+const login = rescue(async (req, res) => {
+    const { email: reqEmail, password } = req.body;
+    try {
+        const user = await userModel.findUserByEmail(reqEmail);
+        const jwtConfig = {
+            expiresIn: '5h',
+            algorithm: 'HS256',
+        };
+        const { _id, email, role } = user;
+        const token = jwt.sign({ data: { _id, email, role } }, secret, jwtConfig);
+        res.status(200).json({ token });
+    } catch (error) {
+        throw new Error(error);
+    }
+});
+
 module.exports = {
     addNewUser,
+    login,
 };
