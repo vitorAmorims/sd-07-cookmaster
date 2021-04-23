@@ -62,6 +62,13 @@ const addImage = async (req, res) => {
   res.status(OK).json(added);
 };
 
+// const getImage = async (req, res) => {
+//   const { id } = req.params;
+//   const image = await recipeModle.getImage(id);
+//   // console.log('controller', image);
+//   res.status(OK).json(image);
+// };
+
 module.exports = {
   createRecipe,
   getAllRecipes,
@@ -69,4 +76,5 @@ module.exports = {
   updateRecipe,
   deleteRecipe,
   addImage,
+  // getImage,
 };

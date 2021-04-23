@@ -41,6 +41,12 @@ const addImage = async (params) => {
   return { _id: id, name, ingredients, preparation, image: `localhost:3000/images/${id}.jpeg` };
 };
 
+// const getImage = async (id) => {
+//   const gotImage = await conn().then((db) => db.collection('recipes').findOne(ObjectId(id)));
+//   console.log('models', gotImage.image);
+//   return gotImage;
+// };
+
 module.exports = {
   createRecipe,
   getAllRecipes,
@@ -48,4 +54,5 @@ module.exports = {
   updateRecipe,
   deleteRecipe,
   addImage,
+  // getImage,
 };
