@@ -19,10 +19,17 @@ const getAllUsers = async () => {
 
 // prettier-ignore
 const createUser = async (name, email, password) => {
-  const product = await connection().then((db) =>
+  const user = await connection().then((db) =>
     db.collection('users').insertOne({ name, email, password, role: 'user' }));
 
-  return { _id: product.insertedId, name, email, role: 'user' };
+  return { _id: user.insertedId, name, email, role: 'user' };
 };
 
-module.exports = { createUser, getAllUsers, getUserByEmail };
+const createAdmin = async (name, email, password) => {
+  const admin = await connection().then((db) =>
+    db.collection('users').insertOne({ name, email, password, role: 'admin' }));
+
+  return { _id: admin.insertedId, name, email, role: 'admin' };
+};
+
+module.exports = { createUser, getAllUsers, getUserByEmail, createAdmin };

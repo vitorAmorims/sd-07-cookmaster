@@ -14,9 +14,10 @@ const authMiddleware = async (req, res, next) => {
       const decoded = jwt.verify(token, secret);
 
       const user = await usersModel.getUserByEmail(decoded.data.email);
-      const { _id: id } = user;
+      const { _id: id, role } = user;
       req.userId = id;
-
+      req.role = role;
+      
       next();
     } catch (error) {
       res.status(STATUS_UNAUTHORIZED).json({ message: error.message });

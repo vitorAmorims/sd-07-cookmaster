@@ -19,4 +19,21 @@ const createUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser };
+const createAdmin = async (req, res) => {
+  const { name, email, password } = req.body;
+
+  const result = await usersService.createAdmin(
+    name,
+    email,
+    password,
+    req.role,
+  );
+
+  if (result === 'Only admins can register new admins') {
+    res.status(403).json({ message: result });
+  } else {
+    res.status(STATUS_CREATED).json({ user: result });
+  }
+};
+
+module.exports = { createUser, createAdmin };
