@@ -1,12 +1,27 @@
 const express = require('express');
 
+const middlewares = require('./src/middleware');
+const router = require('./src/router');
+
 const app = express();
 
-const PORT = 3000;
+const PORT = 3001;
+const SUCCESS = 200;
 
 // não remova esse endpoint, e para o avaliador funcionar
-app.get('/', (request, response) => {
-  response.send();
+app.get('/', (_request, response) => {
+  response
+    .status(SUCCESS)
+    .send();
 });
 
-app.listen(PORT, () => { console.log('API rodando na porta 3000'); });
+app.use(express.json());
+app.use(middlewares.logMiddleware);
+app.use(router.usersRoutes);
+app.use(router.loginRoutes);
+app.use(router.recipesRoutes);
+// app.use(middlewares.errorMiddleware);
+
+app.listen(PORT, () => {
+  console.log('API rodando na porta', PORT);
+});
