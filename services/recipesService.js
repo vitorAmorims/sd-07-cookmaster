@@ -4,6 +4,7 @@ const {
   SUCCESS,
   OK,
   NOT_FOUND,
+  NO_CONTENT,
 } = require('../controllers/statusCode');
 
 const customAnswer = (message, http = UNAUTHORIZED) => ({
@@ -48,9 +49,18 @@ const updateRecipe = async (data, user, id) => {
   return customAnswer(recipeUpdated, OK);
 };
 
+const deleteRecipe = async (id) => {
+    const results = await recipesModel.excludeRecipe(id);
+    if (!results) {
+      customAnswer(results, UNAUTHORIZED);
+    }
+    return customAnswer(results, NO_CONTENT);
+};
+
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };

@@ -4,6 +4,8 @@ const loginController = require('../../controllers/loginController');
 const recipeController = require('../../controllers/recipesController');
 const { validateToken, validateTokenPut } = require('../auth/validateToken');
 
+const routerRecipeId = '/recipes/:id';
+
 const {
   validationName,
   validationPassword,
@@ -53,17 +55,23 @@ router.get(
 );
 
 router.get(
-  '/recipes/:id',
+  routerRecipeId,
   recipeController.getRecipeById,
 );
 
 router.put(
-  '/recipes/:id',
+  routerRecipeId,
   recipesName,
   recipesIngredients,
   recipesPreparation,
   validateTokenPut,
   recipeController.updateRecipe,
+);
+
+router.delete(
+  routerRecipeId,
+  validateTokenPut,
+  recipeController.deleteProduct,
 );
 
 module.exports = router;

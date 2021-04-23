@@ -3,6 +3,7 @@ const CONFLICT = 409;
 const BAD_REQUEST = 400;
 const NOT_FOUND = 404;
 const UNAUTHORIZED = 401;
+const NO_CONTENT = 204;
 const SUCCESS = 201;
 const OK = 200;
 
@@ -14,4 +15,5 @@ module.exports = {
   SUCCESS,
   NOT_FOUND,
   OK,
+  NO_CONTENT,
 };
