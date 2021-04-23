@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 // const UserModel = require('../models/UserModel');
 const { SUCCESS } = require('../utils/statusCode.json');
+
 const MINUTES = 60;
 
 const secret = 'OverheadthealbatrossHangsmotionlessupontheairAnddeepbeneaththerollingwaves';
