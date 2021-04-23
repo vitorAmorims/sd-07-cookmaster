@@ -65,9 +65,25 @@ const update = async (request, response) => {
   }
 };
 
+const excludeById = async (request, response) => {
+  try {
+    const { id } = request.params;
+    const result = await recipesModel.excludeById(id);
+    if (!result) {
+      return response.status(status.NOT_FOUND)
+        .json({ message: MSG_NOT_FOUND });
+    }
+    return response.status(status.NO_CONTENT).send();
+  } catch (error) {
+    console.error(error);
+    response.status(status.INTERNAL_SERVER_ERROR)
+      .json({ message: error.message });
+  }
+};
 module.exports = {
   createRecipes,
   getAll,
   getById,
   update,
+  excludeById,
 };

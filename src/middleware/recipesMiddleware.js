@@ -7,7 +7,7 @@ const NO_TOKEN = 'missing auth token';
 const MALFORMED = 'jwt malformed';
 const ENTRIES = 'Invalid entries. Try again.';
 
-const checkToken = async (request, response, next) => {
+const checkTokenToCreateRecipe = async (request, response, next) => {
   const token = request.headers.authorization;
   if (!token) {
     return response.status(status.UNAUTHORIZED)
@@ -39,6 +39,20 @@ const checkTokenToUpdade = async (request, response, next) => {
   next();
 };
 
+const checkTokenToDelete = async (request, response, next) => {
+  try {
+    const token = request.headers.authorization;
+    if (!token) {
+      return response.status(status.UNAUTHORIZED)
+        .json({ message: NO_TOKEN });
+    }
+  } catch (error) {
+    return response.status(status.UNAUTHORIZED)
+      .json({ message: MALFORMED });
+  }
+  next();
+};
+
 const checkRecipeBody = (request, response, next) => {
   const { name, ingredients, preparation } = request.body;
   if (!name || !ingredients || !preparation) {
@@ -49,7 +63,8 @@ const checkRecipeBody = (request, response, next) => {
 };
 
 module.exports = {
-  checkToken,
+  checkTokenToDelete,
+  checkTokenToCreateRecipe,
   checkTokenToUpdade,
   checkRecipeBody,
 };
