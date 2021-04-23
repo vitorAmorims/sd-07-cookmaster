@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-// const { getRecipeById } = require('../controllers/recipesControllers');
 const {
   postNewRecipe,
   getRecipeByName,
@@ -35,7 +34,6 @@ const handleNewRecipe = async (name, ingredients, preparation, token) => {
   if (parametersIsNotValid) return parametersIsNotValid;
   try {
     const { id } = jwt.verify(token, secret);
-    console
     await postNewRecipe(name, ingredients, preparation, id);
     const newRecipe = await getRecipeByName(name);
     return {
@@ -43,7 +41,6 @@ const handleNewRecipe = async (name, ingredients, preparation, token) => {
       message: { recipe: newRecipe },
     };
   } catch (error) {
-    console.error(error)
     return errorJWTInvalid;
   }
 };
