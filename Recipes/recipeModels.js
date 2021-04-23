@@ -31,10 +31,21 @@ const deleteRecipe = async (id) => {
   await conn().then((db) => db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
 };
 
+const addImage = async (params) => {
+  const { id, name, ingredients, preparation } = params;
+
+  await conn().then((db) => db.collection('recipes')
+  .updateOne({ _id: ObjectId(id) },
+  { $set: { name, ingredients, preparation, image: `localhost:3000/images/${id}.jpeg` } }));
+
+  return { _id: id, name, ingredients, preparation, image: `localhost:3000/images/${id}.jpeg` };
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  addImage,
 };
