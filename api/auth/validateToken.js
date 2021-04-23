@@ -9,6 +9,10 @@ const tokenMessage = {
   message: 'jwt malformed',
 };
 
+const missingTokenMessage = {
+  message: 'missing auth token',
+};
+
 const validateToken = async (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) {
@@ -18,7 +22,7 @@ const validateToken = async (req, res, next) => {
     const decoded = jwt.verify(token, secret);
     const user = await usersModels.existsEmail(decoded.data);
     if (!user) {
-      res.status(UNAUTHORIZED).json(tokenMessage);
+    return res.status(UNAUTHORIZED).json(tokenMessage);
     }
     req.body.user = user;
     next();
@@ -27,4 +31,25 @@ const validateToken = async (req, res, next) => {
   }
 };
 
-module.exports = validateToken;
+const validateTokenPut = async (req, res, next) => {
+  const token = req.headers.authorization;
+  if (!token || token === undefined) {
+    return res.status(UNAUTHORIZED).json(missingTokenMessage);
+  }
+  try {
+    const decoded = jwt.verify(token, secret);
+    const user = await usersModels.existsEmail(decoded.data);
+    if (!user) {
+    return res.status(UNAUTHORIZED).json(tokenMessage);
+    }
+    req.body.user = user;
+    next();
+  } catch (error) {
+    return res.status(UNAUTHORIZED).json(tokenMessage);
+  }
+};
+
+module.exports = {
+  validateToken,
+  validateTokenPut,
+};

@@ -2,7 +2,7 @@ const express = require('express');
 const usersController = require('../../controllers/usersController');
 const loginController = require('../../controllers/loginController');
 const recipeController = require('../../controllers/recipesController');
-const validateToken = require('../auth/validateToken');
+const { validateToken, validateTokenPut } = require('../auth/validateToken');
 
 const {
   validationName,
@@ -55,6 +55,15 @@ router.get(
 router.get(
   '/recipes/:id',
   recipeController.getRecipeById,
+);
+
+router.put(
+  '/recipes/:id',
+  recipesName,
+  recipesIngredients,
+  recipesPreparation,
+  validateTokenPut,
+  recipeController.updateRecipe,
 );
 
 module.exports = router;

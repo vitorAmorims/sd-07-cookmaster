@@ -31,8 +31,19 @@ const getRecipeById = async (req, res) => {
   try {
     const { id } = req.params;
     const getRecipe = await recipesService.getRecipeById(id);
-    console.log(getRecipe);
     const { http, message } = getRecipe;
+    return res.status(http).json(message);
+  } catch (error) {
+    return res.status(500).json({ message: internalError, err: error.message });
+  }
+};
+
+const updateRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { user } = req.body;
+    const updatedRecipe = await recipesService.updateRecipe(req.body, user, id);
+    const { http, message } = updatedRecipe;
     return res.status(http).json(message);
   } catch (error) {
     return res.status(500).json({ message: internalError, err: error.message });
@@ -43,4 +54,5 @@ module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
+  updateRecipe,
 };
