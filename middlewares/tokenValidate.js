@@ -7,7 +7,7 @@ const secret = 'OverheadthealbatrossHangsmotionlessupontheairAnddeepbeneaththero
 const tokenValidate = async (req, res, next) => {
   const { authorization: token } = req.headers;
   const err = new Error();
-  err.message = 'Incorrect username or password';
+  err.message = 'missing auth token';
   if (!token) {
     res.status(UNAUTHORIZED).json(err);
     return next(err);

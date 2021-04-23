@@ -10,6 +10,7 @@ const {
 const router = express.Router();
 
 router.post('/recipes', recipesValidate, tokenValidate, rescue(RecipesController.create));
+router.put('/recipes/:id', recipesValidate, tokenValidate, rescue(RecipesController.update));
 router.get('/recipes/:id', idRecipeValidate, rescue(RecipesController.getById));
 router.get('/recipes', rescue(RecipesController.getAll));
 
