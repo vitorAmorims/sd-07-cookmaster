@@ -9,6 +9,7 @@ const PORT = 3000;
 app.get('/', (_request, response) => {
   response.send();
 });
+app.use(express.static(`${__dirname}/images/`));
 
 const users = require('./routes/usersRoute');
 const login = require('./routes/loginRoute');

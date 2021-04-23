@@ -64,17 +64,14 @@ const deleteRecipe = async (req, res) => {
 
 const insertImageRecipe = async (req, res) => {
   try {
-    if (req.exist) {
     const { path } = req.file;
     const { id } = req.params;
-    console.log('dasdasdasda', id, path);
     const image = await recipesService.insertImageRecipe(
       id,
       `localhost:3000/${path}`,
     );
-    return res.status(200).json({ image });
-    }
-    return res.status(404).json({ ERRO });
+    const { value } = image;
+    return res.status(200).json({ value });
   } catch (error) {
     return res.status(404).json({ ERRO });
   }
