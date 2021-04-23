@@ -1,3 +1,5 @@
+const { ObjectId } = require('mongodb');
+
 const recipesModel = require('../models/recipesModel');
 
 // ----------------------------------------- Funções de verificação
@@ -35,17 +37,26 @@ const getAllRecipes = async () => {
 };
 
 const getRecipeById = async (id) => {
+  if (!ObjectId.isValid(id)) {
+    return 'recipe not found';
+  }
+
   const recipe = await recipesModel.getRecipeById(id);
 
   if (recipe === null) {
     return 'recipe not found';
   }
-
+  
   return recipe;
 };
 
 const updateRecipe = async (id, name, ingredients, preparation) => {
-  const updatedRecipe = await recipesModel.updateRecipe(id, name, ingredients, preparation);
+  const updatedRecipe = await recipesModel.updateRecipe(
+    id,
+    name,
+    ingredients,
+    preparation,
+  );
   return updatedRecipe;
 };
 
