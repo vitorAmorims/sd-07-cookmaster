@@ -4,7 +4,7 @@ const { usersModel } = require('../models');
 const { create, readByEmail, readAll, readById } = usersModel;
 const { CONFLICT } = require('../status');
 
-const SECRET = '123';
+const SECRET = '1234567890';
 
 const validateEmail = email => {
   const regexEmail = /\S+@\S+\.\S+/i;

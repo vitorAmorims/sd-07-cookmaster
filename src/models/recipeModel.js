@@ -46,10 +46,24 @@ const deleteById = async id => {
   return recipe;
 };
 
+const updateImageById = async (id, image, userId) => {
+  const oldRecipe = await readById(id);
+  const newRecipe = connection().then(db =>
+    db
+      .collection(NAME_COLLECTION)
+      .updateOne(
+        { _id: ObjectID(id), userId: userId },
+        { $set: { ...oldRecipe, image } },
+      ),
+  );
+  return newRecipe;
+};
+
 module.exports = {
   create,
   readAll,
   readById,
   updateById,
   deleteById,
+  updateImageById,
 };

@@ -1,10 +1,12 @@
 const { recipesService } = require('../services');
+
 const {
   validateCreateRecipe,
   validateReadAllRecipes,
   validateReadById,
   validateUpdateRecipeById,
-  validateDeleteRecipeById
+  validateDeleteRecipeById,
+  validateUpdateImageById
 } = recipesService;
 
 const {
@@ -100,6 +102,22 @@ const deleteRecipeById = async (req, res, next) => {
       message: error.message,
     });
   }
+};
+
+const createRecipeImageById = async (req, res, next) => {
+  try {
+    const { userId } = req;
+    const { id } = req.params;
+    const urlImage = `localhost:3000/images/${id}.jpeg`;
+    const result = await validateUpdateImageById(id, urlImage, userId);
+    res.status(OK).json(result);
+  } catch (error) {
+    console.error(error);
+    next({
+      status: BAD_REQUEST,
+      message: error.message,
+    });
+  }
 }
 
 module.exports = {
@@ -108,4 +126,5 @@ module.exports = {
   readRecipeById,
   updateRecipeById,
   deleteRecipeById,
+  createRecipeImageById
 };
