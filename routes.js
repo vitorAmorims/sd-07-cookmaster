@@ -21,6 +21,8 @@ const {
 
 const {
     createRecipeController,
+    getAllRecipesController,
+    getRecipeByIdController,
 } = require('./controller/recipeController');
 
 route.use(express.static(`${__dirname}uploads/`));
@@ -45,5 +47,8 @@ route.post(
     validateTokenMiddleware,
     createRecipeController,
 );
+
+route.get('/recipes', getAllRecipesController);
+route.get('/recipes/:id', getRecipeByIdController);
 
 module.exports = route;

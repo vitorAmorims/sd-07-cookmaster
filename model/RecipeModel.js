@@ -8,10 +8,16 @@ const createRecipe = async (name, ingredients, preparation, userId) => {
   return { name, ingredients, preparation, _id: recipe.insertedId, userId };
 };
 
-const findById = async (id) =>
-  connect().then((db) => db.collection('recipes').findOne({ _id: ObjectId(id) }));
+const findById = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+  return connect().then((db) => db.collection('recipes').findOne({ _id: ObjectId(id) }));
+};
+
+const findAll = async () => 
+  connect().then((db) => db.collection('recipes').find().toArray());
 
 module.exports = {
     createRecipe,
     findById,
+    findAll,
 };
