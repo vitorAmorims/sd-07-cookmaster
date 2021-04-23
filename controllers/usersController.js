@@ -31,7 +31,23 @@ const userLogin = async (req, res) => {
   }
 };
 
+const addAdmin = async (req, res) => {
+  try {
+    const { role } = req.data;
+    const { name, email, password } = req.body;
+    const userAdmin = await usersServices.addAdminValidation(name, email, password, role);
+    if (userAdmin.message) {
+      return res.status(userAdmin.code).json({ message: userAdmin.message });
+    }
+    res.status(status.created).json({ user: userAdmin });
+  } catch (error) {
+    console.error(error.message);
+    res.status(status.serverError).json({ message: error.message });
+  }
+};
+
 module.exports = {
   addUser,
   userLogin,
+  addAdmin,
 };

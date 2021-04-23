@@ -74,7 +74,17 @@ const newToken = async (mail, password) => {
   };
 };
 
+const addAdminValidation = async (name, email, password, role) => {
+  if (role === 'admin') {
+    const userAdmin = await usersModel.add(name, email, password, role);
+    return userAdmin;
+  }
+
+  return { message: 'Only admins can register new admins', code: status.forbidden };
+};
+
 module.exports = {
   addUserValidation,
   newToken,
+  addAdminValidation,
 };
