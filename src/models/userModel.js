@@ -5,7 +5,7 @@ const addUser = (name, email, password) => connection()
     .then((item) => item.ops[0]);
 
 const findUserByEmail = (email) => connection()
-    .then((db) => db.connection('users').findOne({ email }));
+    .then((db) => db.collection('users').findOne({ email }));
 
 module.exports = {
     addUser,
