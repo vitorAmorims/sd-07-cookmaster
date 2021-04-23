@@ -9,13 +9,14 @@ module.exports = {
     if (userByEmailExists) {
       throw messageFailure('Email already registered', httpStatus.CONFLICT);
     }
-    user.role = 'user';
-    const userCreated = await userModel.create(user);
+    const { email, password, name } = user;
+    const role = 'user';
+    const userCreated = await userModel.create({ name, email, password, role });
     return messageSuccess(userCreated, httpStatus.CREATED);
   },
   login: async ({ email }) => {
-    const user = await userModel.findByEmail(email);
-    const token = getTokenByUser({ _id: user._id, email: user.email, role: user.role });
+    const { _id, role } = await userModel.findByEmail(email);
+    const token = getTokenByUser({ _id, email, role });
     return messageSuccess(token, httpStatus.OK);
   },
 };

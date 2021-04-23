@@ -8,8 +8,6 @@ const jwtConfig = {
 };
 
 module.exports = {
-  getTokenByUser: (user) => {
-    return jwt.sign({ user }, secret, jwtConfig);
-  },
+  getTokenByUser: (user) => jwt.sign({ user }, secret, jwtConfig),
   getSecret: secret,
 };
