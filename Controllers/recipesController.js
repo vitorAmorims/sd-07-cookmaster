@@ -1,8 +1,7 @@
 const recipesService = require('../Services/recipesService');
 
 const addStatus = 201;
-const getStatus = 200;
-const updateStatus = 200;
+const statusOk = 200;
 const deleteOk = 204;
 const notFound = 404;
 const updateError = 401;
@@ -21,7 +20,7 @@ const createRecipes = async (req, res) => {
 const getAllRecipes = async (_req, res) => {
   try {
     const result = await recipesService.getAllRecipes();
-    res.status(getStatus).json(result);
+    res.status(statusOk).json(result);
   } catch (error) {
     console.error({ message: error.message });
   }
@@ -31,7 +30,7 @@ const getRecipeById = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await recipesService.getRecipeById(id);
-    res.status(getStatus).json(result);
+    res.status(statusOk).json(result);
   } catch (error) {
     console.error({ message: error.message });
     res.status(notFound).json(error);
@@ -43,7 +42,7 @@ const updateRecipe = async (req, res) => {
     const { id } = req.params;
     const { name, ingredients, preparation } = req.body;
     const result = await recipesService.updateRecipe(id, name, ingredients, preparation);
-    res.status(updateStatus).json(result);
+    res.status(statusOk).json(result);
   } catch (error) {
     console.error({ message: error.message });
     res.status(updateError).json(error);
@@ -66,7 +65,7 @@ const uploadImage = async (req, res) => {
     const { id } = req.params;
     const { path } = req.file;
     const result = await recipesService.uploadImage(id, `localhost:3000/${path}`);
-    res.status(getStatus).json(result);
+    res.status(statusOk).json(result);
   } catch (error) {
     console.error({ message: error.message });
     res.status(internalError).json(error);
