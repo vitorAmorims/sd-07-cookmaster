@@ -52,9 +52,17 @@ const updateRecipe = async (recipe, recipeId, user) => {
   return recipeUpdated;
 };
 
+const deleteRecipe = async (recipeId, user) => {
+  validateId(recipeId);
+  await isRecipeBelogToTheUserOrAdmin(user, recipeId);
+  const recipeDeleted = await recipesModel.deleteRecipe(recipeId);
+  return recipeDeleted;
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };
