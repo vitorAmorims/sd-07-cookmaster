@@ -1,13 +1,13 @@
-const Users = require('../models/usersModel');
+const Users = require('../models/usersModels');
 
-const SUCCESS = 200;
+const SUCCESS = 201;
 const SYSTEM_FAIL = 500;
 const FAIL = 404;
 
-const addSale = async (req, res) => {
-  const itemsSold = req.body;
+const addUser = async (req, res) => {
+  const { name, email, password, role } = req.body;
   try {
-    const results = await Sales.addSale(itemsSold);
+    const results = await Users.addUser(name, email, password, role);
     res.status(SUCCESS).json(results.ops[0]);
   } catch (err) {
     res.status(SYSTEM_FAIL).json({ message: err.message });
@@ -15,5 +15,5 @@ const addSale = async (req, res) => {
 };
 
 module.exports = {
-  addSale,
+  addUser,
 };

@@ -1,4 +1,4 @@
-const Recipes = require('../models/recipesModel');
+const Recipes = require('../models/recipesModels');
 
 const SUCCESS = 200;
 const SYSTEM_FAIL = 500;
