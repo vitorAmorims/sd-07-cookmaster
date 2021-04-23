@@ -1,5 +1,5 @@
 const RecipesModel = require('../models/RecipesModel');
-const { CREATED } = require('../utils/statusCode.json');
+const { CREATED, SUCCESS } = require('../utils/statusCode.json');
 
 const create = async (req, res) => {
   const { name, ingredients, preparation } = req.body;
@@ -7,6 +7,12 @@ const create = async (req, res) => {
   return res.status(CREATED).json(newRecipe);
 };
 
+const getAll = async (_req, res) => {
+  const recipes = await RecipesModel.getAll();
+  return res.status(SUCCESS).json(recipes);
+};
+
 module.exports = {
   create,
+  getAll,
 };
