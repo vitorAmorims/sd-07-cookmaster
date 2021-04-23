@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 
 const { users, recipes } = require('./src/routers');
 
@@ -11,6 +12,7 @@ app.get('/', (_request, response) => {
   response.send('Projeto CookMaster');
 });
 
+app.use('/images', express.static(path.join(__dirname, 'uploads')));
 app.use(users);
 app.use(recipes);
 

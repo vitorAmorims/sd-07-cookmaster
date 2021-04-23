@@ -2,9 +2,7 @@ const JWT = require('jsonwebtoken');
 const { ObjectID } = require('mongodb');
 const { usersModel } = require('../models');
 const { create, readByEmail, readAll, readById } = usersModel;
-const { CONFLICT } = require('../status');
-
-const SECRET = '1234567890';
+const { CONFLICT, SECRET, FORBIDDEN } = require('../helpers');
 
 const validateEmail = email => {
   const regexEmail = /\S+@\S+\.\S+/i;
@@ -22,6 +20,22 @@ const validateCreateUser = async (name, email, password) => {
   if (!newUser.result.ok) throw new Error('Error validateCreateUser');
 
   return { _id: newUser.insertedId, name, email, role: 'user' };
+};
+
+const validateCreateAdmin = async (name, email, password, role) => {
+  if (!name || !email || password === undefined || !validateEmail(email))
+    throw new Error('Invalid entries. Try again.');
+
+  const user = await readByEmail(email);
+  if (user) return { status: CONFLICT, message: 'Email already registered' };
+
+  if (role !== 'admin')
+    return { status: FORBIDDEN, message: 'Only admins can register new admins' };
+  
+  const newUser = await create(name, email, password, role);
+  if (!newUser.result.ok) throw new Error('Error validateCreateUser');
+
+  return { _id: newUser.insertedId, name, email, role };
 };
 
 const validateCreateLoginToken = async email => {
@@ -62,4 +76,5 @@ module.exports = {
   validateCreateLoginToken,
   validateReadAllUsers,
   validateReadById,
+  validateCreateAdmin,
 };

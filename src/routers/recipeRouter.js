@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 
 const { recipesMiddleware } = require('../middlewares');
 const { validateToken, validateUserAuthorization, upload } = recipesMiddleware;
@@ -15,8 +14,6 @@ const {
 } = recipesController;
 
 const Recipes = express.Router();
-
-Recipes.use(express.static(path.join(__dirname + '../../', 'uploads')));
 
 Recipes.get('/recipes', readAllRecipes);
 

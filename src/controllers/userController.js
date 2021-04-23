@@ -5,6 +5,7 @@ const {
   validateReadAllUsers,
   validateCreateLoginToken,
   validateReadById,
+  validateCreateAdmin
 } = usersService;
 
 const {
@@ -13,12 +14,30 @@ const {
   NOT_FOUND,
   OK,
   UNAUTHORIZED,
-} = require('../status');
+} = require('../helpers');
 
 const createUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
     const result = await validateCreateUser(name, email, password);
+    if (result.status)
+      return next({ status: result.status, message: result.message });
+    res.status(CREATED).json({ user: result });
+  } catch (error) {
+    console.error(error);
+    next({
+      status: BAD_REQUEST,
+      message: error.message,
+    });
+  }
+};
+
+const createUserAdmin = async (req, res, next) => {
+  try {
+    const { name, email, password } = req.body;
+    const { userRole } = req;
+    // console.log(userRole);
+    const result = await validateCreateAdmin(name, email, password, userRole);
     if (result.status)
       return next({ status: result.status, message: result.message });
     res.status(CREATED).json({ user: result });
@@ -76,6 +95,7 @@ const readUserById = async (req, res, next) => {
 
 module.exports = {
   createUser,
+  createUserAdmin,
   readAllUsers,
   createLoginToken,
   readUserById,

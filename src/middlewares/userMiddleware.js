@@ -1,6 +1,6 @@
 const { usersModel } = require('../models');
 const { readByEmail, readByPassword } = usersModel;
-const { UNAUTHORIZED } = require('../status');
+const { UNAUTHORIZED } = require('../helpers');
 
 const validateEmailOrPasswordIsValid = async (req, _res, next) => {
   try {

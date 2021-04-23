@@ -9,7 +9,7 @@ const {
   updateImageById,
 } = recipesModel;
 
-const { NOT_FOUND } = require('../status');
+const { NOT_FOUND } = require('../helpers');
 
 const validateCreateRecipe = async (name, ingredients, preparation, userId) => {
   if (!ObjectID.isValid(userId))

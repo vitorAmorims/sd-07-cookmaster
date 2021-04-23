@@ -3,8 +3,7 @@ const multer = require('multer');
 const { ObjectID } = require('mongodb');
 
 const { usersModel, recipesModel } = require('../models');
-const { UNAUTHORIZED, NOT_FOUND } = require('../status');
-const SECRET = '1234567890';
+const { UNAUTHORIZED, NOT_FOUND, SECRET } = require('../helpers');
 
 const validateToken = (req, _res, next) => {
   try {
