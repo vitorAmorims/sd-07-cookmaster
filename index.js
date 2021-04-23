@@ -5,7 +5,7 @@ const router = require('./src/router');
 
 const app = express();
 
-const PORT = 3001;
+const PORT = 3000;
 const SUCCESS = 200;
 
 // não remova esse endpoint, e para o avaliador funcionar
