@@ -9,9 +9,21 @@ const {
     validatePasswordMiddleware,
 } = require('./middleware/userMiddlewares');
 
-const { createUserController, loginUserController } = require('./controller/userController');
+const {
+    validateTokenMiddleware,
+    validateCreateRecipeMiddleware,
+} = require('./middleware/recipeMiddlewares');
 
-route.use(express.static(`${__dirname}recipeImages/`));
+const {
+    createUserController,
+    loginUserController,
+} = require('./controller/userController');
+
+const {
+    createRecipeController,
+} = require('./controller/recipeController');
+
+route.use(express.static(`${__dirname}uploads/`));
 
 route.post(
     '/users',
@@ -25,6 +37,13 @@ route.post(
     validateLoginUserMiddleware,
     validatePasswordMiddleware,
     loginUserController,
+);
+
+route.post(
+    '/recipes',
+    validateCreateRecipeMiddleware,
+    validateTokenMiddleware,
+    createRecipeController,
 );
 
 module.exports = route;

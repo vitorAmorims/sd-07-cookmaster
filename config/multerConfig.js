@@ -1,11 +1,16 @@
 const multer = require('multer');
+const { extname, resolve } = require('path');
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, file, cb);
+    destination: (_req, _file, cb) => {
+        cb(null, resolve(__dirname, '..', 'uploads'));
     },
     filename: (_req, file, cb) => {
-        cb(null, file.originalname, 'recipeImages/');
+        const ext = extname(file.originalname);
+        const fileName = file.originalname.substring(
+            file.originalname.lastIndexOf('.', -1),
+            );
+        cb(null, `${fileName}.${ext}`);
     },
 });
 

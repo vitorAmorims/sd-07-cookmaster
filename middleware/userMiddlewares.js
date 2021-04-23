@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../model/UserModel');
 
@@ -52,13 +52,14 @@ const userSchema = Joi.object(createUserSchemaRules);
       const { email, password } = req.body;
       const user = await User.findUser(email);
       if (!user) throw new UnauthorizedException('invalidUser');
-      const isMatch = bcrypt.compareSync(password, user.password);
+      // const isMatch = bcrypt.compareSync(password, user.password);
+      const isMatch = password === user.password;
       if (!isMatch) throw new UnauthorizedException('invalidUser');
       const jwtConfig = {
-        expiresIn: 60 * 5,
+        expiresIn: 3600 * 5,
         algorithm: 'HS256',
       };
-      const token = jwt.sign({ data: user.username }, JWT_SECRET, jwtConfig);
+      const token = jwt.sign({ data: user.email }, JWT_SECRET, jwtConfig);
       req.body.token = token;
       next();
     } catch (err) {
