@@ -8,5 +8,6 @@ const router = express.Router();
 router.post('/recipes', validateTokenMidd, addRecipesMidd, recipes.createRecipes);
 router.get('/recipes', recipes.getAllRecipes);
 router.get('/recipes/:id', recipes.getRecipeById);
+router.put('/recipes/:id', recipes.updateRecipe);
 
 module.exports = router;

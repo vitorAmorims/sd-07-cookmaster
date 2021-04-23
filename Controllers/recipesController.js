@@ -2,7 +2,9 @@ const recipesService = require('../Services/recipesService');
 
 const addStatus = 201;
 const getStatus = 200;
+const updateStatus = 200;
 const notFound = 404;
+const updateError = 401;
 
 const createRecipes = async (req, res) => {
   try {
@@ -34,8 +36,21 @@ const getRecipeById = async (req, res) => {
   }
 };
 
+const updateRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, ingredients, preparation } = req.body;
+    const result = await recipesService.updateRecipe(id, name, ingredients, preparation);
+    res.status(updateStatus).json(result);
+  } catch (error) {
+    console.error({ message: error.message });
+    res.status(updateError).json(error);
+  }
+};
+
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipeById,
+  updateRecipe,
 };
