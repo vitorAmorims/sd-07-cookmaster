@@ -15,7 +15,7 @@ const upload = require('./multer');
 const routerRecipesId = '/recipes/:id';
 const router = express.Router();
 
-router.use('/images', express.static(path.join(__dirname, '../uploads')));
+router.use('/images', express.static(path.join(__dirname, '/uploads')));
 
 router.post('/users', createUser);
 router.post('/users/admin', VJWT(true), createUser);
