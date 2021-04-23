@@ -12,8 +12,8 @@ const createUser = async (request, response) => {
         .json({ message: EMAIL_EXIST });
     }
 
-    const result = await userModel.createUser(name, email, password);
-    response.status(status.CREATED).json(result);
+    const user = await userModel.createUser(name, email, password);
+    response.status(status.CREATED).json({user});
   } catch (error) {
     console.error(error);
     response.status(status.INTERNAL_SERVER_ERROR)

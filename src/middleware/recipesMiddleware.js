@@ -4,29 +4,40 @@ const userModel = require('../models/userModel');
 
 const secret = 'cookmasterSecret';
 
-const NO_TOKEN = 'jwt malformed';
+const NO_TOKEN = 'missing auth token';
+const MALFORMED = 'jwt malformed';
 const ENTRIES = 'Invalid entries. Try again.';
 
 const checkToken = async (request, response, next) => {
   const token = request.headers.authorization;
   if (!token) {
     return response.status(status.UNAUTHORIZED)
-    .json({ message: NO_TOKEN });
+      .json({ message: MALFORMED });
   }
   try {
     const decoded = JWT.verify(token, secret);
-    const user = await userModel.findByEmail(decoded.data.email);
-    if (!user) {
-      return response.status(status.UNAUTHORIZED)
-        .json({ message: NO_TOKEN });
-    }
-    request.user = user;
+    request.user = decoded.data;
   } catch (error) {
     return response.status(status.UNAUTHORIZED)
-    .json({ message: NO_TOKEN });
+      .json({ message: MALFORMED });
   }
   next();
 };
+
+const checkTokenToUpdade = async (request, response, next) => {
+  const token = request.headers.authorization;
+  if (!token) {
+    return response.status(status.UNAUTHORIZED)
+      .json({ message: NO_TOKEN });
+  }
+  try {
+    const decoded = JWT.verify(token, secret);
+    request.user = decoded.data;
+  } catch (error) {
+    return response.status(status.UNAUTHORIZED)
+      .json({ message: MALFORMED });
+  }
+}
 
 const checkRecipeBody = (request, response, next) => {
   const { name, ingredients, preparation } = request.body;
@@ -39,5 +50,6 @@ const checkRecipeBody = (request, response, next) => {
 
 module.exports = {
   checkToken,
+  checkTokenToUpdade,
   checkRecipeBody,
 };

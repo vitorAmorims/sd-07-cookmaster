@@ -22,7 +22,7 @@ const checkUserAndPass = async (request, response, next) => {
     .json({ message: INCORRECT });
   }
 
-  if (findByEmail.user.password !== password) {
+  if (findByEmail.password !== password) {
     return response.status(status.UNAUTHORIZED)
     .json({ message: INCORRECT });
   }
