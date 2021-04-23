@@ -86,10 +86,25 @@ const deleteUser = async (request, response) => {
   }
 };
 
+const addAdmin = async (request, response) => {
+  try {
+    const { name, email, password } = request.body;
+    const { role } = request.user;
+    if (String(role) === 'admin') {
+      const data = await serviceUsers.createUserAdmin(name, email, password, role);
+    return response.status(CREATE).json({ user: data });
+    }
+  } catch (error) {
+    console.log(error);
+    response.status(ERROR).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
   postUser,
   putUser,
   deleteUser,
+  addAdmin,
 };

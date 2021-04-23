@@ -43,6 +43,15 @@ const createUser = async (name, email, password) => {
   return result;
 };
 
+const createUserAdmin = async (name, email, password, role) => {
+  validateName(name);
+  validateEmail(email);
+  validatePassword(password);
+  await checkingEmailExists(email);
+  const result = await modelUser.postdataAdmin(name, email, password, role);
+  return result;
+};
+
 const getAllUsers = async () => {
   const products = await modelUser.getAll();
   const allProducts = {
@@ -76,4 +85,5 @@ module.exports = {
   getUserById,
   updateUser,
   deleteUser,
+  createUserAdmin,
 };

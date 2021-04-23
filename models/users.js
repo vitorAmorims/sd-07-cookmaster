@@ -30,6 +30,13 @@ const postdata = async (name, email, password) => {
   return { _id: user.insertedId, name, email, role };
 };
 
+const postdataAdmin = async (name, email, password, role) => {
+  const user = await connection().then((db) =>
+    db.collection('users').insertOne({ name, email, password, role }));
+
+  return { _id: user.insertedId, name, email, role };
+};
+
 const editdata = async (id, name, quantity) => {
   const updatedProduct = await connection().then((db) =>
     db
@@ -50,4 +57,5 @@ module.exports = {
   postdata,
   editdata,
   deletedata,
+  postdataAdmin,
 };
