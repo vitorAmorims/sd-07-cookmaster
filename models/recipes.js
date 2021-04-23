@@ -47,6 +47,12 @@ const deletedata = async (id) => {
     db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
 };
 
+const editDataWithPatch = async (objParams) => {
+  const update = objParams;
+  await connection().then((db) =>
+    db.collection('recipes').updateOne({ _id: ObjectId(objParams._id) }, {$set: update}));
+}
+
 module.exports = {
   getAll,
   getById,
@@ -54,4 +60,5 @@ module.exports = {
   postdata,
   editdata,
   deletedata,
+  editDataWithPatch,
 };

@@ -54,10 +54,16 @@ const deleteRecipe = async (id) => {
   await modelRecipes.deletedata(id);
 };
 
+const insertImageRecipe = async (objParams) => {
+  await modelRecipes.editDataWithPatch(objParams);  
+  return objParams;
+}
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  insertImageRecipe,
 };
