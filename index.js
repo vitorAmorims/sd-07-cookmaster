@@ -3,7 +3,7 @@ const { userRoutes } = require('./routes');
 
 const app = express();
 
-const PORT = 3000;
+const PORT = '3000';
 
 app.use(express.json());
 
@@ -12,7 +12,6 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-// add rota do usuário
 app.use(userRoutes);
 
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });
