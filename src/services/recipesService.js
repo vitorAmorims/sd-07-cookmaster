@@ -21,13 +21,13 @@ const validateId = (id) => {
   }
 };
 
-const isRecipeBelogToTheUserOrAdmin = async (user, recipeId) => {
-  const { userId } = await recipesModel.getRecipeById(recipeId);
-  const { _id, role } = user;
-  if (role !== 'admin' && String(_id) !== String(userId)) {
-    throw new InvalidEntries('jwt malformed', 401);
-  }
-};
+// const isRecipeBelogToTheUserOrAdmin = async (user, recipeId) => {
+//   const { userId } = await recipesModel.getRecipeById(recipeId);
+//   const { _id, role } = user;
+//   if (role !== 'admin' && String(_id) !== String(userId)) {
+//     throw new InvalidEntries('jwt malformed', 401);
+//   }
+// };
 
 const createRecipe = async (name, ingredients, preparation, user) => {
   validateRecipeInput(name, ingredients, preparation);
@@ -47,14 +47,14 @@ const getRecipeById = async (id) => {
 const updateRecipe = async (recipe, recipeId, user) => {
   const { name, ingredients, preparation } = recipe;
   validateId(recipeId);
-  await isRecipeBelogToTheUserOrAdmin(user, recipeId);
+  // await isRecipeBelogToTheUserOrAdmin(user, recipeId);
   const recipeUpdated = await recipesModel.updateRecipe(name, ingredients, preparation, recipeId);
   return recipeUpdated;
 };
 
 const deleteRecipe = async (recipeId, user) => {
   validateId(recipeId);
-  await isRecipeBelogToTheUserOrAdmin(user, recipeId);
+  // await isRecipeBelogToTheUserOrAdmin(user, recipeId);
   const recipeDeleted = await recipesModel.deleteRecipe(recipeId);
   return recipeDeleted;
 };
