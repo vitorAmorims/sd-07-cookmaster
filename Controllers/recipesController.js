@@ -3,8 +3,10 @@ const recipesService = require('../Services/recipesService');
 const addStatus = 201;
 const getStatus = 200;
 const updateStatus = 200;
+const deleteOk = 204;
 const notFound = 404;
 const updateError = 401;
+const internalError = 500;
 
 const createRecipes = async (req, res) => {
   try {
@@ -48,9 +50,34 @@ const updateRecipe = async (req, res) => {
   }
 };
 
+const deleteRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await recipesService.deleteRecipe(id);
+    res.status(deleteOk).json(result);
+  } catch (error) {
+    console.error({ message: error.message });
+    res.status(notFound).json(error);
+  }
+};
+
+const uploadImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { path } = req.file;
+    const result = await recipesService.uploadImage(id, `localhost:3000/${path}`);
+    res.status(getStatus).json(result);
+  } catch (error) {
+    console.error({ message: error.message });
+    res.status(internalError).json(error);
+  }
+};
+
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
+  uploadImage,
 };
