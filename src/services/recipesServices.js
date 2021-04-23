@@ -3,6 +3,7 @@ const {
   postNewRecipe,
   getRecipeByName,
   getRecipeById,
+  updateRecipeById,
 } = require('../models/recipesModels');
 
 const secret = 'projetoMuitoDificilMeuDeus';
@@ -20,6 +21,11 @@ const errorJWTInvalid = {
 const errorNotFound = {
   http: 404,
   message: { message: 'recipe not found' },
+};
+
+const errorJWTMissing = {
+  http: 401,
+  message: { message: 'missing auth token' },
 };
 
 const validatedParameters = (name, ingredients, preparation) => {
@@ -54,7 +60,30 @@ const handleRecipeById = async (id) => {
   };
 };
 
+const handleUpdateRecipeById = async (recipeId, token, bodyParams) => {
+  if (!token) return errorJWTMissing;
+  try {
+    const { id, role } = jwt.verify(token, secret);
+    const { authorId } = await getRecipeById(recipeId);
+    if (!role === 'admin' || !id === authorId) return errorJWTInvalid;
+    const { name, ingredients, preparation } = bodyParams;
+    await updateRecipeById(recipeId, name, ingredients, preparation);
+    const result = await getRecipeById(recipeId);
+    return {
+      http: 200,
+      message: result,
+    };
+  } catch (error) {
+    return errorJWTInvalid;
+  }
+};
+
+const handleDeleteRecipeById = async (recipeId, token) => {
+
+};
+
 module.exports = {
   handleNewRecipe,
   handleRecipeById,
+  handleUpdateRecipeById,
 };

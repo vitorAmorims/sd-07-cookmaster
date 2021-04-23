@@ -1,6 +1,7 @@
 const {
   handleNewRecipe,
   handleRecipeById,
+  handleUpdateRecipeById,
 } = require('../services/recipesServices');
 const { allRecipes } = require('../models/recipesModels');
 
@@ -37,8 +38,33 @@ const getRecipeById = async (req, res) => {
   }
 };
 
+const updateRecipeById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const token = req.headers.authorization;
+    const bodyParams = req.body
+    const { http, message } = await handleUpdateRecipeById(id, token, bodyParams);
+    return res.status(http).json(message);
+  } catch (error) {
+    return res.status(ERROR).send({ message: error });
+  }
+};
+
+const deleteRecipeById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const token = req.headers.authorization;
+    const { http, message } = await handleDeleteRecipeById(id, token);
+    return res.status(http).json(message);
+  } catch (error) {
+    return res.status(ERROR).send({ message: error });
+  }
+};
+
 module.exports = {
   saveRecipe,
   getAllRecipes,
   getRecipeById,
+  updateRecipeById,
+  deleteRecipeById,
 };
