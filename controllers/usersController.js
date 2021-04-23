@@ -33,7 +33,18 @@ const userLogin = rescue(async (req, res) => {
   return res.status(OK).json({ token });
 });
 
+const createAdmin = rescue(async (req, res) => {
+  const adminData = req.body;
+
+  adminData.role = 'admin';
+
+  const newAdmin = await UsersModel.insertUser(adminData);
+
+  return res.status(CREATED).json({ user: newAdmin.ops[0] });
+});
+
 module.exports = {
   createUser,
   userLogin,
+  createAdmin,
 };

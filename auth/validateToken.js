@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const rescue = require('express-rescue');
-// require('dotenv').config();
 
 const MissingTokenError = require('../errors/MissingTokenError');
 const UsersModel = require('../models/usersModel');
