@@ -51,10 +51,17 @@ const deleteRecipe = async (id) => {
   await recipesModel.deleteRecipe(id);
 };
 
+const addImage = async (id, image) => {
+  await recipesModel.addImage(id, image);
+  const recipe = await recipesModel.findByIdRecipes(id);
+  return recipe;
+};
+
 module.exports = {
   registerRecipes,
   getAllRecipes,
   findByIdRecipes,
   updateRecipes,
   deleteRecipe,
+  addImage,
 };

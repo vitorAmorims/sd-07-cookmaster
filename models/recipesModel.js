@@ -39,9 +39,15 @@ const updateRecipes = async (id, name, ingredients, preparation) =>
         { $set: { id, name, ingredients, preparation } },
         ));
 
+const addImage = async (id, image) =>
+  connect().then((db) =>
+    db
+      .collection('recipes')
+      .updateOne({ _id: ObjectId(id) }, { $set: { id, image } }));
+
 const deleteRecipe = async (id) =>
-   connect()
-    .then((db) => db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
+  connect().then((db) =>
+    db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
 
 module.exports = {
   registerRecipes,
@@ -49,4 +55,5 @@ module.exports = {
   findByIdRecipes,
   updateRecipes,
   deleteRecipe,
+  addImage,
 };

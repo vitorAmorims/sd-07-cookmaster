@@ -1090,7 +1090,7 @@ describe('9 - Crie um endpoint para a adição de uma imagem a uma receita', () 
       .expect('status', 200);
   });
 
-  it.skip('Será validado que ao enviar foto, o nome da imagem é alterada para o id da receita', async () => {
+  it('Será validado que ao enviar foto, o nome da imagem é alterada para o id da receita', async () => {
     const photoFile = path.resolve(__dirname, '../uploads/ratinho.jpg');
     const content = fs.createReadStream(photoFile);
     const formData = frisby.formData();
@@ -1152,7 +1152,7 @@ describe('9 - Crie um endpoint para a adição de uma imagem a uma receita', () 
       });
   });
 
-  it.skip('Será validado que não é possível enviar foto sem estar autenticado', async () => {
+  it('Será validado que não é possível enviar foto sem estar autenticado', async () => {
     const photoFile = path.resolve(__dirname, '../uploads/ratinho.jpg');
     const content = fs.createReadStream(photoFile);
     const formData = frisby.formData();
@@ -1199,7 +1199,7 @@ describe('9 - Crie um endpoint para a adição de uma imagem a uma receita', () 
       .expect('status', 401);
   });
 
-  it.skip('Será validado que é possível enviar foto com usuário admin', async () => {
+  it('Será validado que é possível enviar foto com usuário admin', async () => {
     const photoFile = path.resolve(__dirname, '../uploads/ratinho.jpg');
     const content = fs.createReadStream(photoFile);
     const formData = frisby.formData();

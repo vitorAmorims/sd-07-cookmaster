@@ -1,6 +1,3 @@
-// const Joi = require('joi');
-// const jwt = require('jsonwebtoken');
-// const bcrypt = require('bcrypt-nodejs');
 const rescue = require('express-rescue');
 const recipesService = require('../service/recipesService');
 
@@ -51,10 +48,19 @@ const deleteRecipe = rescue(async (req, res, _next) => {
   res.status(204).send();
 });
 
+const addImage = rescue(async (req, res, _next) => {
+  const { id } = req.params;
+  const image = `localhost:3000/images/${req.file.filename}`;
+  const recipe = await recipesService.addImage(id, image);
+
+  res.status(200).json(recipe);
+});
+
 module.exports = {
   registerRecipes,
   getAllRecipes,
   findByIdRecipes,
   updateRecipes,
   deleteRecipe,
+  addImage,
 };
