@@ -28,5 +28,6 @@ router.put(
   upload.single('image'),
   recipesController.uploadRecipeImage,
   );
+router.get('/images/:id', recipesController.getImage);
 
 module.exports = router;

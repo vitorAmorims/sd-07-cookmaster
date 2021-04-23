@@ -49,7 +49,6 @@ const excludeRecipeValidation = async (id, userId, role) => {
 
 const uploadImageValidation = async (id, userId, role, fileName) => {
   const recipe = await recipesModels.getRecipeById(id);
-  console.log(recipe);
   if (recipe.userId === userId || role === 'admin') {
     const imagePath = `localhost:3000/images/${fileName}`;
     const recipeWithImage = await recipesModels.uploadRecipeImage(id, imagePath, recipe);
