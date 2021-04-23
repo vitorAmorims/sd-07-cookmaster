@@ -40,4 +40,21 @@ const getRecipeById = async (req, res) => {
   }
 };
 
-module.exports = { createRecipe, getAllRecipes, getRecipeById };
+const updateRecipe = async (req, res) => {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const { userId } = req;
+
+  const result = await recipesService.updateRecipe(
+    id,
+    name,
+    ingredients,
+    preparation,
+  );
+
+  if (typeof result === 'string') res.send({ message: result });
+
+  res.status(STATUS_OK).json({ id, name, ingredients, preparation, userId });
+};
+
+module.exports = { createRecipe, getAllRecipes, getRecipeById, updateRecipe };

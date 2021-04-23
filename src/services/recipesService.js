@@ -4,6 +4,7 @@ const recipesModel = require('../models/recipesModel');
 
 const INVALID_ENTRIES_MESSAGE = 'Invalid entries. Try again.';
 
+// prettier-ignore
 const verifyEntries = (name, ingredients, preparation) => {
   if (name === undefined || ingredients === undefined || preparation === undefined) {
     throw new Error(INVALID_ENTRIES_MESSAGE);
@@ -43,4 +44,9 @@ const getRecipeById = async (id) => {
   return recipe;
 };
 
-module.exports = { createRecipe, getAllRecipes, getRecipeById };
+const updateRecipe = async (id, name, ingredients, preparation) => {
+  const updatedRecipe = await recipesModel.updateRecipe(id, name, ingredients, preparation);
+  return updatedRecipe;
+};
+
+module.exports = { createRecipe, getAllRecipes, getRecipeById, updateRecipe };
