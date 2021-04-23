@@ -24,7 +24,7 @@ const addNewUser = rescue(async (req, res) => {
 });
 
 const login = rescue(async (req, res) => {
-    const { email: reqEmail, password } = req.body;
+    const { email: reqEmail } = req.body;
     try {
         const user = await userModel.findUserByEmail(reqEmail);
         const jwtConfig = {
