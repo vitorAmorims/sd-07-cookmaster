@@ -49,9 +49,10 @@ const deletedata = async (id) => {
 
 const editDataWithPatch = async (objParams) => {
   const update = objParams;
+  const { _id } = objParams;
   await connection().then((db) =>
-    db.collection('recipes').updateOne({ _id: ObjectId(objParams._id) }, {$set: update}));
-}
+    db.collection('recipes').updateOne({ _id: ObjectId(_id) }, { $set: update }));
+};
 
 module.exports = {
   getAll,

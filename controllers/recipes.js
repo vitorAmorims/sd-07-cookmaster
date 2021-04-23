@@ -98,20 +98,22 @@ const deleteRecipe = async (request, response) => {
   }
 };
 
-const addImgRecipe =  async (request, response) => {
+const addImgRecipe = async (request, response) => {
   const { id } = request.params;
   const { _id } = request.user;
   const img = request.file;
-  const recipe = await modelRecipes.getById(id);
-  const { userId } = recipe;
-  if (String(userId) === String(_id) || String(request.user.role) === "admin") {
-    const image = `localhost:3000/images/${img.filename}`;
-    const objParams = {
-      ...recipe,
-      image
+  try {
+    const recipe = await modelRecipes.getById(id);
+    const { userId } = recipe;
+    if (String(userId) === String(_id) || String(request.user.role) === 'admin') {
+      const image = `localhost:3000/images/${img.filename}`;
+      const objParams = { ...recipe, image };
+      const result = await serviceRecipes.insertImageRecipe(objParams);
+      return response.status(OK).json(result);
     }
-    const result = await serviceRecipes.insertImageRecipe(objParams);
-    return response.status(OK).json(result);
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
   }
 };
 

@@ -8,17 +8,17 @@ const app = express();
 
 const PORT = 3000;
 
-app.use(express.json({limit: '5mb'}));
+app.use(express.json({ limit: '5mb' }));
 
 app.use(bodyParser.json({
-  limit: '5mb'
+  limit: '5mb',
 }));
 
 app.use(bodyParser.urlencoded({
   limit: '5mb',
   parameterLimit: 100000,
   extended: true,
-  defer: true
+  defer: true,
 }));
 
 const routesUsers = require('./routes/users');

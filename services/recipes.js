@@ -57,7 +57,7 @@ const deleteRecipe = async (id) => {
 const insertImageRecipe = async (objParams) => {
   await modelRecipes.editDataWithPatch(objParams);  
   return objParams;
-}
+};
 
 module.exports = {
   createRecipe,
