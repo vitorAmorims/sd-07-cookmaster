@@ -13,7 +13,7 @@ const newToken = (user) => {
     email: user.email,
     role: user.role,
   };
-  const token = jwt.sign(objToken, secret, jwtConfig);
+  const token = jwt.sign({ data: objToken }, secret, jwtConfig);
   return token;
 };
 
