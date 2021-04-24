@@ -8,7 +8,7 @@ const authMiddleware = async (req, res, next) => {
   const token = req.headers.authorization;
 
   if (!token) {
-    return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'jwt malformed' });
+    return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'missing auth token' });
   }
 
   try {
