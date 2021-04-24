@@ -1,19 +1,10 @@
-const modelUsers = require('../models/users');
-
 const serviceUsers = require('../services/users');
 
 const OK = 200;
 const CREATE = 201;
-const UNPROCESS = 422;
 const ERROR = 400;
 const ERRORADMIN = 403;
 const CONFLICT = 409;
-const objError = {
-  err: {
-    code: 'invalid_data',
-    message: '',
-  },
-};
 
 const postUser = async (request, response) => {
   try {
@@ -33,57 +24,66 @@ const postUser = async (request, response) => {
 };
 
 const getAllUsers = async (request, response) => {
+  const { role } = request.user;
   try {
-    const data = await serviceUsers.getAllUsers();
-    return response.status(OK).json(data);
+    if (String(role) === 'admin') {
+      const result = await serviceUsers.getAllUsers();
+      return response.status(OK).json(result);
+    }
+    throw new Error('error when searching the database OR access denied');
   } catch (error) {
-    console.error(error);
-    return response.status(ERROR).json({ message: error.message });
+    console.log(error);
+    response.status(ERROR).json({ message: error.message });
   }
 };
 
 const getUserById = async (request, response) => {
+  const { id } = request.params;
+  const { role, _id } = request.user;
   try {
-    const { id } = request.params;
-    const data = await serviceUsers.getProductsId(id);
-    if (!data) {
-      objError.err.message = 'Wrong id format';
-      return response.status(UNPROCESS).json(objError);
+    if (String(role) === 'admin' || String(_id) === id) {
+      const result = await serviceUsers.getUserById(id);
+      return response.status(OK).json({ user: result });
     }
-    return response.status(OK).json(data);
+    throw new Error('error when searching for user in bd');
   } catch (error) {
-    console.error(error);
-    const { message } = error;
-    if (message.includes('id')) {
-      objError.err.message = error.message;
-      return response.status(UNPROCESS).json(objError);
-    }
-    return response.status(ERROR).json({ message: error.message });
+    console.log(error);
+    response.status(ERROR).json({ message: error.message });
   }
 };
 
 const putUser = async (request, response) => {
   const { id } = request.params;
-  const { name, quantity } = request.body;
-  const data = await serviceUsers.updateUser(id, name, quantity);
-  return response.status(OK).json(data);
+  const { name, email, password } = request.body;
+  const { role, _id } = request.user;
+  try {
+    if (String(role) === 'admin' || String(_id) === id) {
+      const objParams = { id, name, email, password, role };
+      const data = await serviceUsers.updateUser(objParams);
+      return response.status(CREATE).json({ user: data });
+    }
+    throw new Error('Error when performing update');
+  } catch (error) {
+    console.log(error);
+    response.status(ERRORADMIN).json({ message: error.message });
+  }
 };
 
 const deleteUser = async (request, response) => {
   const responseOK = 204;
   const responseError = 422;
+  const { id } = request.params;
+  const { role, _id } = request.user;
+
   try {
-    const { id } = request.params;
-    const user = await modelUsers.getById(id);
-    const { _id } = user;
-    if (!user) throw new Error({ code: 'invalid_data', message: 'Wrong id format' });
-
-    await serviceUsers.deleteUser(_id);
-
-    return response.status(responseOK).json(user);
+    if (String(role) === 'admin' || String(_id) === id) {
+      await serviceUsers.deleteUser(id);
+      return response.status(responseOK).send();
+    }
+    throw new Error('error when deleting user registration');
   } catch (error) {
     console.log(error);
-    return response.status(responseError).json({ err: error });
+    response.status(responseError).json({ message: error.message });
   }
 };
 

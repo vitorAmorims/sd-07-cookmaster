@@ -37,12 +37,12 @@ const postdataAdmin = async (name, email, password, role) => {
   return { _id: user.insertedId, name, email, role };
 };
 
-const editdata = async (id, name, quantity) => {
-  const updatedProduct = await connection().then((db) =>
+const editdata = async (objParams) => {
+  const { _id, name, email, password, role } = objParams;
+  await connection().then((db) =>
     db
       .collection('users')
-      .updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }));
-  return updatedProduct;
+      .updateOne({ _id: ObjectId(_id) }, { $set: { name, email, password, role } }));
 };
 
 const deletedata = async (id) => {

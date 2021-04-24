@@ -53,11 +53,11 @@ const createUserAdmin = async (name, email, password, role) => {
 };
 
 const getAllUsers = async () => {
-  const products = await modelUser.getAll();
-  const allProducts = {
-    products,
+  const users = await modelUser.getAll();
+  const allUsers = {
+    users,
   };
-  return allProducts;
+  return allUsers;
 };
 
 const getUserById = async (id) => {
@@ -65,14 +65,16 @@ const getUserById = async (id) => {
   return product;
 };
 
-const updateUser = async (id, name, quantity) => {
-  await modelUser.editdata(id, name, quantity);
-  const updatedProduct = {
-    _id: id,
-    name,
-    quantity,
+const updateUser = async (objParams) => {
+  const updatedUser = {
+    _id: objParams.id,
+    name: objParams.name,
+    email: objParams.email,
+    password: objParams.password,
+    role: objParams.role,
   };
-  return updatedProduct;
+  await modelUser.editdata(updatedUser);
+  return updatedUser;
 };
 
 const deleteUser = async (id) => {
