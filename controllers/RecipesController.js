@@ -1,9 +1,17 @@
+const { ObjectId } = require('mongodb');
 const RecipesModel = require('../models/RecipesModel');
-const { CREATED, SUCCESS, NOT_FOUND } = require('../utils/statusCode.json');
+const { CREATED, SUCCESS, NOT_FOUND, NO_CONTENT } = require('../utils/statusCode.json');
 
 const create = async (req, res) => {
   const { name, ingredients, preparation } = req.body;
-  const newRecipe = await RecipesModel.create({ name, ingredients, preparation });
+  const { user: { _id: id } } = req;
+
+  const newRecipe = await RecipesModel.create({
+    name,
+    ingredients,
+    preparation,
+    userId: ObjectId(id),
+  });
   return res.status(CREATED).json(newRecipe);
 };
 
@@ -30,8 +38,15 @@ const getById = async (req, res) => {
 const update = async (req, res) => {
   const { name, ingredients, preparation } = req.body;
   const { id } = req.params;
+
   const updatedRecipe = await RecipesModel.update(id, name, ingredients, preparation);
   res.status(SUCCESS).json(updatedRecipe);
+};
+
+const deleteRecipe = async (req, res) => {
+  const { id } = req.params;
+  const product = await RecipesModel.deleteRecipe(id);
+  res.status(NO_CONTENT).json(product);
 };
 
 module.exports = {
@@ -39,4 +54,5 @@ module.exports = {
   getAll,
   getById,
   update,
+  deleteRecipe,
 };
