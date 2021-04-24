@@ -121,21 +121,21 @@ const getAllRecipes = async () => {
   const recipes = await user.getAllRecipes();
   return recipes;
 };
-const getUserId = async (nameUser) => {
-  const userData = await user.findByUser(nameUser);
+const getUserId = async ({ name }) => {
+  const userData = await user.findByUser(name);
   return userData;
 };
-const createRecipes = async (name, ingredients, preparation, userName) => {
+const createRecipes = async (name, ingredients, preparation, data) => {
   const InvalidEntries = await validateRecipe(name, ingredients, preparation);
 
   if (typeof InvalidEntries === 'object') return InvalidEntries;
 
-  const userData = await getUserId(userName);
+  const userData = await getUserId(data);
     // eslint-disable-next-line no-underscore-dangle
   const id = userData._id.toString();
   const { insertedId } = await user.createRecipes(name, ingredients, preparation, id);
   return {    
-      recipes: {
+      recipe: {
         name,
         ingredients,
         preparation,

@@ -17,8 +17,7 @@ const jwtConfig = {
 const login = async (req, res) => {
   const { email } = req.body;
 
-  const userData = await modelUser.findByEmail(email); 
-  console.log(userData); 
+  const userData = await modelUser.findByEmail(email);  
   
   const token = jwt.sign({ data: userData }, secret, jwtConfig);
   res.status(OK).json({ token });
@@ -36,18 +35,21 @@ const create = async (req, res) => {
   res.status(CREATED).json(result);
 };
 
-const getAllRecipes = async (_req, res) => {
+const getAllRecipes = async (req, res) => {
+  const { authorization } = req.headers;
   const result = await user.getAllRecipes();
+
+  if (authorization) {
+    res.status(OK).json(result);
+  }
 
   // if (result.message) return res.status(BAD_REQUEST).json(result);
 
-  res.status(201).json(result);
+  res.status(OK).json(result);
 };
 const createRecipes = async (req, res) => {
-  const { name, ingredients, preparation, userName } = req.body;
-  const { token } = req.headers;
-
-  const result = await user.createRecipes(name, ingredients, preparation, userName);
+  const { name, ingredients, preparation, data } = req.body;
+  const result = await user.createRecipes(name, ingredients, preparation, data);
 
   if (result.message) return res.status(BAD_REQUEST).json(result);
 
