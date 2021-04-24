@@ -1,8 +1,8 @@
 const { MongoClient } = require('mongodb');
 require('dotenv').config();
 
-const MONGODB_URL = process.env.DB_HOST; // local
-// const MONGODB_URL = 'mongodb://mongodb:27017/Cookmaster'; // avaliador
+// const MONGODB_URL = process.env.DB_HOST; // local
+const MONGODB_URL = 'mongodb://mongodb:27017/Cookmaster'; // avaliador
 
 const connection = async () => {
   try {
