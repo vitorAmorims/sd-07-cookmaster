@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 const { addUserDB } = require('../models/userModel');
 const { addRecipeDB } = require('../models/userModel');
-const { getRecipesDB } = require('../models/userModel');
+const { getAllRecipesDB } = require('../models/userModel');
+const { getRecipeDB } = require('../models/userModel');
 
 const jwtConfig = {
   expiresIn: '2m',
@@ -40,9 +41,16 @@ const addRecipe = async (req, res) => {
   res.status(CREATED).json(data);
 };
 
-const getRecipes = async (req, res) => {
-  const data = await getRecipesDB();
-  // console.log(`data em getRecipes: ${data}`);
+const getAllRecipes = async (req, res) => {
+  const data = await getAllRecipesDB();
+  // console.log(`data em getAllRecipes: ${data}`);
+  res.status(SUCCESS).json(data);
+};
+
+const getRecipe = async (req, res) => {
+  const { id } = req.params;
+  const data = await getRecipeDB(id);
+  // console.log(`data em getRecipe: ${data}`);
   res.status(SUCCESS).json(data);
 };
 
@@ -50,5 +58,6 @@ module.exports = {
   addUser,
   userLogin,
   addRecipe,
-  getRecipes,
+  getAllRecipes,
+  getRecipe,
 };

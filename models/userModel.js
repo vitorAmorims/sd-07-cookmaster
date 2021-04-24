@@ -1,4 +1,4 @@
-// const { ObjectId } = require('mongodb');
+const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
 // consertar o "magic number user nessa função"
@@ -51,11 +51,18 @@ const addRecipeDB = async (name, ingredients, preparation) => {
   return data;
 };
 
-const getRecipesDB = async () => {
-  const allRecipes = await connection()
-    .then((db) => db.collection('recipes').find().toArray());
-  // console.log(`allRecipes em getProductDB: ${AllProducts}`);
+const getAllRecipesDB = async () => {
+  const allRecipes = await connection().then((db) =>
+    db.collection('recipes').find().toArray());
+  // console.log(`allRecipes em getAllRecipes: ${AllProducts}`);
   return allRecipes;
+};
+
+const getRecipeDB = async (id) => {
+  const recipeById = await connection().then((db) =>
+    db.collection('recipes').findOne(ObjectId(id)));
+  // console.log(`getRecipeDB, recipeById: ${recipeById}`);
+  return recipeById;
 };
 
 module.exports = {
@@ -63,5 +70,6 @@ module.exports = {
   findEmail,
   findPassword,
   addRecipeDB,
-  getRecipesDB,
+  getAllRecipesDB,
+  getRecipeDB,
 };
