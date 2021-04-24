@@ -8,7 +8,7 @@ const getAll = async () => {
     return user;
 };
 
-const getUseEmail = async (userEmail) => {
+const getUseEmail = async (userEmail) => { // function only into this context
     const user = await modelForUser.getUseEmail(userEmail);
     if (user === null) {
         return false;
@@ -18,7 +18,7 @@ const getUseEmail = async (userEmail) => {
 
 const create = async (name, email, password) => {
     const getEmail = await getUseEmail(email);
-    console.log(getEmail.email);
+   
     if (getEmail.email !== email || !getEmail.email) {
         const user = await modelForUser.create(name, email, password);
         return user;
@@ -29,5 +29,4 @@ const create = async (name, email, password) => {
 module.exports = {
     create,
     getAll,
-    getUseEmail,
 };

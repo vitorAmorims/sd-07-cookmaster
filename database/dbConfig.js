@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 
-// const MONGODB_URL = 'mongodb://localhost:27017/Cookmaster'; // local
-const MONGODB_URL = 'mongodb://mongodb:27017/Cookmaster'; // avaliador
+const MONGODB_URL = 'mongodb://localhost:27017/Cookmaster'; // local
+// const MONGODB_URL = 'mongodb://mongodb:27017/Cookmaster'; // avaliador
 const DB_NAME = 'Cookmaster';
 const connection = async () => {
   try {

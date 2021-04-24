@@ -1,4 +1,6 @@
 {
     "invalidEntry": "Invalid entries. Try again.",
-    "same_email": "Email already registered"
+    "same_email": "Email already registered",
+    "fill_fields": "All fields must be filled",
+    "invalid_email": "Incorrect username or password"
 }

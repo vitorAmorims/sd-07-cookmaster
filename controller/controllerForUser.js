@@ -1,19 +1,20 @@
 const { validationResult } = require('express-validator');
+const rescue = require('express-rescue');
 const serviceForUser = require('../service/serviceForUser');
 
-const getAll = async (_req, res) => {
+const getAll = rescue(async (_req, res) => {
     try {
         const users = await serviceForUser.getAll();
     res.status(201).json(users);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-};
+});
 
-const getUseEmail = async (req, _res) => {
-    const { email } = req.body;
-    serviceForUser.getUseEmail(email);
-};
+// const getUseEmail = async (req, _res) => {
+//     // const { email } = req.body;
+//     serviceForUser.getUseEmail(email);
+// };
 
 const create = async (req, res) => {
         const { name, email, password } = req.body;
@@ -35,5 +36,4 @@ const create = async (req, res) => {
 module.exports = {
     create,
     getAll,
-    getUseEmail,
 };

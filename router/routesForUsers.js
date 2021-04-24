@@ -5,7 +5,6 @@ const controllerforUsers = require('../controller/controllerForUser');
 const route = Router();
 
 route.get('/', controllerforUsers.getAll);
-route.get('/', controllerforUsers.getUseEmail);
 
 route.post('/',
                 body('name').notEmpty(),
