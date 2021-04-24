@@ -9,6 +9,7 @@ router.post('/recipes',
   middlewares.authMiddleware,
   recipesController.addRecipe);
 router.get('/recipes', recipesController.getRecipes);
+router.get('/recipes/:id', recipesController.getRecipeById);
 
 router.use(middlewares.errorMiddleware);
 
