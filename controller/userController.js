@@ -12,6 +12,15 @@ const insertNewUser = async (req, res) => {
   }
 };
 
+const loginUser = async (req, res) => {
+  try {
+    const result = await userService.loginUser(req.body);
+    res.status(StatusCodes.OK).send(result);
+  } catch ({ message }) {
+    res.status(StatusCodes.UNAUTHORIZED).send(JSON.stringify({ message }));
+  }
+};
 module.exports = {
   insertNewUser,
+  loginUser,
 };

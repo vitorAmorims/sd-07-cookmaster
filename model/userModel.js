@@ -2,10 +2,15 @@ const conn = require('./connection');
 
 const findByEmail = async (user) => {
   const { email } = user;
-  console.log(email);
   const result = await conn().then((db) =>
     db.collection('users').findOne({ email }));
-    console.log(result);
+    return result;
+};
+
+const findByLogin = async (user) => {
+  const { email, password } = user;
+  const result = await conn().then((db) =>
+    db.collection('users').findOne({ email, password }));
     return result;
 };
 
@@ -18,4 +23,5 @@ const insertNewUser = async (user) => {
 module.exports = {
   findByEmail,
   insertNewUser,
+  findByLogin,
 };
