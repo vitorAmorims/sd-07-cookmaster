@@ -1,4 +1,28 @@
 
-GET http://localhost:3000/products
+POST http://localhost:3000/users
 Content-Type: application/json
+
+{
+  "name": "Renato",
+  "email": "fjkdsahfjks@kjhfs.com",
+  "password": "123"
+}
 ###
+
+GET http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "name": "Renato",
+  "email": "12313465",
+  "password": "123"
+}
+###
+
+# POST http://localhost:3000/users/upload
+# Content-Type: multipart/form-data;
+# Content-Disposition: form-data; name="image"; filename="1.png"
+# Content-Type: image/png
+
+# < ./1.png
+# ###

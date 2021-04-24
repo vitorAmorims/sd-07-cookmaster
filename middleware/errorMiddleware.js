@@ -1,16 +1,14 @@
-const status = require('../config/status');
+const { StatusCodes } = require('http-status-codes');
 
 const errorMiddleware = (err, _req, res, _next) => {
+  console.log(err.message);
   if (err.status) {
     return res.status(err.status).json({
-      err: {
-        code: err.code,
-        message: err.message,
-      },
-    });
+      message: err.message,
+   });
   }
-  return res.status(status.INTERNAL_SERVER_ERROR).json({
-    error: 'Eita mainha...',
+  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    erro: 'Eita Mainha... aí cabou!',
   });
 };
 
