@@ -1,7 +1,7 @@
 const validateLoginMiddleware = async (req, res, next) => {
   const { email, password } = req.body;   
   const HTTP401 = 401;
-  const oito = 8;
+  const quatro = 4;
 
   if (!email || !password) {
     return res.status(HTTP401).json({     
@@ -10,7 +10,7 @@ const validateLoginMiddleware = async (req, res, next) => {
   }
 
   const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  if (!regex.test(email) || password.length < oito) {
+  if (!regex.test(email) || password.length < quatro) {
     return res.status(HTTP401).json({     
         message: 'Incorrect username or password',
     });

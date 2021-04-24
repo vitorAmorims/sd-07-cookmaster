@@ -9,6 +9,11 @@ router.get(
   middlewares.validateRecipeExistsMiddleware, 
   recipeController.oneRecipe,
   );
+router.put(
+  '/recipes/:id',
+  middlewares.verifyTokenUpdateRecipeMiddleware,
+  recipeController.updateOneRecipe,
+  ); 
 router.post(
   '/recipes',
   middlewares.validateEntriesRecipeMiddleware,

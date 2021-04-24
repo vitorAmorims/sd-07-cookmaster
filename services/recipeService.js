@@ -18,8 +18,20 @@ const getOneRecipe = async (id) => {
   return list;
 };
 
+const updateRecipe = async (id, name, ingredients, preparation) => {
+  const objRecipe = await recipe.getById(id);
+  if (!objRecipe) {
+    return null;
+  }
+
+  const recipeUpdate = await recipe.update({ id, name, ingredients, preparation });
+
+  return recipeUpdate;
+};
+
 module.exports = {
   createRecipe,
   getAllRecipe,
-  getOneRecipe, 
+  getOneRecipe,
+  updateRecipe, 
 };
