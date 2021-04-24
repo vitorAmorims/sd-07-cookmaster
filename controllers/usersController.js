@@ -19,9 +19,9 @@ const addUser = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password, role } = req.body;
-  const id = await Users.checkForUserEmail._id;
+  const id = await Users.checkForUserEmail.id;
   try {
-    const token = generateAuthToken(id, email, role);
+    const token = generateAuthToken(id, email, role, password);
     res.status(SUCCESS200).json({ token });
   } catch (err) {
     res.status(SYSTEM_FAIL).json({ message: err.message });
