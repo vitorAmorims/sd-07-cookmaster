@@ -3,6 +3,7 @@ const validateEmailMiddleware = require('./validateEmail');
 const validateLoginMiddleware = require('./validateLogin');
 const verifyTokenMiddleware = require('./verifyToken');
 const validateEntriesRecipeMiddleware = require('./validateEntriesRecipe');
+const validateRecipeExistsMiddleware = require('./validateRecipeExist');
 
 module.exports = {
   validateEntriesMiddleware,
@@ -10,4 +11,5 @@ module.exports = {
   validateLoginMiddleware,
   verifyTokenMiddleware,
   validateEntriesRecipeMiddleware,
+  validateRecipeExistsMiddleware,
 };
