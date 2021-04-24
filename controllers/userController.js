@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken');
 const { addUserDB } = require('../models/userModel');
+const { addRecipeDB } = require('../models/userModel');
 
 const jwtConfig = {
-  expiresIn: '7d',
+  expiresIn: '2m',
   algorithm: 'HS256',
 };
 
@@ -31,7 +32,15 @@ const userLogin = async (req, res) => {
   });
 };
 
+const addRecipe = async (req, res) => {
+  const { name, ingredients, preparation } = req.body;
+  const data = await addRecipeDB(name, ingredients, preparation);
+  // console.log(`data em addRecipe: ${data}`);
+  res.status(CREATED).json(data);
+};
+
 module.exports = {
   addUser,
   userLogin,
+  addRecipe,
 };

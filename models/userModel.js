@@ -17,6 +17,8 @@ const addUserDB = async (name, email, password) => {
   return data;
 };
 
+// { "name" : "Receita do Jacquin", "ingredients" : "Frango", "preparation" : "10 minutos no forno" }
+
 const findEmail = async (email) => {
   const findedEmail = await connection().then((db) =>
     db.collection('users').findOne({ email }));
@@ -29,8 +31,29 @@ const findPassword = async (password) => {
   return findedPassword;
 };
 
+const addRecipeDB = async (name, ingredients, preparation) => {
+  const { insertedId } = await connection().then((db) =>
+    db.collection('recipes').insertOne({
+      name,
+      ingredients,
+      preparation,
+    }));
+  const data = {
+    recipe: {
+      name,
+      ingredients,
+      preparation,
+      userid: 'userid', // consertar
+      _id: insertedId,
+    },
+  };
+  // console.log(`addUserDB no model valor : ${data}`);
+  return data;
+};
+
 module.exports = {
   addUserDB,
   findEmail,
   findPassword,
+  addRecipeDB,
 };
