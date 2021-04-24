@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 const serviceUsers = require('../services/users');
 
 const OK = 200;
@@ -8,7 +10,12 @@ const CONFLICT = 409;
 
 const postUser = async (request, response) => {
   try {
-    const { name, email, password } = request.body;
+    const { name, email } = request.body;
+
+    let password = request.body.password;
+    const salt = bcrypt.genSaltSync(5);
+    password = bcrypt.hashSync(password, salt);
+
     const result = await serviceUsers.createUser(name, email, password);
 
     return response.status(CREATE).json({ user: result });
@@ -89,7 +96,12 @@ const deleteUser = async (request, response) => {
 
 const addAdmin = async (request, response) => {
   try {
-    const { name, email, password } = request.body;
+    const { name, email } = request.body;
+
+    let password = request.body.password;
+    const salt = bcrypt.genSaltSync(5);
+    password = bcrypt.hashSync(password, salt);
+
     const { role } = request.user;
     if (String(role) === 'admin') {
       const data = await serviceUsers.createUserAdmin(name, email, password, role);

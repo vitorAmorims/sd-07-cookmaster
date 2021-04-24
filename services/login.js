@@ -21,22 +21,23 @@ const validatePassword = (password) => {
   }
 };
 
-const checkingEmailAndPasswordExists = async (email, password) => {
+const checkingEmailExists = async (email) => {
+
   const account = await modelUser.getByEmail(email);
   if (!account) {
     ERR_MESSAGE = 'Incorrect username or password';
     throw new Error(ERR_MESSAGE);
   }
-  if (account.password !== password) {
-    ERR_MESSAGE = 'Incorrect username or password';
-    throw new Error(ERR_MESSAGE);
-  }
+  // if (account.password !== password) {
+  //   ERR_MESSAGE = 'Incorrect username or password';
+  //   throw new Error(ERR_MESSAGE);
+  // }
 };
 
 const validations = async (email, password) => {
   validateEmail(email);
   validatePassword(password);
-  await checkingEmailAndPasswordExists(email, password);
+  await checkingEmailExists(email);
   const result = await modelUser.getByEmail(email);
   return result;
 };
