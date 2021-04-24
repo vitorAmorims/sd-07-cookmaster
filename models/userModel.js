@@ -51,9 +51,17 @@ const addRecipeDB = async (name, ingredients, preparation) => {
   return data;
 };
 
+const getRecipesDB = async () => {
+  const allRecipes = await connection()
+    .then((db) => db.collection('recipes').find().toArray());
+  // console.log(`allRecipes em getProductDB: ${AllProducts}`);
+  return allRecipes;
+};
+
 module.exports = {
   addUserDB,
   findEmail,
   findPassword,
   addRecipeDB,
+  getRecipesDB,
 };

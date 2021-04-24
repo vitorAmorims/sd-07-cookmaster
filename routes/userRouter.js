@@ -4,6 +4,7 @@ const express = require('express');
 const { addUser } = require('../controllers/userController');
 const { userLogin } = require('../controllers/userController');
 const { addRecipe } = require('../controllers/userController');
+const { getRecipes } = require('../controllers/userController');
 
 // Esse product vai ser feito com middlewares inicialmente, depois se estiver tranquilo levar para MSC
 // Middlewares
@@ -20,5 +21,6 @@ const routes = express.Router();
 routes.post('/users', validateUser, existingEmail, addUser);
 routes.post('/login', validateLogin, loginExists, userLogin);
 routes.post('/recipes', validateRecipe, validateToken, addRecipe);
+routes.get('/recipes', getRecipes);
 
 module.exports = routes;

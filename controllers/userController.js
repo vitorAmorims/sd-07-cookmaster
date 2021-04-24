@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { addUserDB } = require('../models/userModel');
 const { addRecipeDB } = require('../models/userModel');
+const { getRecipesDB } = require('../models/userModel');
 
 const jwtConfig = {
   expiresIn: '2m',
@@ -39,8 +40,15 @@ const addRecipe = async (req, res) => {
   res.status(CREATED).json(data);
 };
 
+const getRecipes = async (req, res) => {
+  const data = await getRecipesDB();
+  // console.log(`data em getRecipes: ${data}`);
+  res.status(SUCCESS).json(data);
+};
+
 module.exports = {
   addUser,
   userLogin,
   addRecipe,
+  getRecipes,
 };
