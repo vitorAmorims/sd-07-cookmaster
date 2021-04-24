@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 
 const MONGO_DB_URL = 'mongodb://localhost:27017/Cookmaster'; // Testes locais;
-// const MONGO_DB_URL = 'mongodb://mongodb:27017/Cookmaster'; // Testes avaliador;
+// const MONGO_DB_URL = 'mongodb://mongodb:27017/Cookmaster'; // Testes avaliador
 const DB_NAME = 'Cookmaster';
 
 const connection = () => (
