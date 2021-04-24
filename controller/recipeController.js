@@ -1,4 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
+const { ObjectId } = require('mongodb');
 const recipeService = require('../service/recipeService');
 const recipeModel = require('../model/recipeModel');
 
@@ -37,9 +38,25 @@ const updateRecipeById = async ({ params, user, body }, res) => {
     res.status(StatusCodes.BAD_REQUEST).send({ message });
   }
 };
+
+const deleteRecipeById = async (req, res) => {
+  const { id } = req.params;
+  await recipeModel.deleteRecipeById(new ObjectId(id));
+  res.status(StatusCodes.NO_CONTENT).send();
+};
+
+const insertNewImageOnRecipeById = async (req, res) => {
+  const { id } = req.params;
+  const { filename } = req.file;
+  const path = `localhost:3000/images/${filename}`;
+  const result = await recipeModel.insertNewImageOnRecipeById(id, path);
+  return res.status(StatusCodes.OK).send(JSON.stringify(result));
+};
 module.exports = {
   insertNewRecipe,
   findAllRecipes,
   findRecipeById,
   updateRecipeById,
+  deleteRecipeById,
+  insertNewImageOnRecipeById,
 };
