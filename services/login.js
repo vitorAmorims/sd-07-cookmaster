@@ -22,7 +22,6 @@ const validatePassword = (password) => {
 };
 
 const checkingEmailExists = async (email) => {
-
   const account = await modelUser.getByEmail(email);
   if (!account) {
     ERR_MESSAGE = 'Incorrect username or password';
