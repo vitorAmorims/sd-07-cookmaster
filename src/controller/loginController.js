@@ -1,6 +1,6 @@
 const loginService = require('../service/loginService');
 
-const { C_200, C_401, C_500 } = loginService.statusHttp;
+const { C_200, C_401 } = loginService.statusHttp;
 
 const registerUser = async (req, res) => {
   try {
