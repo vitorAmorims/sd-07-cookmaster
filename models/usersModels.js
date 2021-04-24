@@ -8,7 +8,7 @@ const addUser = async (name, email, password, role = 'user') =>
     .then((db) => db.collection('users').insertOne({ name, email, password, role }));
 
 const checkForUserEmail = async (email) => getUsers()
-    .then((products) => products.findOne({ email }));
+  .then((users) => users.findOne({ email }));
 
 module.exports = {
   addUser,
