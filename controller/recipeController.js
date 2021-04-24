@@ -1,5 +1,6 @@
 const Recipe = require('../model/RecipeModel');
 
+const NOT_CONTENT = 204;
 const SUCCESS = 200;
 const CREATED = 201;
 const { NotFoundException } = require('../exception');
@@ -38,8 +39,33 @@ const getAllRecipesController = async (_req, res, next) => {
     }
   };
 
+  const updateRecipeController = async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const { _id: userId } = req.user;
+      const recipeUpdated = { ...req.body, userId };
+      const result = await Recipe.updateRecipe(id, recipeUpdated);
+      if (result !== null) return res.status(SUCCESS).json(result);
+      throw new NotFoundException('recipeNotFound');
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  const deleteRecipeController = async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const result = await Recipe.excludeRecipe(id);
+      if (result !== null) return res.status(NOT_CONTENT).send();
+    } catch (err) {
+      next(err);
+    }
+  };
+
 module.exports = {
     createRecipeController,
     getAllRecipesController,
     getRecipeByIdController,
+    updateRecipeController,
+    deleteRecipeController,
 };

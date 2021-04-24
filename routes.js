@@ -7,6 +7,7 @@ const {
     validateUniqueUserMiddleware,
     validateLoginUserMiddleware,
     validatePasswordMiddleware,
+    validateLoggedUserMiddleware,
 } = require('./middleware/userMiddlewares');
 
 const {
@@ -23,6 +24,8 @@ const {
     createRecipeController,
     getAllRecipesController,
     getRecipeByIdController,
+    updateRecipeController,
+    deleteRecipeController,
 } = require('./controller/recipeController');
 
 route.use(express.static(`${__dirname}uploads/`));
@@ -47,8 +50,22 @@ route.post(
     validateTokenMiddleware,
     createRecipeController,
 );
-
+const RECIPES_ID = '/recipes/:id';
 route.get('/recipes', getAllRecipesController);
-route.get('/recipes/:id', getRecipeByIdController);
+route.get(RECIPES_ID, getRecipeByIdController);
+
+route.put(
+    RECIPES_ID,
+    validateTokenMiddleware,
+    validateLoggedUserMiddleware,
+    updateRecipeController,
+    );
+
+route.delete(
+    RECIPES_ID,
+    validateTokenMiddleware,
+    validateLoggedUserMiddleware,
+    deleteRecipeController,
+    );
 
 module.exports = route;
