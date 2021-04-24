@@ -1,3 +1,4 @@
+const validator = require('email-validator');
 const userModel = require('../model/userModel');
 
 const isFull = (name) => {
@@ -6,9 +7,9 @@ const isFull = (name) => {
 };
 
 const emailAndPassword = async (email, password) => {
-  const re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  const isValid = re.test(email);
-  if (!isValid) {
+  // const re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  // const isValid = re.test(email);  
+  if (!validator.validate(email)) {
     return false;
   }
   const passwordDB = await userModel.getPassword(email);
@@ -17,9 +18,9 @@ const emailAndPassword = async (email, password) => {
 };
 
 const emailFormat = (email) => {
-  const re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  const isValid = re.test(email);
-  if (!isValid) {
+  // const re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  // const isValid = re.test(email);  
+  if (!validator.validate(email)) {
     return false;
   }
   return true;

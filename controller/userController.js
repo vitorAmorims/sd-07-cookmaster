@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
+const validator = require('email-validator');
 const userService = require('../service/userService');
 const userModel = require('../model/userModel');
 
@@ -138,10 +139,9 @@ router.get('/recipes', async (req, res) => {
   return res.status(200).json(recipes);
 });
 
-// router.get('/teste', async (req, res) => {
-//   const allUsers = await userModel.getAllUser();
-//   const allRecipes = await userModel.getAllRecipes();
-//   res.status(200).json(allUsers);
-// });
+router.get('/teste', async (req, res) => {
+  console.log(validator.validate('test@email.com'));
+  res.status(200).json(validator.validate('test@email.com'));
+});
 
 module.exports = router;
