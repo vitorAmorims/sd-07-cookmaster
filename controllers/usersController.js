@@ -8,7 +8,8 @@ const addUser = async (req, res) => {
   const { name, email, password, role } = req.body;
   try {
     const results = await Users.addUser(name, email, password, role);
-    res.status(SUCCESS).json(results.ops[0]);
+    console.log(results.ops[0]);
+    res.status(SUCCESS).json({user: results.ops[0]});
   } catch (err) {
     res.status(SYSTEM_FAIL).json({ message: err.message });
   }
