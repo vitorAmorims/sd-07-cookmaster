@@ -1,5 +1,3 @@
-const Recipes = require('../models/recipesModels');
-
 const validateRecipe = async (req, _res, next) => {
   const { name, ingredients, preparation } = req.body;
   if (!name || !ingredients || !preparation) {

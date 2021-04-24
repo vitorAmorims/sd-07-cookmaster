@@ -6,7 +6,7 @@ const authMiddleware = async (req, res, next) => {
   if (token === undefined) {
     return next({ status: 401, message: 'jwt malformed', code: 'invalid_data' });
   }
-  if(tokenIsValid(token, password)) {
+  if (tokenIsValid(token, password)) {
     return next();
   }
   return next({ status: 401, message: 'jwt malformed', code: 'invalid_data' });

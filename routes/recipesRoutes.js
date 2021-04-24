@@ -4,7 +4,11 @@ const middlewares = require('../middlewares');
 
 const router = express.Router();
 
-router.post('/recipes', middlewares.validateRecipe, middlewares.authMiddleware, recipesController.addRecipe);
+router.post('/recipes',
+  middlewares.validateRecipe,
+  middlewares.authMiddleware,
+  recipesController.addRecipe);
+router.get('/recipes', recipesController.getRecipes);
 
 router.use(middlewares.errorMiddleware);
 

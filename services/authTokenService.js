@@ -1,15 +1,17 @@
 const jwt = require('jsonwebtoken');
 
-const generateAuthToken = (id, email, role = 'user', password) =>
-  jwt.sign({ id, email, role }, password);
+const secret = '123';
 
-const tokenIsValid = (token, password) => {
+const generateAuthToken = (id, email, role = 'user') =>
+  jwt.sign({ id, email, role }, secret);
+
+const tokenIsValid = (token) => {
   try {
-    jwt.verify(token, password);
+    jwt.verify(token, secret);
     return true;
   } catch (error) {
     return false;
   }
-}
+};
 
 module.exports = { generateAuthToken, tokenIsValid };

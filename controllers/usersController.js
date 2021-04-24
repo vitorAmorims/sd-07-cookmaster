@@ -1,5 +1,5 @@
 const Users = require('../models/usersModels');
-const {generateAuthToken} = require('../services/authTokenService');
+const { generateAuthToken } = require('../services/authTokenService');
 
 const SUCCESS = 201;
 const SUCCESS200 = 200;
