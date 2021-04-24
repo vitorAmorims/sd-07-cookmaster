@@ -11,6 +11,11 @@ const getAll = rescue(async (_req, res) => {
     }
 });
 
+const getUserByEmail = async (email) => {
+    const user = await serviceForUser.getUserEmail(email);
+    return user;
+};
+
 const create = async (req, res) => {
         const { name, email, password } = req.body;
         const role = 'user';
@@ -31,4 +36,5 @@ const create = async (req, res) => {
 module.exports = {
     create,
     getAll,
+    getUserByEmail,
 };

@@ -4,7 +4,7 @@ const secret = 'dontstopdancing';
 
 const jwtFunc = async (user) => {
     const { password, ...userRest } = await user;
-
+  
     const jwtConfig = {
         expiresIn: '1d',
         algorithm: 'HS256',

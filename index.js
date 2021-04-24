@@ -1,6 +1,8 @@
 const express = require('express');
 const routesForUsers = require('./router/routesForUsers');
 const routesForLogin = require('./router/routesForLogin');
+const routeForRecipes = require('./router/routesForRecipes');
+
 require('dotenv').config();
 
 const app = express();
@@ -15,5 +17,6 @@ app.get('/', (request, response) => {
 
 app.use('/users', routesForUsers);
 app.use('/login', routesForLogin);
+app.use('/recipes', routeForRecipes);
 
 app.listen(PORT, () => { console.log(`Operational on port ${PORT}`); });
