@@ -5,6 +5,7 @@ const user = 'user';
 const PORT = 3000;
 const SUCCESS = 200;
 const CREATED = 201;
+const NO_CONTENT = 204;
 const BAD_REQEUST = 400;
 const UNAUTHORIZED = 401;
 const NOT_FOUND = 404;
@@ -26,6 +27,7 @@ module.exports = {
     PORT,
     SUCCESS,
     CREATED,
+    NO_CONTENT,
     BAD_REQEUST,
     NOT_FOUND,
     CONFLICTS,
