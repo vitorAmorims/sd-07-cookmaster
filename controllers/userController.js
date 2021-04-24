@@ -1,8 +1,13 @@
+const jwt = require('jsonwebtoken');
 const userService = require('../services/userService');
+const connection = require('../config/conn');
 
+const secret = 'abc';
 const HTTP200 = 200;
 const HTTP201 = 201;
+const HTTP401 = 401;
 const HTTP500 = 500;
+const oito = 8;
 
 const createUser = async (req, res) => {
   try {
@@ -17,9 +22,27 @@ const createUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    const { email } = req.body;
-    const result = await userService.loginUser(email);        
-    res.status(HTTP200).json(result);
+    const { email, password } = req.body;
+    const user = await connection().then((db) =>
+    db.collection('users').findOne({ email }));
+    
+    if(password !=='admin' & password.length < 8){
+      return res.status(HTTP401).json({ message: 'Incorrect username or password' });
+    }
+    
+    if (user.password !== password) {
+      return res.status(HTTP401).json({ message: 'Incorrect username or password' });
+    }
+
+    const jwtConfig = {
+      expiresIn: 60 * 60,
+      algorithm: 'HS256',
+    };
+    
+    const { _id, role } = user;
+    const token = jwt.sign({ id: _id, role }, secret, jwtConfig);
+
+    res.status(HTTP200).json({ token });
   } catch (err) {
     console.log(err);
     res.status(HTTP500).json({ message: err.message });

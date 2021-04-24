@@ -40,17 +40,25 @@ const oneRecipe = async (req, res) => {
 
 const updateOneRecipe = async (req, res) => {
   try {
-    const { userId } = req;
+    const { tokenUserId, tokenUserRole, recipeUserId } = req;
     const { name, ingredients, preparation } = req.body;
-    const { id } = req.params;    
+    const { id } = req.params;
+    console.log('token user id ' + tokenUserId);
+    console.log('token user role ' + tokenUserRole);
+    console.log('recipe user id ' + recipeUserId);    
 
+    if(tokenUserId !== recipeUserId && tokenUserRole !='admin'){
+      res.status(HTTP404).json({ message: 'Não tem autorização para alterar' })
+    } 
     const result = await recipeService.updateRecipe(id, name, ingredients, preparation);
+
+
     if (!result) {
       res.status(HTTP404).json({ message: 'Produto não encontrado :(' });
       return;
     }
 
-    res.status(HTTP200).json({ _id: id, name, ingredients, preparation, userId });
+    res.status(HTTP200).json({ _id: id, name, ingredients, preparation, recipeUserId });
   } catch (err) {
     console.log(err);
     res.status(HTTP500).json({ message: err.message });

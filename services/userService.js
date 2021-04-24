@@ -7,13 +7,6 @@ const createUser = async (name, email, password) => {
   return newUser;
 };
 
-const loginUser = async (email) => { 
-  const login = await user.findUser(email);
-        
-  return login;  
-};
-
 module.exports = {
   createUser,
-  loginUser,
 };

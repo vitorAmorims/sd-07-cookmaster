@@ -1,20 +1,20 @@
 const validateLoginMiddleware = async (req, res, next) => {
   const { email, password } = req.body;   
   const HTTP401 = 401;
-  const oito = 8;
 
   if (!email || !password) {
     return res.status(HTTP401).json({     
         message: 'All fields must be filled',
     });
   }
- 
-  const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  if (!regex.test(email) || password.length < oito) {
+
+  const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z-9-]+(?:\.[a-zA-Z0-9-]+)*$/; 
+  if (!regex.test(email)) {   
     return res.status(HTTP401).json({     
         message: 'Incorrect username or password',
     });
   }
+   
   next();
 };
 
