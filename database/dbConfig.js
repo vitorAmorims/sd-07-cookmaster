@@ -6,8 +6,7 @@ const DB_NAME = 'Cookmaster';
 const connection = async () => {
   try {
         const conn = await MongoClient.connect(MONGODB_URL, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+            useNewUrlParser: true, useUnifiedTopology: true,
         });
         return conn.db(DB_NAME);
     } catch (err) {
