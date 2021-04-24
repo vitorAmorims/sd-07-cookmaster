@@ -1,9 +1,10 @@
 const recipeService = require('../services/recipeService');
+const constants = require('../const');
 
 const createRecipe = async (req, res) => {
     const { name, ingredients, preparation } = req.body;
     const { authorization } = req.headers;
-    
+
     const createRecipeResult = await recipeService
         .createRecipe(name, ingredients, preparation, authorization);
 
@@ -12,7 +13,7 @@ const createRecipe = async (req, res) => {
             message: createRecipeResult.error.message,
         });
     }
-    return res.status(201).json({ recipe: createRecipeResult });
+    return res.status(constants.CREATED).json({ recipe: createRecipeResult });
 };
 
 module.exports = {
