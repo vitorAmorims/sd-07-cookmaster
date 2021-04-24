@@ -34,9 +34,13 @@ function validateEmail(email) {
   return re.test(String(email).toLowerCase());
 }
 
-const emailCheck = (email) => {
+const emailCheck = async (email) => {
   const emailInvalid = !validateEmail(email);
+  const user = await loginModel.findUser(email);
   if (email === '' || email === undefined || emailInvalid) {
+    return true;
+  }
+  if (!user) {
     return true;
   }
   return false;
@@ -61,7 +65,7 @@ const registerUser = async (email, password) => {
       fieldHalf: true, message: 'All fields must be filled',
     };
   }
-  if (emailCheck(email) || await passwordCheck(email, password)) {
+  if (await emailCheck(email) || await passwordCheck(email, password)) {
     return {
       checkFail: true, message: 'Incorrect username or password',
     };
