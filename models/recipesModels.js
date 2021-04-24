@@ -1,9 +1,8 @@
-const connection = require('../config/conn');
+// const { ObjectId } = require('mongodb');
+// const connection = require('../config/conn');
 
-const { ObjectId } = require('mongodb');
+// const getProductsList = async () => connection().then((db) => db.collection('products'));
 
-const getProductsList = async () => connection().then((db) => db.collection('products'));
-
-module.exports = {
-  getProductsList,
-};
+// module.exports = {
+//   getProductsList,
+// };

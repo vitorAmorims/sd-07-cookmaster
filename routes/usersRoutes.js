@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.post('/users', middlewares.validateUser, usersController.addUser);
 
-
 router.use(middlewares.errorMiddleware);
 
 module.exports = router;
