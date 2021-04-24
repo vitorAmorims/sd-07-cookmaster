@@ -12,6 +12,16 @@ const recipesRegistration = async (request, response) => {
   }
 };
 
+const getAllRecipes = async (request, response) => {
+  try {
+    const result = await recipesService.getAllRecipes();
+    response.status(STATUS_CODE.SUCCESS).json(result);
+  } catch (error) {
+    response.status(error.status).json({ message: error.message });
+  }
+};
+
 module.exports = {
   recipesRegistration,
+  getAllRecipes,
 };
