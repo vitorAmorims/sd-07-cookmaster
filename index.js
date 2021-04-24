@@ -1,10 +1,14 @@
 const express = require('express');
 
+const helmet = require("helmet");
+
 const bodyParser = require('body-parser');
 
 const path = require('path');
 
 const app = express();
+
+app.use(helmet());
 
 const PORT = 3000;
 
