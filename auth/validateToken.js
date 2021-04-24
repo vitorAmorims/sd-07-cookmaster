@@ -10,4 +10,13 @@ const tokenIsValid = (token) => {
   }
 };
 
-module.exports = { tokenIsValid };
+const isAdmin = (token) => {
+  const { role } = jwt.verify(token, key);
+  if (role === 'admin') return true;
+  return false;
+};
+
+module.exports = {
+  tokenIsValid,
+  isAdmin,
+};

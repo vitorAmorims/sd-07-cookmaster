@@ -9,5 +9,7 @@ route.post('/recipes', authMiddleware.checkIfTheUserIsAuthenticated,
   recipesController.recipesRegistration);
 route.get('/recipes', recipesController.getAllRecipes);
 route.get('/recipes/:id', recipesController.getRecipe);
+route.put('/recipes/:id', authMiddleware.checkIfTheUserIsAuthenticated,
+  recipesController.updateRecipe);
 
 module.exports = route;

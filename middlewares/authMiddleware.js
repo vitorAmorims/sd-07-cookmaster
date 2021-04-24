@@ -4,7 +4,7 @@ const { validateToken } = require('../auth');
 const checkIfTheUserIsAuthenticated = (request, response, next) => {
   const token = request.headers.authorization;
   if (!token) {
-    return response.status(401).send();
+    return response.status(401).send({ message: 'missing auth token' });
   }
 
   if (validateToken.tokenIsValid(token)) {
