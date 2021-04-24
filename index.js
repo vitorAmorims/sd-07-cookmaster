@@ -5,7 +5,7 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 
-const PORT = process.env.ACCESS_PORT;
+const PORT = 3000;
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
@@ -13,5 +13,6 @@ app.get('/', (request, response) => {
 });
 
 app.use('/users', routesForUsers);
+// app.use('/login', routesForLogin);
 
 app.listen(PORT, () => { console.log(`Operational on port ${PORT}`); });
