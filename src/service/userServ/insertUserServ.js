@@ -5,7 +5,8 @@ const { EMAIL_TAKEN } = require('../servDictionary');
 
 const insertUserServ = async (body) => {
   const saltRounds = 10;
-  const inputsInvalid = inputsValidator(body);
+  const mandatoryFields = ['name', 'email', 'password'];
+  const inputsInvalid = inputsValidator(body, mandatoryFields);
   if (inputsInvalid) {
     return inputsInvalid;
   }
@@ -14,9 +15,8 @@ const insertUserServ = async (body) => {
     return { status: EMAIL_TAKEN };
   }
   const { email, name, password } = body;
-  const hash = bcrypt.hashSync(password, saltRounds);
-  console.log(hash)
-  const userData = { email, name, role: body.role || 'user', password: hash };
+  const passHashed = bcrypt.hashSync(password, saltRounds);
+  const userData = { email, name, role: body.role || 'user', password: passHashed };
   const [userInsRes] = await insertUser(userData);
   const safeToReturn = { ...userInsRes, password };
   return { user: safeToReturn, status: 'Created' };

@@ -1,7 +1,8 @@
+require('dotenv').config();
 const mongoClient = require('mongodb').MongoClient;
 
 // local
-const MONGO_DB_URI = 'mongodb://localhost:27017/Cookmaster';
+const MONGO_DB_URI = process.env.DB_URI || 'mongodb://mongodb:27017/Cookmaster';
 
 // remote
 // const MONGO_DB_URI = 'mongodb://mongodb:27017/Cookmaster';

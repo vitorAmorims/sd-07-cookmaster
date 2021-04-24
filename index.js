@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const errMiddleware = require('./middlewares/errMiddleware');
+const { errMiddleware, authMiddleware } = require('./middlewares');
 
 const app = express();
-const { loginRoute, userRoutes } = require('./routes');
+const { loginRoute, recipeRoutes, userRoutes } = require('./routes');
 
 const PORT = 3000;
 app.use(bodyParser.json());
@@ -17,5 +17,6 @@ app.listen(PORT, () => { console.log('API @ PORT 3000'); });
 
 app.use('/users', userRoutes);
 app.use('/login', loginRoute);
+app.use('/recipe', recipeRoutes);
 
 app.use(errMiddleware);

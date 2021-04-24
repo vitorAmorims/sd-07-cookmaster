@@ -20,6 +20,9 @@ const statusMsgMap = {
   'Wrong password': {
     status: 401, message: 'Incorrect username or password',
   },
+  'missing token': {
+    status: 401, message: 'jwt malformed',
+  },
 };
 
 module.exports = statusMsgMap;

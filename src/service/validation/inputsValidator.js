@@ -1,25 +1,27 @@
+const { ObjectId } = require('mongodb');
 const validator = require('validator');
 const { getUserByEmail } = require('../../model/userModel');
 const { BAD_INPUT, EMAIL_TAKEN, PASS_SETUP } = require('../servDictionary');
 
-const preCheckFields = (inputInfo) => {
-  const MANDATORY_FIELDS = ['name', 'email', 'password'];
-  const correctEntries = MANDATORY_FIELDS
-    .find((field) => !Object.keys(inputInfo).includes(field));
+const preCheckFields = (inputInfo, mandatoryFields) => {
+  const correctEntries = mandatoryFields.find((field) => !Object.keys(inputInfo).includes(field));
   const allStrings = Object.values(inputInfo)
     .find((value) => typeof value !== 'string');
   if (allStrings === 0 || correctEntries) {
     return { status: BAD_INPUT };
   }
+  return false;
 };
+
+const validMongoId = (id) => ObjectId.isValid(id);
 
 const emailInDb = async (email) => {
   const dbRes = await getUserByEmail(email);
   return dbRes ? { status: EMAIL_TAKEN } : false;
 };
 
-const inputsValidator = (body) => {
-  const preCheckFail = preCheckFields(body);
+const inputsValidator = (body, fields) => {
+  const preCheckFail = preCheckFields(body, fields);
   if (preCheckFail) {
     return preCheckFail;
   }
@@ -43,4 +45,5 @@ module.exports = {
   emailInDb,
   inputsValidator,
   preCheckFields,
+  validMongoId,
 };

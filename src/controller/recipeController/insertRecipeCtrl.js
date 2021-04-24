@@ -5,6 +5,7 @@ const { serverErr } = require('../dictionaries');
 const insertRecipeCtrl = Router();
 
 insertRecipeCtrl.post('/', async (req, res, next) => {
+  console.log(req)
   try {
     const { body } = req;
     console.log(body);
