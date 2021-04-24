@@ -6,7 +6,7 @@ const isFull = (name) => {
 };
 
 const emailAndPassword = async (email, password) => {
-  const re = /^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  const re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   const isValid = re.test(email);
   if (!isValid) {
     return false;
@@ -17,7 +17,7 @@ const emailAndPassword = async (email, password) => {
 };
 
 const emailFormat = (email) => {
-  const re = /^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  const re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   const isValid = re.test(email);
   if (!isValid) {
     return false;

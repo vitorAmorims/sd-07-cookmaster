@@ -10,6 +10,11 @@ const secret = 'seusecretdetoken';
 
 const missingToken = 'missing auth token';
 
+const jwtConfig = {
+  expiresIn: '7d',
+  algorithm: 'HS256',
+};
+
 const storage = multer.diskStorage({
   destination: (req, file, callback) => { callback(null, 'uploads'); },
   filename: (req, file, callback) => {
@@ -33,11 +38,6 @@ router.put('/recipes/:id/image/', tokenValidation, upload.single('image'), async
   return res.status(200).json(recipes);
 });
 
-const jwtConfig = {
-  expiresIn: '7d',
-  algorithm: 'HS256',
-};
-
 router.post('/users', async (req, res) => {
   const { name, email, password } = req.body;
   let { role } = req.body;
@@ -45,6 +45,7 @@ router.post('/users', async (req, res) => {
   const prmIsValid = userService.validatorUser(name, email, password);
   if (!prmIsValid) return res.status(400).json({ message: 'Invalid entries. Try again.' });
   const response = await userModel.getEmail(email);
+  console.log('response', response);
   if (response.length > 0) return res.status(409).json({ message: 'Email already registered' });
   await userModel.createUser(name, email, password, role);
   return res.status(201).json({
@@ -138,10 +139,9 @@ router.get('/recipes', async (req, res) => {
 });
 
 // router.get('/teste', async (req, res) => {
-//   const { email } = req.body;
 //   const allUsers = await userModel.getAllUser();
 //   const allRecipes = await userModel.getAllRecipes();
-//   res.status(200).json(allRecipes);
+//   res.status(200).json(allUsers);
 // });
 
 module.exports = router;
