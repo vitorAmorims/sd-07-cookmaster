@@ -1,3 +1,11 @@
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt-nodejs');
+const loginModel = require('../model/loginModel');
+
+const SECONDS = 60;
+const MULTIPLIER = 30;
+const secret = 'acertomiseravi';
+
 const statusHttp = {
   C_200: 200,
   C_201: 201,
@@ -11,6 +19,56 @@ const statusHttp = {
   C_500: 500,
 };
 
+const fieldsExistis = (email, password) => {
+  if (email === ''
+  || email === undefined
+  || password === ''
+  || password === undefined) {
+    return false;
+  }
+  return true;
+  };
+
+function validateEmail(email) {
+  const re = /\S+@\S+\.\S+/;
+  return re.test(String(email).toLowerCase());
+}
+
+const emailCheck = (email) => {
+  const emailInvalid = !validateEmail(email);
+  if (email === '' || email === undefined || emailInvalid) {
+    return true;
+  }
+  return false;
+};
+
+const passwordCheck = async (email, password) => {
+  const user = await loginModel.findUser(email);
+  const passwordValidate = bcrypt.compareSync(password, user.password);
+  if (!passwordValidate) {
+    return true;
+  }
+  return false;
+};
+
+const registerUser = async (email, password) => {
+  const jwtConfig = {
+    expiresIn: SECONDS * MULTIPLIER,
+    algorithm: 'HS256',
+  };
+  if (!fieldsExistis(email, password) || emailCheck(email)
+  || await passwordCheck(email, password)) {
+    return {
+      code401: true, message: 'Invalid entries. Try again.',
+    };
+  }
+  const user = await loginModel.findUser(email);
+  const { _id, role } = user;
+  const token = jwt.sign({ data: { _id, email: user.email, role } }, secret, jwtConfig);
+  return token;
+};
+
 module.exports = {
   statusHttp,
+  registerUser,
 };

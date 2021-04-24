@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt-nodejs');
 const usersModel = require('../model/usersModel');
 
 const statusHttp = {
@@ -45,6 +46,10 @@ const verifyCountEmail = async (email) => {
 
 const create = async (name, email, password) => {
   let result = {};
+  let key = password;
+  const salt = bcrypt.genSaltSync(5);
+  key = bcrypt.hashSync(key, salt);
+
   if (!fieldsExistis(name, password)
     || emailCheck(email)) {
     return {
@@ -56,7 +61,7 @@ const create = async (name, email, password) => {
       code409: true, message: 'Email already registered',
     };
   }
-  result = await usersModel.createUser(name, email, password);
+  result = await usersModel.createUser(name, email, key);
   return result;
   };
 

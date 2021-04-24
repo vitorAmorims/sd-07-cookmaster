@@ -20,7 +20,6 @@ app.use(middlewares.logMiddleware);
 app.use(router.usersRoutes);
 app.use(router.loginRoutes);
 app.use(router.recipesRoutes);
-// app.use(middlewares.errorMiddleware);
 
 app.listen(PORT, () => {
   console.log('API rodando na porta', PORT);
