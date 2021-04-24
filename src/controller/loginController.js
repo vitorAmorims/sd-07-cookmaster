@@ -16,7 +16,7 @@ const registerUser = async (req, res) => {
       .status(C_200)
       .send({ token });
   } catch (error) {
-    return res.status(C_500).json({ message: error.message });
+    return res.status(C_401).json({ message: error.message });
   }
 };
 
