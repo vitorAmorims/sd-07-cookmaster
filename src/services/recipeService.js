@@ -14,6 +14,11 @@ const getUserIdByEmail = async (email) => {
     return id;
 };
 
+const recipeExists = (recipe) => {
+    if (recipe === undefined) return false;
+    return true;
+};
+
 const createRecipe = async (name, ingredients, preparation, token) => {
     if (!fieldIsValid(name) || !fieldIsValid(ingredients) || !fieldIsValid(preparation)) {
         return { error: 
@@ -37,7 +42,21 @@ const getAllRecipes = async () => {
     return allRecipes;
 };
 
+const getRecipeById = async (id) => {
+    const recipe = await recipeModel.getById(id);
+    if (!recipeExists(recipe)) {
+        return {
+            error: {
+                message: constants.recipeNotFound,
+                status: constants.NOT_FOUND,
+            },
+        };
+    }
+    return recipe;
+};
+
 module.exports = {
     createRecipe,
     getAllRecipes,
+    getRecipeById,
 };
