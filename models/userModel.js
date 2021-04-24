@@ -13,7 +13,7 @@ const addUserDB = async (name, email, password) => {
       _id: insertedId,
     },
   };
-  console.log(`addUserDB no model valor : ${data}`);
+  // console.log(`addUserDB no model valor : ${data}`);
   return data;
 };
 
@@ -23,7 +23,14 @@ const findEmail = async (email) => {
   return findedEmail;
 };
 
+const findPassword = async (password) => {
+  const findedPassword = await connection().then((db) =>
+    db.collection('users').findOne({ password }));
+  return findedPassword;
+};
+
 module.exports = {
   addUserDB,
   findEmail,
+  findPassword,
 };
