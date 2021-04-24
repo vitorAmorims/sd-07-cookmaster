@@ -11,11 +11,6 @@ const getAll = rescue(async (_req, res) => {
     }
 });
 
-// const getUseEmail = async (req, _res) => {
-//     // const { email } = req.body;
-//     serviceForUser.getUseEmail(email);
-// };
-
 const create = async (req, res) => {
         const { name, email, password } = req.body;
         const role = 'user';
