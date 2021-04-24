@@ -1051,6 +1051,7 @@ describe('9 - Crie um endpoint para a adição de uma imagem a uma receita', () 
       })
       .put(`${url}/recipes/${resultRecipes.recipe._id}/image`, { body: formData })
       .expect('status', 200);
+
   });
 
   it('Será validado que ao enviar foto, o nome da imagem é alterada para o id da receita', async () => {

@@ -6,6 +6,8 @@ app.use(express.json());
 
 const PORT = 3000;
 
+app.use(express.static(`${__dirname}uploads/`));
+
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
   response.send();

@@ -26,7 +26,6 @@ const putRecipesById = async (idRecipes, name, ingredients, preparation) => {
       .updateOne(
         { _id: ObjectId(idRecipes) }, { $set: { name, ingredients, preparation } },
       ));
-    console.log('idRecipes', idRecipes);
   }
 };
 

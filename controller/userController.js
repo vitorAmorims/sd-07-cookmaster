@@ -8,33 +8,29 @@ const router = express.Router();
 
 const secret = 'seusecretdetoken';
 
-router.use(express.static(`${__dirname}uploads/`));
+const missingToken = 'missing auth token';
 
 const storage = multer.diskStorage({
-  destination: (req, file, callback) => {
-      callback(null, 'uploads/');
-  },
+  destination: (req, file, callback) => { callback(null, 'uploads'); },
   filename: (req, file, callback) => {
-      callback(null, file.originalname);
+    callback(null, `${req.params.id}.${file.mimetype.split('/')[1]}`);
   },
 });
 
 const upload = multer({ storage });
 
-router.post('/recipes/:id/image/', upload.array('file', 1), (req, res) => {
+const tokenValidation = (req, res, next) => {
   const token = req.headers.authorization;
-  if (!token) return res.status(401).json({ message: 'missing auth token' });
+  if (!token) return res.status(401).json({ message: missingToken });
+  next();
+};
 
-  // try {
-  //     res.status(200).json({ message: 'Imagens enviadas com sucesso!' });
-  // } catch (error) {
-  //     res.status(500).json({
-  //         message: 'Erro ao enviar as imagens',
-  //         error: error.message,
-  //     });
-  // }
-
-  res.status(200).json('ok');
+router.put('/recipes/:id/image/', tokenValidation, upload.single('image'), async (req, res) => {
+  const { id } = req.params;
+  const recipes = await userModel.getRecipesById(id);
+  const { _id: Id } = recipes;
+  recipes.image = `localhost:3000/images/${Id}.jpeg`;
+  return res.status(200).json(recipes);
 });
 
 const jwtConfig = {
@@ -97,7 +93,7 @@ router.post('/recipes', async (req, res) => {
 router.delete('/recipes/:idRecipes', async (req, res) => {
   const { idRecipes } = req.params;
   const token = req.headers.authorization;
-  if (!token) return res.status(401).json({ message: 'missing auth token' });
+  if (!token) return res.status(401).json({ message: missingToken });
   const decoded = jwt.verify(token, secret);
   const { email } = decoded.data;
   const [id] = await userModel.getId(email);
@@ -145,7 +141,7 @@ router.get('/recipes', async (req, res) => {
 //   const { email } = req.body;
 //   const allUsers = await userModel.getAllUser();
 //   const allRecipes = await userModel.getAllRecipes();
-//   res.status(200).send('Fim');
+//   res.status(200).json(allRecipes);
 // });
 
 module.exports = router;
