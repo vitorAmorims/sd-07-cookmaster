@@ -15,6 +15,7 @@ const invalidEntries = 'Invalid entries. Try again.';
 const emailAlreadyRegistered = 'Email already registered';
 const allFieldsMustBeFilled = 'All fields must be filled';
 const incorrectUsernameOrPassword = 'Incorrect username or password';
+const JWTMalformed = 'jwt malformed';
 
 module.exports = {
     emailValidator,
@@ -30,4 +31,5 @@ module.exports = {
     allFieldsMustBeFilled,
     incorrectUsernameOrPassword,
     textoAleatorio,
+    JWTMalformed,
 };
