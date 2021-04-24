@@ -1,6 +1,6 @@
 const { CustomError, STATUS_CODE } = require('../helpers');
 const { usersModel } = require('../models');
-const { generateToken } = require('./authService');
+const { generateToken } = require('../auth');
 
 const checkIfNameEmailAndPasswordExist = (name, email, password) => {
   if (!name || !email || !password) {
@@ -63,7 +63,7 @@ const checkIfEmailAndPasswordIsValid = async (email, password) => {
 const userLogin = async (email, password) => {
   checkIfEmailAndPasswordExist(email, password);
   await checkIfEmailAndPasswordIsValid(email, password);
-  const token = await generateToken(email);
+  const token = await generateToken.create(email);
   return token;
 };
 

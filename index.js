@@ -1,5 +1,5 @@
 const express = require('express');
-const { usersRoute } = require('./routes');
+const { usersRoute, recipesRoute } = require('./routes');
 
 const app = express();
 
@@ -12,5 +12,6 @@ app.get('/', (request, response) => {
 });
 
 app.use(usersRoute);
+app.use(recipesRoute);
 
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });

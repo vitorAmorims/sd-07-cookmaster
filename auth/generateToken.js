@@ -1,13 +1,12 @@
 const jwt = require('jsonwebtoken');
-const { key, header } = require('../helpers');
 const { usersModel } = require('../models');
+const key = require('./key');
 
-const generateToken = async (user) => {
+const create = async (user) => {
   const { _id, email, role } = await usersModel.findEmail(user);
+  const header = { algorithm: 'HS256', expiresIn: 60 * 60 * 4 };
   const token = jwt.sign({ _id, email, role }, key, header);
   return token;
 };
 
-module.exports = {
-  generateToken,
-};
+module.exports = { create };
