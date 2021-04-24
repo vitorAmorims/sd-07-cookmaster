@@ -9,7 +9,6 @@ const verifyAuthorMiddleware = async (req, res, next) => {
   if (role === 'admin') return next();
 
   const result = await recipeModel.findRecipeById(new ObjectId(id));
-  console.log(typeof result.userId, typeof _id);
   if (result === null) res.status(StatusCodes.NOT_FOUND).send({ message: 'recipe not found' });
   if (result.userId.toString() !== _id.toString()) {
     return res

@@ -13,12 +13,13 @@ const verifyValidEmail = async (user) => {
   const isUnicEmail = await userModel.findByEmail(user);
   if (isUnicEmail !== null) throw new Error('Email already registered');
 };
-const insertNewUser = async (user) => {
+
+const insertNewUser = async (user, role) => {
   const objectUser = user;
   const userParameters = ['email', 'name', 'password'];
   const userKeys = Object.keys(objectUser);
   const isValidUser = userParameters.every((param) => userKeys.includes(param));
-  objectUser.role = 'user';
+  objectUser.role = role;
   if (!isValidUser) throw new Error('Invalid entries. Try again.');
   await verifyValidEmail(user);
   return userModel.insertNewUser(objectUser);
