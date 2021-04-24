@@ -10,6 +10,10 @@ router.post('/recipes',
   recipesController.addRecipe);
 router.get('/recipes', recipesController.getRecipes);
 router.get('/recipes/:id', recipesController.getRecipeById);
+router.put('/recipes/:id',
+  middlewares.authMiddleware,
+  middlewares.recipeUserLoggedOrAdmin,
+  recipesController.updateRecipe);
 
 router.use(middlewares.errorMiddleware);
 
