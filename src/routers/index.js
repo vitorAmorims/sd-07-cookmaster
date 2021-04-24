@@ -1,6 +1,6 @@
 const express = require('express');
 // const multer = require('multer');
-const { login, users, recipes } = require('../controllers');
+const { login, users, addRecipe, getAllRecipes } = require('../controllers');
 
 const {
   checkUserData,
@@ -25,6 +25,7 @@ router.use(express.static(`${__dirname}uploads/`));
 
 router.post('/users', [checkUserData, checkedEmailExists], users);
 router.post('/login', [checkLoginDataExistsMD], login);
-router.post('/recipes', [validaTokenMD, checkedRecipesDataMD], recipes);
+router.post('/recipes', [validaTokenMD, checkedRecipesDataMD], addRecipe);
+router.get('/recipes', getAllRecipes);
 
 module.exports = router;
