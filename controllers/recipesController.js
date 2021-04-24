@@ -42,9 +42,20 @@ const updateRecipe = async (request, response) => {
   }
 };
 
+const deleteRecipe = async (request, response) => {
+  try {
+    const { id } = request.params;
+    await recipesService.deleteRecipe(id);
+    response.status(STATUS_CODE.NO_CONTENT).json();
+  } catch (error) {
+    response.status(409).json({ message: error.message });
+  }
+};
+
 module.exports = {
   recipesRegistration,
   getAllRecipes,
   getRecipe,
   updateRecipe,
+  deleteRecipe,
 };

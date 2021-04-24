@@ -43,9 +43,15 @@ const updateRecipe = async (id, name, ingredients, preparation) => {
   return result;
 };
 
+const deleteRecipe = async (id) => {
+  const result = await recipesModel.deleteRecipe(id);
+  return result;
+};
+
 module.exports = {
   recipesRegistration,
   getAllRecipes,
   getRecipe,
   updateRecipe,
+  deleteRecipe,
 };
