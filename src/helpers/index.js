@@ -8,6 +8,19 @@ const NOT_FOUND = 404;
 const CONFLICT = 409;
 const SECRET = '1234567890';
 
+class NewError extends Error {
+  constructor(message, code) {
+    super(message);
+    this.code = code;
+  }
+}
+
+const throwError = (error, message, code) => {
+  if (error) {
+    throw new NewError(message, code);
+  }
+};
+
 module.exports = {
   OK,
   CREATED,
@@ -18,4 +31,5 @@ module.exports = {
   CONFLICT,
   FORBIDDEN,
   SECRET,
+  throwError,
 };

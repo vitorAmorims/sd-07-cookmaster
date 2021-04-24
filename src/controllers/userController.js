@@ -5,7 +5,7 @@ const {
   validateReadAllUsers,
   validateCreateLoginToken,
   validateReadById,
-  validateCreateAdmin
+  validateCreateAdmin,
 } = usersService;
 
 const {
@@ -20,11 +20,12 @@ const createUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
     const result = await validateCreateUser(name, email, password);
-    if (result.status)
-      return next({ status: result.status, message: result.message });
     res.status(CREATED).json({ user: result });
   } catch (error) {
     console.error(error);
+    if (error.code) {
+      return next({ status: error.code.status, message: error.code.message });
+    }
     next({
       status: BAD_REQUEST,
       message: error.message,
@@ -38,11 +39,12 @@ const createUserAdmin = async (req, res, next) => {
     const { userRole } = req;
     // console.log(userRole);
     const result = await validateCreateAdmin(name, email, password, userRole);
-    if (result.status)
-      return next({ status: result.status, message: result.message });
     res.status(CREATED).json({ user: result });
   } catch (error) {
     console.error(error);
+    if (error.code) {
+      return next({ status: error.code.status, message: error.code.message });
+    }
     next({
       status: BAD_REQUEST,
       message: error.message,
@@ -81,8 +83,9 @@ const readUserById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const result = await validateReadById(id);
-    if (result.status)
+    if (result.status) {
       return next({ status: result.status, message: result.message });
+    }
     res.status(OK).json(result);
   } catch (error) {
     console.error(error);

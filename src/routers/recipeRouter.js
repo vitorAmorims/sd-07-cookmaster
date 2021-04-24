@@ -1,9 +1,11 @@
 const express = require('express');
 
 const { recipesMiddleware } = require('../middlewares');
+
 const { validateToken, validateUserAuthorization, upload } = recipesMiddleware;
 
 const { recipesController } = require('../controllers');
+
 const {
   createRecipe,
   readAllRecipes,
@@ -14,18 +16,19 @@ const {
 } = recipesController;
 
 const Recipes = express.Router();
+const endpointRecipesId = '/recipes/:id';
 
 Recipes.get('/recipes', readAllRecipes);
 
-Recipes.get('/recipes/:id', readRecipeById);
+Recipes.get(endpointRecipesId, readRecipeById);
 
 Recipes.use(validateToken);
 
 Recipes.post('/recipes', createRecipe);
 
-Recipes.put('/recipes/:id', validateUserAuthorization, updateRecipeById);
+Recipes.put(endpointRecipesId, validateUserAuthorization, updateRecipeById);
 
-Recipes.delete('/recipes/:id', validateUserAuthorization, deleteRecipeById);
+Recipes.delete(endpointRecipesId, validateUserAuthorization, deleteRecipeById);
 
 Recipes.put(
   '/recipes/:id/image/',

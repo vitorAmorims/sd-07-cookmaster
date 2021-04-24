@@ -1,9 +1,11 @@
 const express = require('express');
 
 const { usersMiddleware, recipesMiddleware } = require('../middlewares');
+
 const { validateToken } = recipesMiddleware;
 const { validateEmailOrPasswordIsValid } = usersMiddleware;
 const { usersController } = require('../controllers');
+
 const {
   createUser,
   readAllUsers,

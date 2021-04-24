@@ -1,5 +1,6 @@
 const { ObjectID } = require('mongodb');
 const { recipesModel } = require('../models');
+
 const {
   create,
   readAll,
@@ -9,71 +10,63 @@ const {
   updateImageById,
 } = recipesModel;
 
-const { NOT_FOUND } = require('../helpers');
+const { NOT_FOUND, throwError } = require('../helpers');
+
+const codeException = { status: NOT_FOUND, message: 'recipe not found' };
 
 const validateCreateRecipe = async (name, ingredients, preparation, userId) => {
-  if (!ObjectID.isValid(userId))
-    return { status: NOT_FOUND, message: 'user not found' };
-
-  if (!name || !ingredients || !preparation)
-    throw new Error('Invalid entries. Try again.');
+  throwError(!ObjectID.isValid(userId), null, { status: NOT_FOUND, message: 'user not found' });
+  throwError(!name || !ingredients || !preparation, 'Invalid entries. Try again.', null);
 
   const newRecipe = await create(name, ingredients, preparation, userId);
-  if (!newRecipe.result.ok) throw new Error('Error validateCreateRecipe');
+  throwError(!newRecipe.result.ok, 'Error validateCreateRecipe');
 
   return { _id: newRecipe.insertedId, name, ingredients, preparation, userId };
 };
 
 const validateReadAllRecipes = async () => {
   const recipes = await readAll();
-  if (!recipes) throw new Error('Error validateReadyAllRecipes');
+  if (!recipes) {
+    throw new Error('Error validateReadyAllRecipes');
+  }
   return recipes;
 };
 
-const validateReadById = async id => {
-  if (!ObjectID.isValid(id))
-    return { status: NOT_FOUND, message: 'recipe not found' };
+const validateReadById = async (id) => {
+  if (!ObjectID.isValid(id)) return codeException;
+
   const recipe = await readById(id);
-  if (!recipe) throw new Error('Error validateReadById');
+  if (!recipe) {
+    throw new Error('Error validateReadById');
+  }
   return recipe;
 };
 
-const validateUpdateRecipeById = async (
-  id,
-  name,
-  ingredients,
-  preparation,
-  userId,
-) => {
-  if (!ObjectID.isValid(id) || !ObjectID.isValid(userId))
-    return { status: NOT_FOUND, message: 'recipe not found' };
+const validateUpdateRecipeById = async (id, name,
+  ingredients, preparation) => {
+  throwError(!ObjectID.isValid(id), null, codeException);
 
-  if (!name || !ingredients || !preparation)
-    throw new Error('Invalid entries. Try again.');
+  throwError(!name || !ingredients || !preparation, 'Invalid entries. Try again.', null);
 
   const newRecipe = await updateById(
-    id,
-    name,
-    ingredients,
-    preparation,
-    userId,
+    id, name, ingredients, preparation,
   );
-  if (!newRecipe.result.ok) throw new Error('Error validateUpdateRecipeById');
+  throwError(!newRecipe.result.ok, 'validateUpdateRecipeById', null);
 
-  return { _id: id, name, ingredients, preparation, userId };
+  return { _id: id, name, ingredients, preparation };
 };
 
-const validateDeleteRecipeById = async id => {
-  if (!ObjectID.isValid(id))
-    return { status: NOT_FOUND, message: 'recipe not found' };
+const validateDeleteRecipeById = async (id) => {
+  if (!ObjectID.isValid(id)) return codeException;
 
   const recipe = await deleteById(id);
-  if (!recipe.result.ok) throw new Error('Error validateDeleteRecipeById');
+  if (!recipe.result.ok) {
+    throw new Error('Error validateDeleteRecipeById');
+  }
 };
 
 const validateUpdateImageById = async (id, image, userId) => {
-  if (!ObjectID.isValid(id))
-    return { status: NOT_FOUND, message: 'recipe not found' };
+  if (!ObjectID.isValid(id)) return codeException;
 
   const recipe = await validateReadById(id);
 

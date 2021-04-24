@@ -6,7 +6,7 @@ const {
   validateReadById,
   validateUpdateRecipeById,
   validateDeleteRecipeById,
-  validateUpdateImageById
+  validateUpdateImageById,
 } = recipesService;
 
 const {
@@ -22,14 +22,15 @@ const createRecipe = async (req, res, next) => {
     const { name, ingredients, preparation } = req.body;
     const { userId } = req;
     const result = await validateCreateRecipe(
-      name,
-      ingredients,
-      preparation,
-      userId,
+      name, ingredients,
+      preparation, userId,
     );
     res.status(CREATED).json({ recipe: result });
   } catch (error) {
     console.error(error);
+    if (error.code) {
+      return next({ status: error.code.status, message: error.code.message });
+    }
     next({
       status: BAD_REQUEST,
       message: error.message,
@@ -54,8 +55,9 @@ const readRecipeById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const result = await validateReadById(id);
-    if (result.status)
+    if (result.status) {
       return next({ status: result.status, message: result.message });
+    }
     res.status(OK).json(result);
   } catch (error) {
     console.error(error);
@@ -69,24 +71,20 @@ const readRecipeById = async (req, res, next) => {
 const updateRecipeById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { userId } = req;
     const { name, ingredients, preparation } = req.body;
     const result = await validateUpdateRecipeById(
       id,
       name,
       ingredients,
       preparation,
-      userId,
     );
-    if (result.status)
-      return next({ status: result.status, message: result.message });
     res.status(OK).json(result);
   } catch (error) {
     console.error(error);
-    next({
-      status: BAD_REQUEST,
-      message: error.message,
-    });
+    if (error.code) {
+      return next({ status: error.code.status, message: error.code.message });
+    }
+    next({ status: BAD_REQUEST, message: error.message });
   }
 };
 
@@ -118,7 +116,7 @@ const createRecipeImageById = async (req, res, next) => {
       message: error.message,
     });
   }
-}
+};
 
 module.exports = {
   createRecipe,
@@ -126,5 +124,5 @@ module.exports = {
   readRecipeById,
   updateRecipeById,
   deleteRecipeById,
-  createRecipeImageById
+  createRecipeImageById,
 };

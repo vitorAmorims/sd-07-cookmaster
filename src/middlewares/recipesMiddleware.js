@@ -3,7 +3,7 @@ const multer = require('multer');
 const { ObjectID } = require('mongodb');
 
 const { usersModel, recipesModel } = require('../models');
-const { UNAUTHORIZED, NOT_FOUND, SECRET } = require('../helpers');
+const { UNAUTHORIZED, NOT_FOUND, SECRET, throwError } = require('../helpers');
 
 const validateToken = (req, _res, next) => {
   try {
@@ -26,31 +26,23 @@ const validateToken = (req, _res, next) => {
   }
 };
 
-const validateUserAuthorization = async (req, res, next) => {
+const validateUserAuthorization = async (req, _res, next) => {
   try {
     const { id } = req.params;
     const { userId, userRole } = req;
-    // console.log(userId);
-    // console.log(userRole);
-
-    if (!ObjectID.isValid(id) || !ObjectID.isValid(userId))
-      return res.status(NOT_FOUND).json({ message: 'id Invalid' });
-
+    throwError(!ObjectID.isValid(id) || !ObjectID.isValid(userId), null,
+      { status: NOT_FOUND, message: 'id Invalid' });
     const user = await usersModel.readById(userId);
-    if (!user) throw new Error('userId did not registered');
-
+    throwError(!user, 'userId did not registered', null);
     const recipe = await recipesModel.readById(id);
-    if (!recipe) throw new Error('recipe did not registered');
-
-    if (recipe.userId !== userId && userRole === 'user')
-      throw new Error('user is not admin');
-
+    throwError(!recipe, 'recipe did not registered', null);
+    throwError(recipe.userId !== userId && userRole === 'user', 'user is not admin', null);
     next();
   } catch (error) {
-    next({
-      status: UNAUTHORIZED,
-      message: error.message,
-    });
+    if (error.code) {
+      return next({ status: error.code.status, message: error.code.message });
+    }
+    next({ status: UNAUTHORIZED, message: error.message });
   }
 };
 
