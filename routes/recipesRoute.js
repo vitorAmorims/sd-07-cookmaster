@@ -8,5 +8,6 @@ const route = express.Router();
 route.post('/recipes', authMiddleware.checkIfTheUserIsAuthenticated,
   recipesController.recipesRegistration);
 route.get('/recipes', recipesController.getAllRecipes);
+route.get('/recipes/:id', recipesController.getRecipe);
 
 module.exports = route;

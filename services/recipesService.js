@@ -23,7 +23,23 @@ const getAllRecipes = async () => {
   return result;
 };
 
+const checkRecipeByID = (result) => {
+  if (result === null) {
+    throw new CustomError({
+      status: STATUS_CODE.NOT_FOUND,
+      message: 'recipe not found',
+    });
+  }
+};
+
+const getRecipe = async (id) => {
+  const result = await recipesModel.getRecipe(id);
+  checkRecipeByID(result);
+  return result;
+};
+
 module.exports = {
   recipesRegistration,
   getAllRecipes,
+  getRecipe,
 };
