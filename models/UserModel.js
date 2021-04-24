@@ -5,7 +5,8 @@ const create = async (user) =>
   connection().then(async (db) => {
     const newUser = await db.collection('users')
       .insertOne(user);
-    return { user: newUser.ops[0] };
+    const { name, email, role } = newUser.ops[0];
+    return { user: { name, email, role } };
   });
   
 const getByEmail = async (email) => {
