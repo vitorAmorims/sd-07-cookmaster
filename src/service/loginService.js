@@ -56,10 +56,14 @@ const registerUser = async (email, password) => {
     expiresIn: SECONDS * MULTIPLIER,
     algorithm: 'HS256',
   };
-  if (!fieldsExistis(email, password) || emailCheck(email)
-  || await passwordCheck(email, password)) {
+  if (!fieldsExistis(email, password)) {
     return {
-      code401: true, message: 'Invalid entries. Try again.',
+      fieldHalf: true, message: 'All fields must be filled',
+    };
+  }
+  if (emailCheck(email) || await passwordCheck(email, password)) {
+    return {
+      checkFail: true, message: 'Incorrect username or password',
     };
   }
   const user = await loginModel.findUser(email);

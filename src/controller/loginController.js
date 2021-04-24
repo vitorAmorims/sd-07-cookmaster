@@ -6,7 +6,10 @@ const registerUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     const token = await loginService.registerUser(email, password);
-    if (token.code401) {
+    if (token.fieldHalf) {
+      return res.status(C_401).send({ message: token.message });
+    }
+    if (token.checkFail) {
       return res.status(C_401).send({ message: token.message });
     }
     res
