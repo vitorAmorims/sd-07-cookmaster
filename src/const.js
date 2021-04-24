@@ -18,6 +18,7 @@ const allFieldsMustBeFilled = 'All fields must be filled';
 const incorrectUsernameOrPassword = 'Incorrect username or password';
 const JWTMalformed = 'jwt malformed';
 const recipeNotFound = 'recipe not found';
+const missingAuthToken = 'missing auth token';
 
 module.exports = {
     emailValidator,
@@ -36,4 +37,5 @@ module.exports = {
     textoAleatorio,
     JWTMalformed,
     recipeNotFound,
+    missingAuthToken,
 };
