@@ -18,7 +18,7 @@ const findUser = async (email) => {
     }
 
     const jwtConfig = {
-      expiresIn: 60 * 5,
+      expiresIn: 60 * 60,
       algorithm: 'HS256',
     };
     
