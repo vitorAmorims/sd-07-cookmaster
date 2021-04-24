@@ -15,7 +15,7 @@ const SECRET = 'tokensecreto';
 
 const checkedEmail = (email) => {
   const regex = /\S+@\S+\.\S+/;
-  return regex.test(email) && email.includes('gmail');
+  return regex.test(email) && email.includes('mail');
 };
 
 module.exports = {
