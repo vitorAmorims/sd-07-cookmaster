@@ -11,6 +11,7 @@ const CONFLICT_409 = 409;
 const UNPROCESSABLE_ENTITY_422 = 422;
 const CODE_ERROR = 'invalid_data';
 const NOT_FOUND = 'not_found';
+const SECRET = 'tokensecreto';
 
 const checkedEmail = (email) => {
   const regex = /\S+@\S+\.\S+/;
@@ -32,4 +33,5 @@ module.exports = {
   CODE_ERROR,
   NOT_FOUND,
   checkedEmail,
+  SECRET,
 };
