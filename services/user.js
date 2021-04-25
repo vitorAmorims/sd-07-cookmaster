@@ -1,4 +1,5 @@
-const user = require('../models/user');
+const { ObjectId } = require('mongodb');
+const user = require('../models/user'); 
 
 const errInvalidEntries = { 
   message: 'Invalid entries. Try again.',
@@ -14,6 +15,9 @@ const errIncorrectUserNameOrPassword = {
   IncorrectUserNameOrPassword: 'Incorrect username or password',
 };
 
+const errRecipeNotFound = {
+  message: 'recipe not found',
+};
 const verifyName = (name) => {
   if (!name || typeof name !== 'string') return false;
 
@@ -97,6 +101,17 @@ const validateRecipe = async (name, ingredients, preparation) => {
   
   return true;
 };
+const findRecipeById = async (id) => {
+  if (!ObjectId.isValid(id)) {
+    return errRecipeNotFound;
+  }
+  const result = await user.findRecipeById(id);
+  console.log(`opaa${result}`);
+
+  if (result === null) return errRecipeNotFound;
+
+  return result;
+};
 
   const create = async (email, password, name) => {
   const role = 'user';
@@ -151,6 +166,7 @@ module.exports = {
   // deleteProduct,
   // getAll,
   // findById,
+  findRecipeById,
   getAllRecipes,
   createRecipes,  
   isEmailAlreadyExist,

@@ -6,6 +6,7 @@ const CREATED = 201;
 const BAD_REQUEST = 400;
 const CONFLICT = 409;
 const OK = 200;
+const NOT_FOUND = 404;
 
 const secret = 'meutoken';
 
@@ -34,7 +35,18 @@ const create = async (req, res) => {
 
   res.status(CREATED).json(result);
 };
+const findRecipeById = async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
 
+  const result = await user.findRecipeById(id);
+
+  if (result.message) return res.status(NOT_FOUND).json(result);
+
+  if (result.err) return res.status(NOT_FOUND).json(result);
+
+  res.status(OK).json(result);
+};
 const getAllRecipes = async (req, res) => {
   const { authorization } = req.headers;
   const result = await user.getAllRecipes();
@@ -63,6 +75,7 @@ module.exports = {
   // updateById,
   // getAll,
   // findById,
+  findRecipeById,
   getAllRecipes,
   createRecipes,
   login,

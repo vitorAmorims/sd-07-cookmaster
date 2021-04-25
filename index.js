@@ -19,5 +19,6 @@ app.post('/users', user.create);
 app.post('/login', validateUser, user.login);
 app.post('/recipes', validateJWT, user.createRecipes);
 app.get('/recipes', validateGetAllRecipes, user.getAllRecipes);
+app.get('/recipes/:id', validateGetAllRecipes, user.findRecipeById);
 
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });

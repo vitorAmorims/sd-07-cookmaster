@@ -1,10 +1,15 @@
+const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
 const findByEmail = async (email) =>
  connection().then((db) => db.collection('users').findOne({ email }));
 
- const findByUser = async (name) =>
- connection().then((db) => db.collection('users').findOne({ name }));
+const findByUser = async (name) =>
+connection().then((db) => db.collection('users').findOne({ name }));
+
+const findRecipeById = async (id) =>
+   connection()
+    .then((db) => db.collection('recipes').findOne(new ObjectId(id)));
 
 const getAllRecipes = async () =>
 connection().then((db) => db.collection('recipes').find().toArray());
@@ -22,6 +27,7 @@ module.exports = {
 // getAll,
 // deleteById,
 // updateById,
+findRecipeById,
 getAllRecipes,
 createRecipes,
 findByUser,
