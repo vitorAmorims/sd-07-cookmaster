@@ -23,7 +23,21 @@ const getAllRecipes = async (req, res) => {
   }
 };
 
+const getRecipeById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const response = await recipeService.findRecipeById(id);
+    if (response.err) {
+      return res.status(response.err_code).send({ message: response.err });
+    }
+    res.status(status.OK).json(response);
+  } catch (err) {
+    res.status(status.INTERNAL_SERVER_ERROR).json(err.message);
+  }
+};
+
 module.exports = {
   addRecipe,
   getAllRecipes,
+  getRecipeById,
 };
