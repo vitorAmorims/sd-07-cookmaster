@@ -16,6 +16,15 @@ const getById = async (id) => {
   throw new Error('recipe not found');
 };
 
+const update = async (id, { _id: userId, role }, recipe) => {
+  const oldRecipe = await recipesModel.findById(id);
+  if (userId.equals(oldRecipe.userId) || role === 'admin') {
+    await recipesModel.update(id, userId, recipe);
+    return { ...oldRecipe, ...recipe, userId };
+  }
+  throw new Error();
+};
+
 /* const checkUserLogin = async ({ email, password }) => {
   const userExists = await userModel.findByEmail(email);
   if (userExists && userExists.password === password) {
@@ -28,4 +37,5 @@ module.exports = {
   create,
   getAll,
   getById,
+  update,
 };

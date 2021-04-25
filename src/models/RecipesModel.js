@@ -7,7 +7,7 @@ const create = async (recipe) => {
   return insertedId;
 };
 
-const update = async (id, { name, quantity }) => {
+const update = async (id, userId, { name, ingredients, preparation }) => {
   const db = await connection();
   const { result } = await db.collection('recipes').updateOne(
     {
@@ -15,7 +15,9 @@ const update = async (id, { name, quantity }) => {
     {
       $set: {
         name,
-        quantity,
+        ingredients,
+        preparation,
+        userId,
       },
     },
   );
