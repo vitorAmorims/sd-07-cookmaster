@@ -8,14 +8,16 @@ const { userModel } = require('../models');
 const TIME_TOKEN_EXPIRATION = 60 * 60 * 24;
 const secret = 'mysecretjtw';
 
-const generateToken = (userEmail) => {
+const generateToken = (userId, userEmail, userRole) => {
   const jwtConfig = {
     expiresIn: TIME_TOKEN_EXPIRATION,
     algorithm: 'HS256',
   };
-  const token = jwt.sign({ data: userEmail }, secret, jwtConfig);
+  const token = jwt
+    .sign({ data: { id: userId, email: userEmail, role: userRole } }, secret, jwtConfig);
   return token;
 };
+
 const emptyEntries = {
   err: 'All fields must be filled',
   err_code: status.INVALID_LOGIN,
@@ -30,8 +32,8 @@ const userAndPasswordVerification = async (dataLogin) => {
   const user = await userModel.findByEmail(dataLogin.email);
   if (user === null) return invalidEntries;
   if (user.password !== dataLogin.password) return invalidEntries;
-
-  return generateToken(user.email);
+  const { email, _id, role } = user;
+  return generateToken(_id, email, role);
 };
 const loginValidation = async (dataLogin) => {
   if (emptyOrUdefined(dataLogin.email) || emptyOrUdefined(dataLogin.password)) {
