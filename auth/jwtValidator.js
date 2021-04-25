@@ -6,19 +6,19 @@ const message = 'jwt malformed';
 const auth = async (req, res, next) => {
     const { token } = req.headers;
     try {
-        if (!token) return res.status(401).json({ message: 'missing auth token' });
+        if (!token) return res.status(401).json({ message: 'jwt malformed' });
         const decoded = decodeJwt(token);
-        
         if (!decoded) return res.status(401).json({ message });
+
         const userInserted = decoded.payload.data;
-        const { _id: id } = userInserted;
-        const user = await userController.userValidate(id);
+        const { email } = userInserted;
+        const user = await userController.userValidate(email);
         if (!user) { 
             return res.status(401).json({ message: 'jwt malformed' });
         }
         next();
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(401).json({ message: 'jwt malformed' });
     }
 };
 

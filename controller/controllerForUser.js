@@ -16,8 +16,8 @@ const getUserByEmail = async (id, email) => {
     return user;
 };
 
-const userValidate = async (id) => {
-    const user = await serviceForUser.userValidate(id);
+const userValidate = async (email) => {
+    const user = await serviceForUser.userValidate(email);
     return user;
 };
 

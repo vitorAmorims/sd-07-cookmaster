@@ -16,8 +16,8 @@ const getUserEmail = async (userEmail) => { // function only into this context
     return user;
 };
 
-const userValidate = async (id) => {
-    const user = modelForUser.userValidate(id);
+const userValidate = async (email) => {
+    const user = modelForUser.userValidate(email);
     return user;
 };
 

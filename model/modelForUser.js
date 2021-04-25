@@ -23,10 +23,10 @@ const getUseEmail = async (userEmail) => {
     return user;
 };
 
-const userValidate = async (id) => {
+const userValidate = async (email) => {
     const user = await connection()
     .then((dataBase) => dataBase.collection(USER_COLLECTION)
-    .findOne({ _id: ObjectId(id) }));
+    .findOne({ email }));
     return user;
 };
 
