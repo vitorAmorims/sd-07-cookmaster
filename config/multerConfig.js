@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
         let ext = extname(file.originalname);
         if (ext === '.jpg') ext = '.jpeg';
         const fileName = id;
-        cb(null, `${fileName}.${ext}`);
+        cb(null, `${fileName}${ext}`);
         req.imageName = `${fileName}${ext}`;
     },
 });

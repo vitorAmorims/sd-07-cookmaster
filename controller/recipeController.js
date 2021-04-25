@@ -1,3 +1,4 @@
+const path = require('path');
 const Recipe = require('../model/RecipeModel');
 
 const NOT_CONTENT = 204;
@@ -33,6 +34,20 @@ const getAllRecipesController = async (_req, res, next) => {
       const { id } = req.params;
       const result = await Recipe.findById(id);
       if (result !== null) return res.status(SUCCESS).json(result);
+      throw new NotFoundException('recipeNotFound');
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  const getRecipeImageByIdController = async (req, res, next) => {
+    try {
+      const { fileName } = req.params;
+      const id = String(fileName).substring(0, String(fileName).lastIndexOf('.'));
+      const recipe = await Recipe.findById(id);
+      if (recipe !== null) {
+        return res.status(SUCCESS).sendFile(path.resolve(Recipe.getRecipeImage(id)));
+      }
       throw new NotFoundException('recipeNotFound');
     } catch (err) {
       next(err);
@@ -84,4 +99,5 @@ module.exports = {
     updateRecipeController,
     deleteRecipeController,
     uploadRecipeImageController,
+    getRecipeImageByIdController,
 };

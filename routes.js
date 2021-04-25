@@ -29,6 +29,7 @@ const {
     updateRecipeController,
     deleteRecipeController,
     uploadRecipeImageController,
+    getRecipeImageByIdController,
 } = require('./controller/recipeController');
 
 route.use(express.static(`${__dirname}uploads/`));
@@ -79,4 +80,5 @@ route.put(
     uploadRecipeImageController,
     );
 
+route.get('/images/:fileName', getRecipeImageByIdController);
 module.exports = route;

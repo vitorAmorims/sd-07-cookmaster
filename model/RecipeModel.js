@@ -32,10 +32,16 @@ const findAll = async () =>
       db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
   };
 
+  const getRecipeImage = (id) => {
+    const imagePath = `${__dirname}/../uploads/${id}.jpeg`;
+    return imagePath;
+  };
+
 module.exports = {
     createRecipe,
     findById,
     findAll,
     updateRecipe,
     excludeRecipe,
+    getRecipeImage,
 };
