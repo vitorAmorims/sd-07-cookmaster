@@ -32,7 +32,7 @@ const login = rescue(async (req, res) => {
     try {
         const user = await userModel.findUserByEmail(reqEmail);
         const jwtConfig = {
-            expiresIn: '5h',
+            expiresIn: '5d',
             algorithm: 'HS256',
         };
         const { _id, email, role } = user;
@@ -46,4 +46,5 @@ const login = rescue(async (req, res) => {
 module.exports = {
     addNewUser,
     login,
+    secret,
 };
