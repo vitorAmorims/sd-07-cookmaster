@@ -2,6 +2,7 @@ const recipeService = require('../services/recipeService');
 
 const HTTP200 = 200;
 const HTTP201 = 201;
+const HTTP204 = 204;
 const HTTP404 = 404;
 const HTTP500 = 500;
 
@@ -57,9 +58,28 @@ const updateOneRecipe = async (req, res) => {
   }
 };
 
+const deleteRecipe = async (req, res) => {
+  try {
+    const { tokenUserId, tokenUserRole, recipeUserId } = req;
+    const { id } = req.params;
+
+    if (tokenUserId !== recipeUserId && tokenUserRole !== 'admin') {
+      res.status(HTTP404).json({ message: 'Não tem autorização para Excluir' });
+    }
+    
+    await recipeService.deleteOneRecipe(id);
+
+    res.status(HTTP204).send();
+  } catch (err) {
+    console.log(err);
+    res.status(HTTP500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   createRecipe,
   allRecipes,
   oneRecipe,
   updateOneRecipe,
+  deleteRecipe,
 };
