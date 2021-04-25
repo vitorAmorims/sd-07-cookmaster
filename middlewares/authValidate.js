@@ -5,6 +5,7 @@ const UserModel = require('../models/UserModel');
 const authValidate = async (req, res, next) => {
   const { email, password } = req.body;
   const user = await UserModel.getByEmail(email);
+  req.user = user;
   if (!user) {
     const err = new Error();
     err.message = 'Incorrect username or password';

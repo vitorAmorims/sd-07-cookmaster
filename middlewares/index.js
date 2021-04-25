@@ -6,6 +6,7 @@ const recipesValidate = require('./recipesValidate');
 const tokenValidate = require('./tokenValidate');
 const idRecipeValidate = require('./idRecipeValidate');
 const isSigned = require('./isSigned');
+const isAdmin = require('./isAdmin');
 
 module.exports = {
   errorMiddleware,
@@ -16,4 +17,5 @@ module.exports = {
   recipesValidate,
   tokenValidate,
   idRecipeValidate,
+  isAdmin,
 };

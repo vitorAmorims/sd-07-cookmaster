@@ -11,8 +11,8 @@ const secret = 'OverheadthealbatrossHangsmotionlessupontheairAnddeepbeneaththero
   };
 
 const login = async (req, res) => { 
-  const { email } = req.body;
-  const token = jwt.sign({ data: email }, secret, jwtconfig);
+  const { email, role } = req.user;
+  const token = jwt.sign({ data: email, role }, secret, jwtconfig);
   return res.status(SUCCESS).json({ message: 'Login com sucesso', token });
 };
 
