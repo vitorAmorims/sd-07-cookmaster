@@ -6,7 +6,6 @@ const { secret } = loginService;
 
 const statusHttp = {
   C_401: 401,
-  C_500: 500,
 };
 
 const validateTokenMiddleware = async (req, res, next) => {
@@ -23,7 +22,7 @@ const validateTokenMiddleware = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    res.status(statusHttp.C_500).json({ message: error.message });
+    res.status(statusHttp.C_401).json({ message: error.message });
   }
 };
 
