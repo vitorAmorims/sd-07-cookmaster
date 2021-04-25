@@ -14,7 +14,16 @@ const addRecipe = async (req, res) => {
     res.status(status.INTERNAL_SERVER_ERROR).json(err.message);
   }
 };
+const getAllRecipes = async (req, res) => {
+  try {
+    const recipes = await recipeService.getRecipes();
+    res.status(status.OK).json(recipes);
+  } catch (err) {
+    res.status(status.INTERNAL_SERVER_ERROR).json(err.message);
+  }
+};
 
 module.exports = {
   addRecipe,
+  getAllRecipes,
 };

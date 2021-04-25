@@ -23,6 +23,10 @@ const createRecipe = async (recipe, user) => {
   return createdRecipe;
 };
 
+const getRecipes = async () => {
+  const recipes = await recipeModel.getAll();
+  return recipes;
+};
 // O body
 // {
 // "name" : "Receita do Jacquin",
@@ -40,4 +44,5 @@ const createRecipe = async (recipe, user) => {
 
 module.exports = {
   createRecipe,
+  getRecipes,
 };
