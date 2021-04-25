@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const connection = require('../config/connection');
 
 const addRecipe = (name, ingredients, preparation, userId) => connection()
@@ -5,7 +6,7 @@ const addRecipe = (name, ingredients, preparation, userId) => connection()
     .then((item) => item.ops[0]);
 
 const findRecipeById = (id) => connection()
-    .then((db) => db.collection('recipes').findOne({ id }));
+    .then((db) => db.collection('recipes').findOne(ObjectId(id)));
 
 const findAllRecipes = () => connection()
     .then((db) => db.collection('recipes').find().toArray());
@@ -13,13 +14,12 @@ const findAllRecipes = () => connection()
 const updateRecipe = async (id, name, ingredients, preparation) => {
     connection().then((db) =>
         db.collection('recipes')
-        .updateOne({ _id: id }, { $set: { name, ingredients, preparation } }))
-        .then((item) => item.ops[0]);
+        .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } }));
 };
 
 const deleteRecipe = async (id) => {
-    connection().then((db) => db.collection('recipes').deleteOne({ _id: id }));
-  };
+    connection().then((db) => db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
+};
 
 module.exports = {
     addRecipe,
