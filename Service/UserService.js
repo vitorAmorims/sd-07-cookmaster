@@ -48,7 +48,7 @@ const createUserAdmin = async (name, email, password, role) => {
   validateEmail(email);
   validatePassword(password);
   await checkingEmailExists(email);
-  const result = await modelUser.postdataAdmin(name, email, password, role);
+  const result = await modelUser.createUserAdmin(name, email, password, role);
   return result;
 };
 

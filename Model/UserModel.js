@@ -30,7 +30,7 @@ const createUser = async (name, email, password) => {
   return { _id: user.insertedId, name, email, role };
 };
 
-const postdataAdmin = async (name, email, password, role) => {
+const createUserAdmin = async (name, email, password, role) => {
   const user = await connection().then((db) =>
     db.collection('users').insertOne({ name, email, password, role }));
 
@@ -57,5 +57,5 @@ module.exports = {
   createUser,
   editdata,
   deletedata,
-  postdataAdmin,
+  createUserAdmin,
 };

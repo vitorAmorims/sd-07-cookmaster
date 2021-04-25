@@ -74,7 +74,7 @@ const deleteUser = async (req, res) => {
   }
 };
 
-const addAdmin = async (req, res) => {
+const createUserAdmin = async (req, res) => {
   try {
     const { name, email, password } = req.body;
     const { role } = req.user;
@@ -95,5 +95,5 @@ module.exports = {
   getUserById,
   updateUser,
   deleteUser,
-  addAdmin,
+  createUserAdmin,
 };
