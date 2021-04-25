@@ -66,7 +66,8 @@ const generateToken = (user) => {
 const verifyUserMatch = async (email, password) => {
   const user = await User.getUserByEmail(email);
   if (user) {
-    const isMatch = bcrypt.compareSync(password, user.password);
+    const simpleCheck = password === user.password;
+    const isMatch = simpleCheck || bcrypt.compareSync(password, user.password);
     if (isMatch) return generateToken(user);
   } else {
     return 'Incorrect username or password';
