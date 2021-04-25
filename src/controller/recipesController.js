@@ -3,8 +3,6 @@ const recipesService = require('../service/recipesService');
 const { C_201, C_400, C_401, C_500 } = recipesService.statusHttp;
 
 const createRecipe = async (req, res) => {
-  // const { name, ingredients, preparation } = req.body;
-  // const userId = {};
   try {
     const recipe = await recipesService.create(req);
     if (recipe.code400) {
