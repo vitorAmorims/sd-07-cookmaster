@@ -6,7 +6,7 @@ const {
   preparationVerify,
 } = require('../middlewares/BodyMiddlewares');
 const recipesService = require('../services/RecipesService');
-const { CREATED, INTERNAL_SERVER_ERROR } = require('../helpers/HttpStatusCodes');
+const { CREATED, INTERNAL_SERVER_ERROR, OK, NOT_FOUND } = require('../helpers/HttpStatusCodes');
 
 const router = express.Router();
 
@@ -24,6 +24,21 @@ router.post('/',
   } catch (error) {
     res.status(INTERNAL_SERVER_ERROR).json({ message: 'Internal server Error' });
   }    
+});
+
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const recipe = await recipesService.getById(id);
+    res.status(OK).json(recipe);    
+  } catch (error) {
+    res.status(NOT_FOUND).json({ message: 'recipe not found' });
+  }
+});
+
+router.get('/', async (_req, res) => {
+  const recipes = await recipesService.getAll();
+  res.status(OK).json(recipes);
 });
 
 module.exports = router;

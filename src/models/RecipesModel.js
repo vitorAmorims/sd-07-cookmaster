@@ -30,8 +30,8 @@ const remove = async (id) => {
 
 const findById = async (id) => {
   const db = await connection();
-  const product = await db.collection('recipes').findOne(ObjectId(id));
-  return product;    
+  const recipe = await db.collection('recipes').findOne(ObjectId(id));
+  return recipe;    
 };
 
 const findAll = async () => {
