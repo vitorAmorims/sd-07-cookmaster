@@ -52,15 +52,15 @@ const update = async (req, res) => {
     }
 };
 
-const exclude = async (req, res) => {
-    const { id } = req.params;
-    const { role } = await serviceForRecipe.getById(id);
-};
+// const exclude = async (req, res) => {
+//     const { id } = req.params;
+//     const { role } = await serviceForRecipe.getById(id);
+// };
 
 module.exports = {
     create,
     getAll,
     getById,
     update,
-    exclude,
+    // exclude,
 };
