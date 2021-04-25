@@ -46,9 +46,19 @@ const updateRecipe = async (req, res) => {
   }
 };
 
+// const uploadImage = async (req, res) => {
+//   try {
+//     // editar o results
+//     res.status(SUCCESS200).json(results);
+//   } catch (err) {
+//     res.status(SYSTEM_FAIL).json({ message: err.message });
+//   }
+// };
+
 module.exports = {
   addRecipe,
   getRecipes,
   getRecipeById,
   updateRecipe,
+  // uploadImage,
 };
