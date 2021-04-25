@@ -36,8 +36,24 @@ const getRecipeById = async (req, res) => {
   }
 };
 
+const editRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updateRecipe = { ...req.body, id };
+
+    const response = await recipeService.updateRecipeById(updateRecipe);
+    if (response.err) {
+      return res.status(response.err_code).send({ message: response.err });
+    }
+    res.status(status.OK).json(response);
+  } catch (err) {
+    res.status(status.INTERNAL_SERVER_ERROR).json(err.message);
+  }
+};
+
 module.exports = {
   addRecipe,
   getAllRecipes,
   getRecipeById,
+  editRecipe,
 };

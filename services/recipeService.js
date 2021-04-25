@@ -37,6 +37,15 @@ const findRecipeById = async (id) => {
   if (recipe === null) return recipeNotFound;
   return recipe;
 };
+
+const updateRecipeById = async (updatedRecipe) => {
+  await recipeModel.update(updatedRecipe);
+  const { id } = updatedRecipe;
+  
+  const recipe = await recipeModel.findById(id);
+  if (recipe === null) return recipeNotFound;
+  return recipe;
+};
 // O body
 // {
 // "name" : "Receita do Jacquin",
@@ -56,4 +65,5 @@ module.exports = {
   createRecipe,
   getRecipes,
   findRecipeById,
+  updateRecipeById,
 };
