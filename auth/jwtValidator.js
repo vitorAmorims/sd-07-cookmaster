@@ -6,7 +6,7 @@ const message = 'jwt malformed';
 const auth = async (req, res, next) => {
     const { token } = req.headers;
     try {
-        if (!token) return res.status(401).json({ message: 'jwt malformed' });
+        if (!token) return res.status(401).json({ message });
         const decoded = decodeJwt(token);
         if (!decoded) return res.status(401).json({ message });
 
@@ -14,7 +14,7 @@ const auth = async (req, res, next) => {
         const { email } = userInserted;
         const user = await userController.userValidate(email);
         if (!user) { 
-            return res.status(401).json({ message: 'jwt malformed' });
+            return res.status(401).json({ message });
         }
         next();
     } catch (error) {

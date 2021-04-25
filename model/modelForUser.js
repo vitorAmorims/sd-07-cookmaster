@@ -1,4 +1,3 @@
-const { ObjectId } = require('bson');
 const connection = require('../database/dbConfig');
 
 const USER_COLLECTION = 'users';
