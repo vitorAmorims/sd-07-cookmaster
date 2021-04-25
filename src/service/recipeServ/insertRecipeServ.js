@@ -1,14 +1,17 @@
-const { insertRecipe } = require('../../model/recipeModel');
+require('dotenv');
+const jwt = require('jsonwebtoken');
+const { insertRecipe } = require('../../model');
 const { preCheckFields } = require('../validation');
 
-const insertRecipeServ = async (body) => {
+const insertRecipeServ = async (body, token) => {
   const mandatoryFields = ['name', 'ingredients', 'preparation'];
   const inputsInvalid = preCheckFields(body, mandatoryFields);
-  console.log('INSERT_RECIPE_SERV LINE 7: ', body, inputsInvalid)
   if (inputsInvalid) {
     return inputsInvalid;
   }
-  const [insertionRes] = await insertRecipe(body);
+  const { id } = jwt.verify(token, process.env.SECRET).data;
+  console.log(id);
+  const [insertionRes] = await insertRecipe(body, id);
   return { recipe: insertionRes, status: 'Created' };
 };
 

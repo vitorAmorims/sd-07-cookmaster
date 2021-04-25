@@ -21,6 +21,7 @@ const servDictionary = {
     expiresIn: '7d',
     algorithm: 'HS256',
   },
+  BAD_INPUT_RECIPE: 'missing fields in recipe insertion',
 };
 
 module.exports = servDictionary;

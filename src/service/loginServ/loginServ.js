@@ -1,5 +1,5 @@
 require('dotenv').config();
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { preCheckFields } = require('../validation/inputsValidator');
 const { getUserByEmail } = require('../../model/userModel');
@@ -15,7 +15,8 @@ const loginServ = async (body) => {
   if (!userData) {
     return { status: USER_NOT_FOUND };
   }
-  if (!bcrypt.compareSync(body.password, userData.password)) {
+  // if (!bcrypt.compareSync(body.password, userData.password)) {
+  if (body.password !== userData.password) {
     return { status: WRONG_PASSWORD };
   }
   const { _id, name, role } = userData;

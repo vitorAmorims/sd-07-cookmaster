@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { errMiddleware, authMiddleware } = require('./middlewares');
+const { errMiddleware } = require('./middlewares');
 
 const app = express();
 const { loginRoute, recipeRoutes, userRoutes } = require('./routes');

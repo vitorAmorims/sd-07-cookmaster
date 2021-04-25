@@ -23,6 +23,9 @@ const statusMsgMap = {
   'missing token': {
     status: 401, message: 'jwt malformed',
   },
+  'missing fields in recipe insertion': {
+    status: 400, message: 'Invalid entries. Try again.',
+  },
 };
 
 module.exports = statusMsgMap;
