@@ -25,6 +25,14 @@ const update = async (id, { _id: userId, role }, recipe) => {
   throw new Error();
 };
 
+const remove = async (id, { _id: userId, role }) => {
+  const recipe = await recipesModel.findById(id);
+  if (userId.equals(recipe.userId) || role === 'admin') {
+    const result = await recipesModel.remove(id, userId, recipe);
+    if (result.n > 0) return true;
+  }
+  throw new Error();
+};
 /* const checkUserLogin = async ({ email, password }) => {
   const userExists = await userModel.findByEmail(email);
   if (userExists && userExists.password === password) {
@@ -38,4 +46,5 @@ module.exports = {
   getAll,
   getById,
   update,
+  remove,
 };

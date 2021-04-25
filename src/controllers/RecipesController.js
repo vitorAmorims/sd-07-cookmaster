@@ -6,9 +6,17 @@ const {
   preparationVerify,
 } = require('../middlewares/BodyMiddlewares');
 const recipesService = require('../services/RecipesService');
-const { CREATED, INTERNAL_SERVER_ERROR, OK, NOT_FOUND } = require('../helpers/HttpStatusCodes');
+const {
+  CREATED,
+  INTERNAL_SERVER_ERROR,
+  OK,
+  NOT_FOUND,
+  NO_CONTENT,
+} = require('../helpers/HttpStatusCodes');
 
 const router = express.Router();
+
+const MESSAGE_RECIPE = 'recipe not found';
 
 router.post('/',
 authMiddleware,
@@ -39,7 +47,20 @@ async (req, res) => {
     const recipeUpdated = await recipesService.update(id, userLogin, recipe);
     res.status(OK).json(recipeUpdated);    
   } catch (error) {
-    res.status(NOT_FOUND).json({ message: 'recipe not found' });
+    res.status(NOT_FOUND).json({ message: MESSAGE_RECIPE });
+  }
+});
+
+router.delete('/:id',
+authMiddleware,
+async (req, res) => {
+  const { id } = req.params;
+  const { userLogin } = req;
+  try {
+    await recipesService.remove(id, userLogin);
+    res.status(NO_CONTENT).json();
+  } catch (error) {
+    res.status(NOT_FOUND).json({ message: MESSAGE_RECIPE });
   }
 });
 
@@ -49,7 +70,7 @@ router.get('/:id', async (req, res) => {
     const recipe = await recipesService.getById(id);
     res.status(OK).json(recipe);    
   } catch (error) {
-    res.status(NOT_FOUND).json({ message: 'recipe not found' });
+    res.status(NOT_FOUND).json({ message: MESSAGE_RECIPE });
   }
 });
 
