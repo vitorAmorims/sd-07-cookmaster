@@ -16,11 +16,16 @@ const getUserEmail = async (userEmail) => { // function only into this context
     return user;
 };
 
-const create = async (name, email, password) => {
+const userValidate = async (id) => {
+    const user = modelForUser.userValidate(id);
+    return user;
+};
+
+const create = async (name, email, password, role) => {
     const getEmail = await getUserEmail(email);
    
     if (getEmail.email !== email || !getEmail.email) {
-        const user = await modelForUser.create(name, email, password);
+        const user = await modelForUser.create(name, email, password, role);
         return user;
     }
     return errorCreator(code.conflict, message.same_email);
@@ -30,4 +35,5 @@ module.exports = {
     create,
     getAll,
     getUserEmail,
+    userValidate,
 };

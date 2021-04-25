@@ -5,22 +5,12 @@ const code = require('../helpers/status.json');
 
 const getUserCredentials = async (email, password) => {
     const user = await loginForModel.getUserCredentials(email, password);
-    if (user === null) {
-        return false;
-    }
-    return user;
-};
-
-const create = async (email, password) => {
-    const user = await getUserCredentials(email, password);
-  
-    if (user.email !== email || !user || user.password !== password) {
+    if (user === null || !user || user.password !== password) {
         return errorCreator(code.Unauthorized, message.invalid_email);
     }
-  
     return user;
 };
 
 module.exports = {
-    create,
+    getUserCredentials,
 };

@@ -2,5 +2,6 @@
     "invalidEntry": "Invalid entries. Try again.",
     "same_email": "Email already registered",
     "fill_fields": "All fields must be filled",
-    "invalid_email": "Incorrect username or password"
+    "invalid_email": "Incorrect username or password",
+    "recipe_not_found": "recipe not found"
 }

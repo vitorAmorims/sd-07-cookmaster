@@ -10,7 +10,7 @@ const userAccess = rescue(async (req, res) => {
            return res.status(401).json({ message: 'All fields must be filled' });
         }
 
-       const user = await serviceForLogin.create(email, password);
+       const user = await serviceForLogin.getUserCredentials(email, password);
        
        if (user.code) {
            return res.status(user.code).json({ message: user.message });
