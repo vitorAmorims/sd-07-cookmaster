@@ -1,5 +1,5 @@
 const express = require('express');
-const { nameVerify, emailVerify, passwordVerify } = require('../middlewares/UserMiddlewares');
+const { nameVerify, emailVerify, passwordVerify } = require('../middlewares/BodyMiddlewares');
 const userService = require('../services/UserService');
 const { CREATED, CONFLICT } = require('../helpers/HttpStatusCodes');
 

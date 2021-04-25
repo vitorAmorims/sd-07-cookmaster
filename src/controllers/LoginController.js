@@ -1,6 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const { emailVerify, passwordVerify } = require('../middlewares/UserMiddlewares');
+const { emailVerify, passwordVerify } = require('../middlewares/BodyMiddlewares');
 const userService = require('../services/UserService');
 const { OK, UNAUTHORIZED } = require('../helpers/HttpStatusCodes');
 

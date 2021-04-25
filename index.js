@@ -1,6 +1,7 @@
 const express = require('express');
 const userController = require('./src/controllers/UserController');
 const loginController = require('./src/controllers/LoginController');
+const recipeController = require('./src/controllers/RecipesController');
 
 const app = express();
 
@@ -15,5 +16,6 @@ app.get('/', (request, response) => {
 
 app.use('/users', userController);
 app.use('/login', loginController);
+app.use('/recipes', recipeController);
 
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });

@@ -13,7 +13,7 @@ const create = async ({ name, email, password }) => {
 const checkUserLogin = async ({ email, password }) => {
   const userExists = await userModel.findByEmail(email);
   if (userExists && userExists.password === password) {
-    return true;
+    return userExists;
   }
   throw new Error('Senha ou Email inválidos');
 };

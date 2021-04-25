@@ -12,14 +12,23 @@ const nameVerify = (req, res, next) => {
     });
 };
 
-/* const emailVerify = (req, res, next) => {
-  const { email } = req.body;
-  const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-  if (email && EMAIL_REGEX.test(email)) return next();
-  return res.status(BAD_REQUEST).json({
-    message: ERROR_MESSAGE_USERS,
-  });
-}; */
+const ingredientsVerify = (req, res, next) => {
+  const { ingredients } = req.body;
+  return (ingredients)
+    ? next()
+    : res.status(BAD_REQUEST).json({
+      message: ERROR_MESSAGE_USERS,
+    });
+};
+
+const preparationVerify = (req, res, next) => {
+  const { preparation } = req.body;
+  return (preparation)
+    ? next()
+    : res.status(BAD_REQUEST).json({
+      message: ERROR_MESSAGE_USERS,
+    });
+};
 
 const emailVerify = (req, res, next) => {
   const { body: { email }, baseUrl } = req;
@@ -48,17 +57,10 @@ const passwordVerify = (req, res, next) => {
   });
 };
 
-/* const passwordVerify = (req, res, next) => {
-  const { password } = req.body;
-  return (password)
-    ? next()
-    : res.status(BAD_REQUEST).json({
-      message: ERROR_MESSAGE_USERS,
-    });
-}; */
-
 module.exports = {
   nameVerify,
+  ingredientsVerify,
+  preparationVerify,
   emailVerify,
   passwordVerify,
 };
