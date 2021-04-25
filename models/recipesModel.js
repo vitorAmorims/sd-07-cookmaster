@@ -30,9 +30,15 @@ async function update(id, name, ingredients, preparation) {
   });
 }
 
+async function exclude(id) {
+  connect().then(async (db) => 
+    db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
+}
+
 module.exports = {
   addNewRecipe,
   getAllRecipes,
   getById,
   update,
+  exclude,
 };

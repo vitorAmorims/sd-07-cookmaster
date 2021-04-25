@@ -8,10 +8,14 @@ const addNewUser = async (name, email, password) =>
     return product.ops[0];
   });
 
-const findUserByEmail = async (email) => connect().then((db) =>
-    db.collection('users').findOne({ email }));
+const findUserByEmail = async (email) =>
+  connect().then((db) => db.collection('users').findOne({ email }));
+
+const findUserById = async (id) =>
+  connect().then((db) => db.collection('users').findOne({ _id: id }));
 
 module.exports = {
   addNewUser,
   findUserByEmail,
+  findUserById,
 };

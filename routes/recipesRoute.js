@@ -4,9 +4,12 @@ const authorizationToken = require('../middlewares/validateToken');
 
 const router = express.Router();
 
-router.post('/recipes', authorizationToken, recipesControllers.addNewRecipe);
-router.get('/recipes', recipesControllers.getAllRecipes);
-router.get('/recipes/:id', recipesControllers.getRecipesById);
-router.put('/recipes/:id', authorizationToken, recipesControllers.changeRecipes);
+const recipe = '/recipes'; 
+
+router.post(recipe, authorizationToken, recipesControllers.addNewRecipe);
+router.get(recipe, recipesControllers.getAllRecipes);
+router.get(`${recipe}/:id`, recipesControllers.getRecipesById);
+router.put(`${recipe}/:id`, authorizationToken, recipesControllers.changeRecipes);
+router.delete(`${recipe}/:id`, authorizationToken, recipesControllers.deleteRecipe);
 
 module.exports = router;

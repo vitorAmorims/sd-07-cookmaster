@@ -60,9 +60,24 @@ async function changeRecipes(req, res) {
   }
 }
 
+async function deleteRecipe(req, res) {
+  const responseOK = 204;
+  try {
+    const { id } = req.params;
+    const { _id: userID } = req.user;
+    await recipeService.removeRecipe(id, userID);
+    res.status(responseOK).end();
+  } catch (err) {
+    res.status(err.code || 401).json({
+      message: err.message,
+    });
+  }
+}
+
 module.exports = {
   addNewRecipe,
   getAllRecipes,
   getRecipesById,
   changeRecipes,
+  deleteRecipe,
 };

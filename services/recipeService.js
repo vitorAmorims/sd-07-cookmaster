@@ -1,4 +1,5 @@
 const RecipesModel = require('../models/recipesModel');
+const UsersModel = require('../models/usersModel');
 const error = require('../errors');
 
 const validateName = async (name) => {
@@ -39,9 +40,18 @@ const updateRecipe = async (recipe) => {
   await validateName(name);
   await validateIngredients(ingredients);
   await validadePreparation(preparation);
-  const productID = await RecipesModel.getById(id);
-  if (!productID) throw error.invalidID;
+  await getRecipeById(id);
   return RecipesModel.update(id, name, ingredients, preparation);
+};
+
+const removeRecipe = async (id, userID) => {
+  const recipe = await getRecipeById(id);
+  const user = await UsersModel.findUserById(userID);
+  const { _id: idUser, role } = user;
+  if (role !== 'admin' && recipe.userId.toString() !== idUser.toString()) {
+    throw error.invalidUser;
+  }
+  return RecipesModel.exclude(id);
 };
 
 module.exports = {
@@ -49,4 +59,5 @@ module.exports = {
   getRecipes,
   getRecipeById,
   updateRecipe,
+  removeRecipe,
 };

@@ -12,6 +12,8 @@ const missingToken = { code: 401, message: 'missing auth token' };
 
 const invalidID = { code: 404, message: 'recipe not found' };
 
+const invalidUser = { code: 401, message: 'user doesn\'t match recipe\'s user' };
+
 module.exports = {
   invalidEntries,
   email,
@@ -20,4 +22,5 @@ module.exports = {
   invalidToken,
   invalidID,
   missingToken,
+  invalidUser,
 };
