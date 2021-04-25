@@ -17,6 +17,6 @@ app.listen(PORT, () => { console.log('API @ PORT 3000'); });
 
 app.use('/users', userRoutes);
 app.use('/login', loginRoute);
-app.use('/recipe', recipeRoutes);
+app.use('/recipes', recipeRoutes);
 
 app.use(errMiddleware);

@@ -7,9 +7,12 @@ const { validMongoId } = require('../src/service/validation');
 const { status, message } = statusMsgMap['missing token'];
 
 const userValidation = async (id) => {
-  const userInDb = await getUserById(id); 
-  if (!validMongoId(id) || !userInDb) {
-  return false;
+  if (!validMongoId(id)) {
+    return false;
+  }
+  const userInDb = await getUserById(id);
+  if (!userInDb) {
+    return false;
   }
   return true;
 };
