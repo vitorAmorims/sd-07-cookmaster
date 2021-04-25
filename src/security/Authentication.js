@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const secret = 'seusecretdetoken';
+const secret = '01a6fe873b1789a';
 
 const jwtConfig = {
   expiresIn: '7d',
@@ -9,5 +9,5 @@ const jwtConfig = {
 
 module.exports = {
   getTokenByUser: (user) => jwt.sign({ user }, secret, jwtConfig),
-  getSecret: secret,
+  validateToken: (token) => jwt.verify(token, secret),
 };
