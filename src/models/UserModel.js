@@ -40,16 +40,15 @@ const findById = async (id) => {
   return product;    
 };
 
-const findAll = async () => {
+/* const findAll = async () => {
   const db = await connection();
   const users = await db.collection('users').find({}).toArray();
   return users;  
-};
+}; */
 
 module.exports = {
   create,
   findByEmail,
-  findAll,
   findById,
   update,
   remove,
