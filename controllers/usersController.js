@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt-nodejs');
 const Users = require('../models/usersModels');
 const { generateAuthToken } = require('../services/authTokenService');
 
@@ -8,8 +9,11 @@ const SYSTEM_FAIL = 500;
 const UNAUTHORIZED = 401;
 
 const addUser = async (req, res) => {
-  const { name, email, password, role } = req.body;
   try {
+    const { name, email, role } = req.body;
+    let { password } = req.body;
+    const salt = bcrypt.genSaltSync(5);
+    password = bcrypt.hashSync(password, salt);
     const results = await Users.addUser(name, email, password, role);
     res.status(SUCCESS).json({ user: results.ops[0] });
   } catch (err) {
