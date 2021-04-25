@@ -34,7 +34,7 @@ const createLogin = async (req, res, next) => {
         const { _id, email, role, password } = login;
         const loginPassaword = password;
         passwordValidation(reqPassword, loginPassaword);
-        const jwtConfig = { expiresIn: '60s', algorithm: 'HS256' };
+        const jwtConfig = { expiresIn: '600s', algorithm: 'HS256' };
         const token = jwt.sign({ data: [_id, email, role] }, secret, jwtConfig);
         res.status(200).json({ token });
     } catch (err) {

@@ -15,7 +15,7 @@ const errorMiddleware = (err, _req, res, _next) => {
       STATUS = 401;
       break;
     default:
-      STATUS = 406;
+      STATUS = 500;
   }
   
   res.status(STATUS).json(JSON.parse(err.message));

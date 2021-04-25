@@ -1,6 +1,6 @@
 const express = require('express');
 const routes = require('./routes');
-const { errorMiddleware, validateToken } = require('./middlewares');
+const { errorMiddleware } = require('./middlewares');
 
 const app = express();
 app.use(express.json());
@@ -13,8 +13,6 @@ app.get('/', (request, response) => {
 });
 
 app.use(routes.usersRoute);
-
-app.use(validateToken);
 
 app.use(routes.recipesRoute);
 
