@@ -50,10 +50,24 @@ const editRecipe = async (req, res) => {
     res.status(status.INTERNAL_SERVER_ERROR).json(err.message);
   }
 };
+const deleteRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const response = await recipeService.deleteRecipeById(id);
+    if (response.err) {
+      return res.status(response.err_code).send({ message: response.err });
+    }
+    res.status(status.DELETED).send();
+  } catch (err) {
+    res.status(status.INTERNAL_SERVER_ERROR).json(err.message);
+  }
+};
 
 module.exports = {
   addRecipe,
   getAllRecipes,
   getRecipeById,
   editRecipe,
+  deleteRecipe,
 };

@@ -29,9 +29,18 @@ const update = async (updateData) => {
       ));
 };
 
+const deleteRecipe = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+  await connect().then((db) =>
+    db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
+  
+  return true;
+};
+
 module.exports = {
   create,
   getAll,
   findById,
   update,
+  deleteRecipe,
 };

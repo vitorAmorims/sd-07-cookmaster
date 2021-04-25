@@ -41,29 +41,22 @@ const findRecipeById = async (id) => {
 const updateRecipeById = async (updatedRecipe) => {
   await recipeModel.update(updatedRecipe);
   const { id } = updatedRecipe;
-  
+
   const recipe = await recipeModel.findById(id);
   if (recipe === null) return recipeNotFound;
   return recipe;
 };
-// O body
-// {
-// "name" : "Receita do Jacquin",
-// "ingredients" : "Frango",
-// "preparation" : "10 minutos no forno"
-// }
-// modelo de inserção no BD 
-// {
-// "_id" : ObjectId("5f46919477df66035f61a356"),
-// "name" : "string",
-// "ingredients" : "string",
-// "preparation" : "string",
-// "userId" : ObjectId("5f46914677df66035f61a355")
-// }
+
+const deleteRecipeById = async (id) => {
+  const response = await recipeModel.deleteRecipe(id);
+  if (response === null) return recipeNotFound;
+  return response;
+};
 
 module.exports = {
   createRecipe,
   getRecipes,
   findRecipeById,
   updateRecipeById,
+  deleteRecipeById,
 };
