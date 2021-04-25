@@ -1,6 +1,6 @@
 const recipesService = require('../service/recipesService');
 
-const { C_201, C_400, C_401, C_500 } = recipesService.statusHttp;
+const { C_200, C_201, C_400, C_401, C_500 } = recipesService.statusHttp;
 
 const createRecipe = async (req, res) => {
   try {
@@ -20,6 +20,24 @@ const createRecipe = async (req, res) => {
   }
 };
 
+const getAllRecipes = async (req, res) => {
+  try {
+    const recipes = await recipesService.getAll();
+    if (recipes.code500) {
+      return res.status(C_500).send({ message: recipes.message });
+    }
+    return res
+      .status(C_200)
+      .send({ recipes });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(C_500)
+      .json({ message: error.message });
+  }
+};
+
 module.exports = {
   createRecipe,
+  getAllRecipes,
 };

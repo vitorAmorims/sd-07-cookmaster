@@ -10,7 +10,7 @@ router.post('/recipes',
 validateTokenMiddleware,
 recipesController.createRecipe);
 
-// router.get('/recipes', );
+router.get('/recipes', recipesController.getAllRecipes);
 
 // router.get('/recipes/:id', );
 

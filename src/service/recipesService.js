@@ -68,7 +68,18 @@ const create = async (req) => {
   return result;
 };
 
+const getAll = async () => {
+  const result = await recipesModel.getAllRecipes();
+  if (!result) {
+    return {
+      code500: true, message: 'It was not possible to complete your request.',
+    };
+  }
+  return result;
+};
+
 module.exports = {
   statusHttp,
   create,
+  getAll,
 };
