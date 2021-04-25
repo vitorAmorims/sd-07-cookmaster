@@ -1,5 +1,5 @@
 // colocar query do MongoDB
-db.collection('users')
+db.users
 .insertOne({
   name: 'admin',
   email: 'root@email.com',
