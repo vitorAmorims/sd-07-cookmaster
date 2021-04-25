@@ -4,10 +4,11 @@ const decodeJwt = require('../helpers/decodeJwt');
 const message = 'jwt malformed';
 
 const auth = async (req, res, next) => {
-    const { token } = req.headers;
+    const { authorization } = req.headers;
+    console.log(req.headers);
     try {
-        if (!token) return res.status(401).json({ message });
-        const decoded = decodeJwt(token);
+        if (!authorization) return res.status(401).json({ message });
+        const decoded = decodeJwt(authorization);
         if (!decoded) return res.status(401).json({ message });
 
         const userInserted = decoded.payload.data;

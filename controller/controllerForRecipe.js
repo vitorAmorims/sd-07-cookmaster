@@ -18,8 +18,8 @@ const getById = async (req, res) => {
 
 const create = rescue(async (req, res) => {
         const { name, ingredients, preparation } = req.body;
-        const { token } = req.headers;
-        const decoded = decodeJwt(token);
+        const { authorization } = req.headers;
+        const decoded = decodeJwt(authorization);
         const { _id } = decoded.payload.data;
         // const errors = validationResult(req);
         
