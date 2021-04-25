@@ -2,6 +2,8 @@ const express = require('express');
 
 const route = express.Router();
 
+const { upload } = require('./config/multerConfig');
+
 const {
     validateCreateUserMiddleware,
     validateUniqueUserMiddleware,
@@ -26,6 +28,7 @@ const {
     getRecipeByIdController,
     updateRecipeController,
     deleteRecipeController,
+    uploadRecipeImageController,
 } = require('./controller/recipeController');
 
 route.use(express.static(`${__dirname}uploads/`));
@@ -66,6 +69,14 @@ route.delete(
     validateTokenMiddleware,
     validateLoggedUserMiddleware,
     deleteRecipeController,
+    );
+
+route.put(
+    '/recipes/:id/image',
+    validateTokenMiddleware,
+    validateLoggedUserMiddleware,
+    upload.single('image'),
+    uploadRecipeImageController,
     );
 
 module.exports = route;

@@ -62,10 +62,26 @@ const getAllRecipesController = async (_req, res, next) => {
     }
   };
 
+  const uploadRecipeImageController = async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const { imageName, headers } = req;
+      const { _id: userId } = req.user;
+      const recipe = await Recipe.findById(id);
+      const imagePath = `${headers.host}/images/${imageName}`;
+      const recipeWithImage = { ...recipe, userId, image: imagePath };
+      await Recipe.updateRecipe(id, recipeWithImage);
+        res.status(SUCCESS).send(recipeWithImage);
+    } catch (err) {
+      next(err);
+    }
+};
+
 module.exports = {
     createRecipeController,
     getAllRecipesController,
     getRecipeByIdController,
     updateRecipeController,
     deleteRecipeController,
+    uploadRecipeImageController,
 };
