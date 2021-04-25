@@ -11,6 +11,7 @@ const createNewUser = async (req, res) => {
   const { name, email, password } = req.body;
   try {
     const userNew = await servicesUsers.createUser(name, email, password);
+    // console.log('controller', userNew);
     if (!userNew) {
       return res.status(BADREQUEST).json(
         { message: 'User was not created' }
@@ -18,8 +19,9 @@ const createNewUser = async (req, res) => {
     }
     return res.status(CREATED).json(userNew);
   } catch (err) {
+    // console.log(err);
     if (err.code === 'invalid_data' || err.code === 'conflict') {
-      return res.status(UNPROCESSABLEENTITY).json({ err });
+      return res.status(BADREQUEST).json({ err });
     }
     res.status(INTERNALSERVERERROR).json({ message: 'Internal Server Error' });
   }

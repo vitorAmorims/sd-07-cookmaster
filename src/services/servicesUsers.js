@@ -31,10 +31,10 @@ const rulesInsUsers = async (name, email, password) => {
 };
 
 const createUser = async (name, email, password) => {
-  // const rules = await rulesInsUsers(name, email, password);
-  // if (!rules) {
-  //   return false;
-  // };
+  const rules = await rulesInsUsers(name, email, password);
+  if (!rules) {
+    return false;
+  };
   
   const userInserted = await modelsUsers.create(name, email, password);
   return userInserted;
@@ -48,32 +48,10 @@ const getAll = async () => {
   return usersList;
 };
 
-
-// const getById = async (id) => {
-//   // validacao por id
-
-//   if (!ObjectId.isValid(id)) {
-//     // console.log('servicegetById-IF01');
-//     throw {
-//       code: 'invalid_data',
-//       message: 'Wrong id format',
-//     };
-//   }
-//   const productId = await modelsProducts.getById(id);
-//   // console.log('servicegetById');
-//   if (!productId) {
-//     // console.log('servicegetById-IF02');
-//     throw {
-//       code: 'invalid_data',
-//       message: 'Wrong id format',
-//     };
-//   }
-//   return productId;
-// };
-
 module.exports = {
   createUser,
   getAll,
+  rulesInsUsers,
   // createLogin
   // getById,
   // updateById,
