@@ -46,7 +46,6 @@ const updateRecipe = async (req, res) => {
   }
 };
 
-
 module.exports = {
   addRecipe,
   getRecipes,
