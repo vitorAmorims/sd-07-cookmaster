@@ -18,7 +18,16 @@ const countByEmailDuplicate = async (email) => {
       return user;
 };
 
+const findUser = async (email) => {
+  const user = await connection()
+    .then((db) =>
+      db.collection('users')
+        .findOne({ email }));
+  return user;
+};
+
 module.exports = {
   createUser,
   countByEmailDuplicate,
+  findUser,
 };

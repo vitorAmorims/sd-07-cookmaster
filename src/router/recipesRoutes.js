@@ -1,14 +1,16 @@
 const express = require('express');
-// const { recipesController } = require('../controller');
-// const middlewares = require('../middleware');
+const { recipesController } = require('../controller');
+const middlewares = require('../middleware');
 
 const router = express.Router();
 
-// const {  } = middlewares;
+const { validateTokenMiddleware } = middlewares;
+
+router.post('/recipes',
+validateTokenMiddleware,
+recipesController.createRecipe);
 
 // router.get('/recipes', );
-
-// router.post('/recipes', );
 
 // router.get('/recipes/:id', );
 

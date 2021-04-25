@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt-nodejs');
-const loginModel = require('../model/loginModel');
+const usersModel = require('../model/usersModel');
 
 const SECONDS = 60;
 const MULTIPLIER = 30;
@@ -36,7 +36,7 @@ function validateEmail(email) {
 
 const emailCheck = async (email) => {
   const emailInvalid = !validateEmail(email);
-  const user = await loginModel.findUser(email);
+  const user = await usersModel.findUser(email);
   if (email === '' || email === undefined || emailInvalid) {
     return true;
   }
@@ -47,7 +47,7 @@ const emailCheck = async (email) => {
 };
 
 const passwordCheck = async (email, password) => {
-  const user = await loginModel.findUser(email);
+  const user = await usersModel.findUser(email);
   const passwordValidate = bcrypt.compareSync(password, user.password);
   if (!passwordValidate) {
     return true;
@@ -70,7 +70,7 @@ const registerUser = async (email, password) => {
       checkFail: true, message: 'Incorrect username or password',
     };
   }
-  const user = await loginModel.findUser(email);
+  const user = await usersModel.findUser(email);
   const { _id, role } = user;
   const token = jwt.sign({ data: { _id, email: user.email, role } }, secret, jwtConfig);
   return token;
@@ -79,4 +79,5 @@ const registerUser = async (email, password) => {
 module.exports = {
   statusHttp,
   registerUser,
+  secret,
 };
