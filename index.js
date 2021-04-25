@@ -1,11 +1,11 @@
 const express = require('express');
+const path = require('path');
 require('dotenv').config();
 const { usersRoute, recipesRoute } = require('./routes');
 const { errorMiddleware } = require('./middlewares');
 
 const app = express();
 app.use(express.json());
-app.use(express.static(`${__dirname}/uploads`));
 
 const { PORT } = process.env;
 
@@ -14,6 +14,7 @@ app.get('/', (request, response) => {
   response.send();
 });
 
+app.use('/images', express.static(path.join(__dirname, 'uploads')));
 app.use(usersRoute);
 app.use(recipesRoute);
 app.use(errorMiddleware);

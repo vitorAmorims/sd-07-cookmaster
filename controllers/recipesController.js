@@ -70,7 +70,8 @@ const deleteRecipe = async (req, res) => {
 const uploadImage = async (req, res) => {
   try {
     const { id } = req.params;
-    const urlImage = `localhost:3000/images/${id}.jpeg`;
+    const { filename } = req.file;
+    const urlImage = `localhost:3000/images/${filename}`;
     const newRecipeImage = await recipesModel.updateRecipeImage(id, urlImage);
 
     res.status(OK).json(newRecipeImage.value);
