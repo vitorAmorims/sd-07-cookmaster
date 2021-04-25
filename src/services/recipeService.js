@@ -17,8 +17,10 @@ const getRecipeById = async (id) => {
 };
 
 const updateRecipe = async (id, recipe) => {
+  console.log('recipe', recipe);
   const { name, preparation, ingredients, userId } = recipe;
-  const recipeRes = recipeModel.updateRecipe(id, name, preparation, ingredients);
+  const recipeRes = await recipeModel.updateRecipe(id, name, preparation, ingredients);
+  console.log('recipes res', recipeRes);
   return { ...recipeRes, userId };
 };
 
