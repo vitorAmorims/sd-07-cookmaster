@@ -9,6 +9,6 @@ const insertRecipe = async ({ name, ingredients, preparation }, id) => {
   } catch (err) {
     return [{ status: 'insertion fail', err }];
   }
-}
+};
 
 module.exports = insertRecipe;

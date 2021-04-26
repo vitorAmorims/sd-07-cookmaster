@@ -26,6 +26,9 @@ const statusMsgMap = {
   'missing fields in recipe insertion': {
     status: 400, message: 'Invalid entries. Try again.',
   },
+  'db search returned empty': {
+    status: 404, message: 'could not find data',
+  },
 };
 
 module.exports = statusMsgMap;

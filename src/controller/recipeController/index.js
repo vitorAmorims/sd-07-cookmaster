@@ -1,3 +1,7 @@
 const insertRecipeCtrl = require('./insertRecipeCtrl');
+const getRecipeCtrl = require('./getRecipeCtrl');
 
-module.exports = insertRecipeCtrl;
+module.exports = {
+  getRecipeCtrl,
+  insertRecipeCtrl,
+};

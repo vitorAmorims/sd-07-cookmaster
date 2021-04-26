@@ -22,6 +22,7 @@ const servDictionary = {
     algorithm: 'HS256',
   },
   BAD_INPUT_RECIPE: 'missing fields in recipe insertion',
+  MISSING_RECIPES_DATA: 'db search returned empty',
 };
 
 module.exports = servDictionary;
