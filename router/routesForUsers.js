@@ -1,12 +1,13 @@
 const { Router } = require('express');
 const { body } = require('express-validator');
 const controllerforUsers = require('../controller/controllerForUser');
+const middleware = require('../middleware');
 
 const route = Router();
 
-route.get('/', controllerforUsers.getAll);
+route.get('/', middleware.errorMiddleware, controllerforUsers.getAll);
 
-route.post('/',
+route.post('/', middleware.errorMiddleware,
                 body('name').notEmpty(),
                 body('email').isEmail(),
                 body('password').isLength({ min: 5 }), 

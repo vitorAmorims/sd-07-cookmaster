@@ -1,12 +1,12 @@
 const userController = require('../controller/controllerForUser');
 const decodeJwt = require('../helpers/decodeJwt');
 
-const message = 'jwt malformed';
+const message = 'missing auth token';
 
-const auth = async (req, res, next) => {
+const updateAuth = async (req, res, next) => {
     const { authorization } = req.headers;
     try {
-        if (!authorization) return res.status(401).json({ message });
+        if (!authorization) return res.status(401).json({ message: 'missing auth token' });
         const decoded = decodeJwt(authorization);
         if (!decoded) return res.status(401).json({ message });
 
@@ -14,7 +14,7 @@ const auth = async (req, res, next) => {
         const { email } = userInserted;
         const user = await userController.userValidate(email);
         if (!user) { 
-            return res.status(401).json({ message });
+            return res.status(401).json({ message: 'jwt malformed' });
         }
         next();
     } catch (error) {
@@ -22,8 +22,4 @@ const auth = async (req, res, next) => {
     }
 };
 
-module.exports = auth;
-
-// o token do usuário está ligado ao id gerado pelo mongo, (id unico, token unico)
-// se o usuario for deletado, outro token deve ser gerado
-// ou o token anterior sera invalido.
+module.exports = updateAuth;

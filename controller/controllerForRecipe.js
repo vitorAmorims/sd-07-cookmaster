@@ -42,23 +42,28 @@ const update = async (req, res) => {
     const recipe = await serviceForRecipe.update(id, name, ingredients, preparation);
 
     if (recipe.code) {
-        res.status(recipe.code).json({ message: recipe.message });
+       return res.status(recipe.code).json({ message: recipe.message });
     }
-    res.status(201).json({ _id: id, name, ingredients, preparation, userId });
+    res.status(200).json({ _id: id, name, ingredients, preparation, userId });
     } catch (error) {
-        res.status(401).json({ message: error.message });
+      res.status(401).json({ message: error.message });
     }
 };
 
-// const exclude = async (req, res) => {
-//     const { id } = req.params;
-//     const { role } = await serviceForRecipe.getById(id);
-// };
+const exclude = async (req, res) => {
+    const { id } = req.params;
+   const recipe = await serviceForRecipe.exclude(id);
+
+    if (recipe.code) {
+        return res.status(recipe.code).json({ message: recipe.message });
+    }
+    res.status(204).send('No body returned for response');
+};
 
 module.exports = {
     create,
     getAll,
     getById,
     update,
-    // exclude,
+    exclude,
 };

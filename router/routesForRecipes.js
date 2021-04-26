@@ -2,21 +2,23 @@ const { Router } = require('express');
 const { body } = require('express-validator');
 const controllerForRecipe = require('../controller/controllerForRecipe');
 const tokenValidator = require('../auth/jwtValidator');
-const fieldValidator = require('../middleware/fieldValidator');
+const middleware = require('../middleware');
 
 const route = Router();
 
-route.get('/', controllerForRecipe.getAll);
+route.get('/', middleware.errorMiddleware, controllerForRecipe.getAll);
 
-route.get('/:id', controllerForRecipe.getById);
+route.get('/:id', middleware.errorMiddleware, controllerForRecipe.getById);
 
-route.put('/:id', tokenValidator, controllerForRecipe.update);
+route.put('/:id', middleware.authentication, controllerForRecipe.update);
 
-route.post('/',
+route.delete('/:id', middleware.tokenMissing, middleware.getRole, controllerForRecipe.exclude);
+
+route.post('/', middleware.errorMiddleware,
                 body('name').notEmpty(),
                 body('ingredients').notEmpty(),
                 body('preparation').notEmpty(), 
-                fieldValidator,
+                middleware.fieldValidator,
                 tokenValidator,
                 controllerForRecipe.create);
 

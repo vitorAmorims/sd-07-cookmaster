@@ -15,6 +15,12 @@ const getById = async (id) => {
     return recipe;
 };
 
+const getUserById = async (id) => {
+    const user = await connection()
+        .then((dataBase) => dataBase.collection('users').findOne({ _id: ObjectId(id) }));
+    return user;
+};
+
 const create = async (name, ingredients, preparation, userId) => {
     const recipe = await connection()
         .then((dataBase) => dataBase.collection(RECIPE_COLLECTION)
@@ -40,4 +46,5 @@ module.exports = {
     getById,
     update,
     exclude,
+    getUserById,
 };

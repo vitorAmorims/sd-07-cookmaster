@@ -1,8 +1,9 @@
 const { Router } = require('express');
 const login = require('../controller/login');
+const middleware = require('../middleware');
 
 const route = Router();
 
-route.post('/', login.userAccess);
+route.post('/', middleware.errorMiddleware, login.userAccess);
 
 module.exports = route;           
