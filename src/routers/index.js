@@ -6,7 +6,10 @@ const {
   addRecipe,
   getAllRecipes,
   getRecipeById,
-  updateRecipe } = require('../controllers');
+  updateRecipe,
+  deleteRecipe } = require('../controllers');
+
+const recipesId = '/recipes/:id';
 
 const {
   checkUserData,
@@ -22,7 +25,8 @@ router.post('/users', [checkUserData, checkedEmailExists], users);
 router.post('/login', [checkLoginDataExistsMD], login);
 router.post('/recipes', [validaTokenMD, checkedRecipesDataMD], addRecipe);
 router.get('/recipes', getAllRecipes);
-router.get('/recipes/:id', getRecipeById);
-router.put('/recipes/:id', validaTokenMD, updateRecipe);
+router.get(recipesId, getRecipeById);
+router.put(recipesId, validaTokenMD, updateRecipe);
+router.delete(recipesId, validaTokenMD, deleteRecipe);
 
 module.exports = router;

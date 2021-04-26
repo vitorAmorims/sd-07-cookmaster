@@ -645,7 +645,7 @@ describe('7 - Crie um endpoint para a edição de uma receita', () => {
       });
   });
 
-  it.skip('Será validado que é possível editar receita estando autenticado', async () => {
+  it('Será validado que é possível editar receita estando autenticado', async () => {
     let result;
     let resultRecipes;
 
@@ -773,7 +773,7 @@ describe('7 - Crie um endpoint para a edição de uma receita', () => {
   });
 });
 
-describe.skip('8 - Crie um endpoint para a exclusão de uma receita', () => {
+describe('8 - Crie um endpoint para a exclusão de uma receita', () => {
   let connection;
   let db;
 

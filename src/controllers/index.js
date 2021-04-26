@@ -4,7 +4,8 @@ const {
   addRecipe,
   getAllRecipes,
   getRecipeById,
-  updateRecipe } = require('./recipesController');
+  updateRecipe,
+  deleteRecipe } = require('./recipesController');
 
 module.exports = {
   users,
@@ -13,4 +14,5 @@ module.exports = {
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };
