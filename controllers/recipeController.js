@@ -43,16 +43,23 @@ try {
 
 const editRecipeById = async (req, res) => {
   const { name, ingredients, preparation } = req.body;
-  const entries = [name, ingredients, preparation];
   const { id: recipeId } = req.params;
   const { _id: userId, role } = req.user;
-  const result = await recipeService.verifyPermission(
-    recipeId,
-    userId,
-    role,
-    entries,
-);
-  return res.status(200).json(result);
+  const result = await recipeService.verifyPermission(recipeId, userId, role);
+  if (result) {
+    const editedRecipe = await Recipe.editRecipeById(recipeId, name, ingredients, preparation);
+    res.status(200).json(editedRecipe);
+  }
+};
+
+const deleteRecipeById = async (req, res) => {
+  const { id: recipeId } = req.params;
+  const { _id: userId, role } = req.user;
+  const result = await recipeService.verifyPermission(recipeId, userId, role);
+  if (result) {
+    const deletedRecipe = await Recipe.deleteRecipeById(recipeId);
+    res.status(204).json(deletedRecipe);
+  }
 };
 
 module.exports = {
@@ -60,4 +67,5 @@ module.exports = {
   addRecipe,
   getRecipeById,
   editRecipeById,
+  deleteRecipeById,
 };
