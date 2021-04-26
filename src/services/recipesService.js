@@ -21,14 +21,6 @@ const validateId = (id) => {
   }
 };
 
-// const isRecipeBelogToTheUserOrAdmin = async (user, recipeId) => {
-//   const { userId } = await recipesModel.getRecipeById(recipeId);
-//   const { _id, role } = user;
-//   if (role !== 'admin' && String(_id) !== String(userId)) {
-//     throw new InvalidEntries('jwt malformed', 401);
-//   }
-// };
-
 const createRecipe = async (name, ingredients, preparation, user) => {
   validateRecipeInput(name, ingredients, preparation);
   const { _id: userId } = user;
@@ -44,19 +36,26 @@ const getRecipeById = async (id) => {
   return recipe;
 };
 
-const updateRecipe = async (recipe, recipeId, user) => {
+const updateRecipe = async (recipe, recipeId) => {
   const { name, ingredients, preparation } = recipe;
   validateId(recipeId);
-  // await isRecipeBelogToTheUserOrAdmin(user, recipeId);
   const recipeUpdated = await recipesModel.updateRecipe(name, ingredients, preparation, recipeId);
   return recipeUpdated;
 };
 
-const deleteRecipe = async (recipeId, user) => {
+const deleteRecipe = async (recipeId) => {
   validateId(recipeId);
-  // await isRecipeBelogToTheUserOrAdmin(user, recipeId);
   const recipeDeleted = await recipesModel.deleteRecipe(recipeId);
   return recipeDeleted;
+};
+
+const updateRecipeImage = async (recipeId, image, fileValidationError) => {
+  validateId(recipeId);
+  if (fileValidationError) {
+    throw new InvalidEntries(fileValidationError, 403);
+  }
+  const recipeImageUpdated = await recipesModel.updateRecipeImage(recipeId, image);
+  return recipeImageUpdated;
 };
 
 module.exports = {
@@ -65,4 +64,5 @@ module.exports = {
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  updateRecipeImage,
 };
