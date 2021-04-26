@@ -5,11 +5,18 @@ const RecipesControllers = require('../controllers/RecipesControllers');
 
 const router = express.Router();
 
+const recipesPath = '/recipes';
+
 router.post(
-  '/recipes',
+  recipesPath,
   validateToken,
   validateRecipes,
   RecipesControllers.addRecipe,
+);
+
+router.get(
+  recipesPath,
+  RecipesControllers.getAllRecipes,
 );
 
 module.exports = router;

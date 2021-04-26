@@ -1,5 +1,8 @@
-const { CREATED } = require('../config/httpCodes');
-const { addRecipe: modelAddRecipe } = require('../models/RecipesModels');
+const { CREATED, OK } = require('../config/httpCodes');
+const {
+  addRecipe: modelAddRecipe,
+  getAllRecipes: modelGetAllRecipes,
+} = require('../models/RecipesModels');
 
 const addRecipe = async (req, res) => {
   try {
@@ -14,6 +17,16 @@ const addRecipe = async (req, res) => {
   }
 };
 
+const getAllRecipes = async (_req, res) => {
+  try {
+    const results = await modelGetAllRecipes();
+    return res.status(OK).json(results);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
   addRecipe,
+  getAllRecipes,
 };
