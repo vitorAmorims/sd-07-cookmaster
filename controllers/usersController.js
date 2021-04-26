@@ -23,7 +23,7 @@ const addUser = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password, role } = req.body;
-  const id = await Users.checkForUserEmail.id;
+  const id = await Users.findUser.id;
   try {
     const token = generateAuthToken(id, email, role, password);
     res.status(SUCCESS200).json({ token });

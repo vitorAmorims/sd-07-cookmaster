@@ -9,6 +9,7 @@ const authMiddleware = async (req, res, next) => {
   if (tokenIsValid(token, password)) {
     return next();
   }
+  console.log("passei aqui");
   return next({ status: 401, message: 'jwt malformed', code: 'invalid_data' });
 };
 

@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const Users = require('../models/usersModels');
 
 const secret = '123';
 
@@ -11,10 +12,17 @@ const generateAuthToken = (id, email, role = 'user') => {
   return token;
 }
 
-const tokenIsValid = (token) => {
+const tokenIsValid = async (token) => {
   try {
-    jwt.verify(token, secret);
-    return true;
+    const decoded = jwt.verify(token, secret);
+    if (decoded) {
+      const user = await Users.findUser(decoded.email);
+      if(user) {
+        req.user = user;
+        return true;
+      }
+    }
+    console.log("cheguei aqui");
   } catch (error) {
     return false;
   }

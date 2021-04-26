@@ -24,7 +24,6 @@ router.post('/recipes',
 router.get('/recipes', recipesController.getRecipes);
 router.get('/recipes/:id', recipesController.getRecipeById);
 router.put('/recipes/:id',
-  middlewares.authMiddleware,
   middlewares.recipeUserLoggedOrAdmin,
   recipesController.updateRecipe);
 

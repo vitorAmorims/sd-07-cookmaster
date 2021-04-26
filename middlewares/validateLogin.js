@@ -2,14 +2,14 @@ const Users = require('../models/usersModels');
 
 const validateLogin = async (req, _res, next) => {
   const { email, password } = req.body;
-  const emailCheck = await Users.checkForUserEmail(email);
   if (!email || !password) {
     return next({ status: 401, message: 'All fields must be filled', code: 'invalid_data' });
   }
-  if (!emailCheck) {
+  const user = await Users.findUser(email);
+  if (!user) {
     return next({ status: 401, message: 'Incorrect username or password', code: 'invalid_data' });
   }
-  const passwordCheck = emailCheck.password;
+  const passwordCheck = user.password;
   if (!passwordCheck) {
     return next({ status: 401, message: 'Incorrect username or password', code: 'invalid_data' });
   }
