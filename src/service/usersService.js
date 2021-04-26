@@ -46,9 +46,9 @@ const verifyCountEmail = async (email) => {
 
 const create = async (name, email, password) => {
   let result = {};
-  let key = password;
-  const salt = bcrypt.genSaltSync(5);
-  key = bcrypt.hashSync(key, salt);
+  const key = password;
+  // const salt = bcrypt.genSaltSync(5);
+  // key = bcrypt.hashSync(key, salt);
 
   if (!fieldsExistis(name, password)
     || emailCheck(email)) {

@@ -48,7 +48,8 @@ const emailCheck = async (email) => {
 
 const passwordCheck = async (email, password) => {
   const user = await usersModel.findUser(email);
-  const passwordValidate = bcrypt.compareSync(password, user.password);
+  // const passwordValidate = bcrypt.compareSync(password, user.password);
+  const passwordValidate = password === user.password;
   if (!passwordValidate) {
     return true;
   }
