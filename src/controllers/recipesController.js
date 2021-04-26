@@ -4,7 +4,7 @@ const {
   CREATED_201, 
   OK_200, 
   NOT_FOUND_404, 
-  NO_CONTENT_204} = require('../util');
+  NO_CONTENT_204 } = require('../util');
 
 const addRecipe = async (req, res) => {
   try {
