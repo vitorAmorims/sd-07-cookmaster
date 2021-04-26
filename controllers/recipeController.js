@@ -1,4 +1,5 @@
 const Recipe = require('../models/recipeModel');
+const recipeService = require('../services/recipeService');
 
 const CREATED = 201;
 
@@ -40,8 +41,23 @@ try {
 }
 };
 
+const editRecipeById = async (req, res) => {
+  const { name, ingredients, preparation } = req.body;
+  const entries = [name, ingredients, preparation];
+  const { id: recipeId } = req.params;
+  const { _id: userId, role } = req.user;
+  const result = await recipeService.verifyPermission(
+    recipeId,
+    userId,
+    role,
+    entries,
+);
+  return res.status(200).json(result);
+};
+
 module.exports = {
   getAllRecipes,
   addRecipe,
   getRecipeById,
+  editRecipeById,
 };
