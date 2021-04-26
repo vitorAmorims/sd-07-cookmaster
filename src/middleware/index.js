@@ -9,21 +9,22 @@ const usersModel = require('../models/usersModel');
 
 const validaTokenMD = async (req, res, next) => {
   const { authorization: token } = req.headers;
-   try {
-    const decoded = jwt.verify(token, SECRET);
-    const user = await usersModel.getEmail(decoded.data);
-    console.log(decoded);
-    if (!token) {
-      throw new Error();
-    }
+  if (!token) {
+    return res.status(UNAUTHORIZED_401).send({ message: 'missing auth token' });
+  }
+  try {
+    const payload = jwt.verify(token, SECRET);
+    const user = await usersModel.getEmail(payload.data);
+    
     if (!user) {
-      return res.status(UNAUTHORIZED_401).json({ message: 'Usuario inexistente' });
+      return res.status(UNAUTHORIZED_401).send({ message: 'jwt malformed' });
     }
+    
     req.user = user;
     next();
   } catch (error) {
     console.error(error.message);
-    res.status(UNAUTHORIZED_401).send({ message: 'jwt malformed' });
+    return res.status(UNAUTHORIZED_401).send({ message: 'jwt malformed' });
   }
 };
 

@@ -1,4 +1,4 @@
-const { add, getAll, getById } = require('../models/recipesModel');
+const { add, getAll, getById, update } = require('../models/recipesModel');
 const {
   UNAUTHORIZED_401,
   CREATED_201, 
@@ -45,8 +45,27 @@ const getRecipeById = async (req, res) => {
   }
 };
 
+const updateRecipe = async (req, res) => {
+  console.log('Entrou aqui!');
+  try {
+    const { user: { _id: idUser }, body } = req;
+    const { name, ingredients, preparation } = body;
+    const { id } = req.params;
+    const newRecipe = { id, name, ingredients, preparation, idUser };
+
+    const result = await update(newRecipe);
+    console.log('RESULT: ', result);
+
+    res.status(OK_200).json(result);
+  } catch (err) {
+    console.error(err.message);
+    res.status(NOT_FOUND_404).send({ message: 'recipe not found' });
+  }
+};
+
 module.exports = {
   addRecipe,
   getAllRecipes,
   getRecipeById,
+  updateRecipe,
 };

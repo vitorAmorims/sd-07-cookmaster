@@ -9,16 +9,16 @@ const checkedPassword = (password) => {
 };
 
 const loginServices = async (email, password) => {
-  const user = usersModel.getEmail(email);
-
   if (!checkedEmail(email) || checkedPassword(password)) {
-    return true;
+    return null;
   }
 
-  if (!user || user.password === password) {
-    return true;
+  const user = await usersModel.getEmail(email);
+
+  if (!user || user.password !== password) {
+    return null;
   }
-  return false;
+  return user;
 };
 
 module.exports = {

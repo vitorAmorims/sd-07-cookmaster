@@ -19,8 +19,19 @@ const add = async (name, ingredients, preparation, id) =>
     return connect().then((db) => db.collection(COLLECTION_NAME).findOne(ObjectId(id)));
   };
 
+  const update = async ({ id, name, ingredients, preparation, userId }) => {
+    if (!ObjectId.isValid(id)) {
+      return null;
+    }
+    await connect().then((db) => db.collection(COLLECTION_NAME)
+      .updateOne({ _id: ObjectId(id) }, [{
+        $set: { name, ingredients, preparation } }]));
+    return { _id: id, name, ingredients, preparation, userId };
+  };
+
 module.exports = {
   add,
   getAll,
   getById,
+  update,
 };
