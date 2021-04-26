@@ -17,15 +17,24 @@ const router = express.Router();
 
 // const upload = multer({storage});
 
+const recipeId = '/recipes/:id';
+
 router.post('/recipes',
   middlewares.validateRecipe,
   middlewares.authMiddleware,
   recipesController.addRecipe);
+
 router.get('/recipes', recipesController.getRecipes);
-router.get('/recipes/:id', recipesController.getRecipeById);
-router.put('/recipes/:id',
+
+router.get(recipeId, recipesController.getRecipeById);
+
+router.put(recipeId,
   middlewares.authMiddleware,
   recipesController.updateRecipe);
+
+router.delete(recipeId,
+  middlewares.authMiddleware,
+  recipesController.deleteRecipe);
 
 // router.post('/recipes/:id/image/',
 //   middlewares.authMiddleware,

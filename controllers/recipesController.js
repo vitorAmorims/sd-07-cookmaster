@@ -2,6 +2,7 @@ const Recipes = require('../models/recipesModels');
 
 const SUCCESS = 201;
 const SUCCESS200 = 200;
+const SUCCESS204 = 204;
 const SYSTEM_FAIL = 500;
 const FAIL = 404;
 
@@ -46,6 +47,16 @@ const updateRecipe = async (req, res) => {
   }
 };
 
+const deleteRecipe = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const results = await Recipes.deleteRecipe(id);
+    res.status(SUCCESS204).json(results);
+  } catch (err) {
+    res.status(SYSTEM_FAIL).json({ message: err.message });
+  }
+};
+
 // const uploadImage = async (req, res) => {
 //   try {
 //     // editar o results
@@ -60,5 +71,6 @@ module.exports = {
   getRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
   // uploadImage,
 };
