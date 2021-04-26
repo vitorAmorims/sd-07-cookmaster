@@ -1,4 +1,5 @@
-const bcrypt = require('bcrypt-nodejs');
+// incompatibilidade do bcrypt com o teste automatizado
+// const bcrypt = require('bcrypt-nodejs');
 const usersModel = require('../model/usersModel');
 
 const statusHttp = {

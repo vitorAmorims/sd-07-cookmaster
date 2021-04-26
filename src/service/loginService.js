@@ -1,5 +1,6 @@
+// incompatibilidade do bcrypt com o teste automatizado
+// const bcrypt = require('bcrypt-nodejs');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt-nodejs');
 const usersModel = require('../model/usersModel');
 
 const SECONDS = 60;
