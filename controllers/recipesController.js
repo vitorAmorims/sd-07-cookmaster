@@ -4,9 +4,8 @@ const recipesModel = require('../models/recipesModel');
 const createRecipe = async (request, response) => {
   try {
     const { name, ingredients, preparation } = request.body;
-    console.log(name, ingredients, preparation);
-    const { _id } = request.user;
-    const results = await recipesModel.registerRecipe(name, ingredients, preparation, _id);
+    const { _id: userId } = request.user;
+    const results = await recipesModel.registerRecipe(name, ingredients, preparation, userId);
     return response.status(REQUEST_CREATED).json({ recipe: results });
   } catch (error) {
     return response.status(INTERNAL_SERVER_ERROR).json({ message: error.message });
@@ -16,6 +15,7 @@ const createRecipe = async (request, response) => {
 const getRecipes = async (_request, response) => {
   try {
     const results = await recipesModel.findAllRecipes();
+    console.log(results);
     return response.status(REQUEST_OK).json(results);
   } catch (error) {
     return response.status(INTERNAL_SERVER_ERROR).json({ message: error.message });

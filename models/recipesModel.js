@@ -1,10 +1,10 @@
 const { ObjectId } = require('mongodb');
 const connection = require('../config/connection');
 
-const registerRecipe = async (name, ingredients, preparation, id) => connection().then((db) =>
+const registerRecipe = async (name, ingredients, preparation, userId) => connection().then((db) =>
     db.collection('recipes')
-      .insertOne({ name, ingredients, preparation }))
-    .then((result) => ({ name, ingredients, preparation, userId: id, _id: result.insertedId }));
+      .insertOne({ name, ingredients, preparation, userId }))
+    .then((result) => ({ name, ingredients, preparation, userId, _id: result.insertedId }));
 
 const findAllRecipes = async () => connection().then((db) =>
   db.collection('recipes').find({}).toArray());
