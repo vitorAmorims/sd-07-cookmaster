@@ -22,7 +22,7 @@ const validateTokenMiddleware = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    res.status(statusHttp.C_401).json({ message: error.message });
+    return res.status(statusHttp.C_401).json({ message: error.message });
   }
 };
 

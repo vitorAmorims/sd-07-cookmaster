@@ -7,7 +7,7 @@ const createUser = async (name, email, password) => {
   .then((db) =>
   db.collection('users')
   .insertOne({ name, email, password, role }));
-  return { _id: user.insertedId, name, email, password, role };
+  return { _id: user.insertedId, name, email, role };
 };
 
 const countByEmailDuplicate = async (email) => {

@@ -28,7 +28,7 @@ const getAllRecipes = async (req, res) => {
     }
     return res
       .status(C_200)
-      .send({ recipes });
+      .send(recipes);
   } catch (error) {
     console.error(error);
     return res

@@ -8,11 +8,13 @@ const createRecipe = async (name, ingredients, preparation, userId) => {
   return { _id: recipe.insertedId, name, ingredients, preparation, userId };
 };
 
-const getAllRecipes = async () =>
-  connection()
-    .then((db) =>
-      db.collection('recipes')
-        .find().toArray());
+const getAllRecipes = async () => {
+  const recipes = await connection()
+  .then((db) =>
+    db.collection('recipes')
+      .find().toArray());
+  return recipes;
+};
 
 module.exports = {
   createRecipe,
