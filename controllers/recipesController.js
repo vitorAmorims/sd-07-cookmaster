@@ -38,8 +38,8 @@ const getRecipeById = async (request, response) => {
 const updateRecipe = async (request, response) => {
   try {
     const { id } = request.params;
-    const results = await recipesModel.findRecipeById(id);
-    console.log(results);
+    const { name, ingredients, preparation } = request.body;
+    const results = await recipesModel.updateFoundRecipe(id, name, ingredients, preparation);
     return response.status(REQUEST_OK).json(results);
   } catch (error) {
     return response.status(NOT_FOUND).json({
