@@ -1,6 +1,6 @@
 const recipesService = require('../service/recipesService');
 
-const { C_200, C_201, C_400, C_401, C_500 } = recipesService.statusHttp;
+const { C_200, C_201, C_400, C_401, C_404, C_500 } = recipesService.statusHttp;
 
 const createRecipe = async (req, res) => {
   try {
@@ -37,7 +37,28 @@ const getAllRecipes = async (req, res) => {
   }
 };
 
+const getRecipeById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const recipe = await recipesService.getRecipeById(id);
+    if (recipe.code404) {
+      return res
+        .status(C_404)
+        .send({ message: recipe.message });
+    }
+    return res
+      .status(C_200)
+      .send(recipe);
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(C_404)
+      .json({ message: error.message });
+  }
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
+  getRecipeById,
 };

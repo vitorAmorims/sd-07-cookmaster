@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { ObjectId } = require('mongodb');
 const recipesModel = require('../model/recipesModel');
 const usersModel = require('../model/usersModel');
 const loginService = require('./loginService');
@@ -51,6 +52,13 @@ const fieldsExistis = (name, ingredients, preparation) => {
   return true;
   };
 
+const validId = (id) => {
+  if (!ObjectId.isValid(id)) {
+    return false;
+  }
+  return true;
+};
+
 const create = async (req) => {
   const { name, ingredients, preparation } = req.body;
   const token = req.headers.authorization;
@@ -78,8 +86,24 @@ const getAll = async () => {
   return result;
 };
 
+const getRecipeById = async (id) => {
+  if (!validId(id)) {
+    return {
+      code404: true, message: 'recipe not found',
+    };
+  }
+  const result = await recipesModel.getRecipeById(id);
+  if (!result) {
+      return {
+        code404: true, message: 'recipe not found',
+      };
+  }
+  return result;
+};
+
 module.exports = {
   statusHttp,
   create,
   getAll,
+  getRecipeById,
 };
