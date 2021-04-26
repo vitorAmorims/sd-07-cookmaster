@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const env = require('../config/.env');
 const modelUser = require('../models/users');
 
 const validateToken = async (req, res, next) => {
@@ -9,7 +8,7 @@ const validateToken = async (req, res, next) => {
     return res.status(ERROR).json({ message: 'missing auth token' });
   }
   try {
-    const decoded = jwt.verify(token, env.secret);
+    const decoded = jwt.verify(token, process.env.SECRET);
     const user = await modelUser.getById(decoded.id);
     if (!user) {
       const ERROR = 401;

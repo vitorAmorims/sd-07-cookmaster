@@ -9,9 +9,8 @@ const OK = 200;
 const ERROR = 401;
 
 function fnGenerateToken(result, jwtConfig) {
-  let token;
   const { _id, email, role } = result;
-  token = jwt.sign({ id: _id, email, role }, process.env.SECRET, jwtConfig); 
+  const token = jwt.sign({ id: _id, email, role }, process.env.SECRET, jwtConfig); 
   return token;
 }
 
