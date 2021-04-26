@@ -17,6 +17,13 @@ async function verify(name, email, password) {
   return UserModel.add(name, email, password);
 }
 
+const resLogin = async (email, password) => {
+  const userOK = await UserModel.getEmailUser(email);
+  if (!userOK || userOK.password !== password) throw error.incorrectLogin;
+  return UserModel.token(userOK);
+};
+
 module.exports = {
   verify,
+  resLogin,
 };

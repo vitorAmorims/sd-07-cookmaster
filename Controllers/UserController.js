@@ -1,6 +1,9 @@
 const {
   verify,
+  resLogin,
 } = require('../Services/UserService');
+
+const error = require('../error/index');
 
 const addUser = async (req, res) => {
   const resOK = 201;
@@ -13,6 +16,20 @@ const addUser = async (req, res) => {
   }
 };
 
+const login = async (req, res) => {
+  const resOK = 200;
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) throw error.loginInv;
+    const loginOk = await resLogin(email, password);
+    console.log(loginOk);
+    return res.status(resOK).json(loginOk);
+  } catch (err) {
+    res.status(err.code || 401).json({ message: err.message });
+  }
+};
+
 module.exports = {
   addUser,
+  login,
 };
