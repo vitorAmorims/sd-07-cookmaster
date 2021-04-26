@@ -63,5 +63,9 @@ router.put(
   return res.status(200).json({ _id: id, name, ingredients, preparation, userId, image });
 },
 );
+router.get('/images/:image', (req, res) => {
+  const { image } = req.params;
+  return res.status(200).render(`/images/${image}`);
+});
 
 module.exports = router;

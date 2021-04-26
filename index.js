@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const routes = require('./routes');
 
 const app = express();
@@ -11,6 +12,7 @@ app.get('/', (request, response) => {
 });
 
 app.use(express.json());
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
 app.use(routes.userRoutes);
 app.use(routes.recipeRoutes);
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });
