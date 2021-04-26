@@ -12,5 +12,8 @@ routes.post('/users', validateCreateUser, userController.create);
 routes.post('/login', validadeLoginUser, userController.login);
 
 routes.post('/recipes', validateCreateRecipe, recipeController.create);
+routes.get('/recipes', recipeController.getAll);
+
+routes.get('/test', (req, res) => res.status(200).json({}));
 
 module.exports = routes;

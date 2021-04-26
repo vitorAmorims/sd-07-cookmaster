@@ -23,4 +23,8 @@ module.exports = {
 
     return messageSuccess(recipeCreated, httpStatus.CREATED);
   },
+  getAll: async () => {
+    const recipes = await recipeModel.getAll();
+    return messageSuccess(recipes, httpStatus.OK);
+  },
 };

@@ -5,4 +5,8 @@ module.exports = {
     const recipeCreated = await connect('recipes', 'insertOne', recipe);
     return recipeCreated.ops[0];
   },
+  getAll: async () => {
+    const recipes = await connect('recipes', 'find', {});
+    return recipes.toArray();
+  },
 };

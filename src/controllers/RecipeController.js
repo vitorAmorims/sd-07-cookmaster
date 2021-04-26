@@ -10,4 +10,12 @@ module.exports = {
       return response.status(httpStatus).json({ message });
     }
   },
+  getAll: async (request, response) => {
+    try {
+      const { data, httpStatus } = await recipeService.getAll();
+      return response.status(httpStatus).json(data);
+    } catch ({ message, httpStatus }) {
+      return response.status(httpStatus).json({ message });
+    }
+  },
 };
