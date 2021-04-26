@@ -17,9 +17,9 @@ const validateToken = async (req, res, next) => {
     next();
   } catch (error) {
     if (error.message === 'missing auth token') {
-      res.status(401).json({ message: error.message });
+      return res.status(401).json({ message: error.message });
     }
-    res.status(401).json({ message: 'jwt malformed' });
+    return res.status(401).json({ message: 'jwt malformed' });
   }
 };
 
