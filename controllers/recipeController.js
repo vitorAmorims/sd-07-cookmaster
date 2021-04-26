@@ -57,7 +57,7 @@ const deleteRecipeById = async (req, res) => {
   const { _id: userId, role } = req.user;
   const result = await recipeService.verifyPermission(recipeId, userId, role);
   if (result) {
-    const deletedRecipe = await Recipe.deleteRecipeById(recipeId);
+    await Recipe.deleteRecipeById(recipeId);
     return res.status(204).end();
   }
 };
