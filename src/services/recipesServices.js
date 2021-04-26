@@ -105,7 +105,7 @@ const validateToken = async (paramId, token) => {
   } catch (error) {
     return errorJWTInvalid;
   }
-}
+};
 
 const handleAddImage = async (id, filename) => {
   await addImage(id, filename);

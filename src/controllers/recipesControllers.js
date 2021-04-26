@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
   },
   filename: (req, _file, callback) => {
     const name = req.params.id;
-    callback(null, name + '.jpeg');
+    callback(null, `${name}.jpeg`);
   },
 });
 
@@ -78,24 +78,17 @@ const deleteRecipeById = async (req, res) => {
 };
 
 const addImage = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const token = req.headers.authorization;
-    const tokenResult = await validateToken(id, token);
-    if (tokenResult) return res.status(tokenResult.http).json(tokenResult.message);
-    upload(req, res, async (error) => {
-      if (error instanceof multer.MulterError) {
-        return res.status(ERROR).send({ message: error });
-      } else if (error) {
-        return res.status(ERROR).send({ message: error });
-      }
-      const { filename } = req.file;
-      const { http, message } = await handleAddImage(id, filename);
-      return res.status(http).json(message);
-    });
-  } catch (error) {
-    return res.status(ERROR).send({ message: error });
-  }
+  const { id } = req.params;
+  const token = req.headers.authorization;
+  const tokenResult = await validateToken(id, token);
+  if (tokenResult) return res.status(tokenResult.http).json(tokenResult.message);
+  upload(req, res, async (error) => {
+    if (error instanceof multer.MulterError) return res.status(ERROR).send({ message: error });
+    if (error) return res.status(ERROR).send({ message: error });
+    const { filename } = req.file;
+    const { http, message } = await handleAddImage(id, filename);
+    return res.status(http).json(message);
+  });
 };
 
 module.exports = {
