@@ -41,7 +41,7 @@ router.delete(`${BASE_URL}/:id`,
 router.put(`${BASE_URL}/:id/image`,
             authMiddleware.validateTokenUpdating,
             recipeController.uploadPhoto);
-
+  
 router.get('/images/:id', recipeController.getPhoto);
 
 module.exports = router;
