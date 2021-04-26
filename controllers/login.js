@@ -2,8 +2,6 @@ const bcrypt = require('bcrypt');
 
 const jwt = require('jsonwebtoken');
 
-const env = require('../config/.env');
-
 const serviceLogin = require('../services/login');
 
 const OK = 200;
@@ -13,7 +11,7 @@ const ERROR = 401;
 function fnGenerateToken(result, jwtConfig) {
   let token;
   const { _id, email, role } = result;
-  token = jwt.sign({ id: _id, email, role }, env.secret, jwtConfig);
+  token = jwt.sign({ id: _id, email, role }, process.env.SECRET, jwtConfig); 
   return token;
 }
 

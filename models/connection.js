@@ -1,16 +1,15 @@
 const { MongoClient } = require('mongodb');
 
 // teste local
-const MONGO_DB_URL = 'mongodb://localhost:27017/Cookmaster';
+// const MONGO_DB_URL = 'mongodb://localhost:27017/Cookmaster';
 const DB_NAME = 'Cookmaster';
 
 // avaliador
-// const MONGO_DB_URL = 'mongodb://mongodb:27017/Cookmaster';
-// const DB_NAME = 'Cookmaster';
+const MONGO_DB_URL = 'mongodb://mongodb:27017/Cookmaster';
 
 const connection = () => {
   const result = MongoClient
-    .connect(MONGO_DB_URL, {
+    .connect(process.env.MONGO_DB_URL || MONGO_DB_URL, {
       urlNewParser: true,
       useUnifiedTopology: true,
     })

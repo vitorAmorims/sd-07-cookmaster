@@ -1,4 +1,8 @@
+require('dotenv').config();
+
 const express = require('express');
+
+// console.log(process.env)
 
 const helmet = require('helmet');
 
@@ -44,4 +48,4 @@ app.use('/login', require('./routes/login'));
 
 app.use('/recipes', require('./routes/recipes'));
 
-app.listen(PORT, () => { console.log('API rodando na porta 3000'); });
+app.listen(process.env.PORT || PORT, () => { console.log('API rodando na porta 3000'); });
