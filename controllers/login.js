@@ -13,11 +13,7 @@ const ERROR = 401;
 function fnGenerateToken(result, jwtConfig) {
   let token;
   const { _id, email, role } = result;
-  if (role === 'admin') {
-    token = jwt.sign({ id: _id, email, role }, env.secret, jwtConfig);
-  } else {
-    token = jwt.sign({ id: _id, email, role }, env.secret, jwtConfig);
-  }
+  token = jwt.sign({ id: _id, email, role }, env.secret, jwtConfig);
   return token;
 }
 
