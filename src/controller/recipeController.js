@@ -64,14 +64,8 @@ const uploadPhoto = async (req, res) => {
 
 const getPhoto = async (req, res) => {
   try {
-   const { id } = req.params;
-  //  const file = fs.readFileSync('../uploads/' + req.params.id)
-  //   res.setHeader('Content-Length', file.length);
-  //   res.write(file, 'binary');
-  //   res.end();
-  const recipeRes = await recipeService.getRecipeById(id);
-  console.log(recipeRes.image);
-   return res.status(ApiStatusCode.SUCCESS).json(recipeRes.image);
+   const { url } = req;
+   return res.status(ApiStatusCode.SUCCESS).sendFile(url);
   } catch (error) {
     return res.status(401).json({ message: error.message });
   }

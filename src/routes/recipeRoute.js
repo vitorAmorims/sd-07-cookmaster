@@ -1,4 +1,7 @@
 const express = require('express');
+
+const path = require('path');
+
 const { validationMiddleware, authMiddleware } = require('../middlewares');
 const { recipeController } = require('../controller');
 
@@ -23,25 +26,12 @@ router.delete(`${BASE_URL}/:id`,
               authMiddleware.validateTokenUpdating,
               recipeController.deleteRecipe);
 
-// router.use(express.static(__dirname + "uploads/"))
-
-// const storage = multer.diskStorage({
-//  destination: (req, file, callback) => {
-//    console.log('multer dest')
-//    callback(null, 'uploads/');
-//   },
-//   filename: (req, file, callback) => {
-//     console.log('multer')
-//     callback(null, req.params.id + '.jpeg')
-//   }
-// })
-
-// const upload = multer( { storage })
-
 router.put(`${BASE_URL}/:id/image`,
-            authMiddleware.validateTokenUpdating,
-            recipeController.uploadPhoto);
+           authMiddleware.validateTokenUpdating,
+           recipeController.uploadPhoto);
   
-router.get('/images/:id', recipeController.getPhoto);
+router.get('/images',
+           express.static(path.join(__dirname, '../', 'uploads/')),
+           recipeController.getPhoto);
 
 module.exports = router;
