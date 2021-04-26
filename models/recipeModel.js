@@ -25,6 +25,18 @@ const update = async ({ id, name, ingredients, preparation }) => {
     return recipe;
 };
 
+const updateWithImage = async (id, oneRecipe, image) => {
+  const { name, ingredients, preparation, userId } = oneRecipe;  
+  if (!ObjectId.isValid(id)) return null;
+
+    const recipe = await connection().then((db) =>
+        db
+        .collection('recipes')
+        .updateOne({ _id: ObjectId(id) }, 
+        { $set: { name, ingredients, preparation, userId, image } }));
+    return recipe;
+};
+
 const exclude = async (id) => {
   if (!ObjectId.isValid(id)) return null;
 
@@ -37,5 +49,6 @@ module.exports = {
   getAll,
   getById,
   update,
+  updateWithImage,
   exclude,
 };
