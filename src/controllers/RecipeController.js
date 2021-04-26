@@ -1,5 +1,3 @@
-const express = require('express');
-const path = require('path');
 const RecipeService = require('../services/RecipeService');
 
 const create = async (req, res) => {
@@ -63,16 +61,6 @@ const createImage = async (req, res) => {
   }
 };
 
-const findByImage = async (req, res) => {
-  try {
-    const image = express.static(path.resolve(`${__dirname}/../../uploads/`));
-
-    return res.status(200).sendFile(image);
-  } catch (error) {
-    res.status(500).json({ Error: error.message }); 
-  }
-};
-
 const exclude = async (req, res) => {
   try {
     const { id } = req.params;
@@ -90,6 +78,5 @@ module.exports = {
   findById,
   update,
   createImage,
-  findByImage,
   exclude,
 };
