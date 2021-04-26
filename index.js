@@ -17,7 +17,7 @@ app.get('/', (request, response) => {
 app.use(express.static(`${__dirname}/uploads`));
 
 app.use(UserRouter);
-app.use('/recipes', RecipeRouter);
+app.use(RecipeRouter);
 
 app.use(middleware.errorMiddleware);
 

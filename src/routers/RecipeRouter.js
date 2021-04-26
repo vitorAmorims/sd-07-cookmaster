@@ -1,5 +1,7 @@
 const express = require('express');
 const multer = require('multer');
+const path = require('path');
+
 const RecipeController = require('../controllers/RecipeController');
 const middleware = require('../middlewares');
 const jwtValidation = require('../auth/jwtValidation');
@@ -11,22 +13,24 @@ const storage = middleware.storageMiddleware;
 const fileFilter = middleware.fileFilterMiddleware;
 const upload = multer({ fileFilter, storage });
 
-router.post('/', jwtValidation, middleware.recipeMiddleware,
+const recipeId = '/recipes/:id';
+
+router.post('/recipes', jwtValidation, middleware.recipeMiddleware,
 RecipeController.create);
 
-router.post('/:id/image', middleware.idExistMiddleware,
+router.put('/recipes/:id/image', middleware.idExistMiddleware,
 jwtValidation, authenticationJwt, upload.single('image'), RecipeController.createImage);
 
-router.get('/', RecipeController.findAll);
+router.get('/recipes', RecipeController.findAll);
 
-router.use('/images', express.static(`${__dirname}/../../uploads/`));
+router.use('/images', express.static(path.resolve(`${__dirname}/../../uploads/`)));
 
-router.get('/:id', middleware.idExistMiddleware, RecipeController.findById);
+router.get(recipeId, middleware.idExistMiddleware, RecipeController.findById);
 
-router.put('/:id', middleware.idExistMiddleware,
+router.put(recipeId, middleware.idExistMiddleware,
 jwtValidation, authenticationJwt, RecipeController.update);
 
-router.delete('/:id', middleware.idExistMiddleware,
+router.delete(recipeId, middleware.idExistMiddleware,
 jwtValidation, authenticationJwt, RecipeController.exclude);
 
 router.use(middleware.errorMiddleware);
