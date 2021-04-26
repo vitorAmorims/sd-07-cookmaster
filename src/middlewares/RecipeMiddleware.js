@@ -1,4 +1,5 @@
 const httpStatus = require('../../helpers/httpStatus');
+const { validateToken } = require('../security/Authentication');
 
 module.exports = {
   validateCreateRecipe: (request, response, next) => {
@@ -9,8 +10,9 @@ module.exports = {
         .status(httpStatus.BAD_REQUEST)
         .json({ message: 'Invalid entries. Try again.' });
     }
-    if (!authorization) {
-      return response.status(httpStatus.UNAUTHORIZED).json({ message: 'missing auth token' });
+    const validatedToken = validateToken(authorization);
+    if (!validatedToken) {
+      return response.status(httpStatus.UNAUTHORIZED).json({ message: 'jwt malformed' });
     }
     next();
   },

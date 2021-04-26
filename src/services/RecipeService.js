@@ -8,12 +8,19 @@ const { validateToken } = require('../security/Authentication');
 module.exports = {
   create: async (recipe, headers) => {
     const token = headers.authorization;
-    const userByToken = validateToken(token);
-    const user = await userModel.findByEmail(userByToken.user.email);
-    if (!user) {
-      return messageFailure('jwt malformed', httpStatus.UNAUTHORIZED);
+
+    const { user, user: { _id } } = validateToken(token);
+
+    const userByEmail = await userModel.findByEmail(user.email);
+    if (!userByEmail) {
+      throw messageFailure('jwt malformed', httpStatus.UNAUTHORIZED);
     }
-    const userCreated = await recipeModel.create(recipe);
-    return messageSuccess(userCreated, httpStatus.CREATED);
+
+    const { name, ingredients, preparation } = recipe;
+    const recipeCreated = await recipeModel.create({
+      name, ingredients, preparation, userId: _id,
+    });
+
+    return messageSuccess(recipeCreated, httpStatus.CREATED);
   },
 };
