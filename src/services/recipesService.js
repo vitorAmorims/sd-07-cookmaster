@@ -49,11 +49,8 @@ const deleteRecipe = async (recipeId) => {
   return recipeDeleted;
 };
 
-const updateRecipeImage = async (recipeId, image, fileValidationError) => {
+const updateRecipeImage = async (recipeId, image) => {
   validateId(recipeId);
-  if (fileValidationError) {
-    throw new InvalidEntries(fileValidationError, 403);
-  }
   const recipeImageUpdated = await recipesModel.updateRecipeImage(recipeId, image);
   return recipeImageUpdated;
 };

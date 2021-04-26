@@ -72,11 +72,10 @@ const deleteRecipe = async (req, res) => {
 const updateRecipeImage = async (req, res) => {
   try {
     const { id } = req.params;
-    const { pathImage, fileValidationError } = req; 
+    const { pathImage } = req; 
     const recipeImageUpdated = await recipesService.updateRecipeImage(
       id,
       pathImage,
-      fileValidationError,
     );
     res.status(200).json(recipeImageUpdated);
   } catch (error) {
