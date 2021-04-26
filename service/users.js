@@ -27,7 +27,7 @@ const createUserService = async (user) => {
   if (emailverification) throw new Error('Email already registered');
 
   const createdUser = await createUserModel(user);
-  console.log(createdUser);
+  // console.log(createdUser);
   return createdUser;
 };
 
