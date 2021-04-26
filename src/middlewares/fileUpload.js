@@ -9,8 +9,6 @@ const storage = multer.diskStorage({
   },
 });
 
-// const isEndWithJpeg = (filename) => filename.endsWith('.jpg');
-
 const fileFilter = (req, file, callback) => {
     const path = req.get('host');
     const { id } = req.params;

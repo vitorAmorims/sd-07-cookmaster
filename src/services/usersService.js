@@ -26,10 +26,10 @@ const isEmailExist = async (email) => {
   }
 };
 
-const createUser = async (name, email, password) => {
+const createUser = async (name, email, password, role) => {
   validateUserInput(name, email, password);
   await isEmailExist(email);
-  const newUser = await usersModel.createUser(name, email, password);
+  const newUser = await usersModel.createUser(name, email, password, role);
   return ({ user: { ...newUser } });
 };
 
