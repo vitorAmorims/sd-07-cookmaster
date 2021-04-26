@@ -3,7 +3,6 @@ const validateUser = require('./validateUser');
 const validateLogin = require('./validateLogin');
 const authMiddleware = require('./authMiddleware');
 const validateRecipe = require('./validateRecipe');
-const recipeUserLoggedOrAdmin = require('./recipeUserLoggedOrAdmin');
 
 module.exports = {
   errorMiddleware,
@@ -11,5 +10,4 @@ module.exports = {
   validateLogin,
   authMiddleware,
   validateRecipe,
-  recipeUserLoggedOrAdmin,
 };

@@ -1,4 +1,3 @@
-const Recipes = require('../models/recipesModels');
 const { tokenIsValid } = require('../services/authTokenService');
 
 const recipeUserLoggedOrAdmin = async (req, _res, next) => {

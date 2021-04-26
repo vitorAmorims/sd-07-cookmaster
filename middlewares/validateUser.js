@@ -3,7 +3,7 @@ const validateUserService = require('../services/validateUserService');
 
 const validateUser = async (req, _res, next) => {
   const { name, email, password } = req.body;
-  const emailCheck = await Users.checkForUserEmail(email);
+  const emailCheck = await Users.findUser(email);
   if (!await validateUserService(name, email, password)) {
     return next({ status: 400, message: 'Invalid entries. Try again.', code: 'invalid_data' });
   }
