@@ -7,9 +7,9 @@ const getAllRecipes = async (req, res) => {
   try {
   const results = await Recipe.getAllRecipes();
   
-  res.status(200).json(results);
+  return res.status(200).json(results);
   } catch (err) {
-  res.status(500).json({ message: err.message });
+  return res.status(500).json({ message: err.message });
   }
   };
 
@@ -22,9 +22,9 @@ const addRecipe = async (req, res) => {
       throw Error('Invalid entries. Try again.');
     }
     const newRecipe = await Recipe.registerRecipe(name, ingredients, preparation, userId);
-    res.status(CREATED).json({ recipe: newRecipe });
+    return res.status(CREATED).json({ recipe: newRecipe });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    return res.status(400).json({ message: err.message });
   }
 };
 
@@ -35,9 +35,9 @@ try {
 
   if (!result) throw Error('recipe not found');
 
-  res.status(200).json(result);
+  return res.status(200).json(result);
 } catch (err) {
-  res.status(404).json({ message: err.message });
+  return res.status(404).json({ message: err.message });
 }
 };
 
@@ -48,7 +48,7 @@ const editRecipeById = async (req, res) => {
   const result = await recipeService.verifyPermission(recipeId, userId, role);
   if (result) {
     const editedRecipe = await Recipe.editRecipeById(recipeId, name, ingredients, preparation);
-    res.status(200).json(editedRecipe);
+    return res.status(200).json(editedRecipe);
   }
 };
 
@@ -58,7 +58,7 @@ const deleteRecipeById = async (req, res) => {
   const result = await recipeService.verifyPermission(recipeId, userId, role);
   if (result) {
     const deletedRecipe = await Recipe.deleteRecipeById(recipeId);
-    res.status(204).json(deletedRecipe);
+    return res.status(204).end();
   }
 };
 

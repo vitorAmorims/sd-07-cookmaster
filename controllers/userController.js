@@ -12,9 +12,9 @@ const getAllUsers = async (req, res) => {
 try {
 const results = await User.getAllUsers();
 
-res.status(200).json(results);
+return res.status(200).json(results);
 } catch (err) {
-res.status(500).json({ message: err.message });
+return res.status(500).json({ message: err.message });
 }
 };
 
@@ -28,14 +28,14 @@ const salt = bcrypt.genSaltSync(5);
 const encryptedPassword = bcrypt.hashSync(password, salt);
 
 const newUser = await User.registerUser(name, email, encryptedPassword);
-res.status(CREATED).json({ user: newUser });
+return res.status(CREATED).json({ user: newUser });
 } catch (err) {
 // following solution by @carolbezerra_dev
 if (err.message === 'Invalid entries. Try again.') {
 return res.status(BAD_REQUEST).json({ message: err.message });
 }
 
-res.status(CONFLICT).json({ message: err.message });
+return res.status(CONFLICT).json({ message: err.message });
 }
 };
 
