@@ -1,4 +1,3 @@
-// colocar query do MongoDB
 const connection = require('./config/conn');
 
 const create = async (name, email, password, role) => {
