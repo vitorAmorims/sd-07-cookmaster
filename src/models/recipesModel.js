@@ -1,49 +1,54 @@
+// const { ObjectId } = require('mongodb');
 const connect = require('../../config/connection');
-const { ObjectId } = require('mongodb');
 
-const getAll = () => connect()
-  .then(db => db.collection('sales').find().toArray());
+// const getAll = () => connect()
+//   .then(db => db.collection('sales').find().toArray());
 
-const getById = (id) => {
-  if (!ObjectId.isValid(id)) return null;
+// const getById = (id) => {
+//   if (!ObjectId.isValid(id)) return null;
   
-  return connect()
-    .then(db => db.collection('sales').findOne(ObjectId(id)));
-};
+//   return connect()
+//     .then(db => db.collection('sales').findOne(ObjectId(id)));
+// };
 
-const add = async (sales) => {
-  const sale = await connect()
-    .then(db => db.collection('sales').insertOne({ itensSold: sales }));
+const add = async (userId, recipe) => {
+  const newRecipe = await connect()
+    .then((db) => db.collection('recipes')
+    .insertOne({ recipe, userId }));
 
-  return { _id: sale.insertedId, itensSold: sales };
-};
-
-const update = async (id, productId, quantity) => {
-  const sale = await connect()
-    .then(db => db.collection('sales').findOneAndUpdate(
-      {
-        _id: ObjectId(id),
-        'itensSold.productId': productId
-      },
-      { $set: { 'itensSold.$.quantity': quantity } }
-    ));
+  const { name, ingredients, preparation } = recipe;
   
-  return {
-    _id: id,
-    itensSold: [ { productId, quantity }]
-  };
+  return { recipe: {
+    name,
+    ingredients,
+    preparation,
+    userId,
+    _id: newRecipe.insertedId,
+  } };
 };
 
-const deleteSale = (sale) => {
-  connect()
-    .then(db => db.collection('sales').deleteOne(sale));
-  return sale;
-};
+// const update = async (id, productId, quantity) => {
+//   const sale = await connect()
+//     .then(db => db.collection('sales').findOneAndUpdate(
+//       {
+//         _id: ObjectId(id),
+//         'itensSold.productId': productId
+//       },
+//       { $set: { 'itensSold.$.quantity': quantity } }
+//     ));
+  
+//   return {
+//     _id: id,
+//     itensSold: [ { productId, quantity }]
+//   };
+// };
+
+// const deleteSale = (sale) => {
+//   connect()
+//     .then(db => db.collection('sales').deleteOne(sale));
+//   return sale;
+// };
 
 module.exports = {
-  getAll,
-  getById,
   add,
-  update,
-  deleteSale
 };

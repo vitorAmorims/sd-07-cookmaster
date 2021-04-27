@@ -1,5 +1,5 @@
+const { ObjectId } = require('mongodb');
 const connect = require('../../config/connection');
-// const { ObjectId } = require('mongodb');
 /*
 const getAll = () => connect()
   .then(db => db.collection('products').find().toArray());
@@ -10,6 +10,13 @@ const getById = (id) => {
   return connect()
     .then(db => db.collection('products').findOne(ObjectId(id)));
 }; */
+
+const getById = ({ _id }) => {
+  if (!ObjectId.isValid(_id)) return null;
+  
+  return connect()
+    .then((db) => db.collection('users').findOne(ObjectId(_id)));
+};
 
 const add = async ({ name, email, password }) => {
   const role = 'user';
@@ -42,6 +49,7 @@ const deleteProduct = (product) => {
 }; */
 
 module.exports = {
+  getById,
   add,
   getUserByMail,
   getEmailAndPassword,

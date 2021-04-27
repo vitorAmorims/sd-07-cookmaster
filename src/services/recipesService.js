@@ -1,22 +1,28 @@
-const salesModel = require('../models/recipesModel');
-// const productsModel = require('../models/productsModel');
+const jwt = require('../helpers/jwt');
+const userModel = require('../models/userModel');
+const recipesModel = require('../models/recipesModel');
 
-const ERR_MESSAGE = 'Wrong product ID or invalid quantity';
-/*
-const validateQuantity = (quantity) => {
-  const ZERO = 0;
-
-  if (typeof quantity !== 'number'
-  || quantity < ZERO || quantity === ZERO) {
+const validation = ({ name, ingredients, preparation }) => {
+  const ERR_MESSAGE = 'Invalid entries. Try again.';
+  if (!name || !ingredients || !preparation) {
     throw new Error(ERR_MESSAGE);
   }
+};
+
+const verifyToken = async ({ authorization }) => {
+  const decoded = jwt.decodifyToken(authorization);
+  if (!decoded) {
+    throw new Error('jwt malformed');
+  }
+  const user = await userModel.getUserByMail(decoded.email);
+  return user;
 };
 /*
 const validateProductId = (productId) => {
   const product = productsModel.getById(productId);
   if (!product) throw new Error(ERR_MESSAGE);
 }; */
-
+/*
 const validateSaleId = (saleId) => {
   const sale = salesModel.getById(saleId);
   if (!sale) throw new Error(ERR_MESSAGE);
@@ -33,18 +39,15 @@ const getById = async (id) => {
   }
 
   return result;
+}; */
+
+const add = async ({ headers, body }) => {
+  validation(body);
+  const { _id } = await verifyToken(headers);
+
+  return recipesModel.add(_id, body);
 };
 /*
-const add = async (sales) => {
-  sales.forEach(sale => {
-    const { productId, quantity } = sale;
-    validateQuantity(quantity);
-    validateProductId(productId);
-  });
-
-  return salesModel.add(sales);
-};
-
 const update = async (id, sale) => {
   const { productId, quantity } = sale;
   validateQuantity(quantity);
@@ -54,12 +57,12 @@ const update = async (id, sale) => {
   return salesModel.update(id, productId, quantity);
 }; */
 
-const deleteSale = async (id) => {
-  const sale = await validateSaleId(id);
+// const deleteSale = async (id) => {
+//   const sale = await validateSaleId(id);
 
-  return salesModel.deleteSale(sale);
-};
+//   return salesModel.deleteSale(sale);
+// };
 
 module.exports = {
-  deleteSale,
+  add,
 };

@@ -1,12 +1,5 @@
-const jwt = require('jsonwebtoken');
+const jwt = require('../helpers/jwt');
 const userModel = require('../models/userModel');
-
-const secret = 'anything';
-
-const jwtConfig = {
-  expiresIn: '1h',
-  algorithm: 'HS256',
-};
 
 const validateName = ({ name }, string) => {
   if (!name) {
@@ -49,7 +42,6 @@ const add = async (object) => {
 
 const login = async (object) => {
   let ERR_MESSAGE = 'All fields must be filled';
-  const { email, password } = object;
   validateEmailAndPassword(object, ERR_MESSAGE);
   const user = await userModel.getEmailAndPassword(object);
   
@@ -58,7 +50,7 @@ const login = async (object) => {
     throw new Error(ERR_MESSAGE);
   }
 
-  const token = jwt.sign({ email, password }, secret, jwtConfig);
+  const token = jwt.createToken(user);
 
   return { token };
 };

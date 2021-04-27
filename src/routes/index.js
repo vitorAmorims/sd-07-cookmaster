@@ -1,6 +1,7 @@
 const userRoutes = require('./userRoutes');
-// const recipesRoutes = require('./recipesRoutes');
+const recipesRoutes = require('./recipesRoutes');
 
 module.exports = {
   userRoutes,
+  recipesRoutes,
 };
