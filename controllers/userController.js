@@ -24,7 +24,9 @@ const loginUser = (async (req, res, next) => {
         };
 
         const user = await userModel.findUser(email);
-        const token = jwt.sign({ data: user.email }, secret, jwtConfig);
+        const { _id, role } = user;
+        const token = jwt
+        .sign({ data: user.email, _id, role }, secret, jwtConfig);
 
         res.status(200).json({ token });
     } catch (error) {

@@ -1,7 +1,7 @@
 const express = require('express');
 const middlewares = require('./middlewares');
 const userRoute = require('./routes/userRoute');
-// const recipeRoute = require('./routes/recipeRoute');
+const recipeRoute = require('./routes/recipeRoute');
 
 const app = express();
 
@@ -15,7 +15,7 @@ app.get('/', (request, response) => {
 });
 
 app.use(userRoute);
-// app.use(recipeRoute);
+app.use(recipeRoute);
 
 app.use(middlewares.errorMiddleware);
 
