@@ -32,11 +32,14 @@ const updateRecipeById = async (name, ingredients, preparation, id) =>
         .then((db) =>
             db.collection('recipes').updateOne({ _id: new ObjectId(id) },
               { $set: { name, ingredients, preparation } })).then((result) => result);
-        
+const addImageToRecipe = async (objRecipeData, id) =>
+            connection()
+              .then((db) =>
+                  db.collection('recipes').updateOne({ _id: new ObjectId(id) },
+                    { $set: { ...objRecipeData } })).then((result) => result);
+
 module.exports = {
-// getAll,
-// deleteById,
-// updateById,
+addImageToRecipe,
 updateRecipeById,
 deleteRecipeById,
 findRecipeById,

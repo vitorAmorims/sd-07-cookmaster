@@ -10,7 +10,7 @@ const secret = 'meutoken';
   }
   try {
     const decoded = jwt.verify(authorization, secret);
-
+    console.log(decoded);
     req.body.data = decoded.data;  
     next();
   } catch (err) {

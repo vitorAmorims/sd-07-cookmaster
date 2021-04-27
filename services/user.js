@@ -52,11 +52,6 @@ const verifyPassword = (password) => {
 
   return true;
 };
-// const verifyRole = (role) => {
-//   if (!password || typeof password !== 'string') return false;
-
-//   return true;
-// };
 const isValid = async (email, password, name) => {
   const result = await isEmailAlreadyExist(email);
   if (!verifyName(name)) return errInvalidEntries;
@@ -193,12 +188,28 @@ const updateRecipeById = async (objRecipeData) => {
     userId,
   };
 };
+const addImageToRecipe = async (objRecipeData) => {  
+  const { name, ingredients, preparation, id, userId, image } = objRecipeData;
+  if (!ObjectId.isValid(id)) {
+    return errRecipeNotFound;
+  }
+
+  if (typeof result === 'object') return errRecipeNotFound;
+
+  await user.addImageToRecipe(objRecipeData, id);
+
+  return {
+    _id: id,
+    name,
+    ingredients, 
+    preparation, 
+    userId,
+    image,
+  };
+};
 
 module.exports = {
-  // updateById,
-  // deleteProduct,
-  // getAll,
-  // findById,
+  addImageToRecipe,
   updateRecipeById,
   deleteRecipeById,
   findRecipeById,

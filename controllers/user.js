@@ -86,13 +86,32 @@ const updateRecipeById = async (req, res) => {
 
   if (result.message) return res.status(NOT_FOUND).json(result);
 
+  if (result === '') return res.status(NOT_FOUND).json({ message: 'recipe not found' });
+
   res.status(OK).json(result);
 };
+const addImageToRecipe = async (req, res) => {
+  const { id } = req.params;
+  const { data } = req.body;
+  const { _id } = data;  
+  const resultmodel = await user.findRecipeById(id);
+  const { userId } = resultmodel;
+  let result = '';
+  if (String(userId) === String(_id) || data.role === 'admin') {
+    const image = `localhost:3000/images/${id}.jpeg`;
+    const objRecipeData = { ...resultmodel, image };
+    result = await user.addImageToRecipe(objRecipeData);
+  }
+  
+  if (result.message) return res.status(NOT_FOUND).json(result);
+
+  if (result === '') return res.status(NOT_FOUND).json({ message: 'recipe not found' });
+ 
+  res.status(OK).json(result);
+};
+
 module.exports = {
-  // deleteProduct,
-  // updateById,
-  // getAll,
-  // findById,
+  addImageToRecipe,
   updateRecipeById,
   deleteRecipeById,
   findRecipeById,
