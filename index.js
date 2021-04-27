@@ -1,9 +1,11 @@
 const express = require('express');
 const UserRoutes = require('./routes/UserRoutes');
+const RecipeRoutes = require('./routes/RecipeRoutes');
 
 const app = express();
 app.use(express.json());
 app.use(UserRoutes);
+app.use(RecipeRoutes);
 
 const PORT = 3000;
 
