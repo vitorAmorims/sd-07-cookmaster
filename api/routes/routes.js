@@ -78,4 +78,6 @@ router.put(
   recipeController.uploadImage,
 );
 
+router.get('/images/:imageName', recipeController.getImageRecipe);
+
 module.exports = router;

@@ -37,20 +37,27 @@ const updateRecipe = async (data, userId, id) => {
 const excludeRecipe = async (id) => {
   if (!ObjectId.isValid(id)) return null;
 
-  return connection().then((db) => db.collection('recipes')
-    .deleteOne({ _id: ObjectId(id) }));
+  return connection().then((db) =>
+    db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
 };
 
 const uploadImage = async (image, id) => {
   await connection().then((db) =>
     db
       .collection('recipes')
-      .updateOne(
-        { _id: ObjectId(id) },
-        { $set: { image } },
-      ));
-      const recipeWithImage = await getRecipeById(id);
+      .updateOne({ _id: ObjectId(id) }, { $set: { image } }));
+  const recipeWithImage = await getRecipeById(id);
   return recipeWithImage;
+};
+
+const getImageRecipe = async (imagePath) => {
+  const destinationImg = `localhost:3000${imagePath}`;
+  const imageRecipe = await connection().then((db) =>
+    db.collection('recipes').findOne({ image: destinationImg }));
+  if (!imageRecipe) {
+    return null;
+  }
+  return imagePath;
 };
 
 module.exports = {
@@ -60,4 +67,5 @@ module.exports = {
   updateRecipe,
   excludeRecipe,
   uploadImage,
+  getImageRecipe,
 };

@@ -75,6 +75,16 @@ const uploadImage = async (req, res) => {
   }
 };
 
+const getImageRecipe = async (req, res) => {
+  try {
+    const getRecipe = await recipesService.getImageRecipe(req.path);
+    const { http, message } = getRecipe;
+    return res.status(http).sendFile(message, { root: process.cwd() });
+  } catch (error) {
+    return res.status(500).json({ message: internalError, err: error.message });
+  }
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
@@ -82,4 +92,5 @@ module.exports = {
   updateRecipe,
   deleteRecipe,
   uploadImage,
+  getImageRecipe,
 };

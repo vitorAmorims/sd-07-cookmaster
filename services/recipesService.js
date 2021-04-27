@@ -62,6 +62,15 @@ const uploadImage = async (imgDest, id) => {
   return customAnswer(recipeWithImage, OK);
 };
 
+const getImageRecipe = async (imageName) => {
+  const image = await recipesModel.getImageRecipe(imageName);
+
+  if (!image) {
+    return customAnswer(notFoundMessage, NOT_FOUND);
+  }
+
+  return customAnswer(image, OK);
+};
 module.exports = {
   createRecipes,
   getAllRecipes,
@@ -69,4 +78,5 @@ module.exports = {
   updateRecipe,
   deleteRecipe,
   uploadImage,
+  getImageRecipe,
 };
