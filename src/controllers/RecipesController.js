@@ -23,4 +23,15 @@ const getAllRecipes = async (_req, res, next) => {
   }
 };
 
-module.exports = { create, getAllRecipes };
+const getRecipeById = async (req, res, next) => {  
+  try {
+    console.log('entrou na rota');
+    const { id } = req.params;
+    const recipe = await RecipesService.getRecipeById(id);
+    return res.status(SUCESS).json(recipe);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { create, getAllRecipes, getRecipeById };

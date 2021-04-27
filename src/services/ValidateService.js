@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const error = require('./Error_data');
 const UsersModel = require('../models/UsersModel');
+const RecipesModel = require('../models/RecipesModel');
 
 const validField = (arg) => {
     if (!arg || arg === '') throw error.INVALID_DATA_ERROR;
@@ -40,13 +41,18 @@ const validLogin = (user, password) => {
   };
 
   const verifyToken = (token, secret) => {
-    console.log('entrou na verify');    
     try {
       const value = jwt.verify(token, secret);
       return value;
     } catch (err) {
       throw error.INVALID_TOKEN_DATA_ERROR;  
     }    
+  };
+
+  const validRecipeId = async (id) => {
+    const recipe = await RecipesModel.getRecipeById(id);
+    if (!recipe) throw error.NOT_FOUND_RECIPE;
+    return recipe; 
   };
 
 module.exports = { 
@@ -58,4 +64,5 @@ module.exports = {
     validLogin,
     validToken,
     verifyToken,
+    validRecipeId,
 };

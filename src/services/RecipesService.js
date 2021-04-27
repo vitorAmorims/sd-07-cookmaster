@@ -1,4 +1,4 @@
-const RecipesModel = require('../models/RecipesModels');
+const RecipesModel = require('../models/RecipesModel');
 const ValidateService = require('./ValidateService');
 
 const create = async (name, ingredients, preparation, id) => {
@@ -14,4 +14,9 @@ const getAllRecipes = async () => {
     return recipes;
 };
 
-module.exports = { create, getAllRecipes };
+const getRecipeById = async (id) => {
+    const recipe = await ValidateService.validRecipeId(id);
+    return recipe;
+};
+
+module.exports = { create, getAllRecipes, getRecipeById };

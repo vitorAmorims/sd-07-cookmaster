@@ -28,6 +28,11 @@ const INVALID_DATA_ERROR = {
     message: 'missing auth token',
   };
 
+  const NOT_FOUND_RECIPE = {
+    code: 'not_found',
+    message: 'recipe not found',
+  };
+
   module.exports = { 
     INVALID_DATA_ERROR, 
     CONFLICT_EMAIL_ERROR, 
@@ -35,4 +40,5 @@ const INVALID_DATA_ERROR = {
     INVALID_LOGIN_DATA_ERROR,
     INVALID_TOKEN_DATA_ERROR,
     MISSING_TOKEN_DATA_ERROR,
+    NOT_FOUND_RECIPE,
 };
