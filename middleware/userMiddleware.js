@@ -23,6 +23,13 @@ const verifyLogin = async (req, resp, next) => {
   if (!email || !password) {
     return resp.status(401).json({ message: 'All fields must be filled' });
   }
+  const existEmail = await UserModel.replyEmail(email);
+  if (!existEmail) {
+    return resp.status(401).json({ message: 'Incorrect username or password' });
+  }
+  if (existEmail.password !== password) {
+    return resp.status(401).json({ message: 'Incorrect username or password' });
+  }
   next();
 }; 
 

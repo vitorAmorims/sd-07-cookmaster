@@ -1,4 +1,3 @@
-//  const { ObjectId } = require('mongodb');
 const connect = require('../config/conn');
 
 const getAll = async () => connect().then((db) => db.collection('users').find({}).toArray());

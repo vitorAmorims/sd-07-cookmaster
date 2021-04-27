@@ -1,6 +1,5 @@
-//  const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt-nodejs');
 const UserModel = require('../models/userModel');
+const { generateAuthToken } = require('../services/authService');
 
 const getAll = async (req, resp) => {
   try {
@@ -15,12 +14,7 @@ const getAll = async (req, resp) => {
 
 const addUser = async (req, resp) => {
   try {
-    const { name, email } = req.body;
-    let { password } = req.body;
-
-    const salt = bcrypt.genSaltSync(5);
-    password = bcrypt.hashSync(password, salt);
-    
+    const { name, email, password } = req.body;
     const { code, user } = await UserModel.addUser(name, email, password);
     return resp.status(code).json({ user });
   } catch (error) {
@@ -31,17 +25,9 @@ const addUser = async (req, resp) => {
 
 const loginUser = async (req, resp) => {
   try {
-    const { email } = req.body;
-    let { password } = req.body;
-
-    const salt = bcrypt.genSaltSync(5);
-    password = bcrypt.hashSync(password, salt);
-
-    const newLogin = await UserModel.loginUser(email, password);
-
-    if (!newLogin) throw new Error();
-
-    return resp.status(201).json({ newLogin });
+    const { _id, email, role } = await UserModel.replyEmail(req.body.email);
+    const token = generateAuthToken(_id, email, role);
+    resp.status(200).json({ token });
   } catch (error) {
     console.error(error.message);
     resp.status(500).json({ message: error.message });
