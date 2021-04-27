@@ -2,18 +2,25 @@ const { StatusCodes } = require('http-status-codes');
 const userModel = require('../models/userModel');
 const CustomError = require('./CustomError');
 
-const validateLogin = async (res, req, _next) => {
+function validateBody(email, password) {
+    if (!email || !password) {
+        throw new CustomError(StatusCodes.UNAUTHORIZED, 'All fields must be filled');
+      }
+}
+const validateLogin = async (req, _res, next) => {
     try {
-        const { name, password } = req.body;
-        if (!name || !password) {
-      throw CustomError(StatusCodes.UNAUTHORIZED, 'É necessário usuário e senha para fazer login');
-    }
-        const user = await userModel.findUser(username);
-        if (!user) return res.status(401).json({ message: 'Usuário não existe' });
-        if (password !== user.password) throw CustomError(StatusCodes.UNAUTHORIZED, 'Senha inválida');
-        _next();
-    } catch(err) {
-        _next(err);
+        const { email, password } = req.body;
+        validateBody(email, password);
+        const user = await userModel.findUser(email);
+        if (!user) {
+            throw new CustomError(StatusCodes.UNAUTHORIZED, 'Incorrect username or password');
+        }
+        if (password !== user.password) {
+            throw new CustomError(StatusCodes.UNAUTHORIZED, 'Incorrect username or password');
+        }
+        next();
+    } catch (err) {
+        next(err);
     }
 };
 

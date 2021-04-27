@@ -26,7 +26,7 @@ const loginUser = (async (req, res, next) => {
         const user = await userModel.findUser(email);
         const token = jwt.sign({ data: user.email }, secret, jwtConfig);
 
-        res.status(200).json({ message: 'Login com sucesso', token });
+        res.status(200).json({ token });
     } catch (error) {
         next(error);
     }
