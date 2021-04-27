@@ -17,6 +17,24 @@ const generateAuthToken = (_id, email, role) => {
   return token;
 };
 
+const validationAuthToken = (req, resp, next) => {
+  try {
+    const { authorization } = req.headers;
+    jwt.verify(authorization, secret);
+    next();
+  } catch (error) {
+    console.error(error.message);
+    return resp.status(401).json({ message: 'jwt malformed' });
+  }
+};
+
+const idToken = (authorization) => {
+  const { _id: id } = jwt.verify(authorization, secret);
+  return id;
+};
+
 module.exports = {
   generateAuthToken,
+  validationAuthToken,
+  idToken,
 };

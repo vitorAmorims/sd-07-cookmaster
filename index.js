@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const UserRoutes = require('./routes/userRoute');
+const RecipeRoutes = require('./routes/recipeRoute');
 
 const app = express();
 app.use(bodyParser.json());
@@ -13,5 +14,6 @@ app.get('/', (request, response) => {
 });
 
 app.use(UserRoutes);
+app.use(RecipeRoutes);
 
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });
