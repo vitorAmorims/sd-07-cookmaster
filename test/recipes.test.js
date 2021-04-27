@@ -1128,6 +1128,7 @@ describe('9 - Crie um endpoint para a adição de uma imagem a uma receita', () 
       })
       .expect('status', 200)
       .then((response) => {
+        console.log(response)
         const { body } = response;
         result = JSON.parse(body);
         return frisby

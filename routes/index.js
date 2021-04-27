@@ -1,7 +1,10 @@
 const express = require('express');
+const path = require('path');
 
-const photosController = require('../controllers/photosController');
-const photosMiddleware = require('../middlewares/photosMiddleware');
+const editId = '/recipes/:id';
+
+const imagesController = require('../controllers/imagesController');
+const { upload } = require('../middlewares/imagesMiddleware');
 
 const { validateToken } = require('../middlewares/validateTokenMiddleware');
 const { checkRecipeRequiredFields, 
@@ -20,15 +23,14 @@ const recipesController = require('../controllers/recipesController');
 
 const recipesEditMiddlewares = [validateToken, checkRecipeIsFromUserOrAdmin];
 
-/* const usersMiddleware = require('../middlewares/usersMiddleware'); */
+const recipesDeleteMiddlewares = [validateToken, checkRecipeIsFromUserOrAdmin];
 
-/* const productsController = require('../controllers/productsController');
-const salesController = require('../controllers/salesController'); */
+const recipesImageMiddlewares = [validateToken, upload];
 
 const router = express.Router();
-router.use(express.static(`${__dirname}uploads/`));
+router.use(express.static(path.join(__dirname, '/uploads')));
 
-router.post('/photos', photosMiddleware.upload, photosController.sendPhotos);
+router.put('/recipes/:id/image', recipesImageMiddlewares, imagesController.sendImage);
 
 router.post('/users', usersMiddlewares, usersController.createUser);
 
@@ -38,12 +40,10 @@ router.post('/recipes', recipesMiddlewares, recipesController.createRecipe);
 
 router.get('/recipes', recipesController.getRecipes);
 
-router.get('/recipes/:id', recipesController.getRecipeById);
+router.get(editId, recipesController.getRecipeById);
 
-router.put('/recipes/:id', recipesEditMiddlewares, recipesController.updateRecipe);
+router.put(editId, recipesEditMiddlewares, recipesController.updateRecipe);
 
-/* router.get('/users', usersController.findUserByEmail); */
-
-/* router.get('/recipes', ''); */
+router.delete(editId, recipesDeleteMiddlewares, recipesController.deleteRecipe);
 
 module.exports = router;

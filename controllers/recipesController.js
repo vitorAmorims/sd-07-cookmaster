@@ -1,5 +1,8 @@
-const { REQUEST_OK, REQUEST_CREATED, INTERNAL_SERVER_ERROR, NOT_FOUND } = require('../http');
+const { REQUEST_OK, REQUEST_CREATED, INTERNAL_SERVER_ERROR,
+  NOT_FOUND, NO_CONTENT } = require('../http');
 const recipesModel = require('../models/recipesModel');
+
+const notFound = 'recipe not found';
 
 const createRecipe = async (request, response) => {
   try {
@@ -30,7 +33,7 @@ const getRecipeById = async (request, response) => {
     return response.status(REQUEST_OK).json(results);
   } catch (error) {
     return response.status(NOT_FOUND).json({
-      message: 'recipe not found',
+      message: notFound,
     });
   }
 };
@@ -43,7 +46,19 @@ const updateRecipe = async (request, response) => {
     return response.status(REQUEST_OK).json(results);
   } catch (error) {
     return response.status(NOT_FOUND).json({
-      message: 'recipe not found',
+      message: notFound,
+    });
+  }
+};
+
+const deleteRecipe = async (request, response) => {
+  try {
+    const { id } = request.params;
+    const results = await recipesModel.deleteFoundRecipe(id);
+    return response.status(NO_CONTENT).json(results);
+  } catch (error) {
+    return response.status(NOT_FOUND).json({
+      message: notFound,
     });
   }
 };
@@ -53,4 +68,5 @@ module.exports = {
   getRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };
