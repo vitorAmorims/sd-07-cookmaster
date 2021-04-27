@@ -26,7 +26,7 @@ const getById = async (req, resp) => {
     const { id } = req.params;
     const recipe = await RecipeModel.getById(id);
     if (!recipe) {
-      resp.status(404).json({ message: 'recipe not found' });
+      return resp.status(404).json({ message: 'recipe not found' });
     }
     resp.status(200).json(recipe);
   } catch (error) {
