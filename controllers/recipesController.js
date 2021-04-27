@@ -1,6 +1,8 @@
 const recipesService = require('../services/recipesService');
 
 const internalError = 'Erro interno';
+const Hash = 'YHgWQGD8ZeExU9Lez_IIekqBfXcquHAgG0rj9v0mXf0';
+
 const createRecipe = async (req, res) => {
   try {
     const { name, ingredients, preparation, user } = req.body;
@@ -93,4 +95,5 @@ module.exports = {
   deleteRecipe,
   uploadImage,
   getImageRecipe,
+  Hash,
 };
