@@ -12,8 +12,10 @@ const {
 
 const { 
   addRecipe,
+  getAll,
 } = require('../controllers/recipeController');
 
 router.post('/recipes', verifyRecipe, validationAuthToken, addRecipe);
+router.get('/recipes', getAll);
 
 module.exports = router;

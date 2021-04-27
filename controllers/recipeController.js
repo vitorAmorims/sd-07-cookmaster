@@ -14,6 +14,11 @@ const addRecipe = async (req, resp) => {
   }
 };
 
+const getAll = async (_req, _resp) => {
+  console.log('hola');
+};
+
 module.exports = {
   addRecipe,
+  getAll,
 };
