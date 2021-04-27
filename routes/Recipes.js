@@ -33,4 +33,10 @@ router.put(
   RecipesControllers.updateRecipe,
 );
 
+router.delete(
+  recipesSpecificPath,
+  validateToken,
+  RecipesControllers.deleteRecipe,
+);
+
 module.exports = router;

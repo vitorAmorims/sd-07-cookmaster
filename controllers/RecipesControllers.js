@@ -1,10 +1,11 @@
 const { ObjectId } = require('mongodb');
-const { errorMessage, CREATED, OK, NOT_FOUND } = require('../config/httpCodes');
+const { errorMessage, CREATED, OK, NOT_FOUND, NO_CONTENT } = require('../config/httpCodes');
 const {
   addRecipe: modelAddRecipe,
   getAllRecipes: modelGetAllRecipes,
   getRecipeById: modelGetRecipeById,
   updateRecipe: modelUpdateRecipe,
+  deleteRecipe: modelDeleteRecipe,
 } = require('../models/RecipesModels');
 
 const addRecipe = async (req, res) => {
@@ -54,9 +55,20 @@ const updateRecipe = async (req, res) => {
   }
 };
 
+const deleteRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await modelDeleteRecipe(id);
+    if (result) return res.status(NO_CONTENT).json('No body returned for response');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   addRecipe,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };

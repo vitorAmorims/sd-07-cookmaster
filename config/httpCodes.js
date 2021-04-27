@@ -12,6 +12,8 @@ const CONFLICT = 409;
 
 const NOT_FOUND = 404;
 
+const NO_CONTENT = 204;
+
 module.exports = {
   errorMessage,
   BAD_REQUEST,
@@ -20,4 +22,5 @@ module.exports = {
   CONFLICT,
   UNAUTHORIZED,
   NOT_FOUND,
+  NO_CONTENT,
 };
