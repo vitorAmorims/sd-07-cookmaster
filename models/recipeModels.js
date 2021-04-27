@@ -8,11 +8,11 @@ const addRecipe = async (name, ingredients, preparation, userId) =>
     return newRecipe.ops[0];
   });
 
-const getAll = async () => {
-  
-};
+//  const getAll = async () => {
+//    
+//  };
   
 module.exports = {
   addRecipe,
-  getAll,
+  //  getAll,
 };

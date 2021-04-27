@@ -12,10 +12,10 @@ const {
 
 const { 
   addRecipe,
-  getAll,
+  //  getAll,
 } = require('../controllers/recipeController');
 
 router.post('/recipes', verifyRecipe, validationAuthToken, addRecipe);
-router.get('/recipes', getAll);
+//  router.get('/recipes', getAll);
 
 module.exports = router;
