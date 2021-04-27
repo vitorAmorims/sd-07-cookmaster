@@ -3,6 +3,7 @@ const routes = require('./api/routes');
 
 const app = express();
 app.use(express.json());
+app.use(express.static(`${__dirname}/uploads`));
 app.use(routes);
 
 const PORT = 3000;

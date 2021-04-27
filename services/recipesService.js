@@ -57,10 +57,16 @@ const deleteRecipe = async (id) => {
     return customAnswer(results, NO_CONTENT);
 };
 
+const uploadImage = async (imgDest, id) => {
+  const recipeWithImage = await recipesModel.uploadImage(imgDest, id);
+  return customAnswer(recipeWithImage, OK);
+};
+
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  uploadImage,
 };

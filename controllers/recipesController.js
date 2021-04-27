@@ -21,6 +21,7 @@ const getAllRecipes = async (req, res) => {
   try {
     const allRecipes = await recipesService.getAllRecipes();
     const { http, message } = allRecipes;
+    console.log('nonato');
     return res.status(http).json(message);
   } catch (error) {
     return res.status(500).json({ message: internalError, err: error.message });
@@ -50,12 +51,24 @@ const updateRecipe = async (req, res) => {
   }
 };
 
-const deleteProduct = async (req, res) => {
+const deleteRecipe = async (req, res) => {
   try {
     const { id } = req.params;
     const results = await recipesService.deleteRecipe(id);
     const { http, message } = results;
-    
+
+    return res.status(http).json(message);
+  } catch (error) {
+    return res.status(500).json({ message: internalError, err: error.message });
+  }
+};
+
+const uploadImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const imageDest = `localhost:3000/${req.file.path}`;
+    const recipeWithImage = await recipesService.uploadImage(imageDest, id);
+    const { http, message } = recipeWithImage;
     return res.status(http).json(message);
   } catch (error) {
     return res.status(500).json({ message: internalError, err: error.message });
@@ -67,5 +80,6 @@ module.exports = {
   getAllRecipes,
   getRecipeById,
   updateRecipe,
-  deleteProduct,
+  deleteRecipe,
+  uploadImage,
 };

@@ -1,8 +1,20 @@
 const express = require('express');
+const multer = require('multer');
 const usersController = require('../../controllers/usersController');
 const loginController = require('../../controllers/loginController');
 const recipeController = require('../../controllers/recipesController');
 const { validateToken, validateTokenPut } = require('../auth/validateToken');
+
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, 'images');
+  },
+  filename: (req, file, callback) => {
+    callback(null, `${req.params.id}.jpeg`);
+  },
+});
+
+const upload = multer({ storage });
 
 const routerRecipeId = '/recipes/:id';
 
@@ -33,12 +45,7 @@ router.post(
   usersController.createUsers,
 );
 
-router.post(
-  '/login',
-  loginPassword,
-  loginEmail,
-  loginController.login,
-);
+router.post('/login', loginPassword, loginEmail, loginController.login);
 
 router.post(
   '/recipes',
@@ -49,15 +56,9 @@ router.post(
   recipeController.createRecipe,
 );
 
-router.get(
-  '/recipes',
-  recipeController.getAllRecipes,
-);
+router.get('/recipes', recipeController.getAllRecipes);
 
-router.get(
-  routerRecipeId,
-  recipeController.getRecipeById,
-);
+router.get(routerRecipeId, recipeController.getRecipeById);
 
 router.put(
   routerRecipeId,
@@ -68,10 +69,13 @@ router.put(
   recipeController.updateRecipe,
 );
 
-router.delete(
-  routerRecipeId,
+router.delete(routerRecipeId, validateTokenPut, recipeController.deleteRecipe);
+
+router.put(
+  '/recipes/:id/image',
+  upload.single('image'),
   validateTokenPut,
-  recipeController.deleteProduct,
+  recipeController.uploadImage,
 );
 
 module.exports = router;
