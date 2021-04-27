@@ -22,12 +22,11 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) throw error.loginInv;
     const loginOk = await resLogin(email, password);
-    return res.status(resOK).json(loginOk);
+    return res.status(resOK).json({ token: loginOk });
   } catch (err) {
     res.status(err.code || 401).json({ message: err.message });
   }
 };
-
 
 module.exports = {
   addUser,

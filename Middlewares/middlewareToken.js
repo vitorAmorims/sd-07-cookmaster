@@ -16,7 +16,6 @@ const validateToken = async (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
-    console.log(err);
     res.status(err.code || 401).json({
       message: err.message,
     });
@@ -25,4 +24,4 @@ const validateToken = async (req, res, next) => {
 
 module.exports = {
   validateToken,
-}
+};

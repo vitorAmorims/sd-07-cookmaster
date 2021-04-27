@@ -4,6 +4,6 @@ const middlewareToken = require('../Middlewares/middlewareToken');
 
 const router = express.Router();
 
-router.post("/recipes", middlewareToken.validateToken ,RecipesController.addRecipes);
+router.post('/recipes', middlewareToken.validateToken, RecipesController.addRecipes);
 
 module.exports = router;

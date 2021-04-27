@@ -9,4 +9,4 @@ const newRecipe = async (name, ingredients, preparation, id) =>
 
 module.exports = {
    newRecipe,
-}
+};
