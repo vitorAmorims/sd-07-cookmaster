@@ -10,9 +10,9 @@ const jwtConfig = {
 };
 
 const create = async (name, email, password, role) => {  
-  ValidateService.validName(name);
+  ValidateService.validField(name);
     await ValidateService.validEmail(email);
-    ValidateService.validPassword(password);
+    ValidateService.validField(password);
     const newUser = await UsersModel.create(name, email, password, role);
     return newUser;
   };
@@ -28,8 +28,15 @@ const create = async (name, email, password, role) => {
     const user = await UsersModel.findUserByEmail(email);
     if (!user) throw error.INVALID_LOGIN_DATA_ERROR;  
     ValidateService.validLogin(user, password);
-    const token = jwt.sign({ data: user.email }, secret, jwtConfig);  
+    const { _id, role } = user;
+    const token = jwt.sign({ _id, email, role }, secret, jwtConfig);
     return token;
   };
+
+  const findByUserEmailLogin = async (email) => {
+    const user = await UsersModel.findUserByEmail(email);
+    if (!user) throw error.INVALID_LOGIN_DATA_ERROR;  
+    return user;
+  };
   
-module.exports = { create, readAllUsers, findByUserEmail };
+module.exports = { create, readAllUsers, findByUserEmail, findByUserEmailLogin };

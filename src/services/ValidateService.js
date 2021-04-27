@@ -1,9 +1,10 @@
+const jwt = require('jsonwebtoken');
 const error = require('./Error_data');
 const UsersModel = require('../models/UsersModel');
 
-const validName = (name) => {  
-    if (!name || name === '') throw error.INVALID_DATA_ERROR;
-  };
+const validField = (arg) => {
+    if (!arg || arg === '') throw error.INVALID_DATA_ERROR;
+};
 
   const validEmailType = (email) => {
     const REGEX = /\S+@\S+\.\S+/;
@@ -20,11 +21,7 @@ const validName = (name) => {
     if (existEmail) throw error.CONFLICT_EMAIL_ERROR;
   };
 
-  const validPassword = (password) => {
-    if (!password || password === '') throw error.INVALID_DATA_ERROR;
-  };
-
-  const validEmailLogin = (email) => {
+   const validEmailLogin = (email) => {
     if (!email || email === '') throw error.EMPTY_LOGIN_DATA_ERROR;
     if (!validEmailType(email)) throw error.INVALID_LOGIN_DATA_ERROR; 
   };
@@ -33,18 +30,32 @@ const validName = (name) => {
     if (!password || password === '') throw error.EMPTY_LOGIN_DATA_ERROR;
   };
 
-
 const validLogin = (user, password) => {
     const isMatch = user.password === password;
     if (!isMatch) throw error.INVALID_LOGIN_DATA_ERROR;
   };
 
+  const validToken = (token) => {    
+    if (!token || token === '') throw error.MISSING_TOKEN_DATA_ERROR;    
+  };
+
+  const verifyToken = (token, secret) => {
+    console.log('entrou na verify');    
+    try {
+      const value = jwt.verify(token, secret);
+      return value;
+    } catch (err) {
+      throw error.INVALID_TOKEN_DATA_ERROR;  
+    }    
+  };
+
 module.exports = { 
-    validName, 
+    validField,
     validEmailType,
-    validEmail,  
-    validPassword,  
+    validEmail,   
     validEmailLogin,
     validPasswordLogin,
     validLogin,
+    validToken,
+    verifyToken,
 };

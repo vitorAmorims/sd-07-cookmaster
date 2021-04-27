@@ -18,8 +18,21 @@ const INVALID_DATA_ERROR = {
     message: 'Incorrect username or password',
   };
 
-  module.exports = { INVALID_DATA_ERROR, 
+  const INVALID_TOKEN_DATA_ERROR = {
+    code: 'unauthorized',
+    message: 'jwt malformed',
+  };
+
+  const MISSING_TOKEN_DATA_ERROR = {
+    code: 'unauthorized',
+    message: 'missing auth token',
+  };
+
+  module.exports = { 
+    INVALID_DATA_ERROR, 
     CONFLICT_EMAIL_ERROR, 
     EMPTY_LOGIN_DATA_ERROR,
     INVALID_LOGIN_DATA_ERROR,
+    INVALID_TOKEN_DATA_ERROR,
+    MISSING_TOKEN_DATA_ERROR,
 };
