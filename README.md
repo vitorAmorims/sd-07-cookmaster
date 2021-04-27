@@ -196,6 +196,7 @@ Deverá ser possível adicionar uma imagem à uma receita, utilizando o upload d
 **👀 Observações importantes:**
 
  - O não cumprimento de um requisito, total ou parcialmente, impactará em sua avaliação.
+ - O projeto deve rodar na porta **3000**
 
 ##  Todos os seus endpoints devem estar no padrão REST
 
@@ -268,8 +269,6 @@ A resposta do insert para ser retornada após a criação é esta:
 { "_id" : ObjectId("5f46919477df66035f61a356"), "name" : "string", "ingredients" : "string", "preparation" : "string", "userId" : ObjectId("5f46914677df66035f61a355") }
 ```
 (O _id será gerado automaticamente pelo mongodb, e o userId será gerado com o id do usuário que criou a receita)
-
-O projeto deve rodar na porta http://localhost/3000
 
 ---
 
