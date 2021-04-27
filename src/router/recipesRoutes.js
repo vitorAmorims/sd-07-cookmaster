@@ -1,6 +1,7 @@
 const express = require('express');
 const { recipesController } = require('../controller');
 const middlewares = require('../middleware');
+const { RECIPE_BY_ID } = require('../service/recipesService');
 
 const router = express.Router();
 
@@ -10,14 +11,18 @@ router.post('/recipes',
   validateTokenMiddleware,
   recipesController.createRecipe);
 
-router.get('/recipes', recipesController.getAllRecipes);
+router.get('/recipes',
+  recipesController.getAllRecipes);
 
-router.get('/recipes/:id', recipesController.getRecipeById);
+router.get(RECIPE_BY_ID,
+  recipesController.getRecipeById);
 
-router.put('/recipes/:id',
+router.put(RECIPE_BY_ID,
 validateTokenMiddleware,
   recipesController.updateRecipe);
 
-// router.delete('/recipes/:id', );
+router.delete(RECIPE_BY_ID,
+  validateTokenMiddleware,
+  recipesController.deleteRecipe);
 
 module.exports = router;

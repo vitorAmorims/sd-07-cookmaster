@@ -19,6 +19,10 @@ const statusHttp = {
   C_500: 500,
 };
 
+const RECIPE_BY_ID = '/recipes/:id';
+
+const RECIPE_NOT_FOUND = 'recipe not found';
+
 const nameExistis = (name) => {
   if (name === ''
   || name === undefined) {
@@ -89,13 +93,13 @@ const getAll = async () => {
 const getRecipeById = async (id) => {
   if (!validId(id)) {
     return {
-      code404: true, message: 'recipe not found',
+      code404: true, message: RECIPE_NOT_FOUND,
     };
   }
   const result = await recipesModel.getRecipeById(id);
   if (!result) {
       return {
-        code404: true, message: 'recipe not found',
+        code404: true, message: RECIPE_NOT_FOUND,
       };
   }
   return result;
@@ -106,15 +110,29 @@ const updateRecipe = async (req) => {
   const { name, ingredients, preparation } = req.body;
   const { id } = req.params;
   if (!ObjectId.isValid(id)) {
-    return { message: 'recipe not existis',
+    return { message: RECIPE_NOT_FOUND,
   };
 }
   const { _id } = await recipesModel.getRecipeById(id);
   if (!_id) {
-    return { message: 'recipe not existis',
+    return { message: RECIPE_NOT_FOUND,
   };
   }
   result = await recipesModel.updateRecipe(name, ingredients, preparation, id);
+  return result;
+};
+
+const deleteRecipe = async (id) => {
+  if (!validId(id)) {
+    return {
+      err: true, message: RECIPE_NOT_FOUND };
+    }
+  const result = await recipesModel.deleteRecipe(id);
+
+  if (result === null) {
+    return {
+      err: true, message: RECIPE_NOT_FOUND };
+    }
   return result;
 };
 
@@ -124,4 +142,6 @@ module.exports = {
   getAll,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
+  RECIPE_BY_ID,
 };
