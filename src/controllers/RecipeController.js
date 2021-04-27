@@ -18,4 +18,13 @@ module.exports = {
       return response.status(httpStatus).json({ message });
     }
   },
+  getById: async (request, response) => {
+    try {
+      const { id } = request.params;
+      const { data, httpStatus } = await recipeService.getById(id);
+      return response.status(httpStatus).json(data);
+    } catch ({ message, httpStatus }) {
+      return response.status(httpStatus).json({ message });
+    }
+  },
 };

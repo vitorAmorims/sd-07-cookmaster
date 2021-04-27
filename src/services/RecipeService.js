@@ -1,5 +1,6 @@
 const recipeModel = require('../models/recipeModel');
 const userModel = require('../models/userModel');
+const { ObjectId } = require('mongodb');
 
 const { messageSuccess, messageFailure } = require('../../helpers/messageResponse');
 const httpStatus = require('../../helpers/httpStatus');
@@ -26,5 +27,16 @@ module.exports = {
   getAll: async () => {
     const recipes = await recipeModel.getAll();
     return messageSuccess(recipes, httpStatus.OK);
+  },
+  getById: async (id) => {
+    if (!ObjectId.isValid(id)) {
+      throw messageFailure('recipe not found', httpStatus.NOT_FOUND);
+    }
+    const recipeById = await recipeModel.getById(id);
+    if (!recipeById) {
+      throw messageFailure('recipe not found', httpStatus.NOT_FOUND);
+    }
+    const { _id, name, ingredients, preparation, userId } = recipeById;
+    return messageSuccess({ _id, name, ingredients, preparation, userId }, httpStatus.OK);
   },
 };
