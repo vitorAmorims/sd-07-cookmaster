@@ -13,9 +13,11 @@ const {
 const { 
   addRecipe,
   getAll,
+  getById,
 } = require('../controllers/recipeController');
 
 router.post('/recipes', verifyRecipe, validationAuthToken, addRecipe);
 router.get('/recipes', getAll);
+router.get('/recipes/:id', getById);
 
 module.exports = router;
