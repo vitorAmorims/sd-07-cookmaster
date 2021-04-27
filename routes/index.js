@@ -28,9 +28,6 @@ const recipesDeleteMiddlewares = [validateToken, checkRecipeIsFromUserOrAdmin];
 const recipesImageMiddlewares = [validateToken, upload];
 
 const router = express.Router();
-router.use(express.static(path.join(__dirname, '/uploads')));
-
-router.put('/recipes/:id/image', recipesImageMiddlewares, imagesController.sendImage);
 
 router.post('/users', usersMiddlewares, usersController.createUser);
 
@@ -45,5 +42,10 @@ router.get(editId, recipesController.getRecipeById);
 router.put(editId, recipesEditMiddlewares, recipesController.updateRecipe);
 
 router.delete(editId, recipesDeleteMiddlewares, recipesController.deleteRecipe);
+
+router.put('/recipes/:id/image', recipesImageMiddlewares, imagesController.sendImage);
+
+// dirname vai até o arquivo em que está declarado.
+router.use('/images', express.static(path.join(__dirname, '../uploads')));
 
 module.exports = router;
