@@ -1,6 +1,7 @@
 const {
   addRecipe,
   getRecipe,
+  getRecipeForId,
 } = require('../Services/RecipeService');
 const error = require('../error/index');
 
@@ -31,7 +32,21 @@ const getAllRecipes = async (req, res) => {
   }
 };
 
+const getForId = async (req, res) => {
+  const resOK = 200;
+  const { id } = req.params;
+  try {
+    const recipeId = await getRecipeForId(id);
+    res.status(resOK).json(recipeId);
+  } catch (err) {
+    res.status(404).json({
+      message: err.message,
+    });
+  }
+};
+
 module.exports = {
   addRecipes,
   getAllRecipes,
+  getForId,
 };
