@@ -7,6 +7,9 @@ const findByEmail = async (email) =>
 const findByUser = async (name) =>
 connection().then((db) => db.collection('users').findOne({ name }));
 
+const deleteRecipeById = async (id) =>
+connection().then((db) => db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
+
 const findRecipeById = async (id) =>
    connection()
     .then((db) => db.collection('recipes').findOne(new ObjectId(id)));
@@ -23,10 +26,19 @@ const createRecipes = async (name, ingredients, preparation, userId) =>
         .then((db) =>
           db.collection('recipes')
           .insertOne({ name, ingredients, preparation, userId })).then((result) => result);
+
+const updateRecipeById = async (name, ingredients, preparation, id) =>
+      connection()
+        .then((db) =>
+            db.collection('recipes').updateOne({ _id: new ObjectId(id) },
+              { $set: { name, ingredients, preparation } })).then((result) => result);
+        
 module.exports = {
 // getAll,
 // deleteById,
 // updateById,
+updateRecipeById,
+deleteRecipeById,
 findRecipeById,
 getAllRecipes,
 createRecipes,

@@ -7,6 +7,7 @@ const BAD_REQUEST = 400;
 const CONFLICT = 409;
 const OK = 200;
 const NOT_FOUND = 404;
+const NOT_CONTENT = 204;
 
 const secret = 'meutoken';
 
@@ -37,15 +38,21 @@ const create = async (req, res) => {
 };
 const findRecipeById = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
 
   const result = await user.findRecipeById(id);
 
   if (result.message) return res.status(NOT_FOUND).json(result);
 
-  if (result.err) return res.status(NOT_FOUND).json(result);
-
   res.status(OK).json(result);
+};
+const deleteRecipeById = async (req, res) => {
+  const { id } = req.params;
+
+  const result = await user.deleteRecipeById(id);
+
+  if (result.message) return res.status(NOT_FOUND).json(result);
+
+  res.status(NOT_CONTENT).json(result);
 };
 const getAllRecipes = async (req, res) => {
   const { authorization } = req.headers;
@@ -55,8 +62,6 @@ const getAllRecipes = async (req, res) => {
     res.status(OK).json(result);
   }
 
-  // if (result.message) return res.status(BAD_REQUEST).json(result);
-
   res.status(OK).json(result);
 };
 const createRecipes = async (req, res) => {
@@ -65,16 +70,31 @@ const createRecipes = async (req, res) => {
 
   if (result.message) return res.status(BAD_REQUEST).json(result);
 
-  // if (result.conflict) return res.status(CONFLICT).json({ message: 'Email already registered' });
-
   res.status(CREATED).json(result);
 };
+const updateRecipeById = async (req, res) => {
+  const { id } = req.params;
+  const { _id } = req.body.data;
+  const { name, ingredients, preparation, data } = req.body;
+  const resultmodel = await user.findRecipeById(id);
+  const { userId } = resultmodel;
+  let result = '';
+  if (String(userId) === String(_id) || data.role === 'admin') {
+    const objRecipeData = { name, ingredients, preparation, id, userId };
+    result = await user.updateRecipeById(objRecipeData);
+  }
 
+  if (result.message) return res.status(NOT_FOUND).json(result);
+
+  res.status(OK).json(result);
+};
 module.exports = {
   // deleteProduct,
   // updateById,
   // getAll,
   // findById,
+  updateRecipeById,
+  deleteRecipeById,
   findRecipeById,
   getAllRecipes,
   createRecipes,

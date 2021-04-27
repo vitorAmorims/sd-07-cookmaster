@@ -5,6 +5,8 @@ const validateJWT = require('./auth/validateJWT');
 const validateUser = require('./middlewares/validateUser');
 const validateGetAllRecipes = require('./auth/validateGetAllRecipes');
 
+const recipeIdRoute = '/recipes/:id';
+
 const app = express();
 app.use(bodyParser.json());
 
@@ -19,6 +21,8 @@ app.post('/users', user.create);
 app.post('/login', validateUser, user.login);
 app.post('/recipes', validateJWT, user.createRecipes);
 app.get('/recipes', validateGetAllRecipes, user.getAllRecipes);
-app.get('/recipes/:id', validateGetAllRecipes, user.findRecipeById);
+app.get(recipeIdRoute, validateGetAllRecipes, user.findRecipeById);
+app.delete(recipeIdRoute, validateJWT, user.deleteRecipeById);
+app.put(recipeIdRoute, validateJWT, user.updateRecipeById);
 
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });

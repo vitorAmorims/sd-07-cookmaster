@@ -140,14 +140,27 @@ const getUserId = async ({ name }) => {
   const userData = await user.findByUser(name);
   return userData;
 };
+const deleteRecipeById = async (id) => {
+  if (!ObjectId.isValid(id)) {
+    return errRecipeNotFound;
+  }
+  const result = await user.findRecipeById(id);
+  console.log(result);
+
+  if (result === null) return errRecipeNotFound;
+
+  await user.deleteRecipeById(id);
+
+  return result;
+};
 const createRecipes = async (name, ingredients, preparation, data) => {
   const InvalidEntries = await validateRecipe(name, ingredients, preparation);
 
   if (typeof InvalidEntries === 'object') return InvalidEntries;
 
   const userData = await getUserId(data);
-    // eslint-disable-next-line no-underscore-dangle
-  const id = userData._id.toString();
+  const { _id: idUser } = userData;
+  const id = idUser.toString();
   const { insertedId } = await user.createRecipes(name, ingredients, preparation, id);
   return {    
       recipe: {
@@ -161,11 +174,33 @@ const createRecipes = async (name, ingredients, preparation, data) => {
   };
 };
 
+const updateRecipeById = async (objRecipeData) => {  
+  const { name, ingredients, preparation, id, userId } = objRecipeData;
+  if (!ObjectId.isValid(id)) {
+    return errRecipeNotFound;
+  }
+  const result = await validateRecipe(name, ingredients, preparation);
+
+  if (typeof result === 'object') return errRecipeNotFound;
+
+  await user.updateRecipeById(name, ingredients, preparation, id);
+
+  return {
+    _id: id,
+    name,
+    ingredients, 
+    preparation, 
+    userId,
+  };
+};
+
 module.exports = {
   // updateById,
   // deleteProduct,
   // getAll,
   // findById,
+  updateRecipeById,
+  deleteRecipeById,
   findRecipeById,
   getAllRecipes,
   createRecipes,  
