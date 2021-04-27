@@ -35,7 +35,6 @@ const isPass = (password) => {
 const middlewareCreateUser = async (req, res, next) => {
   const { name, email, password } = req.body;
   try {
-    console.log(`Return is email: ${(await isEmail(email)) !== undefined}`);
     if (isName(name) === true) return res.status(CODE_ERROR).json({ message: OBJECT_RESPONSE });
     if (isPass(password) !== undefined) {
       return res.status(CODE_ERROR)
