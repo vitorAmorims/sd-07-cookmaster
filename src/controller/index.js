@@ -1,9 +1,10 @@
 const insertUserCtrl = require('./usersControllers');
-const { getRecipeCtrl, insertRecipeCtrl } = require('./recipeController');
+const { getOneRecipeCtrl, getRecipesCtrl, insertRecipeCtrl } = require('./recipeController');
 const loginCtrl = require('./loginCtrl');
 
 module.exports = {
-  getRecipeCtrl,
+  getOneRecipeCtrl,
+  getRecipesCtrl,
   insertRecipeCtrl,
   insertUserCtrl,
   loginCtrl,

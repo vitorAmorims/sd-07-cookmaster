@@ -2,9 +2,9 @@ const { Router } = require('express');
 const { getRecipeServ } = require('../../service');
 const { serverErr, statusMsgMap } = require('../dictionaries');
 
-const getRecipeCtrl = Router();
+const getRecipesCtrl = Router();
 
-getRecipeCtrl.get('/', async (_req, res, next) => {
+getRecipesCtrl.get('/', async (_req, res, next) => {
   try {
     const getRecipesRes = await getRecipeServ();
     const { status } = getRecipesRes;
@@ -18,4 +18,4 @@ getRecipeCtrl.get('/', async (_req, res, next) => {
   }
 });
 
-module.exports = getRecipeCtrl;
+module.exports = getRecipesCtrl;

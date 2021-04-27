@@ -16,13 +16,13 @@ const servDictionary = {
   EMAIL_TAKEN: 'email in database',
   USER_NOT_FOUND: 'email not registered',
   MISSING_FIELDS: 'All fields must be filled',
-  WRONG_PASSWORD: 'Wrong password',
+  WRONG_PASSWORD: 'wrong password',
   JWT_CONFIG: {
     expiresIn: '7d',
     algorithm: 'HS256',
   },
   BAD_INPUT_RECIPE: 'missing fields in recipe insertion',
-  MISSING_RECIPES_DATA: 'db search returned empty',
+  MISSING_DATA_IN_DB: 'db search returned empty',
 };
 
 module.exports = servDictionary;

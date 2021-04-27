@@ -17,7 +17,7 @@ const statusMsgMap = {
   'All fields must be filled': {
     status: 401, message: 'All fields must be filled',
   },
-  'Wrong password': {
+  'wrong password': {
     status: 401, message: 'Incorrect username or password',
   },
   'missing token': {
@@ -27,7 +27,7 @@ const statusMsgMap = {
     status: 400, message: 'Invalid entries. Try again.',
   },
   'db search returned empty': {
-    status: 404, message: 'could not find data',
+    status: 404, message: 'recipe not found',
   },
 };
 

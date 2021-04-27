@@ -1,13 +1,12 @@
 const { Router } = require('express');
 const { authMiddleware } = require('../middlewares');
 
-const { getRecipeCtrl, insertRecipeCtrl } = require('../src/controller');
+const { getOneRecipeCtrl, getRecipesCtrl, insertRecipeCtrl } = require('../src/controller');
 
 const recipeRoutes = Router();
 
-console.log('recipeRoutes');
-
 recipeRoutes.post('/', authMiddleware, insertRecipeCtrl);
-recipeRoutes.get('/', getRecipeCtrl);
+recipeRoutes.get('/', getRecipesCtrl);
+recipeRoutes.get('/:id', getOneRecipeCtrl);
 
 module.exports = recipeRoutes;
