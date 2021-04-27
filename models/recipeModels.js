@@ -8,11 +8,9 @@ const addRecipe = async (name, ingredients, preparation, userId) =>
     return newRecipe.ops[0];
   });
 
-//  const getAll = async () => {
-//    
-//  };
+const getAll = async () => connect().then((db) => db.collection('recipes').find({}).toArray());
   
 module.exports = {
   addRecipe,
-  //  getAll,
+  getAll,
 };

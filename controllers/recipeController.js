@@ -15,11 +15,13 @@ const addRecipe = async (req, resp) => {
   }
 };
 
-//  const getAll = async (_req, _resp) => {
-//    console.log('hola');
-//  };
+const getAll = async (_req, resp) => {
+  const recipes = await RecipeModel.getAll();
+  console.log(recipes);
+  resp.status(200).json(recipes);
+};
 
 module.exports = {
   addRecipe,
-  //  getAll,
+  getAll,
 };
