@@ -13,13 +13,23 @@ const createRecipe = (async (req, res, next) => {
     }
 });
 
-const getAllRecipe = (async (req, res, next) => {
+const getAllRecipe = (async (_req, res, next) => {
     try {
         const allRecipes = await recipeModel.findAll();
         return res.status(StatusCodes.OK).json(allRecipes);
     } catch (err) {
-        next(err);
+        return next(err);
     }
 });
 
-module.exports = { createRecipe, getAllRecipe };
+const getRecipeById = (async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const recipe = await recipeModel.findById(id);
+        return res.status(StatusCodes.OK).json(recipe);
+    } catch (err) {
+        return next(err);
+    }
+});
+
+module.exports = { createRecipe, getAllRecipe, getRecipeById };

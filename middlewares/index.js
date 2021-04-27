@@ -4,6 +4,7 @@ const validateToken = require('./validateToken');
 const validateUser = require('./validateUser');
 const validateLogin = require('./validateLogin');
 const validateRecipe = require('./validateRecipe');
+const validateId = require('./validateId');
 
 module.exports = {
   CustomError,
@@ -12,4 +13,5 @@ module.exports = {
   validateUser,
   validateLogin,
   validateRecipe,
+  validateId,
 };
