@@ -1,4 +1,4 @@
-const { add, getAll, getById, update, exclude } = require('../models/recipesModel');
+const { add, getAll, getById, update, exclude, updateImage } = require('../models/recipesModel');
 const {
   UNAUTHORIZED_401,
   CREATED_201, 
@@ -13,10 +13,10 @@ const addRecipe = async (req, res) => {
 
     const recipe = await add(name, ingredients, preparation, id);
 
-    res.status(CREATED_201).json({ recipe });
+    return res.status(CREATED_201).json({ recipe });
   } catch (err) {
     console.error(err.message);
-    res.status(UNAUTHORIZED_401).send({ message: 'Incorrect username or password' });
+    return res.status(UNAUTHORIZED_401).send({ message: 'Incorrect username or password' });
   }
 };
 
@@ -24,10 +24,10 @@ const getAllRecipes = async (req, res) => {
   try {
     const recipes = await getAll();
 
-    res.status(OK_200).json(recipes);
+    return res.status(OK_200).json(recipes);
   } catch (err) {
     console.error(err.message);
-    res.status(UNAUTHORIZED_401).send({ message: 'Incorrect username or password' });
+    return res.status(UNAUTHORIZED_401).send({ message: 'Incorrect username or password' });
   }
 };
 
@@ -39,10 +39,10 @@ const getRecipeById = async (req, res) => {
     if (!recipe) {
       throw new Error();
     }
-    res.status(OK_200).json(recipe);
+    return res.status(OK_200).json(recipe);
   } catch (err) {
     console.error(err.message);
-    res.status(NOT_FOUND_404).send({ message: 'recipe not found' });
+    return res.status(NOT_FOUND_404).send({ message: 'recipe not found' });
   }
 };
 
@@ -55,19 +55,39 @@ const updateRecipe = async (req, res) => {
 
     const result = await update(newRecipe);
 
-    res.status(OK_200).json(result);
+    return res.status(OK_200).json(result);
   } catch (err) {
     console.error(err.message);
-    res.status(NOT_FOUND_404).send({ message: 'recipe not found' });
+    return res.status(NOT_FOUND_404).send({ message: 'recipe not found' });
   }
 };
 
 const deleteRecipe = async (req, res) => {
   try {
     await exclude(req.params.id);
-    res.status(NO_CONTENT_204).end();
+    return res.status(NO_CONTENT_204).end();
   } catch (err) {
     console.error(err.message);
+  }
+};
+
+const uploadImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const recipe = await getById(id);
+    if (!recipe) {
+      throw new Error();
+    }
+    const { _id, name, ingredients, preparation, userId } = recipe;
+    const image = `localhost:3000/images/${id}.jpeg`;
+
+    await updateImage(id, image);
+
+    return res.status(OK_200).json({ _id, name, ingredients, preparation, userId, image });
+  } catch (err) {
+    console.error(err.message);
+    return res.status(UNAUTHORIZED_401).send({ message: 'erro ao enviar a imagem' });
   }
 };
 
@@ -77,4 +97,5 @@ module.exports = {
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  uploadImage,
 };

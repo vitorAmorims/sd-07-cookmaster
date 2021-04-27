@@ -29,6 +29,16 @@ const add = async (name, ingredients, preparation, id) =>
     return { _id: id, name, ingredients, preparation, userId };
   };
 
+  const updateImage = async (id, image) => {
+    if (!ObjectId.isValid(id)) {
+      return null;
+    }
+    await connect().then((db) => db.collection(COLLECTION_NAME)
+      .updateOne({ _id: ObjectId(id) },
+        [{ $set: { image } }]));
+    return { _id: id, image };
+  };
+
   const exclude = async (id) => connect()
   .then((db) => db.collection(COLLECTION_NAME).deleteOne({ _id: ObjectId(id) }));
 
@@ -38,4 +48,5 @@ module.exports = {
   getById,
   update,
   exclude,
+  updateImage,
 };
