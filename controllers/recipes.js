@@ -1,4 +1,6 @@
-const { createRecipeService } = require('../service/recipes');
+const { createRecipeService,
+  getAllRecipesService,
+ } = require('../service/recipes');
 const httpStatus = require('./httpStatus');
 
 const createRecipeController = async (req, res) => {
@@ -19,6 +21,18 @@ const createRecipeController = async (req, res) => {
   }
 };
 
+const getAllRecipes = async (req, res) => {
+  try {
+    const recipesList = await getAllRecipesService();
+    res.status(httpStatus.SUCCESS).json(recipesList);
+  } catch (error) {
+    res.status(httpStatus.BAD_REQUEST).json({
+      message: 'Não há receitas',
+    });
+  }
+};
+
 module.exports = {
   createRecipeController,
+  getAllRecipes,
 };

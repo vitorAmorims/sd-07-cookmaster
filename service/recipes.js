@@ -1,4 +1,6 @@
-const { createRecipe } = require('../models/recipes');
+const { createRecipe,
+  getAllRecipes,
+} = require('../models/recipes');
 
 const validateRecipe = (name, ingredients, preparation) => {
   if (!name || !ingredients || !preparation) {
@@ -15,6 +17,13 @@ const createRecipeService = async (recipe, payload) => {
   return createdRecipe;
 };
 
+const getAllRecipesService = async () => {
+  const listOfRecipes = await getAllRecipes();
+
+  return listOfRecipes;
+};
+
 module.exports = {
   createRecipeService,
+  getAllRecipesService,
 };
