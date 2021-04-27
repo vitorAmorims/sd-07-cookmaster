@@ -15,7 +15,7 @@ const registerUserModel = async (user, role) => (
     .insertOne({ ...user, role }))
     .then((result) => result.ops[0])
 );
-  
+
 module.exports = {
   registerUserModel,
   findUserModel,

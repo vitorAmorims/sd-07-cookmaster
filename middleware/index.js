@@ -1,7 +1,7 @@
 const errorMiddleware = require('./errorMiddleware');
-const validateUserMiddleware = require('./validateUserMiddleware');
+const validatesMiddleware = require('./validatesMiddleware');
 
 module.exports = {
   errorMiddleware,
-  validateUserMiddleware,
+  validatesMiddleware,
 };
