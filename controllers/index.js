@@ -8,10 +8,12 @@ const {
 
 const {
   createNewRecipes,
+  getAllRecipes,
 } = require('./recipesController.js');
 
 module.exports = {
   createNewUser,
   login,
   createNewRecipes,
+  getAllRecipes,
 };

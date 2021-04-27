@@ -8,10 +8,12 @@ const {
 
 const {
   createNewRecipes,
+  getAllRecipes,
 } = require('./recipesService');
 
 module.exports = {
   createNewUser,
   login,
   createNewRecipes,
+  getAllRecipes,
 };

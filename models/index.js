@@ -5,10 +5,12 @@ const {
 
 const {
   createNewRecipes,
+  getAllRecipes,
 } = require('./recipesModel');
 
 module.exports = {
   createNewUser,
   getByEmailAndPassword,
   createNewRecipes,
+  getAllRecipes,
 };
