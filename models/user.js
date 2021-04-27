@@ -47,6 +47,5 @@ getAllRecipes,
 createRecipes,
 findByUser,
 findByEmail,
-// findById,
 create,
 };

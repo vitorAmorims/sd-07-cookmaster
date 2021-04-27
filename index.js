@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const multer = require('multer');
+// const multer = require('multer');
 const user = require('./controllers/user');
 const validateJWT = require('./auth/validateJWT');
 const validateUser = require('./middlewares/validateUser');
@@ -19,15 +19,15 @@ app.get('/', (request, response) => {
   response.send();
 });
 //  code from trybe-course
-const storage = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, 'uploads');
-  },
-  filename: (req, file, callback) => {
-    callback(null, `${req.params.id}.${file.mimetype.split('/')[1]}`);
-  } });
+// const storage = multer.diskStorage({
+//   destination: (req, file, callback) => {
+//     callback(null, 'uploads');
+//   },
+//   filename: (req, file, callback) => {
+//     callback(null, `${req.params.id}.${file.mimetype.split('/')[1]}`);
+//   } });
 
- const upload = multer({ storage });
+//  const upload = multer({ storage });
 
 app.post('/users', user.create);
 app.post('/login', validateUser, user.login);
@@ -36,6 +36,6 @@ app.get('/recipes', validateGetAllRecipes, user.getAllRecipes);
 app.get(recipeIdRoute, validateGetAllRecipes, user.findRecipeById);
 app.delete(recipeIdRoute, validateJWT, user.deleteRecipeById);
 app.put(recipeIdRoute, validateJWT, user.updateRecipeById);
-app.put('/recipes/:id/image/', validateJWT, upload.single('image'), user.addImageToRecipe);
+// app.put('/recipes/:id/image/', validateJWT, upload.single('image'), user.addImageToRecipe);
 
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });

@@ -101,7 +101,6 @@ const findRecipeById = async (id) => {
     return errRecipeNotFound;
   }
   const result = await user.findRecipeById(id);
-  console.log(`opaa${result}`);
 
   if (result === null) return errRecipeNotFound;
 
@@ -140,7 +139,6 @@ const deleteRecipeById = async (id) => {
     return errRecipeNotFound;
   }
   const result = await user.findRecipeById(id);
-  console.log(result);
 
   if (result === null) return errRecipeNotFound;
 
