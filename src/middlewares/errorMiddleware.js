@@ -33,7 +33,7 @@ const errorMiddleware = (err, req, res, _next) => {
     const badRequestCode = 400;
 
     if (err.statusCode === 'bad_request') {
-      res.status(badRequestCode).json({ message: err.message });
+      return res.status(badRequestCode).json({ message: err.message });
     }
     
     conflictError(err, res);

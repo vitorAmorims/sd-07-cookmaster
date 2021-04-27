@@ -6,7 +6,6 @@ const createdStatus = 201;
 const okStatus = 200;
 
 const newRecipe = rescue(async (req, res) => {
-    const { authorization } = req.headers;
     const { name, ingredients, preparation } = req.body;
     const { _id } = req.user;
     
@@ -15,8 +14,8 @@ const newRecipe = rescue(async (req, res) => {
 });
 
 const allRecipes = rescue(async (req, res) => {
-  const recipes = await recipesService.getAll();
-  res.status(StatusCodes.OK).json({ recipes });
+  const recipe = await recipesService.getAll();
+  res.status(StatusCodes.OK).json(recipe);
 });
 
 const getByID = rescue(async (req, res) => {

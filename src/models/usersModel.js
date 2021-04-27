@@ -1,6 +1,5 @@
 // const { ObjectId } = require('mongodb');
 const connect = require('../../config/connection');
-const { userToken } = require('../helpers/authentication');
 
 const add = async (name, email, password) =>
   connect().then(async (db) => {

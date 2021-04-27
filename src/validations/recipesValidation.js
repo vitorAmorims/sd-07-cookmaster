@@ -8,7 +8,17 @@ const validEntries = async (name, ingredients, preparation) => {
   }
 };
 
+const validID = async (id) => {
+  const minLengthID = 24;
+  if (typeof id !== 'string' || id.length < minLengthID) {
+    const error = new Error('recipe not found');
+    error.statusCode = 'not_found';
+    throw error;
+  }
+};
+
 const existID = async (id) => {
+  validID(id);
   const idVerify = await recipesModel.getByID(id);
   if (!idVerify) {
     const error = new Error('recipe not found');
@@ -21,4 +31,5 @@ const existID = async (id) => {
 module.exports = {
   validEntries,
   existID,
+  validID,
 };
