@@ -1,5 +1,6 @@
 const { createRecipeService,
   getAllRecipesService,
+  getRecipesByIdService,
  } = require('../service/recipes');
 const httpStatus = require('./httpStatus');
 
@@ -32,7 +33,20 @@ const getAllRecipes = async (req, res) => {
   }
 };
 
+const getRecipeById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const recipe = await getRecipesByIdService(id);
+    res.status(httpStatus.SUCCESS).json(recipe);
+  } catch (error) {
+    res.status(httpStatus.NOT_FOUND).json({
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   createRecipeController,
   getAllRecipes,
+  getRecipeById,
 };
