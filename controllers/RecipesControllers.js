@@ -1,7 +1,9 @@
-const { CREATED, OK } = require('../config/httpCodes');
+const { ObjectId } = require('mongodb');
+const { errorMessage, CREATED, OK, NOT_FOUND } = require('../config/httpCodes');
 const {
   addRecipe: modelAddRecipe,
   getAllRecipes: modelGetAllRecipes,
+  getRecipeById: modelGetRecipeById,
 } = require('../models/RecipesModels');
 
 const addRecipe = async (req, res) => {
@@ -26,7 +28,21 @@ const getAllRecipes = async (_req, res) => {
   }
 };
 
+const getRecipeById = async (req, res) => {
+  try {
+    const error = errorMessage;
+    error.message = 'recipe not found';
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) return res.status(NOT_FOUND).json(error);
+    const result = await modelGetRecipeById(id);
+    return res.status(OK).json(result);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
   addRecipe,
   getAllRecipes,
+  getRecipeById,
 };

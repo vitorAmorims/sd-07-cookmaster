@@ -1,11 +1,14 @@
 const express = require('express');
-const { validateRecipes } = require('../middlewares');
+const {
+  validateRecipes,
+} = require('../middlewares');
 const validateToken = require('../middlewares/validateToken');
 const RecipesControllers = require('../controllers/RecipesControllers');
 
 const router = express.Router();
 
 const recipesPath = '/recipes';
+const recipesSpecificPath = '/recipes/:id';
 
 router.post(
   recipesPath,
@@ -17,6 +20,11 @@ router.post(
 router.get(
   recipesPath,
   RecipesControllers.getAllRecipes,
+);
+
+router.get(
+  recipesSpecificPath,
+  RecipesControllers.getRecipeById,
 );
 
 module.exports = router;

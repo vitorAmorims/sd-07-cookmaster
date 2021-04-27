@@ -10,6 +10,8 @@ const CREATED = 201;
 
 const CONFLICT = 409;
 
+const NOT_FOUND = 404;
+
 module.exports = {
   errorMessage,
   BAD_REQUEST,
@@ -17,4 +19,5 @@ module.exports = {
   CREATED,
   CONFLICT,
   UNAUTHORIZED,
+  NOT_FOUND,
 };
