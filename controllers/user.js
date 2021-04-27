@@ -22,7 +22,7 @@ const login = async (req, res) => {
   const userData = await modelUser.findByEmail(email);  
   
   const token = jwt.sign({ data: userData }, secret, jwtConfig);
-  res.status(OK).json({ token });
+ return res.status(OK).json({ token });
 };
 
 const create = async (req, res) => {
@@ -34,7 +34,7 @@ const create = async (req, res) => {
 
   if (result.conflict) return res.status(CONFLICT).json({ message: 'Email already registered' });
 
-  res.status(CREATED).json(result);
+ return res.status(CREATED).json(result);
 };
 const findRecipeById = async (req, res) => {
   const { id } = req.params;
@@ -43,7 +43,7 @@ const findRecipeById = async (req, res) => {
 
   if (result.message) return res.status(NOT_FOUND).json(result);
 
-  res.status(OK).json(result);
+  return res.status(OK).json(result);
 };
 const deleteRecipeById = async (req, res) => {
   const { id } = req.params;
@@ -52,17 +52,17 @@ const deleteRecipeById = async (req, res) => {
 
   if (result.message) return res.status(NOT_FOUND).json(result);
 
-  res.status(NOT_CONTENT).json(result);
+ return res.status(NOT_CONTENT).json(result);
 };
 const getAllRecipes = async (req, res) => {
   const { authorization } = req.headers;
   const result = await user.getAllRecipes();
 
   if (authorization) {
-    res.status(OK).json(result);
+  return res.status(OK).json(result);
   }
 
-  res.status(OK).json(result);
+ return res.status(OK).json(result);
 };
 const createRecipes = async (req, res) => {
   const { name, ingredients, preparation, data } = req.body;
@@ -70,7 +70,7 @@ const createRecipes = async (req, res) => {
 
   if (result.message) return res.status(BAD_REQUEST).json(result);
 
-  res.status(CREATED).json(result);
+ return res.status(CREATED).json(result);
 };
 const updateRecipeById = async (req, res) => {
   const { id } = req.params;
@@ -88,7 +88,7 @@ const updateRecipeById = async (req, res) => {
 
   if (result === '') return res.status(NOT_FOUND).json({ message: 'recipe not found' });
 
-  res.status(OK).json(result);
+return res.status(OK).json(result);
 };
 // const addImageToRecipe = async (req, res) => {
 //   const { id } = req.params;
