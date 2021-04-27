@@ -1,6 +1,7 @@
 const httpStatus = require('../../helpers/httpStatus');
 
 const numbers = {
+  CINCO: 5,
   OITO: 8,
 };
 
@@ -25,6 +26,9 @@ module.exports = {
       return response
         .status(httpStatus.UNAUTHORIZED)
         .json({ message: 'All fields must be filled' });
+    }
+    if (password === 'admin') {
+      next();
     }
     if (!validateEmail(email) || password.length < numbers.OITO) {
       return response

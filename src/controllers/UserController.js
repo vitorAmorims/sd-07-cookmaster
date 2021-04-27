@@ -1,22 +1,20 @@
 const userService = require('../services/UserService');
 
 module.exports = {
-  create: async (request, response) => {
-    try {
-      const { body } = request;
-      const { data, httpStatus } = await userService.create(body);
-      return response.status(httpStatus).json({ user: data });
-    } catch ({ message, httpStatus }) {
+  async create(request, response) {
+    const { body } = request;
+    const { status, data, message, httpStatus } = await userService.create(body);
+    if (status === 'failure') {
       return response.status(httpStatus).json({ message });
     }
+    return response.status(httpStatus).json({ user: data });
   },
-  login: async (request, response) => {
-    try {
-      const { body } = request;
-      const { data, httpStatus } = await userService.login(body);
-      return response.status(httpStatus).json({ token: data });
-    } catch ({ message, httpStatus }) {
+  async login(request, response) {
+    const { body } = request;
+    const { status, data, message, httpStatus } = await userService.login(body);
+    if (status === 'failure') {
       return response.status(httpStatus).json({ message });
     }
+    return response.status(httpStatus).json({ token: data });
   },
 };

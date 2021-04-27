@@ -8,8 +8,6 @@ const recipeController = require('./src/controllers/RecipeController');
 const { validateCreateUser, validadeLoginUser } = require('./src/middlewares/UserMiddleware');
 const { validateCreateRecipe } = require('./src/middlewares/RecipeMiddleware');
 
-routes.get('/test', (req, res) => res.status(200).json({}));
-
 routes.post('/users', validateCreateUser, userController.create);
 routes.post('/login', validadeLoginUser, userController.login);
 

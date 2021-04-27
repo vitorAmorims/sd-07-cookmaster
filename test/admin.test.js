@@ -2,6 +2,7 @@ const frisby = require('frisby');
 const fs = require('fs');
 const { MongoClient } = require('mongodb');
 
+// const mongoDbUrl = 'mongodb://mongo:291197@localhost:27017/Cookmaster?authSource=admin';
 const mongoDbUrl = 'mongodb://localhost:27017/Cookmaster';
 const url = 'http://localhost:3000';
 

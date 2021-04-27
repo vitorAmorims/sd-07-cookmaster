@@ -8,14 +8,14 @@ const httpStatus = require('../../helpers/httpStatus');
 const { validateToken } = require('../security/Authentication');
 
 module.exports = {
-  create: async (recipe, headers) => {
+  async create(recipe, headers) {
     const token = headers.authorization;
 
     const { user, user: { _id } } = validateToken(token);
 
     const userByEmail = await userModel.findByEmail(user.email);
     if (!userByEmail) {
-      throw messageFailure('jwt malformed', httpStatus.UNAUTHORIZED);
+      return messageFailure('jwt malformed', httpStatus.UNAUTHORIZED);
     }
 
     const { name, ingredients, preparation } = recipe;
@@ -25,17 +25,17 @@ module.exports = {
 
     return messageSuccess(recipeCreated, httpStatus.CREATED);
   },
-  getAll: async () => {
+  async getAll() {
     const recipes = await recipeModel.getAll();
     return messageSuccess(recipes, httpStatus.OK);
   },
-  getById: async (id) => {
+  async getById(id) {
     if (!ObjectId.isValid(id)) {
-      throw messageFailure('recipe not found', httpStatus.NOT_FOUND);
+      return messageFailure('recipe not found', httpStatus.NOT_FOUND);
     }
     const recipeById = await recipeModel.getById(id);
     if (!recipeById) {
-      throw messageFailure('recipe not found', httpStatus.NOT_FOUND);
+      return messageFailure('recipe not found', httpStatus.NOT_FOUND);
     }
     const { _id, name, ingredients, preparation, userId } = recipeById;
     return messageSuccess({ _id, name, ingredients, preparation, userId }, httpStatus.OK);

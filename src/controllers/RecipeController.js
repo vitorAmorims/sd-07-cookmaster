@@ -1,30 +1,27 @@
 const recipeService = require('../services/RecipeService');
 
 module.exports = {
-  create: async (request, response) => {
-    try {
-      const { body, headers } = request;
-      const { data, httpStatus } = await recipeService.create(body, headers);
-      return response.status(httpStatus).json({ recipe: data });
-    } catch ({ message, httpStatus }) {
+  async create(request, response) {
+    const { body, headers } = request;
+    const { status, data, message, httpStatus } = await recipeService.create(body, headers);
+    if (status === 'failure') {
       return response.status(httpStatus).json({ message });
     }
+    return response.status(httpStatus).json({ recipe: data });
   },
-  getAll: async (request, response) => {
-    try {
-      const { data, httpStatus } = await recipeService.getAll();
-      return response.status(httpStatus).json(data);
-    } catch ({ message, httpStatus }) {
+  async getAll(request, response) {
+    const { status, data, message, httpStatus } = await recipeService.getAll();
+    if (status === 'failure') {
       return response.status(httpStatus).json({ message });
     }
+    return response.status(httpStatus).json(data);
   },
-  getById: async (request, response) => {
-    try {
-      const { id } = request.params;
-      const { data, httpStatus } = await recipeService.getById(id);
-      return response.status(httpStatus).json(data);
-    } catch ({ message, httpStatus }) {
+  async getById(request, response) {
+    const { id } = request.params;
+    const { status, data, message, httpStatus } = await recipeService.getById(id);
+    if (status === 'failure') {
       return response.status(httpStatus).json({ message });
     }
+    return response.status(httpStatus).json(data);
   },
 };
