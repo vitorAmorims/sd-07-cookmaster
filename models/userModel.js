@@ -5,8 +5,11 @@ const getAll = async () => connect().then((db) => db.collection('users').find({}
 
 const addUser = async (name, email, password) => 
   connect().then(async (db) => {
-    const user = await db.collection('users').insertOne({ name, email, password, role: 'user' });
-    return user.ops[0];
+    const userResp = await db.collection('users').insertOne(
+      { name, email, password, role: 'user' },
+    );
+    const user = userResp.ops[0];
+    return { code: 201, user };
   });
 
 const replyEmail = async (email) => 
