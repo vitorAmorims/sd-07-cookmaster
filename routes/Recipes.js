@@ -27,4 +27,10 @@ router.get(
   RecipesControllers.getRecipeById,
 );
 
+router.put(
+  recipesSpecificPath,
+  validateToken,
+  RecipesControllers.updateRecipe,
+);
+
 module.exports = router;

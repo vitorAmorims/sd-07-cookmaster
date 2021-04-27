@@ -4,6 +4,7 @@ const {
   addRecipe: modelAddRecipe,
   getAllRecipes: modelGetAllRecipes,
   getRecipeById: modelGetRecipeById,
+  updateRecipe: modelUpdateRecipe,
 } = require('../models/RecipesModels');
 
 const addRecipe = async (req, res) => {
@@ -41,8 +42,21 @@ const getRecipeById = async (req, res) => {
   }
 };
 
+const updateRecipe = async (req, res) => {
+  try {
+    const recipe = req.body;
+    const userId = res.locals.id;
+    const id = res.params;
+    const result = await modelUpdateRecipe(recipe, userId, id);
+    return res.status(OK).json(result);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 module.exports = {
   addRecipe,
   getAllRecipes,
   getRecipeById,
+  updateRecipe,
 };
