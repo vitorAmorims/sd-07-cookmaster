@@ -22,9 +22,16 @@ const recipEdi = async (id, name, ingredients, preparation) => {
   return RecipeModel.edit(id, name, ingredients, preparation);
 };
 
+const deleteRe = async (id) => {
+  await getRecipeForId(id);
+
+  return RecipeModel.del(id);
+};
+
 module.exports = {
   addRecipe,
   getRecipe,
   getRecipeForId,
   recipEdi,
+  deleteRe,
 };

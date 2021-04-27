@@ -1,6 +1,6 @@
 const { ObjectId } = require('mongodb');
 const connect = require('../config/conn');
-const error = require('../error/index');
+const error = require('../error');
 
 const newRecipe = async (name, ingredients, preparation, id) => 
    connect().then(async (db) => {
@@ -26,9 +26,15 @@ const edit = async (id, name, ingredients, preparation) => connect().then(async 
     return { _id: id, name, ingredients, preparation };
   });
 
+  const del = async (id) => {
+    await connect().then((db) => db.collection('recipes')
+      .deleteOne({ _id: ObjectId(id) }));
+  };
+
 module.exports = {
    newRecipe,
    getOneRecipe,
    searchRecipeForId,
    edit,
+   del,
 };

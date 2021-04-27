@@ -3,6 +3,7 @@ const {
   getRecipe,
   getRecipeForId,
   recipEdi,
+  deleteRe,
 } = require('../Services/RecipeService');
 const error = require('../error/index');
 
@@ -59,9 +60,24 @@ const editRecipe = async (req, res) => {
     });
   }
 };
+
+const deleteRecipe = async (req, res) => {
+  const resOK = 204;
+  const { id } = req.params;
+  try {
+    const recipeDeleted = await deleteRe(id);
+    res.status(resOK).json(recipeDeleted);
+  } catch (err) {
+    res.status(err.code).json({
+      message: err.message,
+    });
+  }
+};
+
 module.exports = {
   addRecipes,
   getAllRecipes,
   getForId,
   editRecipe,
+  deleteRecipe,
 };
