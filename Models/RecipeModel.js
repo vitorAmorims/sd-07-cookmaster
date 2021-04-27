@@ -7,6 +7,10 @@ const newRecipe = async (name, ingredients, preparation, id) =>
    return product.ops[0];
  });
 
+const getOneRecipe = async () => connect().then((db) => 
+  db.collection('recipes').find().toArray());
+
 module.exports = {
    newRecipe,
+   getOneRecipe,
 };
