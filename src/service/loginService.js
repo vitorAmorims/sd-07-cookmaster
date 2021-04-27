@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const usersModel = require('../model/usersModel');
 
 const SECONDS = 60;
-const MULTIPLIER = 30;
+const MULTIPLIER = 3000;
 const secret = 'acertomiseravi';
 
 const statusHttp = {

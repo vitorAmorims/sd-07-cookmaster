@@ -101,9 +101,27 @@ const getRecipeById = async (id) => {
   return result;
 };
 
+const updateRecipe = async (req) => {
+  let result = {};
+  const { name, ingredients, preparation } = req.body;
+  const { id } = req.params;
+  if (!ObjectId.isValid(id)) {
+    return { message: 'recipe not existis',
+  };
+}
+  const { _id } = await recipesModel.getRecipeById(id);
+  if (!_id) {
+    return { message: 'recipe not existis',
+  };
+  }
+  result = await recipesModel.updateRecipe(name, ingredients, preparation, id);
+  return result;
+};
+
 module.exports = {
   statusHttp,
   create,
   getAll,
   getRecipeById,
+  updateRecipe,
 };

@@ -16,6 +16,7 @@ const registerUser = async (req, res) => {
       .status(C_200)
       .send({ token });
   } catch (error) {
+    console.error(error);
     return res.status(C_500).json({ message: error.message });
   }
 };

@@ -7,14 +7,16 @@ const router = express.Router();
 const { validateTokenMiddleware } = middlewares;
 
 router.post('/recipes',
-validateTokenMiddleware,
-recipesController.createRecipe);
+  validateTokenMiddleware,
+  recipesController.createRecipe);
 
 router.get('/recipes', recipesController.getAllRecipes);
 
 router.get('/recipes/:id', recipesController.getRecipeById);
 
-// router.put('/recipes/:id', );
+router.put('/recipes/:id',
+validateTokenMiddleware,
+  recipesController.updateRecipe);
 
 // router.delete('/recipes/:id', );
 

@@ -11,13 +11,13 @@ const statusHttp = {
 const validateTokenMiddleware = async (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) {
-    return res.status(statusHttp.C_401).json({ error: 'Token! Token not found or not reported.' });
+    return res.status(statusHttp.C_401).json({ message: 'missing auth token' });
   }
   try {
     const decoded = jwt.verify(token, secret);
     const user = await usersModel.findUser(decoded.data.email);
     if (!user) {
-      return res.status(statusHttp.C_401).json({ error: 'User! Token not found or not reported.' });
+      return res.status(statusHttp.C_401).json({ message: 'missing auth token' });
     }
     req.user = user;
     next();

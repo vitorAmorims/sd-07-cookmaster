@@ -3,9 +3,9 @@ const connection = require('../../config/connection');
 
 const createRecipe = async (name, ingredients, preparation, userId) => {
   const recipe = await connection()
-  .then((db) =>
-  db.collection('recipes')
-  .insertOne({ name, ingredients, preparation, userId }));
+    .then((db) =>
+      db.collection('recipes')
+        .insertOne({ name, ingredients, preparation, userId }));
   return { _id: recipe.insertedId, name, ingredients, preparation, userId };
 };
 
@@ -25,8 +25,22 @@ const getRecipeById = async (id) => {
   return recipe;
 };
 
+const updateRecipe = async (name, ingredients, preparation, id) => {
+  await connection()
+    .then((db) =>
+      db.collection('recipes')
+        .updateOne({ _id: ObjectId(id) },
+          { $set: { name, ingredients, preparation } }));
+  const recipeUpdated = await connection()
+    .then((db) =>
+      db.collection('recipes')
+        .findOne(ObjectId(id)));
+  return recipeUpdated;
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
+  updateRecipe,
 };
