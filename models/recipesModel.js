@@ -15,6 +15,17 @@ const register = async (name, ingredients, preparation, _id) =>
     return connect().then((db) => db.collection('recipes').findOne(ObjectId(id)));
   };
 
+  const update = async (id, name, ingredients, preparation) => {
+    await connect().then((db) => db.collection('recipes')
+      .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } }));
+  
+    return { _id: ObjectId(id), name, ingredients, preparation };
+  };
+
+  const exclude = async (id) =>
+  connect().then(async (db) =>
+    db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
+
   module.exports = {
-    register, getAll, getById,
+    register, getAll, getById, update, exclude,
   };

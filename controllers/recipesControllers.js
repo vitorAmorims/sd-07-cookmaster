@@ -4,6 +4,7 @@ const CREATED = 201;
 const BADREQUEST = 400;
 const SUCCESS = 200;
 const NOTFOUND = 404;
+const NOCONTENT = 204;
 
 const registerRecipe = async (req, res) => {
   try {
@@ -43,8 +44,33 @@ const getRecipeById = async (req, res) => {
   }
 };
 
+const updateRecipe = async (req, res) => {
+  try {
+  const { name, ingredients, preparation } = req.body;
+  const { id } = req.params;
+  const recipe = await recipesModel.update(id, name, ingredients, preparation);
+  res.status(SUCCESS).json(recipe);
+} catch (err) {
+  console.error(err.message);
+    res.status(BADREQUEST).json({ message: err.message });
+}
+};
+
+const deleteRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const recipe = await recipesModel.exclude(id);
+    res.status(NOCONTENT).json(recipe);
+  } catch (err) {
+    console.error(err.message);
+    res.status(BADREQUEST).json({ message: err.message });
+  }
+};
+
 module.exports = {
   registerRecipe,
   getAllRecipes,
   getRecipeById,
+  updateRecipe,
+  deleteRecipe,
 };
