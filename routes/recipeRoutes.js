@@ -54,7 +54,7 @@ router.put(
   const image = `localhost:3000/images/${req.file.filename}`;
   const { tokenUserId, tokenUserRole, recipeUserId } = req;
   if (tokenUserId !== recipeUserId && tokenUserRole !== 'admin') {
-    res.status(404).json({ message: 'Não tem autorização para Adicionar imagem' });
+    return res.status(404).json({ message: 'Não tem autorização para Adicionar imagem' });
   }
   const { id } = req.params;
   const oneRecipe = await recipe.getById(id);
