@@ -31,7 +31,7 @@ const validateLoginMiddleware = async (req, _res, next) => {
     email: joi.string().email().required(),
     password: joi.required(),
   }).validate(userData);
-  console.log('validate', validate)
+  console.log('validate', validate);
   try {
     if (validate.error) {
       return next(

@@ -30,13 +30,7 @@ const findUserController = async (_req, res) => {
 
 const loginUserController = async (req, res) => {
   const { email, password } = req.body;
-  if (!email || password) { 
-    return next({ status: StatusCodes.UNAUTHORIZED, message: 'All fields must be filled' });
-  }  
   try {
-    if (!password) {
-      return next({ status: StatusCodes.UNAUTHORIZED, message: 'Incorrect username or password' });
-    }  
     const token = await usersService.loginUserService(email, password);
     return res.status(StatusCodes.OK).json({ message: 'Sucesso', token });
   } catch (error) {
