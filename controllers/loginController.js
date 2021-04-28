@@ -15,7 +15,7 @@ const login = async (req, res) => {
       return res.status(401).json({ message: 'Incorrect username or password' });
     }
 
-    const jwtConfig = { expiresIn: 60 * 5, algorithm: 'HS256' };
+    const jwtConfig = { expiresIn: 60 * 10, algorithm: 'HS256' };
     const token = jwt.sign({ data: email }, secret, jwtConfig);
     return res.status(200).json({ token });
   } catch (error) {
