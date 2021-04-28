@@ -15,15 +15,15 @@ const addRecipe = async (req, resp) => {
   }
 };
 
-const getAll = async (_req, resp) => {
-  const recipes = await RecipeModel.getAll();
+const getAllRecipe = async (_req, resp) => {
+  const recipes = await RecipeModel.getAllRecipe();
   resp.status(200).json(recipes);
 };
 
-const getById = async (req, resp) => {
+const getByIdRecipe = async (req, resp) => {
   try {
     const { id } = req.params;
-    const recipe = await RecipeModel.getById(id);
+    const recipe = await RecipeModel.getByIdRecipe(id);
     if (!recipe) {
       return resp.status(404).json({ message: 'recipe not found' });
     }
@@ -34,18 +34,37 @@ const getById = async (req, resp) => {
   }
 };
 
-const update = async (req, resp) => {
+const updateRecipe = async (req, resp) => {
   try {
     const { authorization } = req.headers;
     const { id } = req.params;
     const { name, preparation, ingredients } = req.body;
     const email = emailToken(authorization);
     const { role, _id } = await UserModel.replyEmail(email);
-    const { userId } = await RecipeModel.getById(id);
+    const { userId } = await RecipeModel.getByIdRecipe(id);
     const newRecipe = { id, name, ingredients, preparation, userId };
     if (role === 'admin' || userId.match(_id)) {
-      const response = await RecipeModel.update(newRecipe);
+      const response = await RecipeModel.updateRecipe(newRecipe);
       return resp.status(200).json(response);
+    }
+  } catch (error) {
+    console.error(error.message);
+    resp.status(500).json({ message: error.message });
+  }
+};
+
+const deleteRecipe = async (req, resp) => {
+  try {
+    const { authorization } = req.headers;
+    const { id } = req.params;
+    
+    const email = emailToken(authorization);
+    const { role, _id } = await UserModel.replyEmail(email);
+    const { userId } = await RecipeModel.getByIdRecipe(id);
+    
+    if (role === 'admin' || userId.match(_id)) {
+      const response = await RecipeModel.deleteRecipe(id);
+      return resp.status(204).json(response);
     }
   } catch (error) {
     console.error(error.message);
@@ -55,7 +74,8 @@ const update = async (req, resp) => {
 
 module.exports = {
   addRecipe,
-  getAll,
-  getById,
-  update,
+  getAllRecipe,
+  getByIdRecipe,
+  updateRecipe,
+  deleteRecipe,
 };
