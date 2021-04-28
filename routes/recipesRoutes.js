@@ -17,12 +17,12 @@ router.get('/recipes', recipesController.getAllRecipes);
 router.get(`/${routeDomain}/:id`, middleware.recipeIdMiddleware, recipesController.getRecipeById);
 
 router.put(`/${routeDomain}/:id`,
-  middleware.authMiddleware,
+  middleware.updateAuthMiddleware,
   middleware.recipeIdMiddleware,
   recipesController.updateRecipe);
 
 router.delete(`/${routeDomain}/:id`,
-  middleware.authMiddleware,
+  middleware.updateAuthMiddleware,
   middleware.recipeIdMiddleware,
   recipesController.deleteRecipe);
 

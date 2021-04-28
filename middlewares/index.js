@@ -4,6 +4,7 @@ const authMiddleware = require('./authChecks');
 const recipesMiddleware = require('./recipesInputChecks');
 const loginMiddleware = require('./loginChecks');
 const recipeIdMiddleware = require('./recipeId');
+const updateAuthMiddleware = require('./updateAuthChecks');
 
 module.exports = {
   usersMiddleware,
@@ -12,4 +13,5 @@ module.exports = {
   recipesMiddleware,
   loginMiddleware,
   recipeIdMiddleware,
+  updateAuthMiddleware,
 };

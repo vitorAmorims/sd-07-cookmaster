@@ -38,7 +38,7 @@ const update = async (id, updateItem, userId) => {
 
   return {
     _id: id, 
-    updateItem,
+    ...updateItem,
     userId,
   };
 };
