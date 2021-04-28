@@ -23,7 +23,7 @@ const validateUserMiddleware = async (req, _res, next) => {
 };
 
 const MESSAGE = {
-  fild: 'All filds must be filled',
+  field: 'All filds must be filled',
 };
 const validateLoginMiddleware = async (req, _res, next) => {
   const userData = req.body;
@@ -33,7 +33,7 @@ const validateLoginMiddleware = async (req, _res, next) => {
   }).validate(userData);
   try {
     if (!userData.email || !userData.password) { 
-      return next({ status: StatusCodes.UNAUTHORIZED, message: MESSAGE.fild });
+      return next({ status: StatusCodes.UNAUTHORIZED, message: MESSAGE.field });
     }  
     if (validate.error) {
       return next(
