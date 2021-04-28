@@ -59,25 +59,21 @@ const add = async (req, res) => {
   }
 };
 
-// const update = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const [ sale ] = req.body;
-//     const result = await salesService.update(id, sale);
+const update = async (req, res) => {
+  try {
+    const result = await recipesService.update(req);
+    console.log(result);
+    res.status(OK).json(result);
+  } catch (error) {
+    console.error(error);
 
-//     res.status(OK).json(result);
-//   } catch (error) {
-//     console.error(error);
-
-//     const { message } = error;
-//     if (message.includes('ID')) {
-//       objError.err.code = 'invalid_data';
-//       objError.err.message = error.message;
-//       res.status(UNPROCESS).json(objError);
-//     }
-//     res.status(ERROR).json({ message: error.message });
-//   }
-// };
+    const { message } = error;
+    if (message.includes('jwt') || message.includes('token')) {
+      res.status(UNAUTHORIZED).json({ message: error.message });
+    }
+    res.status(ERROR).json({ message: error.message });
+  }
+};
 
 // const deleteSale = async (req, res) => {
 //   try {
@@ -102,4 +98,5 @@ module.exports = {
   add,
   getAll,
   getById,
+  update,
 };

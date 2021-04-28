@@ -45,21 +45,22 @@ const add = async (userId, recipe) => {
   } };
 };
 
-// const update = async (id, productId, quantity) => {
-//   const sale = await connect()
-//     .then(db => db.collection('sales').findOneAndUpdate(
-//       {
-//         _id: ObjectId(id),
-//         'itensSold.productId': productId
-//       },
-//       { $set: { 'itensSold.$.quantity': quantity } }
-//     ));
+const update = async (id, data) => {
+  const { name, ingredients, preparation } = data;
+  await connect()
+    .then((db) => db.collection('recipes').findOneAndUpdate(
+      {
+        _id: ObjectId(id),
+      },
+      { $set: { recipe: {
+        name,
+        ingredients,
+        preparation,
+      } } },
+    ));
   
-//   return {
-//     _id: id,
-//     itensSold: [ { productId, quantity }]
-//   };
-// };
+  return { name, ingredients, preparation };
+};
 
 // const deleteSale = (sale) => {
 //   connect()
@@ -71,4 +72,5 @@ module.exports = {
   add,
   getAll,
   getById,
+  update,
 };

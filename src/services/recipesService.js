@@ -9,7 +9,11 @@ const validation = ({ name, ingredients, preparation }) => {
   }
 };
 
-const verifyToken = async ({ authorization }) => {
+const verifyToken = async (headers) => {
+  if (!headers.authorization) {
+    throw new Error('missing auth token');
+  }
+  const { authorization } = headers;
   const decoded = jwt.decodifyToken(authorization);
   if (!decoded) {
     throw new Error('jwt malformed');
@@ -53,16 +57,22 @@ const getAll = async () => {
   // await jwt.decodifyToken(authorization);
 
   return recipesModel.getAll();
-};
-/*
-const update = async (id, sale) => {
-  const { productId, quantity } = sale;
-  validateQuantity(quantity);
-  validateProductId(productId);
-  validateSaleId(id);
-
-  return salesModel.update(id, productId, quantity);
 }; */
+
+const update = async ({ params, headers, body }) => {
+  await verifyToken(headers);
+  const { id } = params;
+  /* const { _id } = user;
+  const recipe = recipesModel.getById(id);
+  if (user.role === 'admin') {
+    return recipesModel.update(id, body);
+  }
+  if (recipe.userId && recipe.userId === _id) {
+    return recipesModel.update(id, body);
+  }
+  throw new Error('unauthorized'); */
+  return recipesModel.update(id, body);
+};
 
 // const deleteSale = async (id) => {
 //   const sale = await validateSaleId(id);
@@ -73,4 +83,5 @@ const update = async (id, sale) => {
 module.exports = {
   add,
   getById,
+  update,
 };
