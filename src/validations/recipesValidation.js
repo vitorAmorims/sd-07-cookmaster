@@ -28,6 +28,22 @@ const existID = async (id) => {
   return idVerify;
 };
 
+// const matchIDs = (validID, user) => {
+//   const { _id } = user;
+//   if (validID.userID !== _id) {
+
+//   }
+// };
+
+// const checkToken = async (token) => {
+//   const validToken = await verifyToken(token);
+//   if (!validToken) {
+//     const error = new Error('recipe not found');
+//     error.statusCode = 'not_found';
+//     throw error;
+//   }
+// };
+
 module.exports = {
   validEntries,
   existID,

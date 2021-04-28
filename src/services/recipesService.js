@@ -3,14 +3,12 @@ const { recipesModel } = require('../models');
 const {
   validEntries,
   existID,
-  // validToken,
 } = require('../validations/recipesValidation');
 
-const add = async (name, ingredients, preparation) => {
+const add = async (name, ingredients, preparation, userId) => {
   await validEntries(name, ingredients, preparation);
-  // await validToken(email);
 
-  const user = await recipesModel.add(name, ingredients, preparation);
+  const user = await recipesModel.add(name, ingredients, preparation, userId);
   delete user.password; // código @rafaelmguimaraes
   return user;
 };
@@ -25,9 +23,13 @@ const getByID = async (id) => {
   return recipe;
 };
 
-const update = async (id, name, ingredients, preparation) => {
+const update = async (id, body, user) => {
+  const { name, ingredients, preparation } = body;
+  const { _id } = user;
   await validEntries(name, ingredients, preparation);
-  const updatedProduct = await recipesModel.updateByID(id, name, ingredients, preparation);
+  await existID(id);
+  const updatedProduct = await recipesModel.updateByID(id, body, _id);
+
   return updatedProduct;
 };
 

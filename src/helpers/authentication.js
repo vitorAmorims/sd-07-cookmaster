@@ -6,7 +6,7 @@ const userToken = (user) => {
   const { password, ...userWithoutPassword } = user; 
 
   const jwtConfig = {
-    expiresIn: 60 * 5,
+    expiresIn: 60 * 5 * 10,
     algorithm: 'HS256',
   };
   

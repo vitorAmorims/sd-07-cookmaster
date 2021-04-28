@@ -9,8 +9,8 @@ const newRecipe = rescue(async (req, res) => {
     const { name, ingredients, preparation } = req.body;
     const { _id } = req.user;
     
-    const recipeAdd = await recipesService.add(name, ingredients, preparation);
-    res.status(createdStatus).json({ recipe: { ...recipeAdd, userId: _id } });
+    const recipeAdd = await recipesService.add(name, ingredients, preparation, _id);
+    res.status(createdStatus).json({ recipe: { ...recipeAdd } });
 });
 
 const allRecipes = rescue(async (req, res) => {
@@ -26,8 +26,9 @@ const getByID = rescue(async (req, res) => {
 
 const updateByID = rescue(async (req, res) => {
   const { id } = req.params;
-  const { name, ingredients, preparation } = req.body;
-  const updatedRecipe = await recipesService.update(id, name, ingredients, preparation);
+  const { body, user } = req;
+
+  const updatedRecipe = await recipesService.update(id, body, user);
 
   res.status(okStatus).json(updatedRecipe);
 });

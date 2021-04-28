@@ -7,7 +7,7 @@ const add = async (name, ingredients, preparation, userId) =>
     const recipe = await db
       .collection('recipes')
       .insertOne({ name, ingredients, preparation, userId });
-
+    console.log('new recipe', recipe);
     return recipe.ops[0];
   });
 
@@ -22,7 +22,7 @@ const getAll = async () =>
     const recipes = await db
       .collection('recipes')
       .find().toArray();
-    
+    console.log('recipes', recipes);
     return recipes;
   });
 
@@ -34,9 +34,25 @@ connect().then(async (db) => {
   return recipe;
 });
 
+const updateByID = async (id, body, userId) => {
+  const { name, ingredients, preparation } = body;
+  
+  return connect().then(async (db) => {
+    const recipe = await db
+      .collection('recipes')
+      .updateOne(
+        { _id: ObjectId(id) },
+        { $set: { name, ingredients, preparation } },
+      );
+    console.log('recipe', recipe);
+    return { _id: id, userId, name, ingredients, preparation };
+});
+};
+
 module.exports = {
   add,
   auth,
   getAll,
   getByID,
+  updateByID,
 };
