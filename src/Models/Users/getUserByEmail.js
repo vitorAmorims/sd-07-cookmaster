@@ -9,7 +9,7 @@ const getUserByEmail = async (email) =>
       db.collection(process.env.DB_COLLECTION).findOne({
         email,
       }))
-    .then((result) => getUser(result.email))
+    .then((result) => getUser(result))
     .catch((error) => console.log(`Error in model addUser: ${error}`));
 
 module.exports = { getUserByEmail };

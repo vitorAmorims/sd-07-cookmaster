@@ -21,7 +21,7 @@ const isEmail = async (email) => {
   if (email === undefined || email === null) {
     return { code: CODE_ERROR, message: OBJECT_RESPONSE };
   }
-  if (result === email) {
+  if (result.email === email) {
     return { code: ERRO_CODE, message: EMAIL_EXIST };
   }
 };

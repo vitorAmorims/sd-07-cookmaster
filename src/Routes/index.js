@@ -1,14 +1,15 @@
 const express = require('express');
-const { loginMiddleware } = require('../Middlewares/Users/loginMiddleware');
 
 const app = express();
 
 // import users
+const { loginMiddleware } = require('../Middlewares/Users/loginMiddleware');
 const { middlewareCreateUser } = require('../Middlewares/Users/createUserMiddleware');
 const { createUser } = require('../Controllers/Users/createUserController');
 const { loginController } = require('../Controllers/Users/loginController');
 // Import recipes
-
+const { addRecipeMiddleware } = require('../Middlewares/Recipes/addRecipeMiddleware');
+const { addRecipeController } = require('../Controllers/Recipes/addRecipeController');
 // routes
 app.get('/', (_request, response) => {
     response.send();
@@ -16,5 +17,6 @@ app.get('/', (_request, response) => {
 
 app.post('/users', middlewareCreateUser, createUser);
 app.post('/login', loginMiddleware, loginController);
+app.post('/recipes', addRecipeMiddleware, addRecipeController);
 
 module.exports = app;
