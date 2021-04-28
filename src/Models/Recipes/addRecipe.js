@@ -1,6 +1,9 @@
 const connection = require('../connection');
 require('dotenv').config();
 
+// Collection remote test
+const DB_COLLECTION_RECIPES = 'recipes';
+
 const getNewRecipe = ({ id, name, ingredients, preparation, user }) => ({
   recipe: {
     name,
@@ -14,7 +17,7 @@ const getNewRecipe = ({ id, name, ingredients, preparation, user }) => ({
 const addRecipe = async (name, ingredients, preparation, user) =>
   connection()
     .then((db) =>
-      db.collection(process.env.DB_COLLECTION_RECIPES).insertOne({
+      db.collection(DB_COLLECTION_RECIPES).insertOne({
         name,
         ingredients,
         preparation,

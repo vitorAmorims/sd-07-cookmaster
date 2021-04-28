@@ -1,6 +1,9 @@
 const connection = require('../connection');
 require('dotenv').config();
 
+// Collection remote test
+const DB_COLLECTION = 'users';
+
 const getNewUser = ({ id, name, email, role }) => ({
   user: {
     name,
@@ -13,7 +16,7 @@ const getNewUser = ({ id, name, email, role }) => ({
 const createUser = async (name, email, password, role) =>
   connection()
     .then((db) =>
-      db.collection(process.env.DB_COLLECTION).insertOne({
+      db.collection(DB_COLLECTION).insertOne({
         name,
         email,
         password,

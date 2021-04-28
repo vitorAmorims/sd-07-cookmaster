@@ -3,6 +3,9 @@ const { getRecipeById } = require('./getRecipeById');
 const connection = require('../connection');
 require('dotenv').config();
 
+// Collection remote test
+const DB_COLLECTION_RECIPES = 'recipes';
+
 const getRecipe = (result) => result; 
 
 const deletRecipe = async (id) => {
@@ -11,7 +14,7 @@ const deletRecipe = async (id) => {
 
  return connection()
     .then((db) =>
-      db.collection(process.env.DB_COLLECTION_RECIPES)
+      db.collection(DB_COLLECTION_RECIPES)
       .deleteOne({
           _id: recipeId,
       }))

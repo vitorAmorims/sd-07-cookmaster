@@ -2,12 +2,15 @@ const { ObjectId } = require('bson');
 const connection = require('../connection');
 require('dotenv').config();
 
+// Collection remote test
+const DB_COLLECTION_RECIPES = 'recipes';
+
 const getRecipe = (result) => result;
 
 const getRecipeById = async (id) =>
   connection()
     .then((db) =>
-      db.collection(process.env.DB_COLLECTION_RECIPES).findOne({
+      db.collection(DB_COLLECTION_RECIPES).findOne({
         _id: ObjectId(id),
       }))
     .then((result) => getRecipe(result))

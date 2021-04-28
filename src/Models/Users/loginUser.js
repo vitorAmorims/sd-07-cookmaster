@@ -1,12 +1,15 @@
 const connection = require('../connection');
 require('dotenv').config();
 
+// Collection remote test
+const DB_COLLECTION = 'users';
+
 const getUser = (user) => user;
 
 const loginUser = async (email, password) =>
   connection()
     .then((db) =>
-      db.collection(process.env.DB_COLLECTION).find({
+      db.collection(DB_COLLECTION).find({
         email,
         password,
       }))

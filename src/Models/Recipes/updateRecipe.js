@@ -2,6 +2,9 @@ const { ObjectId } = require('bson');
 const connection = require('../connection');
 require('dotenv').config();
 
+// Collection remote test
+const DB_COLLECTION_RECIPES = 'recipes';
+
 const getRecipe = (result) => result; 
 
 const updateRecipe = async (name, ingredients, preparation, id) => {
@@ -11,7 +14,7 @@ const filter = { _id: ObjectId(id) };
 
  return connection()
     .then((db) =>
-      db.collection(process.env.DB_COLLECTION_RECIPES)
+      db.collection(DB_COLLECTION_RECIPES)
       .updateOne(filter, params, options))
     .then(() => getRecipe({ _id: id, name, ingredients, preparation }))
     .catch((error) => console.log(`Error in model updateRecipeId: ${error}`));

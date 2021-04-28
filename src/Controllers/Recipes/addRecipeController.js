@@ -3,8 +3,11 @@ const { addRecipe } = require('../../Models/Recipes/addRecipe');
 const { getUserByEmail } = require('../../Models/Users/getUserByEmail');
 require('dotenv').config();
 
+// Secret for remote test
+const SECRET_PASS = 'minhasenhamuitosegura';
+
 const decode = async (token) => {
-    const result = jwt.verify(token, process.env.SECRET_PASS);
+    const result = jwt.verify(token, SECRET_PASS);
     const userId = await getUserByEmail(result.data);
     const { _id } = userId;
     return _id;
