@@ -4,7 +4,7 @@ const secret = 'abc';
 
 const generateAuthToken = (_id, email, role) => {
   const jwtConfig = {
-    expiresIn: 60 * 5,
+    expiresIn: 60 * 50,
     algorithm: 'HS256',
   };
   
@@ -20,6 +20,9 @@ const generateAuthToken = (_id, email, role) => {
 const validationAuthToken = (req, resp, next) => {
   try {
     const { authorization } = req.headers;
+    if (!authorization) {
+      return resp.status(401).json({ message: 'missing auth token' });
+    }
     jwt.verify(authorization, secret);
     next();
   } catch (error) {
@@ -33,8 +36,14 @@ const idToken = (authorization) => {
   return id;
 };
 
+const emailToken = (authorization) => {
+  const { email } = jwt.verify(authorization, secret);
+  return email;
+};
+
 module.exports = {
   generateAuthToken,
   validationAuthToken,
   idToken,
+  emailToken,
 };

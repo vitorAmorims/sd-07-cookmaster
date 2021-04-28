@@ -1,5 +1,6 @@
 const RecipeModel = require('../models/recipeModels');
-const { idToken } = require('../services/authService');
+const UserModel = require('../models/userModel');
+const { idToken, emailToken } = require('../services/authService');
 
 const addRecipe = async (req, resp) => {
   try {
@@ -7,7 +8,6 @@ const addRecipe = async (req, resp) => {
     const { name, ingredients, preparation } = req.body;
     const id = idToken(authorization);
     const newRecipe = await RecipeModel.addRecipe(name, ingredients, preparation, id);
-    console.log('hola');
     return resp.status(201).json({ recipe: newRecipe });
   } catch (error) {
     console.error(error.message);
@@ -17,7 +17,6 @@ const addRecipe = async (req, resp) => {
 
 const getAll = async (_req, resp) => {
   const recipes = await RecipeModel.getAll();
-  console.log(recipes);
   resp.status(200).json(recipes);
 };
 
@@ -35,8 +34,28 @@ const getById = async (req, resp) => {
   }
 };
 
+const update = async (req, resp) => {
+  try {
+    const { authorization } = req.headers;
+    const { id } = req.params;
+    const { name, preparation, ingredients } = req.body;
+    const email = emailToken(authorization);
+    const { role, _id } = await UserModel.replyEmail(email);
+    const { userId } = await RecipeModel.getById(id);
+    const newRecipe = { id, name, ingredients, preparation, userId };
+    if (role === 'admin' || userId.match(_id)) {
+      const response = await RecipeModel.update(newRecipe);
+      return resp.status(200).json(response);
+    }
+  } catch (error) {
+    console.error(error.message);
+    resp.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   addRecipe,
   getAll,
   getById,
+  update,
 };
