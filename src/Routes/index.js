@@ -16,16 +16,19 @@ const { getRecipeByIdMiddleware } = require('../Middlewares/Recipes/getRecipeByI
 const { getRecipeByIdController } = require('../Controllers/Recipes/getRecipeByIdController');
 const { updateRecipeController } = require('../Controllers/Recipes/updateRecipeController');
 const { updateRecipeMiddleware } = require('../Middlewares/Recipes/updateRecipeMiddleware');
+const { deleteRecipeController } = require('../Controllers/Recipes/deleteRecipeController');
+const { deleteRecipeMiddleware } = require('../Middlewares/Recipes/deleteRecipeMiddleware');
 // routes
 app.get('/', (_request, response) => {
     response.send();
 });
-
+const recipeId = '/recipes/:id';
 app.post('/users', middlewareCreateUser, createUser);
 app.post('/login', loginMiddleware, loginController);
 app.post('/recipes', addRecipeMiddleware, addRecipeController);
 app.get('/recipes', getAllRecipesMiddleware, getAllRecipesController);
-app.get('/recipes/:id', getRecipeByIdMiddleware, getRecipeByIdController);
-app.put('/recipes/:id', updateRecipeMiddleware, updateRecipeController);
+app.get(recipeId, getRecipeByIdMiddleware, getRecipeByIdController);
+app.put(recipeId, updateRecipeMiddleware, updateRecipeController);
+app.delete(recipeId, deleteRecipeMiddleware, deleteRecipeController);
 
 module.exports = app;
