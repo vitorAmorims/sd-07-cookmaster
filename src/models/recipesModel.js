@@ -45,7 +45,7 @@ const add = async (userId, recipe) => {
   } };
 };
 
-const update = async (id, data) => {
+const update = async (id, data, userId) => {
   const { name, ingredients, preparation } = data;
   await connect()
     .then((db) => db.collection('recipes').findOneAndUpdate(
@@ -58,8 +58,10 @@ const update = async (id, data) => {
         preparation,
       } } },
     ));
-  
-  return { name, ingredients, preparation };
+  if (userId) {
+    return { _id: id, name, ingredients, preparation, userId };  
+  }
+  return { _id: id, name, ingredients, preparation };
 };
 
 // const deleteSale = (sale) => {

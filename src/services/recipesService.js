@@ -62,15 +62,17 @@ const getAll = async () => {
 const update = async ({ params, headers, body }) => {
   await verifyToken(headers);
   const { id } = params;
-  /* const { _id } = user;
   const recipe = recipesModel.getById(id);
-  if (user.role === 'admin') {
+  /* if (user.role === 'admin') {
     return recipesModel.update(id, body);
   }
   if (recipe.userId && recipe.userId === _id) {
     return recipesModel.update(id, body);
   }
   throw new Error('unauthorized'); */
+  if (recipe.userId) {
+    return recipesModel.update(id, body, recipe.userId);
+  }
   return recipesModel.update(id, body);
 };
 
