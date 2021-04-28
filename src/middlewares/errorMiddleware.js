@@ -1,48 +1,34 @@
-const conflictError = (err, res) => {
-  const conflict = 409;
-  let response;
+const { StatusCodes } = require('http-status-codes'); 
 
+const conflictError = (err, res) => {
   if (err.statusCode === 'conflict') {
-    return res.status(conflict).json({ message: err.message });
+    return res.status(StatusCodes.CONFLICT).json({ message: err.message });
   }
-  return response;
 };
 
 const unauthorizedError = (err, res) => {
-  const unauthorized = 401;
-  let response;
-
   if (err.statusCode === 'unauthorized') {
-    return res.status(unauthorized).json({ message: err.message });
+    return res.status(StatusCodes.UNAUTHORIZED).json({ message: err.message });
   }
-  return response;
 };
 
 const notFoundError = (err, res) => {
-  const notFound = 404;
-  let response;
-
   if (err.statusCode === 'not_found') {
-    return res.status(notFound).json({ message: err.message });
+    return res.status(StatusCodes.NOT_FOUND).json({ message: err.message });
   }
-  return response;
 };
 
-const errorMiddleware = (err, req, res, _next) => {
+const errorMiddleware = (err, _req, res, _next) => {
   if (err.statusCode) {
-    const badRequestCode = 400;
-
     if (err.statusCode === 'bad_request') {
-      return res.status(badRequestCode).json({ message: err.message });
+      return res.status(StatusCodes.BAD_REQUEST).json({ message: err.message });
     }
     
     conflictError(err, res);
     unauthorizedError(err, res);
     notFoundError(err, res);
   } else {
-    console.log('ERRO', err);
-    const erroMsg = 500;
-    res.status(erroMsg).json(err.message);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(err.message);
   }
 };
 

@@ -10,7 +10,6 @@ app.use(express.json());
 app.use(usersRoute);
 app.use(recipesRoute);
 
-// não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
   response.send();
 });

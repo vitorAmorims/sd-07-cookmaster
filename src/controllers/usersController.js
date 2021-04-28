@@ -20,10 +20,6 @@ const userLogin = rescue(async (req, res) => {
   res.status(okStatus).json({ token });
 });
 
-// const getByID = rescue(async (req, res) => {
-
-// });
-
 module.exports = {
   newUser,
   userLogin,

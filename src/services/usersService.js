@@ -11,7 +11,6 @@ const {
 const add = async (name, email, password) => {
   await validEntries(name, email, password);
   await registeredEmail(email);
-  // await existEmail(email);
 
   const user = await usersModel.add(name, email, password);
   delete user.password; // código @rafaelmguimaraes
