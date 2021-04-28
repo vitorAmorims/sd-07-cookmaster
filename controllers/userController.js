@@ -34,7 +34,6 @@ const loginUser = async (req, res) => {
     const token = jwt.sign({ id: _id, role }, secret, jwtConfig);
     return res.status(HTTP200).json({ token });
   } catch (err) {
-    console.log(err);
     return res.status(HTTP500).json({ message: err.message });
   }
 };

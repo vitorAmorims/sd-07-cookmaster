@@ -22,7 +22,7 @@ const allRecipes = async (req, res) => {
     const result = await recipeService.getAllRecipe();        
     return res.status(HTTP200).json(result);    
   } catch (err) {
-    res.status(HTTP500).json({ message: err.message });
+    return res.status(HTTP500).json({ message: err.message });
   }
 };
 
@@ -46,8 +46,7 @@ const updateOneRecipe = async (req, res) => {
     } 
     const result = await recipeService.updateRecipe(id, name, ingredients, preparation);
     if (!result) {
-      res.status(HTTP404).json({ message: 'Produto não encontrado :(' });
-      return;
+      return res.status(HTTP404).json({ message: 'Produto não encontrado :(' });      
     }
     res.status(HTTP200).json({ _id: id, name, ingredients, preparation, recipeUserId });
   } catch (err) {
@@ -68,7 +67,7 @@ const deleteRecipe = async (req, res) => {
 
     return res.status(HTTP204).send();
   } catch (err) {
-    res.status(HTTP500).json({ message: err.message });
+    return res.status(HTTP500).json({ message: err.message });
   }
 };
 
