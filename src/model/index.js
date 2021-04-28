@@ -1,4 +1,9 @@
-const { getRecipes, getRecipeById, insertRecipe } = require('./recipeModel');
+const {
+  getRecipes,
+  getRecipeById,
+  insertRecipe,
+  updateRecipe,
+} = require('./recipeModel');
 const { getUserByEmail, getUserById, insertUser } = require('./userModel');
 
 module.exports = {
@@ -8,4 +13,5 @@ module.exports = {
   getUserById,
   insertUser,
   insertRecipe,
+  updateRecipe,
 };

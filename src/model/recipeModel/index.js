@@ -1,9 +1,11 @@
 const getRecipes = require('./getRecipes');
-const insertRecipe = require('./insertRecipe');
 const getRecipeById = require('./getRecipeById');
+const insertRecipe = require('./insertRecipe');
+const updateRecipe = require('./updateRecipe');
 
 module.exports = {
   getRecipeById,
   getRecipes,
   insertRecipe,
+  updateRecipe,
 };

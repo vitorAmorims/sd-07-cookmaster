@@ -1,9 +1,15 @@
 const { insertUserServ } = require('./userServ');
 const loginServ = require('./loginServ');
-const { getOneRecipeServ, getRecipeServ, insertRecipeServ } = require('./recipeServ');
+const {
+  editRecipeServ,
+  insertRecipeServ,
+  getOneRecipeServ,
+  getRecipeServ,
+} = require('./recipeServ');
 const servDictionary = require('./servDictionary');
 
 module.exports = {
+  editRecipeServ,
   getOneRecipeServ,
   getRecipeServ,
   insertRecipeServ,

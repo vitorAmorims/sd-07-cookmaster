@@ -17,15 +17,22 @@ const userValidation = async (id) => {
   return true;
 };
 
+const tokenValidation = (tkn) => {
+  if (!tkn) return { err: 'missing auth token' };
+  const jwtDecoded = jwt.verify(tkn, process.env.SECRET);
+  if (!jwtDecoded) {
+    console.log('No token', tkn, jwtDecoded);
+    return { err: 'missing token', status: 'missing auth token' };
+  }
+  return jwtDecoded;
+};
+
 module.exports = async (req, _res, next) => {
   try {
     const token = req.headers.authorization;
-    const jwtDecoded = jwt.verify(token, process.env.SECRET);
-    if (!token || !jwtDecoded) {
-      console.log('No token', req.headers);
-      return next({ err: 'missing token', status, message });
-    }
-    const { id } = jwtDecoded.data;
+    const decodedToken = tokenValidation(token);
+    if (decodedToken.err) return next({ err: decodedToken.err });
+    const { id } = decodedToken.data;
     const userExists = await userValidation(id);
     return !userExists
       ? next({ err: 'Invalid token', status, message })

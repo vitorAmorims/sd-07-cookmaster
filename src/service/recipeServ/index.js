@@ -1,8 +1,10 @@
+const editRecipeServ = require('./editRecipeServ');
+const getOneRecipeServ = require('./getOneRecipeServ');
 const getRecipeServ = require('./getRecipeServ');
 const insertRecipeServ = require('./insertRecipeServ');
-const getOneRecipeServ = require('./getOneRecipeServ');
 
 module.exports = {
+  editRecipeServ,
   getOneRecipeServ,
   getRecipeServ,
   insertRecipeServ,

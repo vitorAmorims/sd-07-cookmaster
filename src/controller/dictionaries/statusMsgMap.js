@@ -1,4 +1,7 @@
 const statusMsgMap = {
+  'authMiddleware error': {
+    status: 401, message: 'jwt malformed',
+  },
   'wrong input': {
     status: 400, message: 'Invalid entries. Try again.',
   },
@@ -28,6 +31,9 @@ const statusMsgMap = {
   },
   'db search returned empty': {
     status: 404, message: 'recipe not found',
+  },
+  'missing auth token': {
+    status: 401, message: 'missing auth token',
   },
 };
 
