@@ -2,7 +2,6 @@ const { Router } = require('express');
 const { authMiddleware } = require('../middlewares');
 
 const {
-  delOneRecipeCtrl,
   editRecipeCtrl,
   getOneRecipeCtrl,
   getRecipesCtrl,
