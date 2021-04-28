@@ -18,4 +18,4 @@ app.get('/', (_request, response) => {
 
 app.use(errorMiddleware);
 
-app.listen(PORT, () => { console.log('API rodando na porta 3000'); });
+app.listen(PORT, () => { console.log('API ativa na porta 3000'); });
