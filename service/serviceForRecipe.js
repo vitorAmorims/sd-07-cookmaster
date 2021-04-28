@@ -1,39 +1,42 @@
 const { ObjectId } = require('bson');
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs').promises;
+// const path = require('path');
+// const fs = require('fs').promises;
 const modelForRecipe = require('../model/modelForRecipe');
 const errorGenerator = require('../helpers/errorCreator');
 const code = require('../helpers/status.json');
 const message = require('../helpers/message.json');
 
-const pathFile = path.resolve(`${__dirname}/../images`);
+// const pathFile = path.resolve(`${__dirname}/../images`);
 
 const storage = multer.diskStorage({
     destination: (_req, _file, callback) => {
         callback(null, 'images');
     },
 
-   filename: (_req, file, callback) => {
-        callback(null, `${Date.now()}-${file.originalname}`);
-   },
+   filename: (req, file, callback) => 
+    //    if (!file.originalname.endsWith('jpeg')) {
+    //      return callback(null, false);
+    //    }
+
+        callback(null, `${req.params.id}.jpeg`)
+   ,
 });
 
-const fileExistis = async (fileName) => {
-    const data = await fs.readdir(pathFile);
-    
-    const item = data.some((file) => file.includes(fileName));
+// const fileExistis = async (fileName) => {
+//     const data = await fs.readdir(pathFile);
+//     const item = data.some((file) => file.includes(fileName));
 
-    return item;
-};
+//     return item;
+// };
 
 const upload = multer({ storage,
-async fileFilter(req, file, callback) {
-    const myFile = await fileExistis(file.originalname);
+    async fileFilter(req, file, callback) {
+    // const myFile = await fileExistis(file.originalname);
 
-        if (myFile) {
-           return callback(null, false);
-        } 
+    //     if (!myFile) {
+    //        return callback(null, false);
+    //     } 
       
           callback(null, true);
   },

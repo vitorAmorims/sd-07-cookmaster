@@ -39,7 +39,7 @@ const insertImg = async (req, res) => {
     const { id } = req.params;
     const localHost = 'localhost:3000/';
     if (!req.file) {
-        return res.status(400).json({ message: 'File already exists' });
+        return res.status(400).json({ message: 'It must be a jpeg file' });
     }
     await serviceForRecipe.insertImg(id, localHost, req.file.path);
     const recipe = await serviceForRecipe.getById(id);
