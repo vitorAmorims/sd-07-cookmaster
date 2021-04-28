@@ -12,4 +12,6 @@ router.post('/recipes',
 
 router.get('/recipes', recipesController.getAllRecipes);
 
+router.get('/recipes/:id', middleware.recipeIdMiddleware, recipesController.getRecipeById);
+
 module.exports = router;
