@@ -2,6 +2,7 @@ const RecipesService = require('../services/RecipesService');
 
 const SUCESS = 200;
 const CREATED = 201;
+const NO_RESPONSE = 204;
 
 const create = async (req, res, next) => {
   try {
@@ -25,7 +26,6 @@ const getAllRecipes = async (_req, res, next) => {
 
 const getRecipeById = async (req, res, next) => {  
   try {
-    console.log('entrou na rota');
     const { id } = req.params;
     const recipe = await RecipesService.getRecipeById(id);
     return res.status(SUCESS).json(recipe);
@@ -34,4 +34,25 @@ const getRecipeById = async (req, res, next) => {
   }
 };
 
-module.exports = { create, getAllRecipes, getRecipeById };
+const update = async (req, res, next) => {
+  const { name, ingredients, preparation } = req.body;
+  const { id } = req.params;
+  try {
+    const updatedRecipe = await RecipesService.update(id, name, ingredients, preparation);
+    return res.status(SUCESS).json(updatedRecipe);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const exclude = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await RecipesService.exclude(id);
+    return res.status(NO_RESPONSE).end();
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { create, getAllRecipes, getRecipeById, update, exclude };

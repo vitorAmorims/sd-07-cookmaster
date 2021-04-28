@@ -1,10 +1,7 @@
 const ValidateService = require('../services/ValidateService');
 const UsersService = require('../services/UsersService');
-// const error = require('../services/Error_data');
 
-const 
-
-validateToken = async (req, res, next) => {
+const validateToken = async (req, res, next) => {
     const token = req.headers.authorization;   
     try {
         ValidateService.validToken(token);

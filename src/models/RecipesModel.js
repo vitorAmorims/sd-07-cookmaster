@@ -21,8 +21,24 @@ const create = async (name, ingredients, preparation, userId) => {
     .then((db) =>
       db.collection('recipes')
          .findOne(ObjectId(id)));
-         console.log(id);
   return recipe;
   };
 
-module.exports = { create, getAllRecipes, getRecipeById };
+  const update = async (id, name, ingredients, preparation) => {
+    if (!ObjectId.isValid(id)) return null;
+    const recipe = await connect()
+      .then((db) => db.collection('recipes')
+        .findOneAndUpdate({ _id: ObjectId(id) },
+          { $set: { name, ingredients, preparation } },
+          { returnOriginal: false }));
+    return recipe.value;
+  };
+
+  const exclude = async (id) => {
+    if (!ObjectId.isValid(id)) return null;
+    await connect()
+    .then((db) => db.collection('recipes')
+      .deleteOne({ _id: ObjectId(id) }));
+  };
+
+module.exports = { create, getAllRecipes, getRecipeById, update, exclude };

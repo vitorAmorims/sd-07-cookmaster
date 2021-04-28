@@ -54,7 +54,7 @@ const validLogin = (user, password) => {
     if (!recipe) throw error.NOT_FOUND_RECIPE;
     return recipe; 
   };
-
+  
 module.exports = { 
     validField,
     validEmailType,
@@ -65,4 +65,5 @@ module.exports = {
     validToken,
     verifyToken,
     validRecipeId,
+    
 };
