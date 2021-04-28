@@ -32,6 +32,7 @@ const loginUserController = async (req, res) => {
   const { email, password } = req.body;
   try {
     const token = await usersService.loginUserService(email, password);
+    if(!token) return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Incorrect username or password' })
     return res.status(StatusCodes.OK).json({ message: 'Sucesso', token });
   } catch (error) {
     console.log('loginUserController', error.message);
