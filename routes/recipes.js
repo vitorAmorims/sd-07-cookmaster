@@ -2,6 +2,7 @@ const express = require('express');
 const { createRecipeController,
   getAllRecipes,
   getRecipeById,
+  updateRecipe,
  } = require('../controllers/recipes');
 const validateToken = require('../middlewares/validateToken');
 
@@ -12,6 +13,7 @@ router.route('/recipes')
   .get(getAllRecipes);
 
 router.route('/recipes/:id')
-  .get(getRecipeById);
+  .get(getRecipeById)
+  .put(updateRecipe);
 
 module.exports = router;

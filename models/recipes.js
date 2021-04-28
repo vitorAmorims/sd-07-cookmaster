@@ -14,8 +14,16 @@ const getRecipesById = async (id) =>
   connect().then((db) => db.collection('recipes').findOne(ObjectId(id)))
     .catch((error) => error.message);
 
+const updateRecipe = async (id, name, ingredients, preparation) =>
+  connect().then((db) => db.collection('recipes').updateOne(
+    { _id: id },
+    { $set: { name, ingredients, preparation } },
+    ))
+      .catch((error) => error.message);
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipesById,
+  updateRecipe,
 };

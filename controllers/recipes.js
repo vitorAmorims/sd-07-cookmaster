@@ -1,6 +1,7 @@
 const { createRecipeService,
   getAllRecipesService,
   getRecipesByIdService,
+  updateRecipeService,
  } = require('../service/recipes');
 const httpStatus = require('./httpStatus');
 
@@ -45,8 +46,22 @@ const getRecipeById = async (req, res) => {
   }
 };
 
+const updateRecipe = async (req, res) => {
+  try {
+    const { name, ingredients, preparation } = req.body;
+    const { id } = req.params;
+    const recipeToUpdate = await updateRecipeService(id, name, ingredients, preparation);
+    res.status(httpStatus.SUCCESS).json(recipeToUpdate);
+  } catch (error) {
+    res.status(httpStatus.BAD_REQUEST).json({
+      message: 'não funfou :(',
+    });
+  }
+};
+
 module.exports = {
   createRecipeController,
   getAllRecipes,
   getRecipeById,
+  updateRecipe,
 };

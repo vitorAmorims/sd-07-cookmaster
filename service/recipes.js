@@ -2,6 +2,7 @@ const { ObjectId } = require('mongodb');
 const { createRecipe,
   getAllRecipes,
   getRecipesById,
+  updateRecipe,
 } = require('../models/recipes');
 
 const validateRecipe = (name, ingredients, preparation) => {
@@ -36,8 +37,15 @@ const getRecipesByIdService = async (id) => {
   return recipe;
 };
 
+const updateRecipeService = async (id, name, ingredients, preparation) => {
+  const recipeToUpdate = await updateRecipe(id, name, ingredients, preparation);
+
+  return recipeToUpdate;
+};
+
 module.exports = {
   createRecipeService,
   getAllRecipesService,
   getRecipesByIdService,
+  updateRecipeService,
 };
