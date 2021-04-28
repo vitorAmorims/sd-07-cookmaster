@@ -18,7 +18,6 @@ const createRecipe = async (request, response) => {
 const getRecipes = async (_request, response) => {
   try {
     const results = await recipesModel.findAllRecipes();
-    console.log(results);
     return response.status(REQUEST_OK).json(results);
   } catch (error) {
     return response.status(INTERNAL_SERVER_ERROR).json({ message: error.message });
@@ -29,7 +28,6 @@ const getRecipeById = async (request, response) => {
   try {
     const { id } = request.params;
     const results = await recipesModel.findRecipeById(id);
-    console.log(results);
     return response.status(REQUEST_OK).json(results);
   } catch (error) {
     return response.status(NOT_FOUND).json({

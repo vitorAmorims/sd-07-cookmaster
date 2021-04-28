@@ -1,4 +1,4 @@
-const { BAD_REQUEST, CONFLICT, UNAUTHORIZED } = require('../http');
+const { BAD_REQUEST, CONFLICT, UNAUTHORIZED, FORBIDDEN } = require('../http');
 
 const usersModel = require('../models/usersModel');
 
@@ -49,8 +49,19 @@ const checkLoginRequiredFields = (request, response, next) => {
   next();
 };
 
+const checkIfAdmin = (request, response, next) => {
+  const { role } = request.user;
+  if (role !== 'admin') {
+    return response.status(FORBIDDEN).json({
+      message: 'Only admins can register new admins',
+    });
+  }
+  next();
+};
+
 module.exports = {
   checkUserRequiredFields,
   checkIfExists,
   checkLoginRequiredFields,
+  checkIfAdmin,
 };

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 /* const bcrypt = require('bcrypt-nodejs'); */
 const { REQUEST_CREATED, REQUEST_OK,
-  INTERNAL_SERVER_ERROR, /* UNPROCESSABLE_ENTITY, */ UNAUTHORIZED } = require('../http');
+  INTERNAL_SERVER_ERROR, UNAUTHORIZED } = require('../http');
 const usersModel = require('../models/usersModel');
 
 const secret = 'trybe';
@@ -35,7 +35,19 @@ const signIn = async (request, response) => {
   }
 };
 
+const createAdminUser = async (request, response) => {
+  try {
+    const { name, email, password } = request.body;
+    const role = 'admin';
+    const results = await usersModel.registerUser(name, email, password, role);
+    return response.status(REQUEST_CREATED).json({ user: results });
+  } catch (error) {
+    return response.status(INTERNAL_SERVER_ERROR).json({ message: error.message });
+  }
+};
+
 module.exports = {
   createUser,
   signIn,
+  createAdminUser,
 };
