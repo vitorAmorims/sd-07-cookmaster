@@ -11,7 +11,7 @@ const CONFLICT = 409;
 const secret = 'ninguemiraadvinharessasenhatoda'; 
 
 const jwtConfig = {
-  expiresIn: 60 * 10,
+  expiresIn: 60 * 1000,
   algorithm: 'HS256',
 };
 
