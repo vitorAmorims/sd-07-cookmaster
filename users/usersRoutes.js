@@ -2,8 +2,8 @@ const express = require('express');
 const usersController = require('./usersController');
 
 const { 
-  validateUserMiddleware, validateLoginMiddleware,
-   /* validateLoginMiddleware */ 
+  validateUserMiddleware,
+  //  validateLoginMiddleware 
 } = require('../middleware/validatesMiddleware');
 
 const route = express.Router();

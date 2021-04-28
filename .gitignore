@@ -295,8 +295,6 @@ index.https
 duvidas.txt
 
 #connection
-util/errorMessages.js
-util/status.js
-util/index.js
+util/connection.js
 
 # End of https://www.toptal.com/developers/gitignore/api/node,macos,windows,linux,visualstudiocode,intellij

@@ -10,7 +10,6 @@ const jwtConfig = {
 };
 
 const registerUserService = async (user, role = 'user') => {
-  console.log('registerUserService', user)
   const emailService = await usersModel.findEmailModel(user.email);
   if (emailService) return null;
   const addService = await usersModel.registerUserModel(user, role);
@@ -19,7 +18,6 @@ const registerUserService = async (user, role = 'user') => {
 
 const findUserService = async () => {
   const findService = await usersModel.findUserModel();
-  console.log('findService',findService)
   return findService;
 };
 
@@ -28,17 +26,17 @@ const findEmailService = async (email) => {
   return findUser;
 };
 
-// const loginUserService = async (email, password) => {
-//   const findUser = await findEmailService(email);
-//   if (findUser.password === password) {
-//     const token = jwt.sign({ data: findUser.email }, secret, jwtConfig);
-//     return token;
-//   }
-// };
+const loginUserService = async (email, password) => {
+  const findUser = await findEmailService(email);
+  if (findUser.password === password) {
+    const token = jwt.sign({ data: findUser.email }, secret, jwtConfig);
+    return token;
+  }
+};
 
 module.exports = {
   registerUserService,
   findUserService,
   findEmailService,
-  // loginUserService,
+  loginUserService,
 };
