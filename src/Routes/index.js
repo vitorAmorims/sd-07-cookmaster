@@ -14,6 +14,8 @@ const { getAllRecipesMiddleware } = require('../Middlewares/Recipes/getAllRecipe
 const { getAllRecipesController } = require('../Controllers/Recipes/getAllRecipesController');
 const { getRecipeByIdMiddleware } = require('../Middlewares/Recipes/getRecipeByIdMiddleware');
 const { getRecipeByIdController } = require('../Controllers/Recipes/getRecipeByIdController');
+const { updateRecipeController } = require('../Controllers/Recipes/updateRecipeController');
+const { updateRecipeMiddleware } = require('../Middlewares/Recipes/updateRecipeMiddleware');
 // routes
 app.get('/', (_request, response) => {
     response.send();
@@ -24,5 +26,6 @@ app.post('/login', loginMiddleware, loginController);
 app.post('/recipes', addRecipeMiddleware, addRecipeController);
 app.get('/recipes', getAllRecipesMiddleware, getAllRecipesController);
 app.get('/recipes/:id', getRecipeByIdMiddleware, getRecipeByIdController);
+app.put('/recipes/:id', updateRecipeMiddleware, updateRecipeController);
 
 module.exports = app;
