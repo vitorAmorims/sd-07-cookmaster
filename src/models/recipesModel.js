@@ -31,7 +31,6 @@ connect().then(async (db) => {
   const recipe = await db
     .collection('recipes')
     .findOne(ObjectId(id));
-  console.log('return recipe', recipe);
   return recipe;
 });
 
