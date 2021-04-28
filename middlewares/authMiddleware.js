@@ -6,6 +6,8 @@ const { validMongoId } = require('../src/service/validation');
 
 const { status, message } = statusMsgMap['missing token'];
 
+const AUTH_ERR = 'missing auth token';
+
 const userValidation = async (id) => {
   if (!validMongoId(id)) {
     return false;
@@ -18,27 +20,28 @@ const userValidation = async (id) => {
 };
 
 const tokenValidation = (tkn) => {
-  if (!tkn) return { err: 'missing auth token' };
-  const jwtDecoded = jwt.verify(tkn, process.env.SECRET || '12345');
-  if (!jwtDecoded) {
-    console.log('No token', tkn, jwtDecoded);
-    return { err: 'missing token', status: 'missing auth token' };
+  try {
+    const jwtDecoded = jwt.verify(tkn, process.env.SECRET || '12345');
+    return jwtDecoded;
+  } catch (err) {
+    console.log(err);
+    return false;
   }
-  return jwtDecoded;
 };
 
-module.exports = async (req, _res, next) => {
+module.exports = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
+    if (!token) return res.status(status).json({ message: 'missing auth token' });
     const decodedToken = tokenValidation(token);
-    if (decodedToken.err) return next({ err: decodedToken.err });
+    if (!decodedToken) return res.status(status).json({ message });
     const { id } = decodedToken.data;
     const userExists = await userValidation(id);
     return !userExists
-      ? next({ err: 'Invalid token', status, message })
+      ? res.status(status).json(message)
       : next();
   } catch (err) {
     console.log(err, 'error');
-    return next({ err: 'authMiddleware error', status, message });
+    return res.status(statusMsgMap['permition denied'].status).json({ message: AUTH_ERR });
   }
 };

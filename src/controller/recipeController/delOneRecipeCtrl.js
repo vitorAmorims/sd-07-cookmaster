@@ -6,9 +6,9 @@ const delOneRecipeCtrl = Router();
 
 delOneRecipeCtrl.delete('/:id', async (req, res, next) => {
   try {
-    const { body, params, headers } = req;
+    const { params, headers } = req;
     const { authorization } = headers;
-    const deletionRes = await delRecipeServ(body, params, authorization);
+    const deletionRes = await delRecipeServ(params, authorization);
     if (deletionRes.err) return next(deletionRes);
     const { status } = deletionRes;
     return res.status(statusMsgMap[`${status}`].status)

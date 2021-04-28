@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { authMiddleware } = require('../middlewares');
 
 const {
+  delOneRecipeCtrl,
   editRecipeCtrl,
   getOneRecipeCtrl,
   getRecipesCtrl,
@@ -14,6 +15,6 @@ recipeRoutes.post('/', authMiddleware, insertRecipeCtrl);
 recipeRoutes.put('/:id', authMiddleware, editRecipeCtrl);
 recipeRoutes.get('/', getRecipesCtrl);
 recipeRoutes.get('/:id', getOneRecipeCtrl);
-// recipeRoutes.delete('/:id', delOneRecipeCtrl);
+recipeRoutes.delete('/:id', delOneRecipeCtrl);
 
 module.exports = recipeRoutes;

@@ -1,4 +1,5 @@
 const {
+  delRecipe,
   getRecipes,
   getRecipeById,
   insertRecipe,
@@ -7,6 +8,7 @@ const {
 const { getUserByEmail, getUserById, insertUser } = require('./userModel');
 
 module.exports = {
+  delRecipe,
   getRecipes,
   getRecipeById,
   getUserByEmail,
