@@ -32,4 +32,14 @@ const getRecipeById = (async (req, res, next) => {
     }
 });
 
-module.exports = { createRecipe, getAllRecipe, getRecipeById };
+const excludeRecipe = (async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        await recipeModel.exclude(id);
+        return res.status(StatusCodes.NO_CONTENT).json();
+    } catch (error) {
+        next(error);
+    }
+});
+
+module.exports = { createRecipe, getAllRecipe, getRecipeById, excludeRecipe };
