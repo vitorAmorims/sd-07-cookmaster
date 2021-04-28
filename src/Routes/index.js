@@ -10,6 +10,8 @@ const { loginController } = require('../Controllers/Users/loginController');
 // Import recipes
 const { addRecipeMiddleware } = require('../Middlewares/Recipes/addRecipeMiddleware');
 const { addRecipeController } = require('../Controllers/Recipes/addRecipeController');
+const { getAllRecipesMiddleware } = require('../Middlewares/Recipes/getAllRecipesMiddleware');
+const { getAllRecipesController } = require('../Controllers/Recipes/getAllRecipesController');
 // routes
 app.get('/', (_request, response) => {
     response.send();
@@ -18,5 +20,6 @@ app.get('/', (_request, response) => {
 app.post('/users', middlewareCreateUser, createUser);
 app.post('/login', loginMiddleware, loginController);
 app.post('/recipes', addRecipeMiddleware, addRecipeController);
+app.get('/recipes', getAllRecipesMiddleware, getAllRecipesController);
 
 module.exports = app;
