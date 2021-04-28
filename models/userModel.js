@@ -69,7 +69,7 @@ const editRecipeDB = async (id, name, ingredients, preparation) => {
   const data = await connection().then((db) =>
     db.collection('recipes').updateOne(
       { _id: id },
-      {$set: {
+      { $set: {
           name,
           ingredients,
           preparation,
@@ -88,7 +88,7 @@ const editRecipeDB = async (id, name, ingredients, preparation) => {
 
 const deleteRecipeDB = async (id) => {
   const deletedRecipe = await connection().then((db) =>
-    db.collection('recipes').deleteOne(ObjectId(id)));
+    db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
   // console.log(`deleteRecipeDB, deletedRecipe: ${deletedRecipe}`);
   return deletedRecipe;
 };
