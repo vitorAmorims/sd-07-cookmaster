@@ -1,9 +1,9 @@
 const { MongoClient } = require('mongodb');
 
 // const DEV = 'localhost';
-const TEST = 'mongodb';
+// const TEST = 'mongodb';
 
-const MONGO_DB_URL = `mongodb://${TEST}:27017/Cookmaster`;
+const MONGO_DB_URL = 'mongodb://mongodb:27017/Cookmaster';
 const DB_NAME = 'Cookmaster';
 
 const connection = () =>
@@ -11,9 +11,8 @@ const connection = () =>
     userNewParser: true,
     useUnifiedTopology: true,
   }).then((connect) => connect.db(DB_NAME))
-    .catch((error) => {
-      console.error(error);
-      process.exit(1);
+    .catch((_error) => {
+      process.exit();
     });
 
 module.exports = connection;
