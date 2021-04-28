@@ -8,7 +8,7 @@ const UNAUTHORIZED = 401;
 const validateTokenMiddleware = async (req, res, next) => {
   const token = req.headers.authorization;
 
-  if (!token) return res.status(UNAUTHORIZED).json({ message: 'jwt must be provided' });
+  if (!token) return res.status(UNAUTHORIZED).json({ message: 'missing auth token' });
   
   try {
     const decode = jwt.verify(token, secret);

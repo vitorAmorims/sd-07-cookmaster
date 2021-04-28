@@ -18,8 +18,25 @@ const getById = async (id) => {
   return connect().then((db) => db.collection('recipes').findOne(ObjectId(id)));
 };
 
+const update = async (id, name, ingredients, preparation) =>
+  connect().then(async (db) => db.collection('recipes')
+    .findOneAndUpdate(
+      { _id: ObjectId(id) },
+      { $set: { name, ingredients, preparation } },
+      { returnOriginal: false },
+  ));
+
+const exclude = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  return connect().then(async (db) => db
+    .collection('recipes').deleteOne({ _id: ObjectId(id) }));
+};
+
 module.exports = {
   add,
   getAll,
   getById,
+  update,
+  exclude,
 };

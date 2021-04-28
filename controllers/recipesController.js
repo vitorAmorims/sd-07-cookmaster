@@ -1,9 +1,10 @@
-const { add, getAll, getById } = require('../models/RecipesModel');
+const { add, getAll, getById, update, exclude } = require('../models/RecipesModel');
 // const {  } = require('../services/recipesService');
 const { verifyRequest } = require('../services/usersService');
 
 const SUCCESS = 200;
 const CREATED = 201;
+const NO_CONTENT = 204;
 const BAD_REQUEST = 400;
 const NOT_FOUND = 404;
 // const UNAUTHORIZED = 401;
@@ -18,7 +19,6 @@ const addRecipe = async (req, res) => {
     const recipe = await add(name, ingredients, preparation, _id);
     res.status(CREATED).json({ recipe });
   } catch (err) {
-    console.error(err.message);
     res.status(BAD_REQUEST).json({ message: err.message });
   }
 };
@@ -28,7 +28,6 @@ const getRecipes = async (_req, res) => {
     const recipes = await getAll();
     res.status(SUCCESS).json(recipes);
   } catch (err) {
-    console.error(err.message);
     res.status(BAD_REQUEST).json({ message: err.message });
   }
 };
@@ -40,9 +39,38 @@ const getRecipeById = async (req, res) => {
 
     res.status(SUCCESS).json(recipe);
   } catch (err) {
-    console.error(err.message);
     res.status(NOT_FOUND).json({ message: err.message });
   }
 };
 
-module.exports = { addRecipe, getRecipes, getRecipeById };
+const updateRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, ingredients, preparation } = req.body;
+    const newRecipe = await update(id, name, ingredients, preparation);
+    res.status(SUCCESS).json(newRecipe.value);
+  } catch (err) {
+    res.status(BAD_REQUEST).json(err);
+  }
+};
+
+const deleteRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const recipeDeleted = await exclude(id);
+
+    if (!recipeDeleted) throw new Error('not found');
+
+    res.status(NO_CONTENT).end();
+  } catch (err) {
+    res.status(NOT_FOUND).json(err);
+  }
+};
+
+module.exports = {
+  addRecipe,
+  getRecipes,
+  getRecipeById,
+  updateRecipe,
+  deleteRecipe,
+};
