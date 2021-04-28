@@ -14,6 +14,15 @@ const create = async (name, ingredients, preparation, userId) => {
   } };
 };
 
+const getAll = async () => {
+  const recipes = await conn().then((db) => db
+    .collection('recipes')
+    .find().toArray());
+
+  return recipes;
+};
+
 module.exports = {
   create,
+  getAll,
 };

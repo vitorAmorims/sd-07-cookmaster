@@ -10,4 +10,6 @@ router.post('/recipes',
   middleware.recipesMiddleware,
   recipesController.createRecipe);
 
+router.get('/recipes', recipesController.getAllRecipes);
+
 module.exports = router;
