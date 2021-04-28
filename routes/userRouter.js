@@ -22,14 +22,16 @@ const recipeExists = require('../middlewares/recipeExists');
 // rotas
 const routes = express.Router();
 
+const recipesIdEndPoint = '/recipes/:id';
+
 routes.post('/users', validateUser, existingEmail, addUser);
 routes.post('/login', validateLogin, loginExists, userLogin);
 routes.post('/recipes', validateRecipe, validateToken, addRecipe);
 routes.get('/recipes', getAllRecipes);
 // o teste desta rota fala que é para ver id não existe mas testa id inválido.
-routes.get('/recipes/:id', recipeExists, getRecipe);
+routes.get(recipesIdEndPoint, recipeExists, getRecipe);
 // esse fala que precisa voltar o user_id mas no teste não pede o user_id
-routes.put('/recipes/:id', validateToken, editRecipe);
-routes.delete('/recipes/:id', validateToken, deleteRecipe);
+routes.put(recipesIdEndPoint, validateToken, editRecipe);
+routes.delete(recipesIdEndPoint, validateToken, deleteRecipe);
 
 module.exports = routes;
