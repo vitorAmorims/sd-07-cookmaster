@@ -1,8 +1,43 @@
 const { ObjectId } = require('bson');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs').promises;
 const modelForRecipe = require('../model/modelForRecipe');
 const errorGenerator = require('../helpers/errorCreator');
 const code = require('../helpers/status.json');
 const message = require('../helpers/message.json');
+
+const pathFile = path.resolve(`${__dirname}/../images`);
+
+const storage = multer.diskStorage({
+    destination: (_req, _file, callback) => {
+        callback(null, 'images');
+    },
+
+   filename: (_req, file, callback) => {
+        callback(null, `${Date.now()}-${file.originalname}`);
+   },
+});
+
+const fileExistis = async (fileName) => {
+    const data = await fs.readdir(pathFile);
+    
+    const item = data.some((file) => file.includes(fileName));
+
+    return item;
+};
+
+const upload = multer({ storage,
+async fileFilter(req, file, callback) {
+    const myFile = await fileExistis(file.originalname);
+
+        if (myFile) {
+           return callback(null, false);
+        } 
+      
+          callback(null, true);
+  },
+});
 
 const getAll = async () => {
     const recipes = await modelForRecipe.getAll();
@@ -27,6 +62,11 @@ const create = async (name, ingredients, preparation, id) => {
     return recipe;
 };
 
+const insertImg = async (userId, localHost, imgPath) => {
+    const img = await modelForRecipe.insertImg(userId, localHost, imgPath);
+    return img;
+};
+
 const update = async (id, name, ingredients, preparation) => {
     const recipe = await modelForRecipe.update(id, name, ingredients, preparation);
     if (recipe === null || !recipe) {
@@ -36,7 +76,6 @@ const update = async (id, name, ingredients, preparation) => {
 };
 
 const exclude = async (id) => {
-    console.log(id);
     if (!ObjectId.isValid(id)) {
         return errorGenerator(code.Not_Found, message.recipe_not_found);
     }
@@ -60,4 +99,6 @@ module.exports = {
     update,
     exclude,
     getUserById,
+    insertImg,
+    upload,
 };

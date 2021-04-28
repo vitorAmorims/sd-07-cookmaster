@@ -15,7 +15,7 @@ const create = async (name, email, password, role) => {
 return user;
 };
 
-const getUseEmail = async (userEmail) => {
+const getUserEmail = async (userEmail) => {
     const user = await connection()
         .then((dataBase) => dataBase.collection(USER_COLLECTION)
         .findOne({ email: userEmail }));
@@ -32,6 +32,6 @@ const userValidate = async (email) => {
 module.exports = {
     getAll,
     create,
-    getUseEmail,
+    getUserEmail,
     userValidate,
 };

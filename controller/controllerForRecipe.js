@@ -2,6 +2,8 @@ const rescue = require('express-rescue');
 const serviceForRecipe = require('../service/serviceForRecipe');
 const decodeJwt = require('../helpers/decodeJwt');
 
+const storage = serviceForRecipe.upload;
+
 const getAll = async (_req, res) => {
     const recipes = await serviceForRecipe.getAll();
     res.status(200).json(recipes);
@@ -32,6 +34,17 @@ const create = rescue(async (req, res) => {
         return res.status(201)
         .json({ recipe: { name, ingredients, preparation, userId: _id, _id: id } });
 });
+
+const insertImg = async (req, res) => {
+    const { id } = req.params;
+    const localHost = 'localhost:3000/';
+    if (!req.file) {
+        return res.status(400).json({ message: 'File already exists' });
+    }
+    await serviceForRecipe.insertImg(id, localHost, req.file.path);
+    const recipe = await serviceForRecipe.getById(id);
+   res.status(200).json(recipe);
+};
 
 const update = async (req, res) => {
     try {
@@ -66,4 +79,6 @@ module.exports = {
     getById,
     update,
     exclude,
+    insertImg,
+    storage,
 };

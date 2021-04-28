@@ -26,6 +26,19 @@ const create = async (name, ingredients, preparation, userId) => {
         .then((dataBase) => dataBase.collection(RECIPE_COLLECTION)
         .insertOne({ name, ingredients, preparation, userId }));
     return recipe;
+}; 
+
+const insertImg = async (recipeId, localhost, imgPath) => {
+    const img = await connection().then((dataBase) => dataBase.collection(RECIPE_COLLECTION)
+        .updateOne(
+            { _id: ObjectId(recipeId) },
+            {  
+              $set: { 
+                image: `${localhost}${imgPath}`,
+              },
+            },
+          ));
+    return img;
 };
 
 const update = async (id, name, ingredients, preparation) => {
@@ -47,4 +60,5 @@ module.exports = {
     update,
     exclude,
     getUserById,
+    insertImg,
 };

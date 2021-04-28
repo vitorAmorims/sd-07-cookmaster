@@ -9,7 +9,7 @@ const getAll = async () => {
 };
 
 const getUserEmail = async (userEmail) => { // function only into this context
-    const user = await modelForUser.getUseEmail(userEmail);
+    const user = await modelForUser.getUserEmail(userEmail);
     if (user === null) {
         return false;
     }
