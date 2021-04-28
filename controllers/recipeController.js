@@ -53,4 +53,22 @@ const editRecipe = (async (req, res, next) => {
     }
 });
 
-module.exports = { createRecipe, getAllRecipe, getRecipeById, excludeRecipe, editRecipe };
+const addRecipeImage = (async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const urlImage = `localhost:3000/images/${id}.jpeg`;
+        const recipe = await recipeModel.addImage(id, urlImage);
+        return res.status(StatusCodes.OK).json(recipe);
+    } catch (err) {
+        return next(err);
+    }
+});
+
+module.exports = {
+    createRecipe,
+    getAllRecipe,
+    getRecipeById,
+    excludeRecipe,
+    editRecipe,
+    addRecipeImage,
+};

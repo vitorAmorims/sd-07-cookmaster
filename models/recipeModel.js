@@ -33,10 +33,21 @@ const findAll = async () => {
     return { _id: id, name, ingredients, preparation };
   };
 
+  const addImage = async (id, image) => {
+    const recipe = await findById(id);
+    connect().then((db) => db.collection('recipes')
+    .updateOne(
+      { _id: ObjectID(id) },
+      { $set: { ...recipe, image } },
+    ));
+    return { ...recipe, image };
+  };
+
 module.exports = {
     registerRecipe,
     findAll,
     findById,
     exclude,
     edit,
+    addImage,
 };
