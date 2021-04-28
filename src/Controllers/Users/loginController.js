@@ -2,6 +2,9 @@ const jwt = require('jsonwebtoken');
 const { loginService } = require('../../Services/userService');
 require('dotenv').config();
 
+// Secret for remote test
+const SECRET_PASS = 'minhasenhamuitosegura';
+
 const jwtConfig = {
     expiresIn: 60 * 5,
     algorithm: 'HS256',
@@ -12,7 +15,7 @@ const loginController = async (req, res) => {
   try {
     const result = await loginService(email, password);
     const token = jwt.sign({ data: result[0].email },
-      process.env.SECRET_PASS, jwtConfig);
+      SECRET_PASS, jwtConfig);
 
     return res.status(200).json({ token });
   } catch (error) {
