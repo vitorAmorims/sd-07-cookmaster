@@ -21,5 +21,5 @@ app.get('/', (request, response) => {
 
 // colocar template literals pra esse log e colocar o "PORT"
 app.listen(PORT, () => {
-  console.log('API rodando na porta 3000');
+  console.log(`API rodando na porta ${PORT}`);
 });

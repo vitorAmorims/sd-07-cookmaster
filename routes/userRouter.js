@@ -6,6 +6,7 @@ const { userLogin } = require('../controllers/userController');
 const { addRecipe } = require('../controllers/userController');
 const { getAllRecipes } = require('../controllers/userController');
 const { getRecipe } = require('../controllers/userController');
+const { editRecipe } = require('../controllers/userController');
 
 // Esse product vai ser feito com middlewares inicialmente, depois se estiver tranquilo levar para MSC
 // Middlewares
@@ -26,5 +27,6 @@ routes.post('/recipes', validateRecipe, validateToken, addRecipe);
 routes.get('/recipes', getAllRecipes);
 // o teste desta rota fala que é para ver id não existe mas testa id inválido.
 routes.get('/recipes/:id', recipeExists, getRecipe);
+routes.put('/recipes/:id', validateToken, editRecipe);
 
 module.exports = routes;

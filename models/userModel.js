@@ -65,6 +65,27 @@ const getRecipeDB = async (id) => {
   return recipeById;
 };
 
+const editRecipeDB = async (id, name, ingredients, preparation) => {
+  const data = await connection().then((db) =>
+    db.collection('recipes').updateOne(
+      { _id: id },
+      {$set: {
+          name,
+          ingredients,
+          preparation,
+        },
+      },
+    ));
+  console.log(`editRecipeDB, editedRecipe: ${data}`);
+  const editedRecipe = {
+    _id: id,
+    name,
+    ingredients,
+    preparation,
+  };
+  return editedRecipe;
+};
+
 module.exports = {
   addUserDB,
   findEmail,
@@ -72,4 +93,5 @@ module.exports = {
   addRecipeDB,
   getAllRecipesDB,
   getRecipeDB,
+  editRecipeDB,
 };

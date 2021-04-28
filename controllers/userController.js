@@ -3,6 +3,7 @@ const { addUserDB } = require('../models/userModel');
 const { addRecipeDB } = require('../models/userModel');
 const { getAllRecipesDB } = require('../models/userModel');
 const { getRecipeDB } = require('../models/userModel');
+const { editRecipeDB } = require('../models/userModel');
 
 const jwtConfig = {
   expiresIn: '2m',
@@ -54,10 +55,19 @@ const getRecipe = async (req, res) => {
   res.status(SUCCESS).json(data);
 };
 
+const editRecipe = async (req, res) => {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const data = await editRecipeDB(id, name, ingredients, preparation);
+  // console.log(`data em editRecipe: ${data}`);
+  res.status(SUCCESS).json(data);
+};
+
 module.exports = {
   addUser,
   userLogin,
   addRecipe,
   getAllRecipes,
   getRecipe,
+  editRecipe,
 };
