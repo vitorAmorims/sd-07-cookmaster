@@ -4,6 +4,7 @@ const { addRecipeDB } = require('../models/userModel');
 const { getAllRecipesDB } = require('../models/userModel');
 const { getRecipeDB } = require('../models/userModel');
 const { editRecipeDB } = require('../models/userModel');
+const { deleteRecipeDB } = require('../models/userModel');
 
 const jwtConfig = {
   expiresIn: '2m',
@@ -15,6 +16,7 @@ const secret = 'secretToken';
 
 const SUCCESS = 200;
 const CREATED = 201;
+const NoContent = 204;
 
 const addUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -63,6 +65,13 @@ const editRecipe = async (req, res) => {
   res.status(SUCCESS).json(data);
 };
 
+const deleteRecipe = async (req, res) => {
+  const { id } = req.params;
+  const data = await deleteRecipeDB(id);
+  console.log(`data em deleteRecipe: ${data}`);
+  res.status(NoContent).json();
+};
+
 module.exports = {
   addUser,
   userLogin,
@@ -70,4 +79,5 @@ module.exports = {
   getAllRecipes,
   getRecipe,
   editRecipe,
+  deleteRecipe,
 };

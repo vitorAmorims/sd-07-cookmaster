@@ -86,6 +86,13 @@ const editRecipeDB = async (id, name, ingredients, preparation) => {
   return editedRecipe;
 };
 
+const deleteRecipeDB = async (id) => {
+  const deletedRecipe = await connection().then((db) =>
+    db.collection('recipes').deleteOne(ObjectId(id)));
+  // console.log(`deleteRecipeDB, deletedRecipe: ${deletedRecipe}`);
+  return deletedRecipe;
+};
+
 module.exports = {
   addUserDB,
   findEmail,
@@ -94,4 +101,5 @@ module.exports = {
   getAllRecipesDB,
   getRecipeDB,
   editRecipeDB,
+  deleteRecipeDB,
 };
