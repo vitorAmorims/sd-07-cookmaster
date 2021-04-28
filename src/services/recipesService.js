@@ -28,9 +28,15 @@ const update = async (id, body, user) => {
   const { _id } = user;
   await validEntries(name, ingredients, preparation);
   await existID(id);
-  const updatedProduct = await recipesModel.updateByID(id, body, _id);
+  const updatedRecipe = await recipesModel.updateByID(id, body, _id);
 
-  return updatedProduct;
+  return updatedRecipe;
+};
+
+const excludeByID = async (id) => {
+  const recipe = await existID(id);
+  await recipesModel.excludeByID(id);
+  return recipe;
 };
 
 module.exports = {
@@ -38,4 +44,5 @@ module.exports = {
   getAll,
   getByID,
   update,
+  excludeByID,
 };

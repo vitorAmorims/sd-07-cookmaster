@@ -49,10 +49,16 @@ const updateByID = async (id, body, userId) => {
 });
 };
 
+const excludeByID = async (id) =>
+  connect().then(async (db) => db
+    .collection('recipes')
+    .deleteOne({ _id: ObjectId(id) }));
+
 module.exports = {
   add,
   auth,
   getAll,
   getByID,
   updateByID,
+  excludeByID,
 };
