@@ -1,11 +1,10 @@
-const rescue = require('express-rescue');
 const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModel');
 const { createUserValidation, loginUserValidation } = require('../services/userService');
 
 const secret = 'minhaSenhaUltraSecreta';
 
-const addNewUser = rescue(async (req, res) => {
+const addNewUser = async (req, res) => {
     const { name: newName, email: newEmail, password } = req.body;
     const validationResult = await createUserValidation(newName, newEmail, password);
     if (validationResult.message) {
@@ -21,9 +20,9 @@ const addNewUser = rescue(async (req, res) => {
     } catch (error) {
         throw new Error(error);
     }
-});
+};
 
-const login = rescue(async (req, res) => {
+const login = async (req, res) => {
     const { email: reqEmail, password } = req.body;
     const validation = await loginUserValidation(reqEmail, password);
     if (validation.message) {
@@ -41,7 +40,7 @@ const login = rescue(async (req, res) => {
     } catch (error) {
         throw new Error(error);
     }
-});
+};
 
 module.exports = {
     addNewUser,

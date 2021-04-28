@@ -1,5 +1,6 @@
 const express = require('express');
 const { tokenValidation } = require('../middlewares/tokenValidation');
+const { recipeNullCampsValidation } = require('../middlewares/recipeNullCampsValidation');
 const { 
     createNewRecipe, 
     showAllRecipes, 
@@ -12,8 +13,8 @@ const recipeRouters = express.Router();
 
 recipeRouters.get('/', showAllRecipes);
 recipeRouters.get('/:id', showRecipeById);
-recipeRouters.post('/', tokenValidation, createNewRecipe);
-recipeRouters.put('/:id', tokenValidation, updateRecipe);
+recipeRouters.post('/', recipeNullCampsValidation, tokenValidation, createNewRecipe);
+recipeRouters.put('/:id', recipeNullCampsValidation, tokenValidation, updateRecipe);
 recipeRouters.delete('/:id', deleteRecipe);
 
 module.exports = recipeRouters;
