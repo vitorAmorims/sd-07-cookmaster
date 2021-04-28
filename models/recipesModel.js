@@ -31,8 +31,28 @@ const getById = async (id) => {
   return recipe;
 };
 
+const update = async (id, updateItem, userId) => {
+  await conn().then((db) => db
+    .collection('recipes')
+    .updateOne({ _id: ObjectId(id) }, { $set: { updateItem, userId } }));
+
+  return {
+    _id: id, 
+    updateItem,
+    userId,
+  };
+};
+
+const exclude = async (id) => {
+  await conn().then((db) => db
+    .collection('recipes')
+    .deleteOne({ _id: ObjectId(id) }));
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
+  exclude,
 };

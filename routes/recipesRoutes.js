@@ -5,6 +5,8 @@ const middleware = require('../middlewares');
 
 const router = express.Router();
 
+const routeDomain = 'recipes';
+
 router.post('/recipes',
   middleware.authMiddleware,
   middleware.recipesMiddleware,
@@ -12,6 +14,16 @@ router.post('/recipes',
 
 router.get('/recipes', recipesController.getAllRecipes);
 
-router.get('/recipes/:id', middleware.recipeIdMiddleware, recipesController.getRecipeById);
+router.get(`/${routeDomain}/:id`, middleware.recipeIdMiddleware, recipesController.getRecipeById);
+
+router.put(`/${routeDomain}/:id`,
+  middleware.authMiddleware,
+  middleware.recipeIdMiddleware,
+  recipesController.updateRecipe);
+
+router.delete(`/${routeDomain}/:id`,
+  middleware.authMiddleware,
+  middleware.recipeIdMiddleware,
+  recipesController.deleteRecipe);
 
 module.exports = router;
