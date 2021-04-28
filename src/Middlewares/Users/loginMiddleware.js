@@ -5,16 +5,26 @@ const { loginService } = require('../../Services/userService');
 const EMAIL_REGEX = /^[a-z0-9.]+@[a-z]+\.[a-z]/i;
 const MINSIZE = 6;
 
+const validationPassword = (pass) => {
+  if (pass.length <= MINSIZE && pass !== 'admin') {
+    return {
+      status: 401,
+      message: { message: 'Incorrect username or password' },
+    };
+  }
+};
+
 const validationFilds = (email, password) => {
   if (!email || !password) {
     return { status: 401, message: { message: 'All fields must be filled' } };
   }
   if (!EMAIL_REGEX.test(email)) {
-    return { status: 401, message: { message: 'Incorrect username or password' } };
+    return {
+      status: 401,
+      message: { message: 'Incorrect username or password' },
+    };
   }
-  if (password.length <= MINSIZE) {
-    return { status: 401, message: { message: 'Incorrect username or password' } };
-  }
+  return validationPassword(password);
 };
 
 const validationLogin = (result, userPassword) => {
