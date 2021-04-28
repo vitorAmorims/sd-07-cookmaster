@@ -1,5 +1,5 @@
-// const recipesModel = require('../models/recipesModel');
 const recipesService = require('../services/recipesService');
+const recipesModel = require('../models/recipesModel');
 
 const OK = 200;
 const CREATE = 201;
@@ -15,16 +15,15 @@ const UNAUTHORIZED = 401;
 //   }
 // };
 
-// const getAll = async (_req, res) => {
-//   try {
-//     const results = await salesModel.getAll();
-
-//     res.status(OK).json({ sales: results });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(ERROR).json({ message: error.message });
-//   }
-// };
+const getAll = async (_req, res) => {
+  try {
+    const results = await recipesModel.getAll();
+    res.status(OK).json(results);
+  } catch (error) {
+    console.error(error);
+    res.status(ERROR).json({ message: error.message });
+  }
+};
 
 // const getById = async (req, res) => {
 //   try {
@@ -103,4 +102,5 @@ const add = async (req, res) => {
 
 module.exports = {
   add,
+  getAll,
 };

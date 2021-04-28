@@ -1,15 +1,27 @@
 // const { ObjectId } = require('mongodb');
 const connect = require('../../config/connection');
 
-// const getAll = () => connect()
-//   .then(db => db.collection('sales').find().toArray());
-
-// const getById = (id) => {
-//   if (!ObjectId.isValid(id)) return null;
+const getAll = async () => {
+  const recipes = await connect()
+  .then((db) => db.collection('recipes').find().toArray());
+  const responseModel = recipes.map((dbRecipe) => {
+    if (dbRecipe.userId) {
+      const { _id, recipe, userId } = dbRecipe;
+      const { name, ingredients, preparation } = recipe;
+      return { _id, name, ingredients, preparation, userId };
+    }
+    const { _id, name, ingredients, preparation } = dbRecipe;
+    return { _id, name, ingredients, preparation };
+  });
+  return responseModel;
+};
+/*
+const getById = (id) => {
+  if (!ObjectId.isValid(id)) return null;
   
-//   return connect()
-//     .then(db => db.collection('sales').findOne(ObjectId(id)));
-// };
+  return connect()
+    .then(db => db.collection('sales').findOne(ObjectId(id)));
+}; */
 
 const add = async (userId, recipe) => {
   const newRecipe = await connect()
@@ -51,4 +63,5 @@ const add = async (userId, recipe) => {
 
 module.exports = {
   add,
+  getAll,
 };

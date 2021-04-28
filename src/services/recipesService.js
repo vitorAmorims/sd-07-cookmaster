@@ -17,6 +17,7 @@ const verifyToken = async ({ authorization }) => {
   const user = await userModel.getUserByMail(decoded.email);
   return user;
 };
+
 /*
 const validateProductId = (productId) => {
   const product = productsModel.getById(productId);
@@ -46,6 +47,12 @@ const add = async ({ headers, body }) => {
   const { _id } = await verifyToken(headers);
 
   return recipesModel.add(_id, body);
+};
+/*
+const getAll = async () => {
+  // await jwt.decodifyToken(authorization);
+
+  return recipesModel.getAll();
 };
 /*
 const update = async (id, sale) => {
