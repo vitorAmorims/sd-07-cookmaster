@@ -1,9 +1,9 @@
 const connect = require('../util/connection');
 
-const findUserModel = async () => {
+const findUserModel = async () => (
   connect().then((db) => db.collection('users')
-    .find().toArray());
-};
+    .find().toArray())
+);
 
 const findEmailModel = async (email) => (
   connect().then((db) => db.collection('users')

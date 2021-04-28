@@ -23,21 +23,19 @@ const validateUserMiddleware = async (req, _res, next) => {
 };
 
 const MESSAGE = {
-  field: 'All filds must be filled',
+  filled: 'All fields must be filled',
 };
 const validateLoginMiddleware = async (req, _res, next) => {
   const userData = req.body;
   const validate = joi.object({
-    email: joi.string().email(),
-    password: joi.string(),
+    email: joi.string().email().required(),
+    password: joi.required(),
   }).validate(userData);
+  console.log('validate', validate)
   try {
-    if (!userData.email || !userData.password) { 
-      return next({ status: StatusCodes.UNAUTHORIZED, message: MESSAGE.field });
-    }  
     if (validate.error) {
       return next(
-        { status: StatusCodes.UNAUTHORIZED, message: 'Incorrect username rs password' },
+        { status: StatusCodes.UNAUTHORIZED, message: MESSAGE.filled },
       ); 
     }
     next();
@@ -46,17 +44,17 @@ const validateLoginMiddleware = async (req, _res, next) => {
   }
 };
 
-const validateTokenMiddleware = async (req, res, next) => {
+const validateTokenMiddleware = async (req, _res, next) => {
   const secret = 'cookmaster';
   const token = req.headers.authorization;
   if (!token) {
-    return next({ status: StatusCodes.UNAUTHORIZED, message: MESSAGE.fild }); 
+    return next({ status: StatusCodes.UNAUTHORIZED, message: MESSAGE.filled }); 
   }
   try {
     const decoded = jwt.verify(token, secret);
     const user = await usersModel.findEmailModel(decoded.data);
     if (!user) {
-      return next({ status: StatusCodes.UNAUTHORIZED, message: 'All filds must be filled' }); 
+      return next({ status: StatusCodes.UNAUTHORIZED, message: MESSAGE.filled }); 
     }
     req.user = user;
     next();
