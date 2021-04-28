@@ -29,18 +29,18 @@ const validateSaleId = (saleId) => {
   if (!sale) throw new Error(ERR_MESSAGE);
 
   return sale;
-};
-/*
-const getById = async (id) => {
-  const result = await salesModel.getById(id);
+}; */
 
-  if(!result) {
-    const ERROR_MESSAGE = 'Sale not found';
+const getById = async (id) => {
+  const result = await recipesModel.getById(id);
+
+  if (!result) {
+    const ERROR_MESSAGE = 'recipe not found';
     throw new Error(ERROR_MESSAGE);
   }
 
   return result;
-}; */
+};
 
 const add = async ({ headers, body }) => {
   validation(body);
@@ -72,4 +72,5 @@ const update = async (id, sale) => {
 
 module.exports = {
   add,
+  getById,
 };

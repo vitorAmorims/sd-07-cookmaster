@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/recipes', recipesController.getAll);
 
-// router.get('/recipes/:id', recipesController.getById);
+router.get('/recipes/:id', recipesController.getById);
 
 router.post('/recipes', recipesController.add);
 /*
