@@ -64,15 +64,16 @@ const update = async (id, data, userId) => {
   return { _id: id, name, ingredients, preparation };
 };
 
-// const deleteSale = (sale) => {
-//   connect()
-//     .then(db => db.collection('sales').deleteOne(sale));
-//   return sale;
-// };
+const deleteRecipe = (recipe) => {
+  connect()
+    .then((db) => db.collection('recipes').deleteOne(recipe));
+  return '';
+};
 
 module.exports = {
   add,
   getAll,
   getById,
   update,
+  deleteRecipe,
 };

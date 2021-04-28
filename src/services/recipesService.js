@@ -76,14 +76,16 @@ const update = async ({ params, headers, body }) => {
   return recipesModel.update(id, body);
 };
 
-// const deleteSale = async (id) => {
-//   const sale = await validateSaleId(id);
-
-//   return salesModel.deleteSale(sale);
-// };
+const deleteRecipe = async ({ params, headers }) => {
+  await verifyToken(headers);
+  const { id } = params;
+  const recipe = recipesModel.getById(id);
+  return recipesModel.deleteRecipe(recipe);
+};
 
 module.exports = {
   add,
   getById,
   update,
+  deleteRecipe,
 };

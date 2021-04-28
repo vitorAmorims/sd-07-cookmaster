@@ -3,6 +3,7 @@ const recipesModel = require('../models/recipesModel');
 
 const OK = 200;
 const CREATE = 201;
+const NO_CONTENT = 204;
 const BAD_REQUEST = 400;
 const UNAUTHORIZED = 401;
 const NOT_FOUND = 404;
@@ -75,28 +76,26 @@ const update = async (req, res) => {
   }
 };
 
-// const deleteSale = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const result = await salesService.deleteSale(id);
+const deleteRecipe = async (req, res) => {
+  try {
+    await recipesService.deleteRecipe(req);
 
-//     res.status(OK).json(result);
-//   } catch (error) {
-//     console.error(error);
+    res.status(NO_CONTENT).json();
+  } catch (error) {
+    console.error(error);
 
-//     const { message } = error;
-//     if (message.includes('id')) {
-//       objError.err.code = 'invalid_data';
-//       objError.err.message = 'Wrong sale ID format';
-//       res.status(UNPROCESS).json(objError);
-//     }
-//     res.status(ERROR).json({ message: error.message });
-//   }
-// };
+    const { message } = error;
+    if (message.includes('jwt') || message.includes('token')) {
+      res.status(UNAUTHORIZED).json({ message: error.message });
+    }
+    res.status(ERROR).json({ message: error.message });
+  }
+};
 
 module.exports = {
   add,
   getAll,
   getById,
   update,
+  deleteRecipe,
 };
