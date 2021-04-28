@@ -23,6 +23,7 @@ const servDictionary = {
   },
   BAD_INPUT_RECIPE: 'missing fields in recipe insertion',
   MISSING_DATA_IN_DB: 'db search returned empty',
+  INVALID_PRODUCT_ID: 'product id invalid',
 };
 
 module.exports = servDictionary;
