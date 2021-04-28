@@ -9,7 +9,7 @@ const insertRecipeServ = async (body, token) => {
   if (inputsInvalid) {
     return inputsInvalid;
   }
-  const { id } = jwt.verify(token, process.env.SECRET).data;
+  const { id } = jwt.verify(token, process.env.SECRET || '12345').data;
   const [insertionRes] = await insertRecipe(body, id);
   return { recipe: insertionRes, status: 'Created' };
 };

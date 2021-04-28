@@ -19,7 +19,7 @@ const userValidation = async (id) => {
 
 const tokenValidation = (tkn) => {
   if (!tkn) return { err: 'missing auth token' };
-  const jwtDecoded = jwt.verify(tkn, process.env.SECRET);
+  const jwtDecoded = jwt.verify(tkn, process.env.SECRET || '12345');
   if (!jwtDecoded) {
     console.log('No token', tkn, jwtDecoded);
     return { err: 'missing token', status: 'missing auth token' };

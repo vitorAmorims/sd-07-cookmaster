@@ -12,7 +12,7 @@ const editRecipeServ = async (body, params, token) => {
   const inputsInvalid = preCheckFields(body, MANDATORY_FIELDS);
   if (inputsInvalid) return inputsInvalid;
   // {status: BAD_INPUT};
-  const userId = jwt.verify(token, process.env.SECRET).data.id;
+  const userId = jwt.verify(token, process.env.SECRET || '12345').data.id;
   const editionRes = updateRecipe(body, userId, id);
   return editionRes.err
     ? editionRes

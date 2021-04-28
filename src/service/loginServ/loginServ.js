@@ -21,7 +21,7 @@ const loginServ = async (body) => {
   }
   const { _id, name, role } = userData;
   const payload = { id: _id, name, role };
-  const token = jwt.sign({ data: payload }, process.env.SECRET, JWT_CONFIG);
+  const token = jwt.sign({ data: payload }, process.env.SECRET || '12345', JWT_CONFIG);
   return { token, status: 'OK' };
   };
 
