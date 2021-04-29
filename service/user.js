@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const User = require('../models/user.js');
 const { code, message } = require('../config/statusTable');
 
@@ -14,7 +15,6 @@ const validateFields = (name, email, password) => {
 const addUser = async (name, email, password, role) => {
   const validation = validateFields(name, email, password);
   if (validation.message) return validation;
-
   const result = await User.addUser(name, email, password, role);
   if (!result) {
     return { code: code.conflict, message: message.conflict };
@@ -22,6 +22,25 @@ const addUser = async (name, email, password, role) => {
   return { code: code.created, result };
 };
 
+const login = async (email, password) => {
+  const secret = 'seusecretdetoken';
+  if (!email || !password) return { code: code.unauthorized, message: message.unauthorized };
+
+  const user = await User.login(email, password);
+
+  if (!user || user.password !== password || user.email !== email) return { code: code.unauthorized, message: message.incorrect_fields };
+
+  const jwtConfig = {
+    expiresIn: '7d',
+    algorithm: 'HS256',
+  };
+
+  const token = jwt.sign({ data: user }, secret, jwtConfig);
+
+  return { code: code.ok, token };
+};
+
 module.exports = {
   addUser,
+  login,
 };

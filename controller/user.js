@@ -21,6 +21,25 @@ const addUser = async (req, res) => {
   }
 };
 
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const { code, message, token } = await User.login(email, password);
+
+    if (!token) {
+      return res.status(code).json({
+        message,
+      });
+    }
+    res.status(200).json({ token });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: 'Erro interno', error: err });
+  }
+};
+
 module.exports = {
   addUser,
+  login,
 };
