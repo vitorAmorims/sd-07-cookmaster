@@ -1,6 +1,6 @@
 const { ObjectId } = require('bson');
 const multer = require('multer');
-// const path = require('path');
+const path = require('path');
 // const fs = require('fs').promises;
 const modelForRecipe = require('../model/modelForRecipe');
 const errorGenerator = require('../helpers/errorCreator');
@@ -8,10 +8,10 @@ const code = require('../helpers/status.json');
 const message = require('../helpers/message.json');
 
 // const pathFile = path.resolve(`${__dirname}/../images`);
-
+// console.log(pathFile);
 const storage = multer.diskStorage({
     destination: (_req, _file, callback) => {
-        callback(null, 'images');
+        callback(null, 'uploads');
     },
 
    filename: (req, file, callback) => 

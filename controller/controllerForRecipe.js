@@ -23,11 +23,6 @@ const create = rescue(async (req, res) => {
         const { authorization } = req.headers;
         const decoded = decodeJwt(authorization);
         const { _id } = decoded.payload.data;
-        // const errors = validationResult(req);
-        
-        // if (!errors.isEmpty()) {
-        //     return res.status(code.Bad_Request).json({ message: 'Invalid entries. Try again.' });
-        // }
       
         const recipe = await serviceForRecipe.create(name, ingredients, preparation, _id);
         const id = recipe.insertedId;
@@ -37,11 +32,12 @@ const create = rescue(async (req, res) => {
 
 const insertImg = async (req, res) => {
     const { id } = req.params;
-    const localHost = 'localhost:3000/';
-    // if (!req.file) {
-    //     return res.status(400).json({ message: 'It must be a jpeg file' });
-    // }
-    await serviceForRecipe.insertImg(id, localHost, req.file.path);
+    const LOCALHOST = 'localhost:3000/';
+    const IMAGES = 'images/';
+
+    const imageSet = IMAGES.concat(req.file.path.split('/')[1]);
+
+    await serviceForRecipe.insertImg(id, LOCALHOST, imageSet);
     const recipe = await serviceForRecipe.getById(id);
     res.status(200).json(recipe);
 };

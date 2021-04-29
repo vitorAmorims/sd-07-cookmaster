@@ -29,6 +29,7 @@ const create = async (name, ingredients, preparation, userId) => {
 }; 
 
 const insertImg = async (recipeId, localhost, imgPath) => {
+    console.log(`${localhost}${imgPath}`);
     const img = await connection().then((dataBase) => dataBase.collection(RECIPE_COLLECTION)
         .updateOne(
             { _id: ObjectId(recipeId) },

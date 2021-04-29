@@ -13,7 +13,7 @@ const getRole = async (req, res, next) => {
 
     const { _id: idToken, role } = decoded.payload.data;
 
-    const { userId } = await service.getById(recipeId); // UserId do usuario que criou a receita
+    const { userId } = await service.getById(recipeId);
     
     if (!idToken.match(userId) && role === 'admin') return next();
     
