@@ -21,10 +21,10 @@ const addRecipeMiddleware = (req, res, next) => {
   const { authorization } = req.headers;
   
   if (validationToken(authorization)) {
-      res.status(CODE_TOKEN_ERROR).json({ message: INVALID_TOKEN });
+    return res.status(CODE_TOKEN_ERROR).json({ message: INVALID_TOKEN });
   }
   if (verifyFilds(name, ingredients, preparation)) {
-      res.status(CODE_ERROR).json({ message: MESSAGE_ERROR });
+     return res.status(CODE_ERROR).json({ message: MESSAGE_ERROR });
   }
   next();
 };
