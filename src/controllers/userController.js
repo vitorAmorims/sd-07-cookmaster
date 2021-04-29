@@ -13,7 +13,6 @@ const add = async (req, res) => {
 
     res.status(CREATE).json(results);
   } catch (error) {
-    console.error(error);
     let response = BAD_REQUEST;
     const { message } = error;
     if (message.includes('Email')) {
@@ -29,7 +28,6 @@ const login = async (req, res) => {
 
     res.status(OK).json(result);
   } catch (error) {
-    console.error(error);
     let response = BAD_REQUEST;
     const { message } = error;
     if (message.includes('fields')

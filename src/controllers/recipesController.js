@@ -46,7 +46,6 @@ const add = async (req, res) => {
 
     res.status(CREATE).json(result);
   } catch (error) {
-
     const { message } = error;
     if (message.includes('Invalid')) {
       return res.status(BAD_REQUEST).json({ message: error.message });
@@ -64,7 +63,6 @@ const update = async (req, res) => {
     console.log(result);
     res.status(OK).json(result);
   } catch (error) {
-
     const { message } = error;
     if (message.includes('jwt') || message.includes('token')) {
       return res.status(UNAUTHORIZED).json({ message: error.message });
@@ -79,7 +77,6 @@ const deleteRecipe = async (req, res) => {
 
     res.status(NO_CONTENT).json();
   } catch (error) {
-
     const { message } = error;
     if (message.includes('jwt') || message.includes('token')) {
       return res.status(UNAUTHORIZED).json({ message: error.message });
