@@ -38,13 +38,13 @@ const loginMiddleware = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     if (validationFilds(email, password)) {
-      res
+      return res
         .status(validationFilds(email, password).status)
         .json(validationFilds(email, password).message);
     }
     const result = await loginService(email, password);
     if (validationLogin(result[0], password)) {
-      res
+      return res
         .status(validationLogin(result[0], password).status)
         .json(validationLogin(result[0], password).message);
     }

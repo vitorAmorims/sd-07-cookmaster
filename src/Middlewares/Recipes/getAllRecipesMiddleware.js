@@ -12,7 +12,7 @@ const getAllRecipesMiddleware = (req, res, next) => {
   const { authorization } = req.headers;
 
   if (authorization && validationToken(authorization)) {
-    res.status(CODE_TOKEN_ERROR).json({ message: INVALID_TOKEN });
+   return res.status(CODE_TOKEN_ERROR).json({ message: INVALID_TOKEN });
   }
 
   next();
