@@ -26,4 +26,11 @@ module.exports = {
     }
     next();
   },
+  validateDeleteRecipe(request, response, next) {
+    const { authorization } = request.headers;
+    if (!authorization) {
+      return response.status(httpStatus.UNAUTHORIZED).json({ message: 'missing auth token' });
+    }
+    next();
+  },
 };

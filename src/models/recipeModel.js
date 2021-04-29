@@ -21,4 +21,8 @@ module.exports = {
 
     return recipeUpdated;
   },
+  async delete(id) {
+    const recipeDeleted = await connect('recipes', 'deleteOne', { _id: ObjectId(id) });
+    return recipeDeleted.result;
+  },
 };

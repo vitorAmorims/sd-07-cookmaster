@@ -33,4 +33,14 @@ module.exports = {
     }
     return response.status(httpStatus).json(data);
   },
+  async delete(request, response) {
+    const { id } = request.params;
+    const { headers } = request;
+
+    const { status, message, httpStatus } = await recipeService.delete(id, headers);
+    if (status === 'failure') {
+      return response.status(httpStatus).json({ message });
+    }
+    return response.status(httpStatus).send();
+  },
 };

@@ -62,4 +62,15 @@ module.exports = {
     }
     return messageSuccess(recipeById, httpStatus.OK);
   },
+  async delete(id, headers) {
+    const token = headers.authorization;
+    const { user } = validateToken(token);
+    const recipeById = await recipeModel.getById(id);
+    const { _id } = user;
+    if (recipeById.userId === _id || user.role === 'admin') {
+      await recipeModel.delete(id);
+      return messageSuccess({}, httpStatus.NO_CONTENT);
+    }
+    return messageFailure('Não foi possivel criar', httpStatus.BAD_REQUEST);
+  },
 };
