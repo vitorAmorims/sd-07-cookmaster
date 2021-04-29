@@ -1,5 +1,4 @@
-// colocar query do MongoDB
-db.insertOne({
+db.users.insertOne({
   name: 'admin',
   email: 'root@email.com',
   password: 'admin',
