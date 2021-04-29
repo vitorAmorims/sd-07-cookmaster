@@ -14,5 +14,6 @@ routes.post('/login', validadeLoginUser, userController.login);
 routes.post('/recipes', validateCreateRecipe, recipeController.create);
 routes.get('/recipes', recipeController.getAll);
 routes.get('/recipes/:id', recipeController.getById);
+routes.put('/recipes/:id', validateCreateRecipe, recipeController.update);
 
 module.exports = routes;

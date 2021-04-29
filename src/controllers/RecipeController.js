@@ -24,4 +24,13 @@ module.exports = {
     }
     return response.status(httpStatus).json(data);
   },
+  async update(request, response) {
+    const { id } = request.params;
+    const { body, headers } = request;
+    const { status, data, message, httpStatus } = await recipeService.update(body, headers, id);
+    if (status === 'failure') {
+      return response.status(httpStatus).json({ message });
+    }
+    return response.status(httpStatus).json(data);
+  },
 };

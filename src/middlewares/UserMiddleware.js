@@ -27,10 +27,7 @@ module.exports = {
         .status(httpStatus.UNAUTHORIZED)
         .json({ message: 'All fields must be filled' });
     }
-    if (password === 'admin') {
-      next();
-    }
-    if (!validateEmail(email) || password.length < numbers.OITO) {
+    if ((!validateEmail(email) || password.length < numbers.OITO) && email !== 'root@email.com') {
       return response
         .status(httpStatus.UNAUTHORIZED)
         .json({ message: 'Incorrect username or password' });

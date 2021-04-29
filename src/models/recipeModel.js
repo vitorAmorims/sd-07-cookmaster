@@ -14,4 +14,11 @@ module.exports = {
     const recipe = await connect('recipes', 'findOne', { _id: ObjectId(id) });
     return recipe;
   },
+  async update(recipe, id) {
+    const recipeUpdated = await connect('recipes', 'updateOne',
+      { _id: ObjectId(id) },
+      { $set: recipe });
+
+    return recipeUpdated;
+  },
 };
