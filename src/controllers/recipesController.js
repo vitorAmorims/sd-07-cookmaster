@@ -35,7 +35,7 @@ const getById = async (req, res) => {
    } catch (error) {
     const { message } = error;
     if (message.includes('found')) {
-      return es.status(NOT_FOUND).json({ message: error.message });
+      return res.status(NOT_FOUND).json({ message: error.message });
     }
     res.status(ERROR).json({ message: error.message });
   }
