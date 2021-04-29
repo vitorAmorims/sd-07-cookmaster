@@ -10,11 +10,11 @@ const options = {
   useUnifiedTopology: true,
 };
 
-const connection = () =>
-  MongoClient.connect(MONGO_DB_URL, options)
+const connection = () => MongoClient.connect(MONGO_DB_URL, options)
     .then((conn) => conn.db(DB_NAME))
     .catch((err) => {
       console.log(`Database connection error: ${err}`);
-      process.exit();
+      // process.exit();
     });
+
 module.exports = connection;
