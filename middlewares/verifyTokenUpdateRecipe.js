@@ -15,16 +15,18 @@ const verifyTokenUpdateRecipeMiddleware = async (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) return res.status(401).json({ message: 'missing auth token' });
 
-   jwt.verify(token, secret, (err, decoded) => {
-    if (err) return res.status(401).json({ message: 'jwt malformed' });
+  try {
+    const decoded = jwt.verify(token, secret);
     req.tokenUserId = decoded.id;
     req.tokenUserRole = decoded.role;
-  });
-  
-  const userRecipe = await getUserByIdRecipe(idRecipe);
+  } catch (error) {
+    return res.status(401).json({ message: 'jwt malformed' });
+  }
 
-  req.recipeUserId = userRecipe.userId;
+  const userRecipe = await getUserByIdRecipe(idRecipe);
   
+  req.recipeUserId = userRecipe.userId;
+
   next();
 };
 
