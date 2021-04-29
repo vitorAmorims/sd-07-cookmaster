@@ -5,6 +5,7 @@ const { createRecipeController,
   updateRecipe,
  } = require('../controllers/recipes');
 const validateToken = require('../middlewares/validateToken');
+const updateToken = require('../middlewares/updateToken');
 
 const router = express.Router();
 
@@ -14,6 +15,6 @@ router.route('/recipes')
 
 router.route('/recipes/:id')
   .get(getRecipeById)
-  .put(updateRecipe);
+  .put(updateToken, updateRecipe);
 
 module.exports = router;

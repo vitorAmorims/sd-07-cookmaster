@@ -50,11 +50,14 @@ const updateRecipe = async (req, res) => {
   try {
     const { name, ingredients, preparation } = req.body;
     const { id } = req.params;
+    const { _id } = req.user;
+    const userId = _id;
     const recipeToUpdate = await updateRecipeService(id, name, ingredients, preparation);
-    res.status(httpStatus.SUCCESS).json(recipeToUpdate);
+    console.log(recipeToUpdate);
+    res.status(httpStatus.SUCCESS).json({ _id: id, name, ingredients, preparation, userId });
   } catch (error) {
     res.status(httpStatus.BAD_REQUEST).json({
-      message: 'não funfou :(',
+      message: error.message,
     });
   }
 };
