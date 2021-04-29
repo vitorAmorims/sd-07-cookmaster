@@ -3,6 +3,7 @@ const { createRecipeController,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
  } = require('../controllers/recipes');
 const validateToken = require('../middlewares/validateToken');
 const updateToken = require('../middlewares/updateToken');
@@ -15,6 +16,7 @@ router.route('/recipes')
 
 router.route('/recipes/:id')
   .get(getRecipeById)
-  .put(updateToken, updateRecipe);
+  .put(updateToken, updateRecipe)
+  .delete(updateToken, deleteRecipe);
 
 module.exports = router;

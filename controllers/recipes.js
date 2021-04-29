@@ -2,6 +2,7 @@ const { createRecipeService,
   getAllRecipesService,
   getRecipesByIdService,
   updateRecipeService,
+  deleteRecipeService,
  } = require('../service/recipes');
 const httpStatus = require('./httpStatus');
 
@@ -62,9 +63,23 @@ const updateRecipe = async (req, res) => {
   }
 };
 
+const deleteRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedRecipe = await deleteRecipeService(id);
+    console.log(deletedRecipe);
+    res.status(httpStatus.NO_CONTENT).end();
+  } catch (error) {
+    res.status(httpStatus.UNAUTHORIZED).json({
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   createRecipeController,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };

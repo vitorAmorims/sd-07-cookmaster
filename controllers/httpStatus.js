@@ -6,6 +6,7 @@ const httpStatus = {
   UNAUTHORIZED: 401,
   NOT_FOUND: 404,
   FORBIDDEN: 403,
+  NO_CONTENT: 204,
   
 };
 
