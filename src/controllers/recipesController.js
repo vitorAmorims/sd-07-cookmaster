@@ -21,7 +21,6 @@ const getAll = async (_req, res) => {
     const results = await recipesModel.getAll();
     res.status(OK).json(results);
   } catch (error) {
-    console.error(error);
     res.status(ERROR).json({ message: error.message });
   }
 };
@@ -47,7 +46,6 @@ const add = async (req, res) => {
 
     res.status(CREATE).json(result);
   } catch (error) {
-    console.error(error);
 
     const { message } = error;
     if (message.includes('Invalid')) {
@@ -66,11 +64,10 @@ const update = async (req, res) => {
     console.log(result);
     res.status(OK).json(result);
   } catch (error) {
-    console.error(error);
 
     const { message } = error;
     if (message.includes('jwt') || message.includes('token')) {
-      res.status(UNAUTHORIZED).json({ message: error.message });
+      return res.status(UNAUTHORIZED).json({ message: error.message });
     }
     res.status(ERROR).json({ message: error.message });
   }
@@ -82,7 +79,6 @@ const deleteRecipe = async (req, res) => {
 
     res.status(NO_CONTENT).json();
   } catch (error) {
-    console.error(error);
 
     const { message } = error;
     if (message.includes('jwt') || message.includes('token')) {
