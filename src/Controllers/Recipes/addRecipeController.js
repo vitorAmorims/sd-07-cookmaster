@@ -9,7 +9,7 @@ const SECRET_PASS = 'minhasenhamuitosegura';
 const decode = async (token) => {
     const result = jwt.verify(token, SECRET_PASS);
     const userId = await getUserByEmail(result.data);
-    const { _id } = await userId;
+    const { _id } = userId;
     return _id;
 };
 
