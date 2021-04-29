@@ -2,6 +2,8 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const recipesController = require('../controllers/recipesController');
+const imagesController = require('../controllers/imagesController');
+
 const middlewares = require('../middlewares');
 
 const router = express.Router();
@@ -28,5 +30,9 @@ router.put('/recipes/:id/image/',
   middlewares.loggedInMiddleware,
   upload.single('image'),
   recipesController.addImageRecipe);
-  
+
+// #10 endpoint para acessar a imagem de uma receita
+router.get('/images/:id',
+  imagesController.getImageById);
+
 module.exports = router;
