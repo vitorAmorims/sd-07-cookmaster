@@ -7,7 +7,7 @@ const secret = 'abc';
 const createUser = (async (req, res, next) => {
     try {
         const { name, email, password } = req.body;
-        const newUser = await userModel.registerUser(name, email, password);
+        const newUser = await userModel.registerUser(name, email, password, 'user');
         if (!newUser) throw Error;
         return res.status(StatusCodes.CREATED).json({ user: newUser });
     } catch (error) {
@@ -34,4 +34,20 @@ const loginUser = (async (req, res, next) => {
     }
 });
 
-module.exports = { createUser, loginUser };
+const adminUser = (async (req, res, next) => {
+    try {
+        if (req.userRole === 'admin') {
+            const { name, email, password } = req.body;
+            const newUser = await userModel.registerUser(name, email, password, 'admin');
+            if (!newUser) throw Error;
+            return res.status(StatusCodes.CREATED).json({ user: newUser });
+        } throw Error;
+    } catch (error) {
+        next({
+            status: StatusCodes.FORBIDDEN,
+            message: 'Only admins can register new admins',
+          });
+    }
+});
+
+module.exports = { createUser, loginUser, adminUser };
