@@ -3,7 +3,8 @@ const userService = require('../services/UserService');
 module.exports = {
   async create(request, response) {
     const { body } = request;
-    const { status, data, message, httpStatus } = await userService.create(body);
+    const { authorization } = request.headers;
+    const { status, data, message, httpStatus } = await userService.create(body, authorization);
     if (status === 'failure') {
       return response.status(httpStatus).json({ message });
     }

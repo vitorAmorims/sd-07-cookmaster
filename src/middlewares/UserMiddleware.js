@@ -1,4 +1,5 @@
 const httpStatus = require('../../helpers/httpStatus');
+const { validateToken } = require('../security/Authentication');
 
 const numbers = {
   CINCO: 5,
@@ -12,6 +13,13 @@ function validateEmail(email) {
 
 function validateInputs(email, password) {
   return (!validateEmail(email) || password.length < numbers.OITO) && email !== 'root@email.com';
+}
+
+function validateTokenAdmin(validatedToken) {
+  if (validatedToken.user.role === 'admin') {
+    return true;
+  }
+  return false;
 }
 
 module.exports = {
@@ -35,6 +43,17 @@ module.exports = {
       return response
         .status(httpStatus.UNAUTHORIZED)
         .json({ message: 'Incorrect username or password' });
+    }
+    next();
+  },
+  async validateCreateUserAdmin(request, response, next) {
+    const { authorization } = request.headers;
+
+    const validatedToken = validateToken(authorization);
+    console.log(validatedToken);
+    if (!validateTokenAdmin(validatedToken)) {
+      return response.status(httpStatus.FORBIDDEN).json({
+        message: 'Only admins can register new admins' });
     }
     next();
   },

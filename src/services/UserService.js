@@ -4,15 +4,17 @@ const httpStatus = require('../../helpers/httpStatus');
 const { getTokenByUser } = require('../security/Authentication');
 
 module.exports = {
-  async create(user) {
+  async create(user, authorization) {
     const { email, password, name } = user;
     const userByEmailExists = await userModel.findByEmail(email);
     if (userByEmailExists) {
       return messageFailure('Email already registered', httpStatus.CONFLICT);
     }
     let { role } = user;
-    if (!role) {
+    if (!authorization) {
       role = 'user';
+    } else {
+      role = 'admin';
     }
     const userCreated = await userModel.create({ name, email, password, role });
     return messageSuccess(userCreated, httpStatus.CREATED);
