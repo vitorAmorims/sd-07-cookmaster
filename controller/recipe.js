@@ -16,7 +16,7 @@ const addRecipe = async (req, res) => {
       });
     }
 
-    res.status(code).json({ recipe: result });
+    return res.status(code).json({ recipe: result });
   } catch (err) {
     console.log(err);
   }
@@ -32,7 +32,7 @@ const getRecipes = async (req, res) => {
       });
     }
 
-    res.status(code).json(result);
+    return res.status(code).json(result);
   } catch (err) {
     console.log(err);
   }
@@ -49,7 +49,7 @@ const getRecipeById = async (req, res) => {
       });
     }
 
-    res.status(code).json(result);
+    return res.status(code).json(result);
   } catch (err) {
     console.log(err);
   }
@@ -70,7 +70,7 @@ const editRecipeById = async (req, res) => {
         message,
       });
     }
-    res.status(code).json(result);
+    return res.status(code).json(result);
   } catch (err) {
     console.log(err);
   }
@@ -91,7 +91,7 @@ const deleteRecipeById = async (req, res) => {
         message,
       });
     }
-    res.status(code).json(result);
+    return res.status(code).json(result);
   } catch (err) {
     console.log(err);
   }
@@ -111,7 +111,7 @@ const uploadRecipeImage = async (req, res) => {
         message,
       });
     }
-    res.status(code).json(result);
+    return res.status(code).json(result);
   } catch (err) {
     console.log(err);
   }
@@ -121,7 +121,7 @@ const getImageFile = async (req, res) => {
   try {
     const { file } = req.params;
 
-    res.status(200).sendFile(path.join(__dirname, '../images', file));
+    return res.status(200).sendFile(path.join(__dirname, '../images', file));
   } catch (err) {
     console.log(err);
   }

@@ -7,12 +7,12 @@ const segredo = 'seusecretdetoken';
 module.exports = async (req, res, next) => {
   try {
   const token = req.headers.authorization;
-  if (!token) res.status(401).json({ message: 'missing auth token' });
+  if (!token) return res.status(401).json({ message: 'missing auth token' });
   
     const decoded = jwt.verify(token, segredo);
     const { email, password } = decoded.data;
     const user = await User.login(email, password);
-    if (!user) res.status(code.unauthorized).json({ message: 'jwt malformed' });
+    if (!user) return res.status(code.unauthorized).json({ message: 'jwt malformed' });
 
     req.data = decoded.data;
 

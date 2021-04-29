@@ -15,7 +15,7 @@ const addUser = async (req, res) => {
         message,
       });
     }
-    res.status(code).json({ user: result });
+    return res.status(code).json({ user: result });
   } catch (err) {
     console.log(err);
   }
@@ -32,7 +32,7 @@ const login = async (req, res) => {
         message,
       });
     }
-    res.status(200).json({ token });
+    return res.status(200).json({ token });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: 'Erro interno', error: err });
