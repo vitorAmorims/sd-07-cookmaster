@@ -16,7 +16,7 @@ route.put('/:id', middleware.authentication, controllerForRecipe.update);
 
 route.put('/:id/image/', 
     middleware.authentication, 
-    middleware.getRole, upload.single('file'), controllerForRecipe.insertImg);
+    middleware.getRole, upload.single('image'), controllerForRecipe.insertImg);
 
 route.delete('/:id', middleware.tokenMissing, middleware.getRole, controllerForRecipe.exclude);
 

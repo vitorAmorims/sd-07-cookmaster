@@ -11,7 +11,7 @@ const message = require('../helpers/message.json');
 
 const storage = multer.diskStorage({
     destination: (_req, _file, callback) => {
-        callback(null, 'images');
+        callback(null, 'uploads');
     },
 
    filename: (req, file, callback) => 
