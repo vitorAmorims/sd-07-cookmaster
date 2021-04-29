@@ -7,7 +7,8 @@ const addUser = async (name, email, password, role) => {
     password,
     role,
   };
-  const emailRegistered = await connection().then((db) => db.collection('users').find({ email }).count());
+  const emailRegistered = await connection().then((db) =>
+    db.collection('users').find({ email }).count());
   if (emailRegistered >= 1) return null;
   const insert = await connection().then((db) =>
     db.collection('users').insertOne(newUser));
@@ -19,6 +20,7 @@ const addUser = async (name, email, password, role) => {
 const login = async (email, password) => {
   const user = await connection().then((db) =>
     db.collection('users').find({ email, password }).toArray());
+  if (user.length === 0) return {};
   return user[0];
 };
 

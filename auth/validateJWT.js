@@ -5,9 +5,10 @@ const { code } = require('../config/statusTable');
 const segredo = 'seusecretdetoken';
 
 module.exports = async (req, res, next) => {
+  try {
   const token = req.headers.authorization;
   if (!token) res.status(401).json({ message: 'missing auth token' });
-  try {
+  
     const decoded = jwt.verify(token, segredo);
     const { email, password } = decoded.data;
     const user = await User.login(email, password);

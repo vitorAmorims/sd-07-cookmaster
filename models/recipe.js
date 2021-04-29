@@ -2,42 +2,85 @@ const { ObjectId } = require('bson');
 const connection = require('./connection');
 
 const addRecipe = async (name, ingredients, preparation, userId) => {
-  const recipe = await connection().then((db) =>
-    db
-      .collection('recipes')
-      .insertOne({ name, ingredients, preparation, userId }));
-  return recipe.ops[0];
+  try {
+    const recipe = await connection().then((db) =>
+      db
+        .collection('recipes')
+        .insertOne({ name, ingredients, preparation, userId }),
+    );
+    return recipe.ops[0];
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const getRecipes = async () => {
-  const recipes = await connection().then((db) =>
-    db.collection('recipes').find().toArray());
-  return recipes;
+  try {
+    const recipes = await connection().then((db) =>
+      db.collection('recipes').find().toArray(),
+    );
+    return recipes;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const getRecipeById = async (id) => {
-  if (id.length !== 24) return undefined;
-  const recipes = await connection().then((db) =>
-    db
-      .collection('recipes')
-      .find({ _id: ObjectId(id) })
-      .toArray());
-  return recipes[0];
+  try {
+    if (id.length !== 24) return undefined;
+    const recipes = await connection().then((db) =>
+      db
+        .collection('recipes')
+        .find({ _id: ObjectId(id) })
+        .toArray(),
+    );
+    return recipes[0];
+  } catch (err) {
+    console.log(err);
+  }
 };
 
-const editRecipeById = async (
-  name, ingredients, preparation, userId, role, id,
-) => {
- const recipe = await connection().then((db) => db.collection('recipes')
- .find({ _id: ObjectId(id) }).toArray());
-  const userIdRecipe = recipe[0].userId;
-  if (userIdRecipe === userId || role === 'admin') {
-    await connection().then((db) =>
-      db.collection('recipes').updateOne(
-          { _id: ObjectId(id) },
-          { $set: { name, ingredients, preparation } },
-));
-    return { _id: id, name, ingredients, preparation, userIdRecipe };
+const editRecipeById = async (recipeEdited, userId, role, id) => {
+  try {
+    const { name, ingredients, preparation } = recipeEdited;
+    const recipe = await getRecipeById(id);
+    const userIdRecipe = recipe.userId;
+    if (userIdRecipe === userId || role === 'admin') {
+      await connection().then((db) =>
+        db
+          .collection('recipes')
+          .updateOne({ _id: ObjectId(id) }, { $set: recipeEdited }),
+      );
+      return { _id: id, name, ingredients, preparation, userIdRecipe };
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const deleteRecipeById = async (userId, role, id) => {
+  try {
+    const recipe = getRecipeById(id);
+    const userIdRecipe = recipe.userId;
+    if (userIdRecipe === userId || role === 'admin') {
+      await connection().then((db) =>
+        db.collection('recipes').deleteOne({ _id: ObjectId(id) }),
+      );
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const uploadRecipeImage = async (userId, role, id, path) => {
+  try {
+    const recipe = await getRecipeById(id);
+    const userIdRecipe = recipe.userId;
+    if (userIdRecipe === userId || role === 'admin') {
+      return { ...recipe, image: `localhost:3000/${path}` };
+    }
+  } catch (err) {
+    console.log(err);
   }
 };
 
@@ -46,4 +89,6 @@ module.exports = {
   getRecipes,
   getRecipeById,
   editRecipeById,
+  deleteRecipeById,
+  uploadRecipeImage,
 };

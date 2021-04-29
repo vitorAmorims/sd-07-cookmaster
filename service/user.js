@@ -28,7 +28,9 @@ const login = async (email, password) => {
 
   const user = await User.login(email, password);
 
-  if (!user || user.password !== password || user.email !== email) return { code: code.unauthorized, message: message.incorrect_fields };
+  if (user.password !== password || user.email !== email) {
+    return { code: code.unauthorized, message: message.incorrect_fields };
+  }
 
   const jwtConfig = {
     expiresIn: '7d',

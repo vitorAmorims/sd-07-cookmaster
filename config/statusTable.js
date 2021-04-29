@@ -5,6 +5,7 @@ const code = {
   unauthorized: 401,
   ok: 200,
   not_found: 404,
+  no_content: 204,
 };
 
 const message = {
@@ -13,6 +14,7 @@ const message = {
   unauthorized: 'All fields must be filled',
   incorrect_fields: 'Incorrect username or password',
   recipe_not_found: 'recipe not found',
+  missing_auth: 'missing auth token',
 };
 
 module.exports = { code, message };

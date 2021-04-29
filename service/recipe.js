@@ -2,7 +2,9 @@ const Recipe = require('../models/recipe.js');
 const { code, message } = require('../config/statusTable');
 
 const addRecipe = async (name, ingredients, preparation, userId) => {
-  if (!name || !ingredients || !preparation) return { code: code.bad_request, message: message.bad_request };
+  if (!name || !ingredients || !preparation) {
+    return { code: code.bad_request, message: message.bad_request };
+  }
 
   const result = await Recipe.addRecipe(name, ingredients, preparation, userId);
 
@@ -23,10 +25,27 @@ const getRecipeById = async (id) => {
   return { code: code.ok, result };
 };
 
-const editRecipeById = async (name, ingredients, preparation, userId, role, id) => {
-  if (!name || !ingredients || !preparation) return { code: code.bad_request, message: message.bad_request };
+const editRecipeById = async (recipeEdited, userId, role, id) => {
+  const { name, ingredients, preparation } = recipeEdited;
+  if (!name || !ingredients || !preparation) {
+    return { code: code.bad_request, message: message.bad_request };
+  }
 
-  const result = await Recipe.editRecipeById(name, ingredients, preparation, userId, role, id);
+  const result = await Recipe.editRecipeById(recipeEdited, userId, role, id);
+
+  return { code: code.ok, result };
+};
+
+const deleteRecipeById = async (userId, role, id) => {
+  const result = await Recipe.deleteRecipeById(userId, role, id);
+
+  return { code: code.no_content, result };
+};
+
+const uploadRecipeImage = async (userId, role, id, path) => {
+  const result = await Recipe.uploadRecipeImage(userId, role, id, path);
+
+  if (!result) return { code: code.unauthorized, message: message.missing_auth };
 
   return { code: code.ok, result };
 };
@@ -36,4 +55,6 @@ module.exports = {
   getRecipes,
   getRecipeById,
   editRecipeById,
+  deleteRecipeById,
+  uploadRecipeImage,
 };
