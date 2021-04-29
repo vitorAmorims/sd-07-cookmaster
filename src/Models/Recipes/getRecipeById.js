@@ -1,6 +1,6 @@
 const { ObjectId } = require('bson');
 const connection = require('../connection');
-// require('dotenv').config();
+require('dotenv').config();
 
 // Collection remote test
 const DB_COLLECTION_RECIPES = 'recipes';
