@@ -2,7 +2,7 @@ const { MongoClient } = require('mongodb');
 // require('dotenv').config();
 
 // URL REMOTE TEST
-const DB_URL = 'mongodb://mongodb:27017/Cookmaster';
+const MONGO_DB_URL = 'mongodb://mongodb:27017/Cookmaster';
 const DB_NAME = 'Cookmaster';
 
 const options = {
@@ -11,7 +11,7 @@ const options = {
 };
 
 const connection = () =>
-  MongoClient.connect(DB_URL, options)
+  MongoClient.connect(MONGO_DB_URL, options)
     .then((conn) => conn.db(DB_NAME))
     .catch((err) => {
       console.log(`Database connection error: ${err}`);

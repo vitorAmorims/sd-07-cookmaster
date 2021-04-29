@@ -1,5 +1,6 @@
 const express = require('express');
 
+const recipeId = '/recipes/:id';
 const app = express();
 
 // import users
@@ -18,11 +19,12 @@ const { updateRecipeController } = require('../Controllers/Recipes/updateRecipeC
 const { updateRecipeMiddleware } = require('../Middlewares/Recipes/updateRecipeMiddleware');
 const { deleteRecipeController } = require('../Controllers/Recipes/deleteRecipeController');
 const { deleteRecipeMiddleware } = require('../Middlewares/Recipes/deleteRecipeMiddleware');
+
 // routes
-app.get('/', (_request, response) => {
+app.get('/', (request, response) => {
     response.send();
 });
-const recipeId = '/recipes/:id';
+
 app.post('/users', middlewareCreateUser, createUser);
 app.post('/login', loginMiddleware, loginController);
 app.post('/recipes', addRecipeMiddleware, addRecipeController);
