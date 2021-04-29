@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { addRecipe } = require('../../Models/Recipes/addRecipe');
 const { getUserByEmail } = require('../../Models/Users/getUserByEmail');
-require('dotenv').config();
+// require('dotenv').config();
 
 // Secret for remote test
 const SECRET_PASS = 'minhasenhamuitosegura';

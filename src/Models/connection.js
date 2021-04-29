@@ -1,5 +1,5 @@
 const { MongoClient } = require('mongodb');
-require('dotenv').config();
+// require('dotenv').config();
 
 // URL REMOTE TEST
 const MONGO_DB_URL = 'mongodb://mongodb:27017/Cookmaster';

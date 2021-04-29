@@ -8,7 +8,6 @@ const { getUserByEmailService } = require('../../Services/userService');
 
 const isName = (name) => {
   if (name === undefined) {
-    console.log('entrou aqui!');
     return true;
   }
 };

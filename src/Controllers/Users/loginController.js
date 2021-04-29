@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { loginService } = require('../../Services/userService');
-require('dotenv').config();
+// require('dotenv').config();
 
 // Secret for remote test
 const SECRET_PASS = 'minhasenhamuitosegura';

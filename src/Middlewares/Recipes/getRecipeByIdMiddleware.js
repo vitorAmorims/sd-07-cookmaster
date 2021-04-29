@@ -10,7 +10,6 @@ const validationToken = (token) => {
   }
 };
 
-// Adcionar uma chamada da model para verificar a existencia da receita no banco, 404 recipe not found
 const getRecipeByIdMiddleware = async (req, res, next) => {
   const { authorization } = req.headers;
   const { id } = req.params;
