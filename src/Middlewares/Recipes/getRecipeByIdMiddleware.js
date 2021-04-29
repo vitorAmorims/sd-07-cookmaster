@@ -16,11 +16,11 @@ const getRecipeByIdMiddleware = async (req, res, next) => {
 
   const recipeExist = await getRecipeById(id);
   if (!recipeExist) {
-    res.status(NOT_FOUND).json({ message: 'recipe not found' });
+   return res.status(NOT_FOUND).json({ message: 'recipe not found' });
   }
   
   if (authorization && validationToken(authorization)) {
-    res.status(CODE_TOKEN_ERROR).json({ message: INVALID_TOKEN });
+   return res.status(CODE_TOKEN_ERROR).json({ message: INVALID_TOKEN });
   }
 
   next();
