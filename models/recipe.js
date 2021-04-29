@@ -6,8 +6,7 @@ const addRecipe = async (name, ingredients, preparation, userId) => {
     const recipe = await connection().then((db) =>
       db
         .collection('recipes')
-        .insertOne({ name, ingredients, preparation, userId }),
-    );
+        .insertOne({ name, ingredients, preparation, userId }));
     return recipe.ops[0];
   } catch (err) {
     console.log(err);
@@ -17,8 +16,7 @@ const addRecipe = async (name, ingredients, preparation, userId) => {
 const getRecipes = async () => {
   try {
     const recipes = await connection().then((db) =>
-      db.collection('recipes').find().toArray(),
-    );
+      db.collection('recipes').find().toArray());
     return recipes;
   } catch (err) {
     console.log(err);
@@ -32,8 +30,7 @@ const getRecipeById = async (id) => {
       db
         .collection('recipes')
         .find({ _id: ObjectId(id) })
-        .toArray(),
-    );
+        .toArray());
     return recipes[0];
   } catch (err) {
     console.log(err);
@@ -49,8 +46,7 @@ const editRecipeById = async (recipeEdited, userId, role, id) => {
       await connection().then((db) =>
         db
           .collection('recipes')
-          .updateOne({ _id: ObjectId(id) }, { $set: recipeEdited }),
-      );
+          .updateOne({ _id: ObjectId(id) }, { $set: recipeEdited }));
       return { _id: id, name, ingredients, preparation, userIdRecipe };
     }
   } catch (err) {
@@ -64,8 +60,7 @@ const deleteRecipeById = async (userId, role, id) => {
     const userIdRecipe = recipe.userId;
     if (userIdRecipe === userId || role === 'admin') {
       await connection().then((db) =>
-        db.collection('recipes').deleteOne({ _id: ObjectId(id) }),
-      );
+        db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
     }
   } catch (err) {
     console.log(err);
@@ -81,8 +76,7 @@ const uploadRecipeImage = async (userId, role, id, path) => {
       await connection().then((db) =>
         db
           .collection('recipes')
-          .updateOne({ _id: ObjectId(id) }, { $set: { image: pathName } }),
-      );
+          .updateOne({ _id: ObjectId(id) }, { $set: { image: pathName } }));
       return { ...recipe, image: pathName };
     }
   } catch (err) {
