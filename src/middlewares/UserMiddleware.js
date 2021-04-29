@@ -10,6 +10,10 @@ function validateEmail(email) {
   return regex.test(String(email).toLowerCase());
 }
 
+function validateInputs(email, password) {
+  return (!validateEmail(email) || password.length < numbers.OITO) && email !== 'root@email.com';
+}
+
 module.exports = {
   validateCreateUser: (request, response, next) => {
     const { name, email, password } = request.body;
@@ -27,7 +31,7 @@ module.exports = {
         .status(httpStatus.UNAUTHORIZED)
         .json({ message: 'All fields must be filled' });
     }
-    if ((!validateEmail(email) || password.length < numbers.OITO) && email !== 'root@email.com') {
+    if (validateInputs(email, password)) {
       return response
         .status(httpStatus.UNAUTHORIZED)
         .json({ message: 'Incorrect username or password' });
