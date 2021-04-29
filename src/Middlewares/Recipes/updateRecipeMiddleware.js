@@ -18,13 +18,13 @@ const updateRecipeMiddleware = async (req, res, next) => {
 
     const recipe = await getRecipeById(id);
      if (!recipe) {
-        res.status(NOT_FOUND).json({ message: 'recipe not found' });
+       return res.status(NOT_FOUND).json({ message: 'recipe not found' });
     }
     if (!authorization) {
-        res.status(CODE_TOKEN_ERROR).json({ message: MISSING_TOKEN });
+       return res.status(CODE_TOKEN_ERROR).json({ message: MISSING_TOKEN });
     }
     if (validationToken(authorization)) {
-        res.status(CODE_TOKEN_ERROR).json({ message: INVALID_TOKEN });
+       return res.status(CODE_TOKEN_ERROR).json({ message: INVALID_TOKEN });
     }
     next();
 };   

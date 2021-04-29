@@ -13,10 +13,10 @@ const deleteRecipeMiddleware = async (req, res, next) => {
     const { authorization } = req.headers;
    
     if (!authorization) {
-        res.status(CODE_TOKEN_ERROR).json({ message: MISSING_TOKEN });
+       return res.status(CODE_TOKEN_ERROR).json({ message: MISSING_TOKEN });
     }
     if (validationToken(authorization)) {
-        res.status(CODE_TOKEN_ERROR).json({ message: INVALID_TOKEN });
+       return res.status(CODE_TOKEN_ERROR).json({ message: INVALID_TOKEN });
     }
     next();
 };   
