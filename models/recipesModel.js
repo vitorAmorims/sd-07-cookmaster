@@ -1,8 +1,6 @@
 const { ObjectId } = require('mongodb');
 const connect = require('./conn');
 
-// const userId = '1234567890';
-
 const createRecipe = async (name, ingredients, preparation, id) => 
   connect().then((db) =>
     db.collection('recipes').insertOne({ name, ingredients, preparation, userId: id }))
@@ -47,10 +45,25 @@ const deleteRecipe = async (id) => {
     ));
 };
 
+const addImageRecipe = async (id, image) => {
+  if (!ObjectId.isValid(id)) return null;
+
+const finalRecipe = await connect().then((db) =>
+    db
+      .collection('recipes')
+      .findOneAndUpdate(
+        { _id: ObjectId(id) },
+        { $set: { image } },
+        { returnOriginal: false },
+    ));
+    return finalRecipe.value;
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  addImageRecipe,
 };

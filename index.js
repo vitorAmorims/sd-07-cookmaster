@@ -16,6 +16,8 @@ app.use(routes.usersRoute);
 
 app.use(routes.recipesRoute);
 
+app.use(routes.imagesRoute);
+
 app.use(errorMiddleware);
 
 app.listen(PORT, () => {

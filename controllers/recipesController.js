@@ -67,10 +67,25 @@ const deleteRecipe = async (req, res) => {
   }
 };
 
+const addImageRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const image = `${req.hostname}:3000/images/${id}.jpeg`;
+    const finalRecipe = await recipesService.addImageRecipe(id, image);
+    res.status(200).json(finalRecipe);
+  } catch (error) {
+    res.status(500).json({
+      message: 'Erro ao enviar imagem',
+    });
+    console.log(error);
+  }
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  addImageRecipe,
 };
