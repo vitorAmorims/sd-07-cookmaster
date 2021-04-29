@@ -41,4 +41,16 @@ const create = async (name, ingredients, preparation, userId) => {
       .deleteOne({ _id: ObjectId(id) }));
   };
 
-module.exports = { create, getAllRecipes, getRecipeById, update, exclude };
+  const uploadImage = async (id) => { 
+    const recipe = await getRecipeById(id);
+    const { name, ingredients, preparation } = recipe;
+    const recipeUpload = await connect().then((db) => db.collection('recipes')
+    .findOneAndUpdate({ _id: ObjectId(id) },
+    { $set: { name, ingredients, preparation, image: `localhost:3000/images/${id}.jpeg` } },
+    { returnOriginal: false }));
+    console.log(recipe, 'model');
+    console.log(recipeUpload, 'model uploaded');
+    return recipeUpload.value;
+  };
+
+module.exports = { create, getAllRecipes, getRecipeById, update, exclude, uploadImage };

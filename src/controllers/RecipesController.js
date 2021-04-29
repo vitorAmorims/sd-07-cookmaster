@@ -55,4 +55,15 @@ const exclude = async (req, res, next) => {
   }
 };
 
-module.exports = { create, getAllRecipes, getRecipeById, update, exclude };
+const uploadImage = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const uploaded = await RecipesService.uploadImage(id);
+    console.log(uploaded, 'controller');
+    return res.status(SUCESS).json(uploaded);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { create, getAllRecipes, getRecipeById, update, exclude, uploadImage };
