@@ -35,7 +35,7 @@ const getById = async (req, res) => {
    } catch (error) {
     const { message } = error;
     if (message.includes('found')) {
-      res.status(NOT_FOUND).json({ message: error.message });
+      return es.status(NOT_FOUND).json({ message: error.message });
     }
     res.status(ERROR).json({ message: error.message });
   }
@@ -51,10 +51,10 @@ const add = async (req, res) => {
 
     const { message } = error;
     if (message.includes('Invalid')) {
-      res.status(BAD_REQUEST).json({ message: error.message });
+      return res.status(BAD_REQUEST).json({ message: error.message });
     }
     if (message.includes('jwt')) {
-      res.status(UNAUTHORIZED).json({ message: error.message });
+      return res.status(UNAUTHORIZED).json({ message: error.message });
     }
     res.status(ERROR).json({ message: error.message });
   }
@@ -86,7 +86,7 @@ const deleteRecipe = async (req, res) => {
 
     const { message } = error;
     if (message.includes('jwt') || message.includes('token')) {
-      res.status(UNAUTHORIZED).json({ message: error.message });
+      return res.status(UNAUTHORIZED).json({ message: error.message });
     }
     res.status(ERROR).json({ message: error.message });
   }
