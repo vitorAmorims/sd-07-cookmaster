@@ -36,8 +36,27 @@ const queryRecipesController = async (_req, res) => {
   }
 };
 
+const queryRecipeController = async (req, res, next) => {
+  const { id } = req.params;
+  console.log('id', id);
+  try {
+    const queryController = await recipesService.queryRecipeService(id);
+    console.log('queryController', queryController);
+    if (!queryController) {
+      return next(
+        { status: StatusCodes.NOT_FOUND, message: 'recipe not found' },
+      );
+    }
+    return res.status(StatusCodes.OK).json(queryController);
+  } catch (error) {
+    console.log('queryRecipesControlles', error.message);
+    throw new Error(error);
+  }
+};
+
 module.exports = {
   recipeId,
   addRecipeController,
   queryRecipesController,
+  queryRecipeController,
 };
