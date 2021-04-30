@@ -1,6 +1,6 @@
 /** @format */
 
-const { create, getEmail, getPassword } = require('./userModel');
+const { create, getEmail, getPassword, createAdmin } = require('./userModel');
 const {
   createRecipe,
   findAllRecipe,
@@ -18,6 +18,7 @@ module.exports = {
   createRecipe,
   findAllRecipe,
   findRecipeId,
+  createAdmin,
   upRecipe,
   deleteRecipe,
 };

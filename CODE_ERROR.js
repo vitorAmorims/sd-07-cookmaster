@@ -12,8 +12,10 @@ const ZERO = 0;
 const MIN = 5;
 const PORT = 3000;
 const USER = 'users';
+const ROLE_ADMIN = 'admin';
 const ROLE_USER = 'user';
 const UNAUTHORIZED = 401;
+const FORBIDDEN = 403;
 const RECIPE = 'recipes';
 
 module.exports = {
@@ -24,12 +26,14 @@ module.exports = {
   INTERNAL,
   USER,
   UNAUTHORIZED,
+  FORBIDDEN,
   CONFLIT,
   ROLE_USER,
   ENTITY,
   ZERO,
   MIN,
   NOT_FOUND,
+  ROLE_ADMIN,
   PORT,
   RECIPE,
 };

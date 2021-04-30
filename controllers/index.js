@@ -1,8 +1,8 @@
 /** @format */
 
-const { createUsers } = require('./userController');
+const { createUsers, createAdmin } = require('./userController');
 const { login } = require('./loginController');
-const { UpImage } = require('./imageController');
+const { upImageController } = require('./imageController');
 const {
   createRecipe,
   recipesGet,
@@ -14,7 +14,8 @@ const {
 module.exports = {
   createUsers,
   login,
-  UpImage,
+  createAdmin,
+  upImageController,
   createRecipe,
   recipesGet,
   recipesGetId,

@@ -1,12 +1,8 @@
 /** @format */
-const express = require('express');
-
 const { Router } = require('express');
 const { body } = require('express-validator');
-const path = require('path');
-const { uploadImage } = require('../services');
 
-const { validToken, validRecipeMiddleware } = require('../Middlewares');
+const { validToken, validRecipeMiddleware, multerMiddleware } = require('../Middlewares');
 
 const {
   createRecipe,
@@ -14,7 +10,8 @@ const {
   recipesGetId,
   recipesUp,
   recipesDelete,
-  UpImage,
+  upImageController,
+  imageUploadService,
 } = require('../controllers');
 
 const rota = '/recipes/:id';
@@ -57,13 +54,12 @@ routerRecipe.delete(
   validRecipeMiddleware,
   recipesDelete,
 );
-routerRecipe.use('images', express.static(path.join(__dirname, '../uploads')));
 
 routerRecipe.put(
   '/recipes/:id/image',
   validToken,
-  uploadImage,
-  UpImage,
+  multerMiddleware,
+  upImageController,
 );
 
 module.exports = { routerRecipe };

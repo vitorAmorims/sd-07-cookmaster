@@ -1,9 +1,8 @@
 /** @format */
 
-const { createUser, getEmailUser } = require('./userService');
+const { createUser, getEmailUser, createAdmins } = require('./userService');
 const { getLogin } = require('./loginService');
-const { imageService } = require('./imageService');
-const { uploadImage } = require('./uploadImageService');
+const { imageService, imageUploadService } = require('./imageService');
 const {
   createRecipes,
   getRecipes,
@@ -16,8 +15,9 @@ module.exports = {
   createUser,
   getEmailUser,
   getLogin,
+  imageUploadService,
   imageService,
-  uploadImage,
+  createAdmins,
   createRecipes,
   getRecipes,
   getIdRecipes,

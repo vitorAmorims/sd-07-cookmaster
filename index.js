@@ -1,6 +1,7 @@
 const express = require('express');
+const path = require('path');
 
-const { routerUser, routerRecipe } = require('./routes');
+const { routerUser, routerRecipe, routerAdmin } = require('./routes');
 
 const { errorMiddleware } = require('./Middlewares');
 
@@ -12,7 +13,7 @@ app.use(express.json());
 
 // routerUser
 
-const router = [routerUser, routerRecipe];
+const router = [routerUser, routerRecipe, routerAdmin];
 
 app.use(router);
 
@@ -20,6 +21,8 @@ app.use(router);
 app.get('/', (_req, res) => {
   res.send();
 });
+
+app.use('images', express.static(path.resolve(`${__dirname}/uploads`)));
 
 app.use(errorMiddleware);
 
