@@ -10,4 +10,9 @@ const findByEmail = async (email) => {
   return response;
 };
 
-module.exports = { createUser, findByEmail };
+const login = async (email, password) => {
+  const response = await userModel.login(email, password);
+  return response;
+};
+
+module.exports = { createUser, findByEmail, login };
