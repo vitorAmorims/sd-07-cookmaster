@@ -9,7 +9,8 @@ const createUser = async (req, res) => {
     const { name, email, password } = req.body;
     const result = await userServeices.createUser(name, email, password);
     console.log('saiu de Controller');
-    return res.status(CREATED).json(result);
+    console.log(result.ops[0]);
+    return res.status(CREATED).json({ result: result.ops[0] });
   } catch (error) {
     console.log('ERRO em controller');
     res.status(FAIL).json({ message: error.message }); 
