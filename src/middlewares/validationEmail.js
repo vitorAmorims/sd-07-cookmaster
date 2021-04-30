@@ -1,4 +1,4 @@
-const { findByEmail } = require('../models/userModel');
+const { findByEmail } = require('../service/userServices');
 
 const validEmail = async (req, res, next) => {
   const { email } = req.body;
