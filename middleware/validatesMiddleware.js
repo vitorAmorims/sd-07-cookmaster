@@ -31,7 +31,6 @@ const validateLoginMiddleware = async (req, _res, next) => {
     email: joi.string().email().required(),
     password: joi.required(),
   }).validate(userData);
-  console.log('validate', validate);
   try {
     if (validate.error) {
       return next(
@@ -48,15 +47,34 @@ const validateTokenMiddleware = async (req, _res, next) => {
   const secret = 'cookmaster';
   const token = req.headers.authorization;
   if (!token) {
-    return next({ status: StatusCodes.UNAUTHORIZED, message: MESSAGE.filled }); 
+    return next({ status: StatusCodes.UNAUTHORIZED, message: 'jwt malformed' }); 
   }
   try {
     const decoded = jwt.verify(token, secret);
-    const user = await usersModel.findEmailModel(decoded.data);
+    const user = await usersModel.findEmailModel(decoded.email);
     if (!user) {
       return next({ status: StatusCodes.UNAUTHORIZED, message: MESSAGE.filled }); 
     }
     req.user = user;
+    next();
+  } catch (error) {
+    next({ status: StatusCodes.UNAUTHORIZED, message: 'jwt malformed' });
+  }
+};
+
+const validateRecipesMiddleware = async (req, _res, next) => {
+  const recipeData = req.body;
+  const validate = joi.object({
+    name: joi.string().required(),
+    ingredients: joi.string().required(),
+    preparation: joi.string().required(),
+  }).validate(recipeData);
+  try {
+    if (validate.error) {
+       return next(
+        { status: StatusCodes.BAD_REQUEST, message: 'Invalid entries. Try again.' },
+      ); 
+    }
     next();
   } catch (error) {
     return null;
@@ -67,4 +85,5 @@ module.exports = {
   validateUserMiddleware,
   validateLoginMiddleware,
   validateTokenMiddleware,
+  validateRecipesMiddleware,
 };

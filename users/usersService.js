@@ -29,7 +29,9 @@ const findEmailService = async (email) => {
 const loginUserService = async (email, password) => {
   const findUser = await findEmailService(email);
   if (findUser && findUser.password === password) {
-    const token = jwt.sign({ data: findUser.email }, secret, jwtConfig);
+    const data = { ...findUser };
+    delete data.password;
+    const token = jwt.sign(data, secret, jwtConfig);
     return token;
   }
 };

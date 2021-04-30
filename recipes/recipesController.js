@@ -1,4 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
+const recipesService = require('./recipesService');
 
 const recipeId = (req, res) => {
   try {
@@ -12,4 +13,20 @@ const recipeId = (req, res) => {
   }
 };
 
-module.exports = recipeId;
+const addRecipeController = async (req, res) => {
+  const recipe = req.body;
+  const { _id: userId } = req.user;
+  try {
+    const newRecipe = await recipesService.addRecipeService(recipe, userId);
+    if (!newRecipe) return null;
+    return res.status(StatusCodes.CREATED).json(newRecipe);
+  } catch (error) {
+    console.log('addRecipeController', error.message);
+    throw new Error(error);
+  }
+};
+
+module.exports = {
+  recipeId,
+  addRecipeController,
+};

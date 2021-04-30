@@ -20,7 +20,6 @@ const registerUserController = async (req, res, next) => {
 const findUserController = async (_req, res) => {
   try {
     const findController = await usersService.findUserService();
-    console.log('findController', findController);
     return res.status(StatusCodes.OK).json({ findController });
   } catch (error) {
     console.log('findUserController', error.message);

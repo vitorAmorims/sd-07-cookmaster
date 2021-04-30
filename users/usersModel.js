@@ -5,9 +5,9 @@ const findUserModel = async () => (
     .find().toArray())
 );
 
-const findEmailModel = async (email) => (
+const findEmailModel = async (userEmail) => (
   connect().then((db) => db.collection('users')
-    .findOne({ email }))
+    .findOne({ email: userEmail }))
 );
 
 const registerUserModel = async (user, role) => (

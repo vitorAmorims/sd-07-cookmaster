@@ -1,5 +1,9 @@
 const express = require('express');
 const multer = require('multer');
+const { 
+  validateRecipesMiddleware,
+  validateTokenMiddleware, 
+} = require('../middleware/validatesMiddleware');
 const recipesController = require('./recipesController');
 
 const route = express.Router();
@@ -17,7 +21,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-route.get('/recipes', recipesController.findUserController);
+// route.get('/recipes', recipesController.findUserController);
+route.post('/recipes',
+validateRecipesMiddleware,
+validateTokenMiddleware,
+recipesController.addRecipeController);
 route.post('/recipes/:id/image/', upload.array('file'), recipesController.recipeId);
 
 module.exports = route;
