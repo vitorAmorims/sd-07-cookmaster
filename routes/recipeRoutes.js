@@ -11,7 +11,6 @@ const {
   recipesUp,
   recipesDelete,
   upImageController,
-  imageUploadService,
 } = require('../controllers');
 
 const rota = '/recipes/:id';

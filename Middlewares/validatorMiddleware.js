@@ -1,10 +1,9 @@
 /** @format */
-
+const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const { BAD_REQ, CONFLIT, FORBIDDEN, UNAUTHORIZED } = require('../CODE_ERROR');
 const { getEmailUser } = require('../services');
 const { getEmail } = require('../models');
-const jwt = require('jsonwebtoken');
 
 const E1 = {
   status: BAD_REQ,
