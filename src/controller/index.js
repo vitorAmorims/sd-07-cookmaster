@@ -5,11 +5,14 @@ const FAIL = 400;
 
 const createUser = async (req, res) => {
   try {
-    const { name, quantity } = req.body;
-    const result = await userServeices.createProducts(name, quantity);
-    res.status(CREATED).json(result);
+    console.log('entro em controller');
+    const { name, email, password } = req.body;
+    const result = await userServeices.createUser(name, email, password);
+    console.log('saiu de Controller');
+    return res.status(CREATED).json(result);
   } catch (error) {
-    res.status(FAIL).json({ err: { code: 'invalid_data', message: error.message } });
+    console.log('ERRO em controller');
+    res.status(FAIL).json({ message: error.message }); 
   }
 };
 
