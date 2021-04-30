@@ -53,9 +53,8 @@ const recipesGetId = async (req, res) => {
 const recipesUp = async (req, res) => {
   try {
     const { id } = req.params;
-    const { userId: ids } = req.user;
     const { name, ingredients, preparation } = req.body;
-    const update = await upRecipes(id, name, ingredients, preparation, ids);
+    const update = await upRecipes(id, name, ingredients, preparation);
     return res.status(SUCCESS).json(update);
   } catch (error) {
     return res.status(NOT_FOUND).json(E2);

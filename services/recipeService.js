@@ -11,8 +11,8 @@ const {
 const getIdRecipes = async (id) => findRecipeId(id);
 const getRecipes = async () => findAllRecipe();
 const deleteRecipes = async (id) => deleteRecipe(id);
-const upRecipes = async (id, name, ingredients, preparation, ids) =>
-  upRecipe(id, name, ingredients, preparation, ids);
+const upRecipes = async (id, name, ingredients, preparation) =>
+  upRecipe(id, name, ingredients, preparation);
 
 const createRecipes = async (name, ingredients, preparation, id) =>
   createRecipe(name, ingredients, preparation, id);
