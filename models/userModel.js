@@ -1,8 +1,11 @@
 const connection = require('../config/conn');
 
+const getAllUsers = async () =>
+  connection().then((db) => db.collection('users').find().toArray());
+
 const registerUser = async (name, email, password) =>
   connection().then((db) =>
-    db.collection('users').insertOne({ email, password, name, role: 'user' }))
+    db.collection('users').insertOne({ name, email, password, role: 'user' }))
     .then((result) => result.ops[0]);
 
 const getUserEmail = async (email) => {
@@ -11,9 +14,8 @@ const getUserEmail = async (email) => {
   return userEmail;
 };
 
-// const getAll = async () =>
-//   connection().then((db) => db.collection('users').find().toArray());
 module.exports = {
-  registerUser,
+  getAllUsers,
   getUserEmail,
+  registerUser,
 };
