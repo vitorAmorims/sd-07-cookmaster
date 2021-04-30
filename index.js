@@ -1,6 +1,8 @@
 const express = require('express');
+const router = require('./src/router');
 
 const app = express();
+app.use(express.json());
 
 const PORT = 3000;
 
@@ -9,4 +11,6 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.listen(PORT, () => { console.log('API rodando na porta 3000'); });
+app.use(router);
+
+app.listen(PORT, () => { console.log(`API rodando na porta ${PORT}`); });
