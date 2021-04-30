@@ -1,11 +1,16 @@
 const express = require('express');
 const controller = require('../controller');
+const middleware = require('../middlewares');
 
 const router = express.Router();
 
 const recipeIdURL = '/recipes/:id';
 
-router.post('/users', controller.createUser);
+router.post('/users',
+  middleware.validationName,
+  middleware.validationEmail,
+  middleware.validationPassword,
+  controller.createUser);
 router.post('/login', '');
 router.post('/recipes', '');
 router.get('/recipes', '');
