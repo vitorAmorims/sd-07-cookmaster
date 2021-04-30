@@ -8,10 +8,13 @@ const router = express.Router();
 
 router.post('/users',
   middleware.validationName,
-  middleware.validationEmail,
+  middleware.validationEmailCreate,
   middleware.validationPassword,
   controller.createUser);
-// router.post('/login', '');
+router.post('/login',
+  middleware.validationPasswordLogin,
+  middleware.validationEmail,
+  controller.login);
 // router.post('/recipes', '');
 // router.get('/recipes', '');
 // router.get(recipeIdURL, '');

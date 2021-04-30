@@ -17,4 +17,12 @@ const createUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser };
+const login = async (req, res) => {
+  try {
+    return console.log('ok');
+  } catch (error) {
+    return res.status(FAIL).json({ message: error.message }); 
+  }
+};
+
+module.exports = { createUser, login };
