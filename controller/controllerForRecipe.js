@@ -18,6 +18,11 @@ const getById = async (req, res) => {
     res.status(200).json(recipe);
 };
 
+// const getFile = async (req, res) => {
+//     const img = await serviceForRecipe.getFile(req.params.id);
+//     res.status(200).json('http://localhost:300/'.concat(img));
+// };
+
 const create = rescue(async (req, res) => {
         const { name, ingredients, preparation } = req.body;
         const { authorization } = req.headers;
@@ -77,4 +82,5 @@ module.exports = {
     exclude,
     insertImg,
     storage,
+    // getFile,
 };

@@ -7,37 +7,19 @@ const errorGenerator = require('../helpers/errorCreator');
 const code = require('../helpers/status.json');
 const message = require('../helpers/message.json');
 
-// const pathFile = path.resolve(`${__dirname}/../images`);
-// console.log(pathFile);
+// const pathFile = path.resolve(`${__dirname}/../uploads`);
+
 const storage = multer.diskStorage({
     destination: (_req, _file, callback) => {
         callback(null, 'uploads');
     },
 
    filename: (req, file, callback) => 
-    //    if (!file.originalname.endsWith('jpeg')) {
-    //      return callback(null, false);
-    //    }
-
-        callback(null, `${req.params.id}.jpeg`)
-   ,
+    callback(null, `${req.params.id}.jpeg`),
 });
-
-// const fileExistis = async (fileName) => {
-//     const data = await fs.readdir(pathFile);
-//     const item = data.some((file) => file.includes(fileName));
-
-//     return item;
-// };
 
 const upload = multer({ storage,
     async fileFilter(req, file, callback) {
-    // const myFile = await fileExistis(file.originalname);
-
-    //     if (!myFile) {
-    //        return callback(null, false);
-    //     } 
-      
           callback(null, true);
   },
 });
@@ -46,6 +28,14 @@ const getAll = async () => {
     const recipes = await modelForRecipe.getAll();
     return recipes;
 };
+
+// const getFile = async (id) => {
+//     const recipe = await modelForRecipe.getById(id);
+//     const img = recipe.image.split('/')[2];
+//     const data = await fs.readdir(pathFile);
+//     const image = data.filter((element) => element === img);
+//     return image[0];
+// };
 
 const getById = async (id) => {
     if (!ObjectId.isValid(id)) {
@@ -104,4 +94,5 @@ module.exports = {
     getUserById,
     insertImg,
     upload,
+    // getFile,
 };
