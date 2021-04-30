@@ -12,4 +12,14 @@ const createUser = async (name, email, password) => {
   }
 };
 
-module.exports = { createUser };
+const findByEmail = async (email) => {
+  try {
+    return await connect()
+    .then((db) => db.collection('users')
+      .findOne({ email }));
+  } catch (error) {
+    console.error({ message: 'Sem conexão com o banco' });
+  }
+};
+
+module.exports = { createUser, findByEmail };

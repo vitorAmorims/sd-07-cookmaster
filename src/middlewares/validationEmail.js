@@ -1,5 +1,8 @@
-const validEmail = (req, res, next) => {
+const { findByEmail } = require('../models/userModel');
+
+const validEmail = async (req, res, next) => {
   const { email } = req.body;
+
   // disponivel em: https://cursos.alura.com.br/forum/topico-como-validar-email-e-senha-em-javascript-80469
   const regex = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
 
@@ -9,6 +12,11 @@ const validEmail = (req, res, next) => {
   if (regex.test(email) === false) {
     return res.status(400).json({ message: 'Invalid entries. Try again.' });
   }
+  if (await findByEmail(email)) {
+    return res.status(409)
+      .json({ message: 'Email already registered' });
+  }
+
   next();
 };
 
