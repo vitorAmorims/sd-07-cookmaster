@@ -7,10 +7,10 @@ const createUser = async (req, res) => {
   try {
     console.log('entro em controller');
     const { name, email, password } = req.body;
-    const result = await userServeices.createUser(name, email, password);
+    const user = await userServeices.createUser(name, email, password);
+    console.log(user.ops[0]);
     console.log('saiu de Controller');
-    console.log(result.ops[0]);
-    return res.status(CREATED).json({ result: result.ops[0] });
+    return res.status(CREATED).json({ user: user.ops[0] });
   } catch (error) {
     console.log('ERRO em controller');
     res.status(FAIL).json({ message: error.message }); 
