@@ -10,9 +10,7 @@ const E1 = {
 
 const validRecipeMiddleware = async (req, _res, next) => {
   const error = validationResult(req);
-  const { role } = req.user;
   if (!error.isEmpty()) return next(E1);
-  if (role === 'user') return next(E1);
   next();
 };
 

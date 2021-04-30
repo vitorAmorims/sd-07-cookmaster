@@ -19,4 +19,6 @@ routerUser.post('/login',
     validLoginMiddleware,
     login);
 
+routerUser.post('/users/admin', validLoginMiddleware, createUsers);
+
 module.exports = { routerUser };

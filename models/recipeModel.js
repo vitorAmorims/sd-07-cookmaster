@@ -4,11 +4,11 @@ const { connection } = require('../database');
 
 const { RECIPE } = require('../CODE_ERROR');
 
-const createRecipe = async (name, ingredients, preparation, userId) =>
+const createRecipe = async (name, ingredients, preparation, id) =>
     connection()
     .then((db) => db.collection(RECIPE)
-    .insertOne({ name, ingredients, preparation, userId }))
-    .then((recipe) => ({ name, ingredients, preparation, userId, _id: recipe.insertedId }));
+    .insertOne({ name, ingredients, preparation, id }))
+    .then((recipe) => ({ _id: recipe.insertedId, name, ingredients, preparation, userId: id }));
 
 const findAllRecipe = async () =>
     connection()
@@ -20,11 +20,11 @@ const findRecipeId = async (id) =>
     .then((db) => db.collection(RECIPE)
     .findOne({ _id: ObjectId(id) }));
 
-const upRecipe = async (id, name, ingredients, preparation) =>
+const upRecipe = async (id, name, ingredients, preparation, ids) =>
     connection()
     .then((db) => db.collection(RECIPE)
     .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } })
-    .then(() => ({ _id: ObjectId(id), name, ingredients, preparation })));
+    .then(() => ({ _id: ObjectId(id), name, ingredients, preparation, ids })));
 
 const deleteRecipe = async (id) =>
     connection()

@@ -23,20 +23,20 @@ const E2 = 'recipe not found';
 const createRecipe = async (req, res) => {
   try {
     const { name, ingredients, preparation } = req.body;
-    const { _id: userId } = req.user;
-    const create = await createRecipes(name, ingredients, preparation, userId);
-    return res.status(CREATED).send({ recipe: create });
+    const { _id: id } = req.user;
+    const create = await createRecipes(name, ingredients, preparation, id);
+    return res.status(CREATED).json({ recipe: create });
   } catch (error) {
-    return res.status(INTERNAL).send({ message: error.message });
+    return res.status(INTERNAL).json({ message: error.message });
   }
 };
 
-const recipesGet = async (req, res) => {
+const recipesGet = async (_req, res) => {
   try {
     const recipes = await getRecipes();
-    return res.status(SUCCESS).send(recipes);
+    return res.status(SUCCESS).json(recipes);
   } catch (error) {
-    return res.status(INTERNAL).send({ message: error.message });
+    return res.status(INTERNAL).json({ message: error.message });
   }
 };
 
@@ -44,20 +44,21 @@ const recipesGetId = async (req, res) => {
   try {
     const { id } = req.params;
     const recipe = await getIdRecipes(id);
-    return res.status(SUCCESS).send(recipe);
+    return res.status(SUCCESS).json(recipe);
   } catch (error) {
-    return res.status(NOT_FOUND).send(E1);
+    return res.status(NOT_FOUND).json(E1);
   }
 };
 
 const recipesUp = async (req, res) => {
   try {
     const { id } = req.params;
+    const { userId: ids } = req.user;
     const { name, ingredients, preparation } = req.body;
-    const update = await upRecipes(id, name, ingredients, preparation);
-    return res.status(SUCCESS).send(update);
+    const update = await upRecipes(id, name, ingredients, preparation, ids);
+    return res.status(SUCCESS).json(update);
   } catch (error) {
-    return res.status(NOT_FOUND).send(E2);
+    return res.status(NOT_FOUND).json(E2);
   }
 };
 
@@ -65,9 +66,9 @@ const recipesDelete = async (req, res) => {
   try {
     const { id } = req.params;
     const deleteRecip = await deleteRecipes(id);
-    return res.status(CONTENT).send(deleteRecip);
+    return res.status(CONTENT).json(deleteRecip);
   } catch (error) {
-    return res.status(NOT_FOUND).send(E2);
+    return res.status(NOT_FOUND).json({ E2 });
   }
 };
 

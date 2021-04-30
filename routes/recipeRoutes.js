@@ -6,7 +6,7 @@ const { body } = require('express-validator');
 const path = require('path');
 const { uploadImage } = require('../services');
 
-const { validToken, validRecipeMiddlewareare } = require('../Middlewares');
+const { validToken, validRecipeMiddleware } = require('../Middlewares');
 
 const {
   createRecipe,
@@ -23,10 +23,11 @@ const routerRecipe = Router();
 
 routerRecipe.post(
   '/recipes',
+  validToken,
   body('name').notEmpty(),
   body('ingredients').notEmpty(),
   body('preparation').notEmpty(),
-  validRecipeMiddlewareare,
+  validRecipeMiddleware,
   createRecipe,
 );
 
@@ -46,14 +47,14 @@ routerRecipe.put(
   body('name').notEmpty(),
   body('ingredients').notEmpty(),
   body('preparation').notEmpty(),
-  validRecipeMiddlewareare,
+  validRecipeMiddleware,
   recipesUp,
 );
 
 routerRecipe.delete(
   '/recipes/:id',
   validToken,
-  validRecipeMiddlewareare,
+  validRecipeMiddleware,
   recipesDelete,
 );
 routerRecipe.use('images', express.static(path.join(__dirname, '../uploads')));
