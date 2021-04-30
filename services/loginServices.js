@@ -6,7 +6,7 @@ const message = require('./messageService.json');
 
 const Model = userModels;
 
-const SECRET = "MASTERSKYWALKERISJEDI";
+const SECRET = 'MASTERSKYWALKERISJEDI';
 
 const idValid = (id) => {
   if (!ObjectId.isValid(id)) return message.idValid;
@@ -39,10 +39,8 @@ const tokenCreate = async (myEmail, myPassword) => {
     .find((user) => user.email === myEmail && user.password === myPassword);
   
   const token = jwt.sign({ _id, email, role }, SECRET);
-  return ({ token: token });
+  return ({ token });
 };
-
-
 
 const getById = (id) => {
   if (idValid(id) !== true) return idValid(id);
@@ -59,7 +57,7 @@ const create = async ({ email, password }) => {
 };
 
 const update = async ({ id, name, email, password }) => {
-  if (create({name, email, password}) !== true) return create({name, email, password});
+  if (create({ name, email, password }) !== true) return create({ name, email, password });
   if (idValid(id) !== false) return idValid(id);
   return true;
 };
@@ -67,7 +65,7 @@ const update = async ({ id, name, email, password }) => {
 const exclude = async (id) => {
   if (idValid(id) !== true) return idValid(id);
   const product = await Model.getById(id);
-  if (product === null) return validateId;
+  if (product === null) return message.idValid;
   return true;
 };
 
@@ -78,5 +76,5 @@ module.exports = {
   getById,
   create,
   update,
-  exclude
+  exclude,
 };

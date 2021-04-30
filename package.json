@@ -7,7 +7,8 @@
     "test": "jest --runInBand  --detectOpenHandles --forceExit",
     "start": "node index.js",
     "debug": "nodemon index.js",
-    "lint": "eslint --no-inline-config --ext .js,.jsx --no-error-on-unmatched-pattern -c .eslintrc.json ."
+    "lint": "eslint --no-inline-config --ext .js,.jsx --no-error-on-unmatched-pattern -c .eslintrc.json .",
+    "fix:err": "eslint middlewares --fix"
   },
   "repository": {
     "type": "git",

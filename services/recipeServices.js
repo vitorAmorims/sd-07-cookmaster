@@ -16,20 +16,19 @@ const validEntrie = (myValue) => {
   return true;
 };
 
-const validEmail = (myEmail) => {
-  const emailvalidation = /[\w\d]+@+[\w\d]+.com/;
-  if (!emailvalidation.test(myEmail)) return message.invalid;
-  return true;
-};
+// const validEmail = (myEmail) => {
+//   const emailvalidation = /[\w\d]+@+[\w\d]+.com/;
+//   if (!emailvalidation.test(myEmail)) return message.invalid;
+//   return true;
+// };
 
-const uniqueEmail = async (myEmail) => {
-  const recipes = await Model.getAll();
-  const exists = await recipes
-    .find((recipe) => recipe.email === myEmail );
-  if (exists) return message.already;
-  return true;
-};
-
+// const uniqueEmail = async (myEmail) => {
+//   const recipes = await Model.getAll();
+//   const exists = await recipes
+//     .find((recipe) => recipe.email === myEmail);
+//   if (exists) return message.already;
+//   return true;
+// };
 
 const getById = (id) => {
   if (idValid(id) !== true) return idValid(id);
@@ -57,7 +56,7 @@ const update = async ({ id, name, ingredients, preparation }) => {
 const exclude = async (id) => {
   if (idValid(id) !== true) return idValid(id);
   const product = await Model.getById(id);
-  if (product === null) return validateId;
+  if (product === null) return message.idValid;
   return true;
 };
 
@@ -68,5 +67,5 @@ module.exports = {
   getById,
   create,
   update,
-  exclude
+  exclude,
 };

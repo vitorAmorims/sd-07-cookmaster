@@ -4,7 +4,7 @@ const recipeServices = require('../services/recipeServices');
 const SUCCESS = 200;
 const CREATE = 201;
 const DELETE = 204;
-const USERERR = 404;
+// const USERERR = 404;
 const SERVERERR = 500;
 
 const Model = recipeModels;
@@ -21,7 +21,7 @@ const getAllRecipes = async (_req, res) => {
   }
 };
 
-const getRecipeById = async (req, res) =>  {
+const getRecipeById = async (req, res) => {
   try {
     const { id } = req.params;
     
@@ -34,14 +34,14 @@ const getRecipeById = async (req, res) =>  {
     return res.status(message.status).send(message.response);
   } catch (err) {
     console.log(err);
-    res.status(SERVERERR).json({ message: err.message});
+    res.status(SERVERERR).json({ message: err.message });
   }
 };
 
-const createRecipe = async (req, res) =>  {
+const createRecipe = async (req, res) => {
   try {
-    const {name, userId, ingredients, preparation} = req.body;
-    const {status, response} = await Service.create({ name, ingredients, preparation });
+    const { name, userId, ingredients, preparation } = req.body;
+    const { status, response } = await Service.create({ name, ingredients, preparation });
     if (!response) {
       const result = await Model.create({ name, userId, ingredients, preparation });
       return res.status(CREATE).send(result);
@@ -53,38 +53,36 @@ const createRecipe = async (req, res) =>  {
   }
 };
 
-const updateRecipe = async (req, res) =>  {
+const updateRecipe = async (req, res) => {
   try {
-    const {userId, name, ingredients, preparation} = req.body;
+    const { userId, name, ingredients, preparation } = req.body;
     const { id } = req.params;
-    const {status, response} = await Service.update({ id, userId, name, ingredients, preparation });
+    const { status, response } = await Service
+      .update({ id, userId, name, ingredients, preparation });
     if (!response) {
       const result = await Model.update({ id, userId, name, ingredients, preparation });
       console.log(result);
       return res.status(SUCCESS).json(result);
     }    
     return res.status(status).json(response);
-
   } catch (err) {
     console.log(err);
-    res.status(SERVERERR).json({ message: err.message});    
+    res.status(SERVERERR).json({ message: err.message });    
   }
 };
 
-const deleteRecipe = async (req, res) =>  {
+const deleteRecipe = async (req, res) => {
   try {
     const { id } = req.params;
-    const {status, response} = await Service.exclude(id);
+    const { status, response } = await Service.exclude(id);
     if (!response) {
       await Model.exclude(id);
       return res.status(DELETE).end();
     }
     return res.status(status).json(response);
-    
   } catch (err) {
     console.log(err);
-    res.status(SERVERERR).json({ message: err.message});
-    
+    res.status(SERVERERR).json({ message: err.message });
   }
 };
 
@@ -93,5 +91,5 @@ module.exports = {
   getRecipeById,
   createRecipe,
   updateRecipe,
-  deleteRecipe
+  deleteRecipe,
 };

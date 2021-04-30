@@ -25,28 +25,31 @@ const validEmail = (myEmail) => {
 const uniqueEmail = async (myEmail) => {
   const users = await Model.getAll();
   const exists = await users
-    .find((user) => user.email === myEmail );
+    .find((user) => user.email === myEmail);
   if (exists) return message.already;
   return true;
 };
-
 
 const getById = (id) => {
   if (idValid(id) !== false) return idValid(id);
   return true;
 };
 
-const create = ({ name, email, password }) => { 
-  if (validEntrie(name) !== true) return validEntrie(name);
-  if (validEntrie(email) !== true) return validEntrie(email);
-  if (validEntrie(password) !== true) return validEntrie(password);
-  if (validEmail(email) !== true) return validEmail(email);
-  if (uniqueEmail(email) !== true) return uniqueEmail(email);
+const mail = (myEmail) => {
+  if (validEntrie(myEmail) !== true) return validEntrie(myEmail);
+  if (validEmail(myEmail) !== true) return validEmail(myEmail);
+  if (uniqueEmail(myEmail) !== true) return uniqueEmail(myEmail);
   return true;
 };
 
+const create = ({ name, email, password }) => { 
+  if (validEntrie(name) !== true) return validEntrie(name);
+  if (validEntrie(password) !== true) return validEntrie(password);
+  if (mail(email) !== true) return mail(email);
+};
+
 const update = async ({ id, name, email, password }) => {
-  if (create({name, email, password}) !== true) return create({name, email, password});
+  if (create({ name, email, password }) !== true) return create({ name, email, password });
   if (idValid(id) !== false) return idValid(id);
   return true;
 };
@@ -54,7 +57,7 @@ const update = async ({ id, name, email, password }) => {
 const exclude = async (id) => {
   if (idValid(id) !== true) return idValid(id);
   const product = await Model.getById(id);
-  if (product === null) return validateId;
+  if (product === null) return message.idValid;
   return true;
 };
 
@@ -65,5 +68,5 @@ module.exports = {
   getById,
   create,
   update,
-  exclude
+  exclude,
 };

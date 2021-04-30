@@ -5,5 +5,5 @@ const recipeRoutes = require('./recipeRoutes');
 module.exports = {
   userRoutes,
   loginRoutes,
-  recipeRoutes
+  recipeRoutes,
 };
