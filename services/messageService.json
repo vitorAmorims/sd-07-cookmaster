@@ -1,0 +1,50 @@
+{
+  "invalid": {
+    "response": {
+        "message": "Invalid entries. Try again."
+    },
+    "status": 400
+  },
+  "already": {
+    "response": {
+        "message": "Email already registered"
+    },
+    "status": 409
+  },
+  "filled": {
+    "response": {
+        "message": "All fields must be filled"
+    },
+    "status": 401
+  },
+  "incorrect": {
+    "response": {
+        "message": "Incorrect username or password"
+    },
+    "status": 401
+  },
+  "malformed": {
+    "response": {
+        "message": "jwt malformed"
+    },
+    "status": 401
+  },
+  "notFound": {
+    "response": {
+        "message": "recipe not found"
+    },
+    "status": 404
+  },
+  "authorized": {
+    "response": {
+        "message": "missing auth token"
+    },
+    "status": 401
+  },
+  "forbidden": {
+    "response": {
+        "message": "Only admins can register new admins"
+    },
+    "status": 403
+  }
+}
