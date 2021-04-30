@@ -26,6 +26,7 @@ route.post('/recipes',
 validateRecipesMiddleware,
 validateTokenMiddleware,
 recipesController.addRecipeController);
+route.get('/recipes', recipesController.queryRecipesController);
 route.post('/recipes/:id/image/', upload.array('file'), recipesController.recipeId);
 
 module.exports = route;

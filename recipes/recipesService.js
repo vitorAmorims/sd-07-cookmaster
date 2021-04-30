@@ -6,6 +6,12 @@ const addRecipeService = async (newRecipe, userId) => {
   return { recipe: regRecipeService };
 };
 
+const queryRecipesService = async () => {
+  const queryService = await recipesModel.queryRecipesModel();
+  return queryService;
+};
+
 module.exports = {
   addRecipeService,
+  queryRecipesService,
 };

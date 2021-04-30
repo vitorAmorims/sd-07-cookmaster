@@ -26,7 +26,18 @@ const addRecipeController = async (req, res) => {
   }
 };
 
+const queryRecipesController = async (_req, res) => {
+  try {
+    const queryController = await recipesService.queryRecipesService();
+    return res.status(StatusCodes.OK).json(queryController);
+  } catch (error) {
+    console.log('queryRecipesControlles', error.message);
+    throw new Error(error);
+  }
+};
+
 module.exports = {
   recipeId,
   addRecipeController,
+  queryRecipesController,
 };
