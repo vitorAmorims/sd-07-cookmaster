@@ -6,7 +6,7 @@ const message = require('./messageService.json');
 const Model = recipeModels;
 
 const idValid = (id) => {
-  if (!ObjectId.isValid(id)) return message.idValid;
+  if (!ObjectId.isValid(id)) return message.notFound;
   return true;
 };
 
@@ -32,7 +32,7 @@ const uniqueEmail = async (myEmail) => {
 
 
 const getById = (id) => {
-  if (idValid(id) !== false) return idValid(id);
+  if (idValid(id) !== true) return idValid(id);
   return true;
 };
 

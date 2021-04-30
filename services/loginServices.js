@@ -35,16 +35,17 @@ const existsUser = async (myEmail, myPassword) => {
 
 const tokenCreate = async (myEmail, myPassword) => {
   const users = await Model.getAll();
-  const { id, email, role } = await users
+  const { _id, email, role } = await users
     .find((user) => user.email === myEmail && user.password === myPassword);
-  const token = jwt.sign({ id, email, role }, SECRET);
+  
+  const token = jwt.sign({ _id, email, role }, SECRET);
   return ({ token: token });
 };
 
 
 
 const getById = (id) => {
-  if (idValid(id) !== false) return idValid(id);
+  if (idValid(id) !== true) return idValid(id);
   return true;
 };
 

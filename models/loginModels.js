@@ -19,7 +19,7 @@ const create = async ({email, token}) => {
   const login = await connection().then(db =>
     db.collection(LOGIN).insertOne({ email, token })
   );
-  return { "login": {_id: login.insertedId, email, token }};
+  return { "token": token };
 };
 
 const update = async ({id, email, password }) => {

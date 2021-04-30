@@ -14,19 +14,19 @@ const getById = async (id) => {
   );
 };
 
-const create = async ({name, email, password, role}) => {
+const create = async ({ userId, name, ingredients, preparation}) => {
   const recipe = await connection().then(db =>
-    db.collection(RECIPES).insertOne({ name, ingredients, preparation })
+    db.collection(RECIPES).insertOne({ userId, name, ingredients, preparation })
   );
-  return { "recipe": {_id: recipe.insertedId, name, ingredients, preparation}};
+  return { "recipe": {_id: recipe.insertedId, userId, name, ingredients, preparation}};
 };
 
-const update = async ({id, name, email, password, role }) => {
+const update = async ({id, userId, name, ingredients, preparation }) => {
   const recipe = await connection().then((db) => db
     .collection(RECIPES)
-    .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } })
+    .updateOne({ _id: ObjectId(id) }, { $set: { userId, name, ingredients, preparation } })
   );
-  return { "recipe": recipe };
+  return { id, userId, name, ingredients, preparation };
 };
 
 const exclude = async (id) => {

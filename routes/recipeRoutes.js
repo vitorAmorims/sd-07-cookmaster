@@ -1,12 +1,13 @@
 const express = require('express');
 const recipeControllers = require('../controllers/recipeControllers');
+const { auth, especificAuth } = require('../middlewares/userMiddlewares');
 
 const router = express.Router();
 
-router.get('/recipes', recipeControllers.getAllrecipes);
-router.get('/recipes/:id', recipeControllers.getrecipeById);
-router.post('/recipes', recipeControllers.createrecipe);
-router.put('/recipes/:id', recipeControllers.updaterecipe);
-router.delete('/recipes/:id', recipeControllers.deleterecipe);
+router.get('/recipes', recipeControllers.getAllRecipes);
+router.get('/recipes/:id', recipeControllers.getRecipeById);
+router.post('/recipes', auth, recipeControllers.createRecipe);
+router.put('/recipes/:id', especificAuth, recipeControllers.updateRecipe);
+router.delete('/recipes/:id', especificAuth, recipeControllers.deleteRecipe);
 
 module.exports = router;

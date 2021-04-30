@@ -14,6 +14,7 @@ app.get('/', (request, response) => {
 app.use(express.json());
 app.use(routes.userRoutes);
 app.use(routes.loginRoutes);
+app.use(routes.recipeRoutes);
 
 app.listen(PORT, () => {
   console.log(`API rodando na porta ${PORT}`);
