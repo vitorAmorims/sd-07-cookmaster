@@ -15,7 +15,11 @@ router.post('/login',
   middleware.validationPasswordLogin,
   middleware.validationEmail,
   controller.login);
-// router.post('/recipes', '');
+router.post('/recipes',
+  middleware.validationName,
+  middleware.validationRecipes,
+  middleware.validationToken,
+  controller.login);
 // router.get('/recipes', '');
 // router.get(recipeIdURL, '');
 // router.put(recipeIdURL, '');
