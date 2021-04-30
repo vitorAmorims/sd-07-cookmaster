@@ -2,8 +2,6 @@
 
 const { validationResult } = require('express-validator');
 const { BAD_REQ } = require('../CODE_ERROR');
-const { getEmailUser } = require('../services');
-const { findRecipeId } = require('../models');
 
 const E1 = {
   status: BAD_REQ,

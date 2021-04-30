@@ -23,7 +23,7 @@ const findRecipeId = async (id) =>
 const upRecipe = async (id, name, ingredients, preparation) =>
     connection()
     .then((db) => db.collection(RECIPE)
-    .updateOne({ _id: ObjectId(id) }, {$set: { name, ingredients, preparation }})
+    .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } })
     .then(() => ({ _id: ObjectId(id), name, ingredients, preparation })));
 
 const deleteRecipe = async (id) =>

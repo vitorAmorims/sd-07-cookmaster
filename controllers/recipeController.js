@@ -14,7 +14,7 @@ const {
   getIdRecipes,
   upRecipes,
   deleteRecipes,
-} = require('../models');
+} = require('../services');
 
 const E1 = { message: 'recipe not found' };
 

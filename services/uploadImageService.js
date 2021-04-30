@@ -4,7 +4,7 @@ const image = multer.diskStorage({
     destination: (_req, _file, call) => {
         call(null, 'uploads');
     },
-    filename: (rewq, _file, call) => {
+    filename: (req, _file, call) => {
         const { id } = req.params;
         call(null, `${id}.jpeg`);
     },
