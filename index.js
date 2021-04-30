@@ -43,6 +43,8 @@ app.put(
 );
 app.get('/images/:file', Recipe.getImageFile);
 
+app.post('/users/admin', validateJWT, User.addAdmin);
+
 app.listen(PORT, () => {
   console.log('API rodando na porta 3000');
 });

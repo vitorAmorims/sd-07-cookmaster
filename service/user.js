@@ -42,7 +42,18 @@ const login = async (email, password) => {
   return { code: code.ok, token };
 };
 
+const addAdmin = async (name, email, password, role) => {
+  const validation = validateFields(name, email, password);
+  if (validation.message) return validation;
+  const result = await User.addAdmin(name, email, password, role);
+  if (!result) {
+    return { code: code.forbidden, message: message.forbidden };
+  }
+  return { code: code.created, result };
+};
+
 module.exports = {
   addUser,
   login,
+  addAdmin,
 };

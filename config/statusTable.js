@@ -6,6 +6,7 @@ const code = {
   ok: 200,
   not_found: 404,
   no_content: 204,
+  forbidden: 403,
 };
 
 const message = {
@@ -15,6 +16,7 @@ const message = {
   incorrect_fields: 'Incorrect username or password',
   recipe_not_found: 'recipe not found',
   missing_auth: 'missing auth token',
+  forbidden: 'Only admins can register new admins',
 };
 
 module.exports = { code, message };

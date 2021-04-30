@@ -24,7 +24,25 @@ const login = async (email, password) => {
   return user[0];
 };
 
+const addAdmin = async (name, email, password, role) => {
+  const newUser = {
+    name,
+    email,
+    password,
+    role,
+  };
+  if (role === 'admin') {
+    const insert = await connection().then((db) =>
+      db.collection('users').insertOne(newUser));
+    const result = insert.ops[0];
+    delete result.password;
+    return result;
+  }
+  return null;
+};
+
 module.exports = {
   addUser,
   login,
+  addAdmin,
 };
