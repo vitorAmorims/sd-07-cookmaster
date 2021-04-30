@@ -4,19 +4,19 @@ const { validatorMiddleware, validLoginMiddleware } = require('../Middlewares');
 
 const { createUsers, login } = require('../controllers');
 
-const router = Router();
+const routerUser = Router();
 
-router.post('/users',
+routerUser.post('/users',
     body('email').isEmail(), 
     body('name').notEmpty(),
     body('password').notEmpty().isLength({ max: 10 }),
     validatorMiddleware,
     createUsers);
 
-router.post('/login',
+routerUser.post('/login',
     body('email').isEmail(), 
     body('password').notEmpty(),
     validLoginMiddleware,
     login);
 
-module.exports = { router };
+module.exports = { routerUser };

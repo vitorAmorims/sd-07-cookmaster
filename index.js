@@ -1,5 +1,6 @@
 const express = require('express');
-const { router } = require('./routes');
+
+const { routerUser, routerRecipe } = require('./routes');
 
 const { errorMiddleware } = require('./Middlewares');
 
@@ -9,7 +10,12 @@ const app = express();
 
 app.use(express.json());
 
+// routerUser
+
+const router = [routerUser, routerRecipe];
+
 app.use(router);
+
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_req, res) => {
   res.send();
