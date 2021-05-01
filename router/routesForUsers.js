@@ -13,4 +13,12 @@ route.post('/', middleware.errorMiddleware,
                 body('password').isLength({ min: 5 }), 
                 controllerforUsers.create);
 
+route.post('/admin', middleware.errorMiddleware,
+                middleware.authentication,
+                middleware.adminGetRole,
+                body('name').notEmpty(),
+                body('email').isEmail(),
+                body('password').isLength({ min: 5 }), 
+                controllerforUsers.create);
+
 module.exports = route;

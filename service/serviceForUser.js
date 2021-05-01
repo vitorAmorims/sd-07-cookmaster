@@ -2,6 +2,7 @@ const modelForUser = require('../model/modelForUser');
 const errorCreator = require('../helpers/errorCreator');
 const code = require('../helpers/status.json');
 const message = require('../helpers/message.json');
+const isUser = require('../helpers/isUser');
 
 const getAll = async () => {
     const user = await modelForUser.getAll();
@@ -21,11 +22,18 @@ const userValidate = async (email) => {
     return user;
 };
 
-const create = async (name, email, password, role) => {
+const create = async (userName, email, password, originalUrl) => {
+    let roleCredential = 'user';
+    const credentials = isUser(originalUrl);
+
+    if (!credentials) roleCredential = 'admin';
+
     const getEmail = await getUserEmail(email);
    
     if (getEmail.email !== email || !getEmail.email) {
-        const user = await modelForUser.create(name, email, password, role);
+        const user = await modelForUser.create(userName, email, password, roleCredential);
+        const [role] = user.ops;
+        if (!role) return errorCreator(code.conflict, message.same_email);
         return user;
     }
     return errorCreator(code.conflict, message.same_email);

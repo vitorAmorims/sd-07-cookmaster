@@ -5,6 +5,7 @@ const message = 'missing auth token';
 
 const updateAuth = async (req, res, next) => {
     const { authorization } = req.headers;
+    console.log(authorization);
     try {
         if (!authorization) return res.status(401).json({ message: 'missing auth token' });
         const decoded = decodeJwt(authorization);

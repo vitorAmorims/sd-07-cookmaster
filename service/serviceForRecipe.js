@@ -7,7 +7,8 @@ const errorGenerator = require('../helpers/errorCreator');
 const code = require('../helpers/status.json');
 const message = require('../helpers/message.json');
 
-// const pathFile = path.resolve(`${__dirname}/../uploads`);
+// const pathFile = path.resolve(`${__dirname}/`);
+// console.log(pathFile);
 
 const storage = multer.diskStorage({
     destination: (_req, _file, callback) => {

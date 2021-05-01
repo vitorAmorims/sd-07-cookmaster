@@ -23,15 +23,17 @@ const userValidate = async (email) => {
 
 const create = rescue(async (req, res) => {
         const { name, email, password } = req.body;
-        const role = 'user';
+        const { originalUrl } = req;
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
             return res.status(400).json({ message: 'Invalid entries. Try again.' });
         }
-        const user = await serviceForUser.create(name, email, password, role);
-        
+        const user = await serviceForUser.create(name, email, password, originalUrl);
+       
         if (user.code) return res.status(user.code).json({ message: user.message });
+
+        const [{ role }] = user.ops;
 
         const id = user.insertedId;
 
