@@ -62,6 +62,6 @@ routerRecipe.put(
   upImageController,
 );
 
-routerRecipe.use('/images', express.static(path.join(__dirname, '../uploads')));
+routerRecipe.use('/images/', express.static(path.join(__dirname, '../uploads')));
 
 module.exports = { routerRecipe };
