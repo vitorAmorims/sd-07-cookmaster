@@ -1,11 +1,13 @@
 const { ObjectId } = require('mongodb');
 const connect = require('./connection');
 
+const colName = 'users';
+
 const createUser = async (newUser) => {
   const { email, name, password } = newUser;
   const role = 'user';
   const { insertedId } = await connect()
-    .then((db) => db.collection('users').insertOne({ email, name, password, role }));
+    .then((db) => db.collection(colName).insertOne({ email, name, password, role }));
   return {
     user: {
       name,
@@ -19,13 +21,13 @@ const createUser = async (newUser) => {
 
 const searchByEmail = async (email) => {
   const search = await connect()
-    .then((db) => db.collection('users').findOne({ email }));
+    .then((db) => db.collection(colName).findOne({ email }));
   return search;
 };
 
 const searchByAccount = async (email, password) => {
   const search = await connect()
-    .then((db) => db.collection('users').findOne({ email, password }));
+    .then((db) => db.collection(colName).findOne({ email, password }));
   return search;
 };
 
