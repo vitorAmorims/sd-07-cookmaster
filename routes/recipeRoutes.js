@@ -1,6 +1,7 @@
 /** @format */
-const { Router } = require('express');
+const express = require('express');
 const { body } = require('express-validator');
+const path = require('path');
 
 const { validToken, validRecipeMiddleware, multerMiddleware } = require('../Middlewares');
 
@@ -15,7 +16,7 @@ const {
 
 const rota = '/recipes/:id';
 
-const routerRecipe = Router();
+const routerRecipe = express.Router();
 
 routerRecipe.post(
   '/recipes',
@@ -60,5 +61,7 @@ routerRecipe.put(
   multerMiddleware,
   upImageController,
 );
+
+routerRecipe.use('/images', express.static(path.join(__dirname, '../uploads')));
 
 module.exports = { routerRecipe };

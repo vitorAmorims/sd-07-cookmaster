@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 
 const { routerUser, routerRecipe, routerAdmin } = require('./routes');
 
@@ -21,8 +20,6 @@ app.use(router);
 app.get('/', (_req, res) => {
   res.send();
 });
-
-app.use('images', express.static(path.resolve(`${__dirname}/uploads`)));
 
 app.use(errorMiddleware);
 
