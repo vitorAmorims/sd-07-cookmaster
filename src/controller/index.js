@@ -1,6 +1,7 @@
 const { ObjectID } = require('mongodb');
 const jwt = require('jsonwebtoken');
 const userServeices = require('../service/userServices');
+const recipeServeices = require('../service/recipeService');
 
 const SUCESS = 200;
 const CREATED = 201;
@@ -8,14 +9,14 @@ const FAIL = 400;
 
 const createUser = async (req, res) => {
   try {
-    console.log('entro em controller');
+    // console.log('entro em controller');
     const { name, email, password } = req.body;
     const user = await userServeices.createUser(name, email, password);
-    console.log(user.ops[0]);
-    console.log('saiu de Controller');
+    // console.log(user.ops[0]);
+    // console.log('saiu de Controller');
     return res.status(CREATED).json({ user: user.ops[0] });
   } catch (error) {
-    console.log('ERRO em controller');
+    // console.log('ERRO em controller');
     return res.status(FAIL).json({ message: error.message }); 
   }
 };
@@ -40,4 +41,21 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { createUser, login };
+const createRecipe = async (req, res) => {
+  try {
+    // console.log('entro em controller');
+    const { name, ingredients, preparation } = req.body;
+    const { id } = req.user;
+    // console.log(req.user);
+    // console.log(name);
+    const recipes = await recipeServeices.createRecipe(name, ingredients, preparation, id);
+    // console.log(recipe.ops[0]);
+    // console.log('saiu de Controller');
+    return res.status(CREATED).json({ recipe: recipes.ops[0] });
+  } catch (error) {
+    // console.log('ERRO em controller');
+    return res.status(FAIL).json({ message: error.message }); 
+  }
+};
+
+module.exports = { createUser, login, createRecipe };

@@ -13,7 +13,7 @@ const validEmail = async (req, res, next) => {
     return res.status(401).json({ message: 'All fields must be filled' });
   }
   const emailValid = await findByEmail(email);
-  console.log(emailValid);
+  // console.log(emailValid);
   if (emailValid === null) {
     return res.status(401).json({ message: 'Incorrect username or password' });
   }

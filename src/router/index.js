@@ -19,7 +19,7 @@ router.post('/recipes',
   middleware.validationName,
   middleware.validationRecipes,
   middleware.validationToken,
-  controller.login);
+  controller.createRecipe);
 // router.get('/recipes', '');
 // router.get(recipeIdURL, '');
 // router.put(recipeIdURL, '');
