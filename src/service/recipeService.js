@@ -12,13 +12,8 @@ const getRecipes = async () => {
 };
 
 const getRecipeById = async (id) => {
-  const idNotFound = 'recipe not found';
-  if (typeof id !== 'string') throw new Error(idNotFound);
-  
-  const response = await recipeModels.getRecipesById(id);
-  if (!response) throw new Error(idNotFound);
-
-  return response;
+  const recipe = await recipeModels.getRecipesById(id);
+  return recipe;
 };
 
 module.exports = { createRecipe, getRecipes, getRecipeById };

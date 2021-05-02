@@ -74,7 +74,7 @@ const getRecipeById = async (req, res) => {
     const result = await recipeServeices.getRecipeById(id);
     return res.status(SUCESS).json(result);
   } catch (error) {
-    return res.status(NOTFOUND).json({ menssage: 'recipe not found' });
+    return res.status(NOTFOUND).json({ menssage: error.menssage });
   }
 };
 

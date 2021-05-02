@@ -21,7 +21,7 @@ router.post(recipeURL,
   middleware.validationToken,
   controller.createRecipe);
 router.get(recipeURL, controller.getRecipes);
-router.get(`${recipeURL}/:id`, controller.getRecipeById);
+router.get(`${recipeURL}/:id`, middleware.recipeIdNotFound, controller.getRecipeById);
 // router.put(`${recipeURL}/:id`, '');
 // router.delete(`${recipeURL}/:id`, '');
 
