@@ -1,7 +1,7 @@
 const connection = require('../config/conn');
 
-const getAllUsers = async () =>
-  connection().then((db) => db.collection('users').find().toArray());
+// const getAllUsers = async () =>
+//   connection().then((db) => db.collection('users'));
 
 const registerUser = async (name, email, password) =>
   connection().then((db) =>
@@ -15,7 +15,7 @@ const getUserEmail = async (email) => {
 };
 
 module.exports = {
-  getAllUsers,
+  // getAllUsers,
   getUserEmail,
   registerUser,
 };

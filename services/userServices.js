@@ -49,9 +49,9 @@ const registerUser = async (name, email, password) => {
   return register;
 };
 
-const getAllUsers = async () => userModel.getAllUsers();
+// const getAllUsers = async () => userModel.getAllUsers();
 
 module.exports = {
   registerUser,
-  getAllUsers,
+  // getAllUsers,
 };
