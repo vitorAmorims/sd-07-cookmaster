@@ -6,6 +6,7 @@ const recipeServeices = require('../service/recipeService');
 const SUCESS = 200;
 const CREATED = 201;
 const FAIL = 400;
+const NOTFOUND = 404;
 
 const createUser = async (req, res) => {
   try {
@@ -67,4 +68,14 @@ const getRecipes = async (req, res) => {
   }
 };
 
-module.exports = { createUser, login, createRecipe, getRecipes };
+const getRecipeById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await recipeServeices.getRecipeById(id);
+    return res.status(SUCESS).json(result);
+  } catch (error) {
+    return res.status(NOTFOUND).json({ menssage: 'recipe not found' });
+  }
+};
+
+module.exports = { createUser, login, createRecipe, getRecipes, getRecipeById };

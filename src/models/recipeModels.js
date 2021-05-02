@@ -22,4 +22,12 @@ const getRecipes = async () => {
   }
 };
 
-module.exports = { createRecipe, getRecipes };
+const getRecipesById = async (id) => {
+  try {
+    return await connect().then((db) => db.collection('recipes').findOne(ObjectID(id)));
+  } catch (error) {
+    console.error({ message: nonDb });
+  }
+};
+
+module.exports = { createRecipe, getRecipes, getRecipesById };
