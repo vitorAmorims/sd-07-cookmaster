@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const usersModel = require('./usersModel');
 
 const secret = 'cookmaster';
-const dezMin = 60 * 10;
+const dezMin = 60 * 30;
 
 const jwtConfig = {
   expiresIn: dezMin,

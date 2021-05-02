@@ -59,10 +59,9 @@ const queryRecipeController = async (req, res, next) => {
 
 const updateRecipeController = async (req, res, _next) => {
   const data = req.body;
-  const { _id: userIdent, role } = req.user;
-  console.log(`user ${userIdent}, ${role}`);
+  const { id } = req.params;
   try {
-    const updateRecipe = await recipesService.updateRecipeService(data);
+    const updateRecipe = await recipesService.updateRecipeService(id, data);
     return res.status(StatusCodes.OK).json(updateRecipe);
     } catch (error) {
     console.log('updateRecipesControlles', error.message);

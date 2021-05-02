@@ -84,18 +84,17 @@ const validateRecipesMiddleware = async (req, _res, next) => {
 
 const validate = async (req, _res, next) => {
   const { id } = req.params;
-  const { _id: userIdent, role } = req.user;
-  const recipe = await recipesModel.updateRecipetModel(id);
+  const recipe = await recipesModel.queryRecipeModel(id);
   if (!recipe) {
     return next(
       { status: StatusCodes.NOT_FOUND, message: 'recipe not found' },
     );
   }
-  if (role.toString() !== 'admin' || recipe.userId.toString() !== userIdent.toString()) {
-    return next(
-      { status: StatusCodes.UNAUTHORIZED, message: 'Controler missing auth token' },
-    );
-  }
+  // if (role !== 'admin' || recipe.userId !== userIdent.toString()) {
+  //   return next(
+  //     { status: StatusCodes.UNAUTHORIZED, message: 'Validate missing auth token' },
+  //   );
+  // }
   next();
 };
 
