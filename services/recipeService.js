@@ -1,22 +1,21 @@
-const model = require('../models/userModel');
+const model = require('../models/recipeModel');
 
-const createUser = async (newUser) => {
-  const { insertedId } = await model.createUser(newUser);   
+const createRecipe = async (newRecipe) => {
+  const { insertedId } = await model.createRecipe(newRecipe);   
   return {
-    user: {
+    recipe: {
       _id: insertedId,
-      ...newUser,
-      role: 'user',
+      ...newRecipe,      
     },
   };  
 };
 
-const findUserByEmail = async (mail) => {
-  const user = await model.findUserByEmail(mail);
-  return user;
+const findRecipeByName = async (name) => {
+  const recipe = await model.findRecipeByName(name);
+  return recipe;
 };
 
 module.exports = {  
-  findUserByEmail,
-  createUser,
+  createRecipe,
+  findRecipeByName,
 };

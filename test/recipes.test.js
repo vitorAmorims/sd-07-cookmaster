@@ -146,7 +146,7 @@ describe('3 - Crie um endpoint para o cadastro de receitas', () => {
         preparation: '10 min no forno',
       })
       .expect('status', 401)
-      .then((responseLogin) => {
+      .then((responseLogin) => {        
         const { json } = responseLogin;
         expect(json.message).toBe('jwt malformed');
       });

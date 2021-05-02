@@ -1,17 +1,16 @@
-// const { ObjectId } = require('bson');
 const connection = require('./connection');
 
-const users = 'users';
+const recipes = 'recipes';
 
-const createUser = async (user) => connection()
-  .then((db) => db.collection(users)
-    .insertOne(user));
+const createRecipe = async (recipe) => connection()
+  .then((db) => db.collection(recipes)
+    .insertOne(recipe));
 
-const findUserByEmail = async (email) => connection()
-.then((db) => db.collection(users)
-  .findOne({ email }));
+const findRecipeByName = async (name) => connection()
+.then((db) => db.collection(recipes)
+  .findOne({ name }));
 
 module.exports = {
-  createUser,
-  findUserByEmail,
+  createRecipe,
+  findRecipeByName,
 };

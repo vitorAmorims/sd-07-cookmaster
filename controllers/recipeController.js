@@ -2,22 +2,25 @@ const express = require('express');
 
 const router = express.Router();
 
-const service = require('../services/userService');
-const userMiddleware = require('../middlewares/userMiddleware');
-const userSchema = require('../schemas/recipesSchema');
+const service = require('../services/recipeService');
+const recipeMiddleware = require('../middlewares/recipeMiddleware');
+const recipeSchema = require('../schemas/recipeSchema');
+const validateToken = require('../oauth/validateToken');
 
-router.post('/users', userSchema, userMiddleware, 
+router.post('/recipes',
+  recipeSchema, recipeMiddleware, validateToken,
   async (request, response) => {
     try {
-      const { name, email, password } = request.body;
+      const { name, ingredients, preparation } = request.body;
+      const { user: { _id } } = request;
     
-    const user = {
-      name,
-      email,
-      password,
-    };
+      const objectRecipe = { name, ingredients, preparation };
 
-    return response.status(201).json(await service.createUser(user));
+      const resultRecipe = await service.createRecipe(objectRecipe);
+
+      return response
+        .status(201)
+        .json({ recipe: { ...resultRecipe.recipe, userId: _id } });
     } catch (error) {
       return response.status(500).json({ message: 'Erro interno', error });
     }
