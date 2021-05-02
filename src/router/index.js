@@ -11,18 +11,28 @@ router.post('/users',
   middleware.validationEmailCreate,
   middleware.validationPassword,
   controller.createUser);
+
 router.post('/login',
   middleware.validationPasswordLogin,
   middleware.validationEmail,
   controller.login);
+
 router.post(recipeURL,
   middleware.validationName,
   middleware.validationRecipes,
   middleware.validationToken,
   controller.createRecipe);
+
 router.get(recipeURL, controller.getRecipes);
+
 router.get(`${recipeURL}/:id`, middleware.recipeIdNotFound, controller.getRecipeById);
-// router.put(`${recipeURL}/:id`, '');
+
+router.put(`${recipeURL}/:id`,
+  middleware.validationName,
+  middleware.validationRecipes,
+  middleware.validationToken,
+  controller.updateRecipe);
+
 // router.delete(`${recipeURL}/:id`, '');
 
 module.exports = router;

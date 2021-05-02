@@ -1,4 +1,4 @@
-const { ObjectID } = require('mongodb');
+const { ObjectID, ObjectId } = require('mongodb');
 const jwt = require('jsonwebtoken');
 const userServeices = require('../service/userServices');
 const recipeServeices = require('../service/recipeService');
@@ -6,7 +6,6 @@ const recipeServeices = require('../service/recipeService');
 const SUCESS = 200;
 const CREATED = 201;
 const FAIL = 400;
-const NOTFOUND = 404;
 
 const createUser = async (req, res) => {
   try {
@@ -18,7 +17,7 @@ const createUser = async (req, res) => {
     return res.status(CREATED).json({ user: user.ops[0] });
   } catch (error) {
     // console.log('ERRO em controller');
-    return res.status(FAIL).json({ message: error.message }); 
+    return res.status(FAIL).json({ message: error.message });
   }
 };
 
@@ -38,7 +37,7 @@ const login = async (req, res) => {
 
     return res.status(SUCESS).json({ token });
   } catch (error) {
-    return res.status(FAIL).json({ message: error.message }); 
+    return res.status(FAIL).json({ message: error.message });
   }
 };
 
@@ -55,7 +54,7 @@ const createRecipe = async (req, res) => {
     return res.status(CREATED).json({ recipe: recipes.ops[0] });
   } catch (error) {
     // console.log('ERRO em controller');
-    return res.status(FAIL).json({ message: error.message }); 
+    return res.status(FAIL).json({ message: error.message });
   }
 };
 
@@ -64,7 +63,7 @@ const getRecipes = async (req, res) => {
     const result = await recipeServeices.getRecipes();
     return res.status(SUCESS).json(result);
   } catch (error) {
-    return res.status(FAIL).json({ message: error.message }); 
+    return res.status(FAIL).json({ message: error.message });
   }
 };
 
@@ -74,8 +73,27 @@ const getRecipeById = async (req, res) => {
     const result = await recipeServeices.getRecipeById(id);
     return res.status(SUCESS).json(result);
   } catch (error) {
-    return res.status(NOTFOUND).json({ menssage: error.menssage });
+    return res.status(FAIL).json({ menssage: error.menssage });
   }
 };
 
-module.exports = { createUser, login, createRecipe, getRecipes, getRecipeById };
+const updateRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, ingredients, preparation } = req.body;
+
+    await recipeServeices.updateRecipe(id, name, ingredients, preparation);
+    return res.status(SUCESS).json({ id, name, ingredients, preparation, userId: ObjectId(id) });
+  } catch (error) {
+    return res.status(FAIL).json({ menssage: error.menssage });
+  }
+};
+
+module.exports = {
+  createUser,
+  login,
+  createRecipe,
+  getRecipes,
+  getRecipeById,
+  updateRecipe,
+};

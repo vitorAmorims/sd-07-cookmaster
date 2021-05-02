@@ -23,9 +23,24 @@ const getRecipes = async () => {
 };
 
 const getRecipesById = async (id) => {
-  const recipe = await connect().then((db) =>
-    db.collection('recipes').findOne(ObjectId(id)));
-  return recipe;
+  try {
+    return await connect()
+      .then((db) => db.collection('recipes').findOne(ObjectId(id)));
+  } catch (error) {
+    console.error({ message: nonDb });
+  }
 };
 
-module.exports = { createRecipe, getRecipes, getRecipesById };
+const updateRecipe = async (id, name, ingredients, preparation) => {
+  try {
+    return await connect()
+      .then((db) => db.collection('recipes').updateOne(
+        { id: ObjectId(id) },
+        { $set: { name, ingredients, preparation } },
+      ));
+  } catch (error) {
+    console.error({ message: nonDb });
+  }
+};
+
+module.exports = { createRecipe, getRecipes, getRecipesById, updateRecipe };
