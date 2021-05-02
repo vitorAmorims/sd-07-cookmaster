@@ -1,10 +1,15 @@
 const { StatusCodes } = require('http-status-codes');
 const recipesService = require('./recipesService');
 
-const recipeId = (req, res) => {
+const NOT_FOUND = 'recipe not found';
+const recipeId = async (req, res, _next) => {
   try {
     const { id } = req.params;
-    return res.status(StatusCodes.OK).json(id);
+    const image = req.file;
+    const newPatch = `localhost:3000/images/${image.filename}`;
+    const data = { image: newPatch };
+    const updateRecipe = await recipesService.updateRecipeService(id, data);
+    return res.status(StatusCodes.OK).json(updateRecipe);
   } catch (error) {
    return res.status(500).json({ 
      message: 'Erro ao enviar imagem',
@@ -42,7 +47,7 @@ const queryRecipeController = async (req, res, next) => {
     const queryController = await recipesService.queryRecipeService(id);
     if (!queryController) {
       return next(
-        { status: StatusCodes.NOT_FOUND, message: 'recipe not found' },
+        { status: StatusCodes.NOT_FOUND, message: NOT_FOUND },
       );
     }
     return res.status(StatusCodes.OK).json(queryController);
@@ -52,20 +57,14 @@ const queryRecipeController = async (req, res, next) => {
   }
 };
 
-const updateRecipeController = async (req, res, next) => {
-  const { id } = req.params;
+const updateRecipeController = async (req, res, _next) => {
   const data = req.body;
   const { _id: userIdent, role } = req.user;
+  console.log(`user ${userIdent}, ${role}`);
   try {
-    const recipe = await recipesService.queryRecipeService(id);
-    if (role !== 'admin' || recipe.userId !== userIdent) {
-      return next(
-        { status: StatusCodes.UNAUTHORIZED, message: 'missing auth token' },
-      );
-    }
     const updateRecipe = await recipesService.updateRecipeService(data);
     return res.status(StatusCodes.OK).json(updateRecipe);
-  } catch (error) {
+    } catch (error) {
     console.log('updateRecipesControlles', error.message);
     throw new Error(error);
   }
@@ -77,7 +76,7 @@ const excludeRecipeController = async (req, res, next) => {
     const queryRecipe = await recipesService.queryRecipeService(id);
     if (!queryRecipe) {
       return next(
-        { status: StatusCodes.NOT_FOUND, message: 'recipe not found' },
+        { status: StatusCodes.NOT_FOUND, message: NOT_FOUND },
       );
     }
     const exclude = await recipesService.excludeRecipeService(id);
