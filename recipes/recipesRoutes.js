@@ -22,12 +22,13 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // route.get('/recipes', recipesController.findUserController);
+route.get('/recipes', recipesController.queryRecipesController);
 route.post('/recipes',
 validateRecipesMiddleware,
 validateTokenMiddleware,
 recipesController.addRecipeController);
-route.get('/recipes', recipesController.queryRecipesController);
 route.get('/recipes/:id', recipesController.queryRecipeController);
+route.post('/recipes/:id', validateTokenMiddleware, recipesController.updateRecipeController);
 route.post('/recipes/:id/image/', upload.array('file'), recipesController.recipeId);
 
 module.exports = route;

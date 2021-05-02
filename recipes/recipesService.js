@@ -12,12 +12,17 @@ const queryRecipesService = async () => {
 
 const queryRecipeService = async (id) => {
   const queryService = await recipesModel.queryRecipeModel(id);
-  console.log(queryService);
   return queryService;
+};
+
+const updateRecipeService = async (id, data) => {
+  const updateRecipe = await recipesModel.updateRecipetModel(id, data);
+  return updateRecipe;
 };
 
 module.exports = {
   addRecipeService,
   queryRecipesService,
   queryRecipeService,
+  updateRecipeService,
 };

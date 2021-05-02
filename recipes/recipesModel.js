@@ -18,8 +18,13 @@ const queryRecipeModel = async (id) => {
    .findOne(ObjectId(id)));
 };
 
+const updateRecipetModel = async (id, data) => connect().then((db) =>
+    db.collection('products')
+      .updateOne({ _id: ObjectId(id) }, { $set: { data } })).then(() => (data));
+
 module.exports = {
   regRecipeModel,
   queryRecipesModel,
   queryRecipeModel,
+  updateRecipetModel,
 };

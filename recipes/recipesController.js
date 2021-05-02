@@ -38,10 +38,8 @@ const queryRecipesController = async (_req, res) => {
 
 const queryRecipeController = async (req, res, next) => {
   const { id } = req.params;
-  console.log('id', id);
   try {
     const queryController = await recipesService.queryRecipeService(id);
-    console.log('queryController', queryController);
     if (!queryController) {
       return next(
         { status: StatusCodes.NOT_FOUND, message: 'recipe not found' },
@@ -54,9 +52,25 @@ const queryRecipeController = async (req, res, next) => {
   }
 };
 
+const updateRecipeController = async (req, res, _next) => {
+  const { id } = req.params;
+  const data = req.body;
+  const { _id: userIdent, role } = req.user;
+  try {
+    const recipe = await recipesService.queryRecipeService(id);
+    if (role !== 'admin' || recipe.userId !== userIdent) return null;
+    const updateRecipe = await recipesService.updateRecipeService(data);
+    return res.status(StatusCodes.OK).json(updateRecipe);
+  } catch (error) {
+    console.log('updateRecipesControlles', error.message);
+    throw new Error(error);
+  }
+};
+
 module.exports = {
   recipeId,
   addRecipeController,
   queryRecipesController,
   queryRecipeController,
+  updateRecipeController,
 };
