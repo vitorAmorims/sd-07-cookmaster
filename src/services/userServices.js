@@ -12,12 +12,13 @@ const validateUser = (user) => {
   if (!user.name) throw new Error(invalidEntries);
 };
 
-const createUser = async (user) => {
+const createUser = async (user, admin) => {
   const { email } = user;
   validateUser(user);
   const search = await usersModel.searchByEmail(email);
   if (search !== null) throw new Error('Email already registered');
-  return usersModel.createUser(user);  
+  if (admin) return usersModel.createUser(user, admin);
+  return usersModel.createUser(user);
 };
 
 const loginHandler = async (user) => {

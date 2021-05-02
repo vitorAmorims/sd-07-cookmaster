@@ -22,7 +22,20 @@ const loginHandler = async (req, res) => {
   }
 };
 
+const createAdmin = async (req, res) => {
+  try {
+    const result = await userServices.createUser(req.body, 'admin');
+    res.status(StatusCodes.CREATED).json(result);
+  } catch ({ message }) {
+    if (message === 'Email already registered') {
+      return res.status(StatusCodes.CONFLICT).send(JSON.stringify({ message }));
+    }
+    return res.status(StatusCodes.BAD_REQUEST).send(JSON.stringify({ message }));
+  }
+};
+
 module.exports = {
   createUser,
   loginHandler,
+  createAdmin,
 };

@@ -3,9 +3,10 @@ const connect = require('./connection');
 
 const colName = 'users';
 
-const createUser = async (newUser) => {
+const createUser = async (newUser, admin) => {
   const { email, name, password } = newUser;
-  const role = 'user';
+  let role = 'user';
+  if (admin) role = 'admin';
   const { insertedId } = await connect()
     .then((db) => db.collection(colName).insertOne({ email, name, password, role }));
   return {
