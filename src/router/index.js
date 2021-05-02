@@ -20,7 +20,7 @@ router.post('/recipes',
   middleware.validationRecipes,
   middleware.validationToken,
   controller.createRecipe);
-// router.get('/recipes', '');
+router.get('/recipes', controller.getRecipes);
 // router.get(recipeIdURL, '');
 // router.put(recipeIdURL, '');
 // router.delete(recipeIdURL, '');

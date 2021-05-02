@@ -58,4 +58,13 @@ const createRecipe = async (req, res) => {
   }
 };
 
-module.exports = { createUser, login, createRecipe };
+const getRecipes = async (req, res) => {
+  try {
+    const result = await recipeServeices.getRecipes();
+    return res.status(SUCESS).json(result);
+  } catch (error) {
+    return res.status(FAIL).json({ message: error.message }); 
+  }
+};
+
+module.exports = { createUser, login, createRecipe, getRecipes };

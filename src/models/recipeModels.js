@@ -5,13 +5,21 @@ const nonDb = 'Sem conexão com o banco';
 
 const createRecipe = async (name, ingredients, preparation, id) => {
   try {
-    console.log(name);
+    // console.log(name);
     return await connect()
-      .then((db) => db.collection('users')
+      .then((db) => db.collection('recipes')
         .insertOne({ name, ingredients, preparation, userId: ObjectID(id) }));
   } catch (error) {
     console.error({ message: nonDb });
   }
 };
 
-module.exports = { createRecipe };
+const getRecipes = async () => {
+  try {
+    return await connect().then((db) => db.collection('recipes').find().toArray());
+  } catch (error) {
+    console.error({ message: nonDb });
+  }
+};
+
+module.exports = { createRecipe, getRecipes };
