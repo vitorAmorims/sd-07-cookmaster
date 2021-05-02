@@ -47,7 +47,7 @@ const validateTokenMiddleware = async (req, _res, next) => {
   const secret = 'cookmaster';
   const token = req.headers.authorization;
   if (!token) {
-    return next({ status: StatusCodes.UNAUTHORIZED, message: 'jwt malformed' }); 
+    return next({ status: StatusCodes.UNAUTHORIZED, message: 'missing auth token' }); 
   }
   try {
     const decoded = jwt.verify(token, secret);

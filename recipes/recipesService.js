@@ -20,9 +20,15 @@ const updateRecipeService = async (id, data) => {
   return updateRecipe;
 };
 
+const excludeRecipeService = async (id) => {
+  const excludeId = recipesModel.excludeModel(id);
+  return excludeId;
+};
+
 module.exports = {
   addRecipeService,
   queryRecipesService,
   queryRecipeService,
   updateRecipeService,
+  excludeRecipeService,
 };

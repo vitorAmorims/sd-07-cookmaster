@@ -52,18 +52,39 @@ const queryRecipeController = async (req, res, next) => {
   }
 };
 
-const updateRecipeController = async (req, res, _next) => {
+const updateRecipeController = async (req, res, next) => {
   const { id } = req.params;
   const data = req.body;
   const { _id: userIdent, role } = req.user;
   try {
     const recipe = await recipesService.queryRecipeService(id);
-    if (role !== 'admin' || recipe.userId !== userIdent) return null;
+    if (role !== 'admin' || recipe.userId !== userIdent) {
+      return next(
+        { status: StatusCodes.UNAUTHORIZED, message: 'missing auth token' },
+      );
+    }
     const updateRecipe = await recipesService.updateRecipeService(data);
     return res.status(StatusCodes.OK).json(updateRecipe);
   } catch (error) {
     console.log('updateRecipesControlles', error.message);
     throw new Error(error);
+  }
+};
+
+const excludeRecipeController = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const queryRecipe = await recipesService.queryRecipeService(id);
+    if (!queryRecipe) {
+      return next(
+        { status: StatusCodes.NOT_FOUND, message: 'recipe not found' },
+      );
+    }
+    const exclude = await recipesService.excludeRecipeService(id);
+    return res.status(StatusCodes.NO_CONTENT).json(exclude);
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);  
   }
 };
 
@@ -73,4 +94,5 @@ module.exports = {
   queryRecipesController,
   queryRecipeController,
   updateRecipeController,
+  excludeRecipeController,
 };

@@ -18,13 +18,21 @@ const queryRecipeModel = async (id) => {
    .findOne(ObjectId(id)));
 };
 
-const updateRecipetModel = async (id, data) => connect().then((db) =>
-    db.collection('products')
-      .updateOne({ _id: ObjectId(id) }, { $set: { data } })).then(() => (data));
+const updateRecipetModel = async (id, data) => (
+  connect().then((db) => db.collection('recipes')
+      .updateOne({ _id: ObjectId(id) }, { $set: { data } }))
+      .then(() => (data))
+);
+
+const excludeModel = async (id) => (
+  connect().then((db) => 
+    db.collection('recipes').deleteOne({ _id: ObjectId(id) }))
+);
 
 module.exports = {
   regRecipeModel,
   queryRecipesModel,
   queryRecipeModel,
   updateRecipetModel,
+  excludeModel,
 };
