@@ -6,7 +6,9 @@ const SECRET_JWT = 'nobailenosehmidia';
 
 const isLogged = async (req, res, next) => {
   const tokenJwt = req.headers.authorization;
-  if (!tokenJwt) return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'jwt malformed' });
+  if (!tokenJwt) {
+    return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'missing auth token' });
+  }
 
   try {
     const { data: { email, password } } = jsonwebtoken.verify(tokenJwt, SECRET_JWT);

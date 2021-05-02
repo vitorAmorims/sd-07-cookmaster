@@ -13,12 +13,9 @@ const validateUser = (user) => {
 };
 
 const createUser = async (user) => {
-  // console.log(user);
   const { email } = user;
-  console.log({ email });
   validateUser(user);
   const search = await usersModel.searchByEmail(email);
-  console.log({ search });
   if (search !== null) throw new Error('Email already registered');
   return usersModel.createUser(user);  
 };

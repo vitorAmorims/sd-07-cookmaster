@@ -27,8 +27,37 @@ const getRecipe = async (req, res) => {
   }
 };
 
+const editRecipe = async (req, res) => {
+  const { params, user, body } = req;
+  try {
+    const { _id: userId } = user;
+    const { id } = params;
+    const editedRecipe = await recipesServices.editRecipe(id, body, userId);
+    res.status(StatusCodes.OK).send(editedRecipe);
+  } catch ({ message }) {
+    res.status(StatusCodes.BAD_REQUEST).json({ message });
+  }
+};
+
+const deleteRecipe = async (req, res) => {
+  const { id } = req.params;
+  await recipesServices.deleteRecipe(id);
+  res.status(StatusCodes.NO_CONTENT).send();
+};
+
+const postRecipeImage = async (req, res) => {
+  const { id } = req.params;
+  const { filename } = req.file;
+  const url = `localhost:3000/images/${filename}`;
+  const recipe = await recipesServices.uploadRecipeImage(id, url);
+  return res.status(StatusCodes.OK).send(JSON.stringify(recipe));
+};
+
 module.exports = {
   postRecipe,
   getRecipes,
   getRecipe,
+  editRecipe,
+  deleteRecipe,
+  postRecipeImage,
 };
