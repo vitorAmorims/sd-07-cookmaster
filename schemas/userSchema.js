@@ -8,7 +8,7 @@ const userSchema = [
     .withMessage(invalidEntry)
     .isEmail()
     .withMessage(invalidEntry),
-  body('password').isLength({ min: 5 }).withMessage(invalidEntry),
+  body('password').exists({ checkFalsy: true }).withMessage(invalidEntry),
 ];
 
 module.exports = userSchema;

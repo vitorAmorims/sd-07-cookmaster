@@ -12,8 +12,8 @@ const createUser = async (newUser) => {
 };
 
 const findUserByEmail = async (mail) => {
-  if (await model.findUserByEmail(mail)) return true;
-  return false;
+  const user = await model.findUserByEmail(mail);
+  return user;
 };
 
 module.exports = {  

@@ -2,11 +2,9 @@ const { validationResult } = require('express-validator');
 const service = require('../services/userService');
 const { alreadyEmail } = require('../messages');
 
-const validateUserMiddleware = async (request, response, next) => {
+const userMiddleware = async (request, response, next) => {
   const errors = validationResult(request);
-  const { email } = request.body;
-
-  console.log('email', email);
+  const { email } = request.body;  
     
   if (!errors.isEmpty()) { 
     const { msg } = errors.array()[0];
@@ -14,11 +12,10 @@ const validateUserMiddleware = async (request, response, next) => {
   }
 
   if (await service.findUserByEmail(email)) {
-    console.log('entrei no segundo if');
     return response.status(409).json({ message: alreadyEmail });
   }
 
   next();
 };
 
-module.exports = validateUserMiddleware;
+module.exports = userMiddleware;
