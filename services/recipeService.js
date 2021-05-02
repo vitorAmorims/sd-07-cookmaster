@@ -15,7 +15,10 @@ const findRecipeByName = async (name) => {
   return recipe;
 };
 
+const getAllRecipes = async () => model.getAllRecipes();
+
 module.exports = {  
   createRecipe,
   findRecipeByName,
+  getAllRecipes,
 };

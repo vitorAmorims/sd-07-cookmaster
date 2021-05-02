@@ -10,7 +10,12 @@ const findRecipeByName = async (name) => connection()
 .then((db) => db.collection(recipes)
   .findOne({ name }));
 
+const getAllRecipes = async () => connection()
+.then((db) => db.collection(recipes)
+.find().toArray());
+
 module.exports = {
   createRecipe,
   findRecipeByName,
+  getAllRecipes,
 };

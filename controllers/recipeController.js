@@ -26,4 +26,7 @@ router.post('/recipes',
     }
   });
 
+  router.get('/recipes', async (request, response) => response
+    .status(200).json(await service.getAllRecipes()));
+
 module.exports = router;
