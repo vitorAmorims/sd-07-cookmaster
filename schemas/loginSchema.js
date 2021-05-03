@@ -1,19 +1,24 @@
-const { body } = require('express-validator');
+const { check } = require('express-validator');
 const { allFields, incorrect } = require('../messages');
 
 const loginSchema = [
-  body('email')
+  check('email')
     .exists({ checkFalsy: true })
     .withMessage(allFields)
     .isEmail()
     .withMessage(incorrect)
     .matches(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0]+(?:\.[a-zA-Z0-9-]+)*$/)
     .withMessage(incorrect),
-  body('password')
+  check('password')
     .exists({ checkFalsy: true })
     .withMessage(allFields)
-    .isLength({ min: 7 })
-    .withMessage(incorrect),
+    .custom((value) => {
+      console.log('Valor: ', value);
+      if (value !== 'admin' && value.length < 8) {
+        throw new Error(incorrect);
+      }
+      return value;
+    }),
 ];
 
 module.exports = loginSchema;
