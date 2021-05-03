@@ -10,15 +10,15 @@ const createRecipe = async (newRecipe) => {
   };  
 };
 
-const findRecipeByName = async (name) => {
-  const recipe = await model.findRecipeByName(name);
-  return recipe;
-};
+const findRecipeByName = async (name) => model.findRecipeByName(name);
 
+const findRecipeById = async (id) => model.findRecipeById(id); 
+  
 const getAllRecipes = async () => model.getAllRecipes();
 
 module.exports = {  
   createRecipe,
   findRecipeByName,
+  findRecipeById,
   getAllRecipes,
 };
