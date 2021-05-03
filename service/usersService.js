@@ -1,5 +1,4 @@
 const usersModels = require('../models/users');
-// const message = require('../helpers/message.json');
 
 const create = async (name, email, password) => {
     const nameExists = await usersModels.findByName(name);

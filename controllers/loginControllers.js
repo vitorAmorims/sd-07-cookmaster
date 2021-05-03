@@ -3,8 +3,7 @@ const jwtCreate = require('../helpers/jwtCreate');
 
 const loginService = require('../service/loginService');
 const message = require('../helpers/message.json');
-// const middlewares = require('../middlewares');
- 
+
 const login = async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
