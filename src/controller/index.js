@@ -105,9 +105,9 @@ const putImage = async (req, res) => {
     const { id } = req.params;
     const { file } = req; 
     const urlImage = `localhost:3000/images/${file.filename}`;
-    const recipe = await recipeServeices.putImage(id, urlImage);
+    const result = await recipeServeices.putImage(id, urlImage);
 
-    res.status(200).json(recipe);
+    res.status(200).json(result);
   } catch (error) {
     return res.status(FAIL).json({ menssage: error.menssage });
   }

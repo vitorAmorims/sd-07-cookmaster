@@ -55,13 +55,11 @@ const deleteRecipe = async (id) => {
 
 const putImage = async (id, urlImage) => {
   try {
-    const recipe = await getRecipesById(id);
-    connect().then((db) => db.collection('recipes')
+    return connect().then((db) => db.collection('recipes')
     .updateOne(
       { _id: ObjectId(id) },
       { $set: { image: urlImage } },
     ));
-    return { ...recipe, urlImage };
   } catch (error) {
     console.error({ message: nonDb });
   }
