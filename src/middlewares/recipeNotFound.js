@@ -10,7 +10,7 @@ const validName = async (req, res, next) => {
 
   const recipe = await recipeModels.getRecipesById(id);
 
-  if (recipe === null) {
+  if (!recipe) {
     return res.status(404).json({ message: 'recipe not found' });
   }
   next();

@@ -33,6 +33,9 @@ router.put(`${recipeURL}/:id`,
   middleware.validationToken,
   controller.updateRecipe);
 
-// router.delete(`${recipeURL}/:id`, '');
+router.delete(`${recipeURL}/:id`, 
+  middleware.validationToken,
+  middleware.recipeIdNotFound,
+  controller.deleteRecipe);
 
 module.exports = router;

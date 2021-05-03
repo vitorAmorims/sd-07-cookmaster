@@ -5,6 +5,7 @@ const recipeServeices = require('../service/recipeService');
 
 const SUCESS = 200;
 const CREATED = 201;
+const DELETEDSUCESS = 204;
 const FAIL = 400;
 
 const createUser = async (req, res) => {
@@ -89,6 +90,16 @@ const updateRecipe = async (req, res) => {
   }
 };
 
+const deleteRecipe = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await recipeServeices.deleteRecipe(id);
+    return res.status(DELETEDSUCESS).json();
+  } catch (error) {
+    return res.status(FAIL).json({ menssage: error.menssage });
+  }
+};
+
 module.exports = {
   createUser,
   login,
@@ -96,4 +107,5 @@ module.exports = {
   getRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };
