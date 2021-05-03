@@ -1,7 +1,7 @@
 const recipeModels = require('../models/recipeModels');
 
 const createRecipe = async (name, ingredients, preparation, id) => {
-    // console.log(name);
+  // console.log(name);
   const response = await recipeModels.createRecipe(name, ingredients, preparation, id);
   return response;
 };
@@ -26,4 +26,17 @@ const deleteRecipe = async (id) => {
   return response;
 };
 
-module.exports = { createRecipe, getRecipes, getRecipeById, updateRecipe, deleteRecipe };
+const putImage = async (id, urlImage) => {
+  await recipeModels.putImage(id, urlImage);
+  const response = await recipeModels.getRecipesById(id);
+  return response;
+};
+
+module.exports = {
+  createRecipe,
+  getRecipes,
+  getRecipeById,
+  updateRecipe,
+  deleteRecipe,
+  putImage,
+};

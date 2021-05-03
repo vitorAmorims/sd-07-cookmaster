@@ -53,4 +53,25 @@ const deleteRecipe = async (id) => {
   }
 };
 
-module.exports = { createRecipe, getRecipes, getRecipesById, updateRecipe, deleteRecipe };
+const putImage = async (id, urlImage) => {
+  try {
+    const recipe = await getRecipesById(id);
+    connect().then((db) => db.collection('recipes')
+    .updateOne(
+      { _id: ObjectId(id) },
+      { $set: { image: urlImage } },
+    ));
+    return { ...recipe, urlImage };
+  } catch (error) {
+    console.error({ message: nonDb });
+  }
+};
+
+module.exports = {
+  createRecipe,
+  getRecipes,
+  getRecipesById,
+  updateRecipe,
+  deleteRecipe,
+  putImage,
+};

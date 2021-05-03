@@ -100,6 +100,19 @@ const deleteRecipe = async (req, res) => {
   }
 };
 
+const putImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { file } = req; 
+    const urlImage = `localhost:3000/images/${file.filename}`;
+    const recipe = await recipeServeices.putImage(id, urlImage);
+
+    res.status(200).json(recipe);
+  } catch (error) {
+    return res.status(FAIL).json({ menssage: error.menssage });
+  }
+};
+
 module.exports = {
   createUser,
   login,
@@ -108,4 +121,5 @@ module.exports = {
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  putImage,
 };
