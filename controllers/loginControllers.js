@@ -1,6 +1,5 @@
 const { validationResult } = require('express-validator');
 const jwtCreate = require('../helpers/jwtCreate');
-
 const loginService = require('../service/loginService');
 const message = require('../helpers/message.json');
 
@@ -21,7 +20,6 @@ const login = async (req, res) => {
         );
     }
     const token = jwtCreate(result);
-
     res.status(200).json({ user: { email, password }, token });
 };
 
