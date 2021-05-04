@@ -35,4 +35,12 @@ router.post('/recipes',
     response.status(200).json(await service.findRecipeById(id));
   });
 
+  router.put('/recipes/:id', validateToken, async (request, response) => {
+    const { name, ingredients, preparation } = request.body;
+      const { user: { _id } } = request;
+      const { id } = request.params;
+      const objectRecipe = { name, ingredients, preparation, userId: _id };
+      response.status(200).json(await service.updateRecipe(id, objectRecipe));
+  });
+
 module.exports = router;

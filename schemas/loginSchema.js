@@ -12,8 +12,7 @@ const loginSchema = [
   check('password')
     .exists({ checkFalsy: true })
     .withMessage(allFields)
-    .custom((value) => {
-      console.log('Valor: ', value);
+    .custom((value) => {      
       if (value !== 'admin' && value.length < 8) {
         throw new Error(incorrect);
       }

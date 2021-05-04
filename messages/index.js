@@ -4,6 +4,7 @@ const allFields = 'All fields must be filled';
 const incorrect = 'Incorrect username or password';
 const invalidToken = 'jwt malformed';
 const recipeNotFound = 'recipe not found';
+const missingToken = 'missing auth token';
 
 module.exports = {
   invalidEntry,
@@ -12,4 +13,5 @@ module.exports = {
   incorrect,
   invalidToken,
   recipeNotFound,
+  missingToken,
 };
