@@ -8,6 +8,8 @@ const router = Router();
 // const middlewares = require('../middlewares');
 // const helpers = require('../helpers');
 
-router.post('/', verifyAuthorization, recipesControllers);
+router.get('/', recipesControllers.getAll);
+
+router.post('/', verifyAuthorization, recipesControllers.recipes);
 
 module.exports = router;

@@ -2,6 +2,11 @@
 const recipesService = require('../service/recipesService');
 const message = require('../helpers/message.json');
 
+const getAll = async (req, res) => {
+    const recipes = await recipesService.getAll();
+    res.status(200).json(recipes);
+  };
+
 const recipes = async (req, res) => {
     const { name, ingredients, preparation } = req.body;
     if (!name || !ingredients || !preparation) {
@@ -18,4 +23,7 @@ const recipes = async (req, res) => {
     return result;
 };
 
-module.exports = recipes;
+module.exports = {
+    getAll,
+    recipes,
+};
