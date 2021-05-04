@@ -40,7 +40,15 @@ router.post('/recipes',
       const { user: { _id } } = request;
       const { id } = request.params;
       const objectRecipe = { name, ingredients, preparation, userId: _id };
-      response.status(200).json(await service.updateRecipe(id, objectRecipe));
+      
+      return response.status(200)
+        .json(await service.updateRecipe(id, objectRecipe));
   });
+
+  router.delete('/recipes/:id', 
+    validateToken, async (request, response) => {
+      const { id } = request.params;
+      return response.status(204).json(await service.deleteRecipe(id));
+    });
 
 module.exports = router;

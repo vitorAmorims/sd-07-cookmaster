@@ -6,7 +6,7 @@ const secret = 'minhasenha';
 const validateToken = async (request, response, next) => {  
   const { authorization: token } = request.headers;
   let msg = invalidToken;
-  if (request.method === 'PUT') msg = missingToken;
+  if (['PUT', 'DELETE'].includes(request.method)) msg = missingToken;
   if (!token) {
     return response.status(401).json({ message: msg });
   }
