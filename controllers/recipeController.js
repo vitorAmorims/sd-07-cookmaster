@@ -8,6 +8,8 @@ const recipeIdMiddleware = require('../middlewares/recipeIdMiddleware');
 const recipeSchema = require('../schemas/recipeSchema');
 const validateToken = require('../oauth/validateToken');
 
+const recipeId = '/recipes/:id';
+
 router.post('/recipes',
   recipeSchema, recipeMiddleware, validateToken,
   async (request, response) => {
@@ -30,12 +32,12 @@ router.post('/recipes',
   router.get('/recipes', async (request, response) => response
     .status(200).json(await service.getAllRecipes()));
 
-  router.get('/recipes/:id', recipeIdMiddleware, async (request, response) => {
+  router.get(recipeId, recipeIdMiddleware, async (request, response) => {
     const { id } = request.params;
     response.status(200).json(await service.findRecipeById(id));
   });
 
-  router.put('/recipes/:id', validateToken, async (request, response) => {
+  router.put(recipeId, validateToken, async (request, response) => {
     const { name, ingredients, preparation } = request.body;
       const { user: { _id } } = request;
       const { id } = request.params;
@@ -45,7 +47,7 @@ router.post('/recipes',
         .json(await service.updateRecipe(id, objectRecipe));
   });
 
-  router.delete('/recipes/:id', 
+  router.delete(recipeId, 
     validateToken, async (request, response) => {
       const { id } = request.params;
       return response.status(204).json(await service.deleteRecipe(id));
