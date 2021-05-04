@@ -3,8 +3,8 @@ const model = require('../models/userModel');
 
 const secret = 'hakunamatata';
 
-const loginUser = async (req, res, next) => {
-  const token = req.header.authorization;
+module.exports = async (req, res, next) => {
+  const token = req.headers.authorization;
 
   if (!token) {
     return res.status(401).json({ error: 'token not found' });
@@ -20,10 +20,6 @@ const loginUser = async (req, res, next) => {
     req.user = login;
     next();
   } catch (error) {
-    return res.statu(401).json({ message: error.message });
+    return res.status(401).json({ message: 'jwt malformed' });
   }
-};
-
-module.exports = {
-  loginUser,
 };
