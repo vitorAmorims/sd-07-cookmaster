@@ -37,6 +37,12 @@ const addImage = async (id, filename) => {
   };  
 };
 
+const getImage = async (id) => {
+  console.log('oi gente');
+  const recipe = await model.findRecipeById(id);
+  console.log('Recipe: ', recipe);
+};
+
 module.exports = {  
   createRecipe,
   findRecipeByName,
@@ -45,4 +51,5 @@ module.exports = {
   updateRecipe,
   deleteRecipe,
   addImage,
+  getImage,
 };

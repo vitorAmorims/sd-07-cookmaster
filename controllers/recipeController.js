@@ -42,6 +42,11 @@ router.post('/recipes',
     }
   });
 
+  router.get('/images/:id/', async (request, response) => {    
+    const { id } = request.params;
+    await service.getImage(id);
+  });
+
   router.get('/recipes', async (request, response) => response
     .status(200).json(await service.getAllRecipes()));
 
