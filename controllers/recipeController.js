@@ -42,7 +42,7 @@ router.post('/recipes',
     }
   });
 
-  router.get('/images/:id/', async (request, response) => {    
+  router.get('/images/:id/', async (request, _response) => {    
     const { id } = request.params;
     await service.getImage(id);
   });
