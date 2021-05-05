@@ -10,6 +10,8 @@ const router = Router();
 
 router.get('/', recipesControllers.getAll);
 
+router.get('/:id', recipesControllers.findByid);
+
 router.post('/', verifyAuthorization, recipesControllers.recipes);
 
 module.exports = router;

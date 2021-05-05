@@ -4,6 +4,10 @@ const getAll = async () => {
     const result = await recipesModels.getAll();
     return result;
   };
+const findByid = async (id) => {
+    const result = await recipesModels.findByid(id);
+    return result;
+  };
 
 const recipes = async (name, ingredients, preparation) => {
     const nameExists = await recipesModels.findByName(name);
@@ -16,5 +20,6 @@ const recipes = async (name, ingredients, preparation) => {
 
 module.exports = { 
     getAll,
+    findByid,
     recipes,
 };
