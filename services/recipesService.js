@@ -1,30 +1,30 @@
 const recipesModel = require('../models/recipesModel');
 
-const validateName = (name) => {
-  if (!name) {
-    return false;
-  }
-  return true;
-};
+// const validateName = (name) => {
+//   if (!name) {
+//     return false;
+//   }
+//   return true;
+// };
 
-const validateIngredients = (ingredients) => {
-  if (!ingredients) {
-    return false;
-  }
-  return true;
-};
+// const validateIngredients = (ingredients) => {
+//   if (!ingredients) {
+//     return false;
+//   }
+//   return true;
+// };
 
-const validatePreparation = (preparation) => {
-  if (!preparation) {
-    return false;
-  }
-  return true;
-};
+// const validatePreparation = (preparation) => {
+//   if (!preparation) {
+//     return false;
+//   }
+//   return true;
+// };
 
 const createRecipes = async (name, ingredients, preparation) => {
-  if (!validateName(name)
-    || !validateIngredients(ingredients)
-    || !validatePreparation(preparation)) {
+  if (!name
+    || !ingredients
+    || !preparation) {
     return {
       erro: {
         message: 'Invalid entries. Try again.', status: 400,
@@ -33,10 +33,32 @@ const createRecipes = async (name, ingredients, preparation) => {
   }
 
   const recipes = await recipesModel.createRecipes(name, ingredients, preparation);
-  console.log('recipesModel', recipes);
   return recipes;
+};
+
+const getAllRecipes = async () => {
+  const recipes = await recipesModel.getAllRecipes();
+  // console.log('recipes no service', recipes);
+  return recipes;
+};
+
+const getById = async (id) => {
+  const result = await recipesModel.getById(id);
+  console.log('service', result);
+
+  if (!result) {
+    return {
+      msg: {
+        message: 'recipe not found',
+      },
+      status: 404,
+    };
+  }
+  return result;
 };
 
 module.exports = {
   createRecipes,
+  getAllRecipes,
+  getById,
 };
