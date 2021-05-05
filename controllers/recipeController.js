@@ -1,4 +1,5 @@
 const express = require('express');
+const multer = require('multer');
 
 const router = express.Router();
 
@@ -9,6 +10,18 @@ const recipeSchema = require('../schemas/recipeSchema');
 const validateToken = require('../oauth/validateToken');
 
 const recipeId = '/recipes/:id';
+
+const storage = multer.diskStorage({
+  destination: (_request, file, callback) => {
+    callback(null, 'uploads/');
+  },
+  filename: (request, file, callback) => {
+    const { id } = request.params;
+    callback(null, `${id}.jpeg`);
+  },
+});
+
+const upload = multer({ storage });
 
 router.post('/recipes',
   recipeSchema, recipeMiddleware, validateToken,
@@ -35,6 +48,13 @@ router.post('/recipes',
   router.get(recipeId, recipeIdMiddleware, async (request, response) => {
     const { id } = request.params;
     response.status(200).json(await service.findRecipeById(id));
+  });
+
+  router.put(`${recipeId}/image`, validateToken, upload.single('image'),     
+    async (request, response) => {      
+      const { id } = request.params;
+      const { filename } = request.file;
+      response.status(200).json(await service.addImage(id, filename));
   });
 
   router.put(recipeId, validateToken, async (request, response) => {

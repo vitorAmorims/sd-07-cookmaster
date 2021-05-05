@@ -28,6 +28,15 @@ const updateRecipe = async (id, recipe) => {
 
 const deleteRecipe = async (id) => model.deleteRecipe(id);
 
+const addImage = async (id, filename) => {
+  const recipe = await model.findRecipeById(id);
+  await model.addImage(id, recipe, filename);  
+  return {
+    ...recipe,
+    image: `localhost:3000/images/${filename}`,
+  };  
+};
+
 module.exports = {  
   createRecipe,
   findRecipeByName,
@@ -35,4 +44,5 @@ module.exports = {
   getAllRecipes,
   updateRecipe,
   deleteRecipe,
+  addImage,
 };
