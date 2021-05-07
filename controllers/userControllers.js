@@ -9,7 +9,7 @@ const create = async (req, res) => {
     if (!errors.isEmpty()) {
        return res.status(400).json({ message: message.invalid_entries });
     }
-    const result = await userService.create(name, email, password);
+    const result = await userService.create(name, email, password, 'user');
 
     if (!result) return res.status(409).json({ message: message.emailExists });
 

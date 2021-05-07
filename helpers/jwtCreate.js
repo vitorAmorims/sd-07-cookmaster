@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const secret = 'my secret';
+const secret = 'mysecret';
 
 const headers = {
     expiresIn: '7d',

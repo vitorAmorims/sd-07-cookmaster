@@ -21,7 +21,20 @@ const findByid = async (req, res) => {
  res.status(200).json(idRecipes);
 };
 
+const updateRecipes = async (req, res) => {
+    // const { user } = req;
+    // console.log(user);
+    const { id } = req.params;
+    const { name, ingredients, preparation } = req.body;
+    const recipe = await recipesService.updateRecipes(id, name, ingredients, preparation);
+    console.log(recipe);
+    if (!recipe) return res.status(401).json({ message: 'missing auth token' });
+    res.status(200).json({ _id: id, name, ingredients, preparation });
+};
+
 const recipes = async (req, res) => {
+    const { _id } = req.user;
+    
     const { name, ingredients, preparation } = req.body;
     if (!name || !ingredients || !preparation) {
         return res.status(400).json({ message: message.invalid_entries });
@@ -31,14 +44,22 @@ const recipes = async (req, res) => {
     // if (!errors.isEmpty()) {
     //    return res.status(400).json({ message: message.invalid_entries });
     // }
-    const result = await recipesService.recipes(name, ingredients, preparation);
+    const result = await recipesService.recipes(name, ingredients, preparation, _id);
 
-    res.status(201).json({ recipe: { name, ingredients, preparation } });
+    res.status(201).json({ recipe: result });
     return result;
 };
+
+const deleteRecipes = async (req, res) => {
+    const { id } = req.params;
+    const deleteRecipe = await recipesService.deleteRecipes(id);
+    res.status(204).json(deleteRecipe);
+  };
 
 module.exports = {
     getAll,
     findByid,
     recipes,
+    updateRecipes,
+    deleteRecipes,
 };

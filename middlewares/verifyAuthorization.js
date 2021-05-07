@@ -1,11 +1,14 @@
 const validateToken = require('../helpers/validateToken');
+const message = require('../helpers/message.json');
 
 const verifyAuthorization = (req, res, next) => {
     const token = req.headers.authorization; 
- const payload = validateToken(token);
-
- if (!payload) return res.status(401).json({ message: 'jwt malformed' });
-
+    if (!token) return res.status(401).json({ message: message.update });
+//  
+   const payload = validateToken(token);
+   req.user = payload;
+   if (!payload) return res.status(401).json({ message: message.tokenInvalido });
+   
     next();
 };
 

@@ -1,5 +1,4 @@
 const express = require('express');
-// const verifyAuthorization = require('./middlewares/verifyAuthorization');
 const userRouter = require('./router/userRouter');
 const loginRouter = require('./router/loginRouter');
 const recipesRouter = require('./router/recipesRouter');
