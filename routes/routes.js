@@ -15,6 +15,6 @@ router.get('/recipes', recipesController.getAllRecipes);
 router.get(recipe, recipesController.getById);
 router.post('/recipes', tokenValidate, recipesController.createRecipes);
 // router.put(recipe, tokenValidate, recipesController.updateRecipes);
-router.delete(recipe, tokenValidate, recipesController.deleteRecipe);
+// router.delete(recipe, tokenValidate, recipesController.deleteRecipe);
 
 module.exports = router;

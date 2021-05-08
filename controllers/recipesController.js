@@ -55,23 +55,23 @@ const getById = async (req, res) => {
 //   }
 // };
 
-const deleteRecipe = async (req, res) => {
-  const { id } = req.params;
-  try {
-    await recipesService.deleteRecipe(id);
+// const deleteRecipe = async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     await recipesService.deleteRecipe(id);
 
-    return res.status(204).json();
-    // res.status(204).json(recipe);
-  } catch (error) {
-    // console.error({ message: error.message });
-    res.status(500).json({ message: error.message });
-  }
-};
+//     return res.status(204).json();
+//     // res.status(204).json(recipe);
+//   } catch (error) {
+//     // console.error({ message: error.message });
+//     res.status(500).json({ message: error.message });
+//   }
+// };
 
 module.exports = {
   createRecipes,
   getAllRecipes,
   getById,
   // updateRecipes,
-  deleteRecipe,
+  // deleteRecipe,
 };
