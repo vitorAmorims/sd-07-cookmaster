@@ -1,5 +1,6 @@
 const express = require('express');
 const multer = require('multer');
+const path = require('path');
 
 const router = express.Router();
 
@@ -20,7 +21,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.use(express.static(`${__dirname}/uploads`));
+router.use('/images', express.static(path.join(__dirname, '../uploads')));
 
 const recipeId = '/recipes/:id';
 
