@@ -37,10 +37,9 @@ const addImage = async (id, filename) => {
   };  
 };
 
-const getImage = async (id) => {
-  console.log('oi gente');
-  const recipe = await model.findRecipeById(id);
-  console.log('Recipe: ', recipe);
+const getImage = async (id) => {    
+  const { image } = await model.findRecipeById(id);
+  return `localhost:3000/uploads/${image}`;
 };
 
 module.exports = {  

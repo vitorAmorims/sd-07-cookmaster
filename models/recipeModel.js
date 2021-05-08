@@ -39,7 +39,7 @@ const updateRecipe = async (id, recipe) => {
 
 const addImage = async (id, recipe, filename) => connection()
   .then((db) => db.collection(recipes)
-    .updateOne({ _id: ObjectId(id) }, { $set: { ...recipe, filename } }));    
+    .updateOne({ _id: ObjectId(id) }, { $set: { ...recipe, image: filename } }));    
 
 const deleteRecipe = async (id) => connection()
     .then((db) => db.collection(recipes)

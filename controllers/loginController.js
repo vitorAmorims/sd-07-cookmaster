@@ -1,13 +1,6 @@
-const express = require('express');
-
-const router = express.Router();
-
-const loginMiddleware = require('../middlewares/loginMiddleware');
 const token = require('../oauth/token');
-const loginSchema = require('../schemas/loginSchema');
 
-router.post('/login', loginSchema, loginMiddleware, 
-async (request, response) => {
+const getToken = async (request, response) => {
   try {
     const { email } = request.body;
     
@@ -17,6 +10,8 @@ async (request, response) => {
   } catch (error) {   
     return response.status(500).json({ message: 'Erro interno', error });
   }
-});
+};
 
-module.exports = router;
+module.exports = {
+  getToken,
+};

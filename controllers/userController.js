@@ -1,13 +1,6 @@
-const express = require('express');
-
-const router = express.Router();
-
 const service = require('../services/userService');
-const userMiddleware = require('../middlewares/userMiddleware');
-const userSchema = require('../schemas/userSchema');
 
-router.post('/users', userSchema, userMiddleware, 
-  async (request, response) => {
+const createUser = async (request, response) => {
     try {
       const { name, email, password } = request.body;
     
@@ -21,6 +14,8 @@ router.post('/users', userSchema, userMiddleware,
     } catch (error) {
       return response.status(500).json({ message: 'Erro interno', error });
     }
-  });
+};
 
-module.exports = router;
+module.exports = {
+  createUser,
+};
