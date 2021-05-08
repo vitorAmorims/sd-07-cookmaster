@@ -31,7 +31,6 @@ const updateRecipes = async (id, name, ingredients, preparation) => {
     .then((db) =>
       db.collection('recipes')
         .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } }));
-  // console.log('update model', recipes);
   return recipes;
 };
 
