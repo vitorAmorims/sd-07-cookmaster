@@ -57,30 +57,20 @@ const getById = async (id) => {
   return result;
 };
 
-const updateRecipes = async (id, name, ingredients, preparation) => {
-  const recipes = await recipesModel.updateRecipes(id, name, ingredients, preparation);
-  // if (!recipes) {
-  //   return {
-  //     msg: {
-  //       message: 'missing auth token',
-  //       status: 401,
-  //     },
-  //   };
-  // }
-  console.log('recipe', recipes);
-
-  return recipes;
-};
-
-// const deleteRecipe = async (id) => {
-//   const recipes = await recipesModel.getById(id);
+// const updateRecipes = async (id, name, ingredients, preparation) => {
+//   const recipes = await recipesModel.updateRecipes(id, name, ingredients, preparation);
 //   return recipes;
 // };
+
+const deleteRecipe = async (id) => {
+  const recipes = await recipesModel.getById(id);
+  return recipes;
+};
 
 module.exports = {
   createRecipes,
   getAllRecipes,
   getById,
-  updateRecipes,
-  // deleteRecipe,
+  // updateRecipes,
+  deleteRecipe,
 };
