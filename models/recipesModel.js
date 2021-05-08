@@ -23,8 +23,28 @@ const getById = async (id) => {
   return data;
 };
 
+const updateRecipes = async (id, name, ingredients, preparation) => {
+  // if (!ObjectId.isValid(id)) return null;
+  // const { name, ingredients, preparation } = recipeUpdate;
+  // console.log('model', recipeUpdate);
+  const recipes = await connection()
+    .then((db) =>
+      db.collection('recipes')
+        .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } }));
+  // console.log('update model', recipes);
+  return recipes;
+};
+
+const deleteRecipe = async (id) => {
+  const deleteRecipes = await connection()
+    .then((db) => db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
+  return deleteRecipes;
+};
+
 module.exports = {
   createRecipes,
   getAllRecipes,
   getById,
+  updateRecipes,
+  deleteRecipe,
 };
