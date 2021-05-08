@@ -72,24 +72,15 @@ const updateRecipes = async (id, name, ingredients, preparation) => {
   return recipes;
 };
 
-const deleteRecipe = async (id) => {
-  const recipes = await recipesModel.getById(id);
-
-  // if (!recipes) {
-  //   return {
-  //     msg: {
-  //       message: 'missing auth token',
-  //     },
-  //     status: 401,
-  //   };
-  // }
-  return recipes;
-};
+// const deleteRecipe = async (id) => {
+//   const recipes = await recipesModel.getById(id);
+//   return recipes;
+// };
 
 module.exports = {
   createRecipes,
   getAllRecipes,
   getById,
   updateRecipes,
-  deleteRecipe,
+  // deleteRecipe,
 };
