@@ -47,6 +47,14 @@ const deleteRecipes = async (id) => {
             return deleteRecipe;
       };
 
+const editUpload = async (id, filename) => {
+  const upload = await connection()
+  .then((db) =>
+    db.collection('recipes')
+      .updateOne({ _id: ObjectId(id) }, { $set: { image: filename } }));
+      return upload;
+  };
+
 module.exports = {
     getAll,
     findByid,
@@ -54,4 +62,5 @@ module.exports = {
     recipes,
     findByName,
     deleteRecipes,
+    editUpload,
 };

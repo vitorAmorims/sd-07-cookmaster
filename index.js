@@ -8,6 +8,7 @@ const app = express();
 const PORT = 3000;
 
 // const middlewares = require('./middlewares');
+app.use('/images', express.static(`${__dirname}/uploads`));
 
 app.use(express.json());
 

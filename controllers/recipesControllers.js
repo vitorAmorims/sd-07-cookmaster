@@ -56,10 +56,21 @@ const deleteRecipes = async (req, res) => {
     res.status(204).json(deleteRecipe);
   };
 
+const editUpload = async (req, res) => {
+    const { id } = req.params;
+    const { filename } = req.file;
+    console.log('id', id);
+    console.log('filename', filename);
+    const result = await recipesService.editUpload(id, filename);
+    console.log(result, 'controler');
+    res.status(200).json(result);
+};
+
 module.exports = {
     getAll,
     findByid,
     recipes,
     updateRecipes,
     deleteRecipes,
+    editUpload,
 };

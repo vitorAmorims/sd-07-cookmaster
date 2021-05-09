@@ -9,6 +9,6 @@ const router = Router();
 
 router.post('/', 
 body('email').isEmail(),
-body('password').isLength({ min: 4 }), loginControllers);
+body('password').isLength({ min: 5 }), loginControllers);
 
 module.exports = router;

@@ -10,6 +10,6 @@ const router = Router();
 router.post('/', 
 body('email').isEmail(), 
 body('name').notEmpty(), 
-body('password').isLength({ min: 4 }), userControllers);
+body('password').isLength({ min: 5 }), userControllers);
 
 module.exports = router;
