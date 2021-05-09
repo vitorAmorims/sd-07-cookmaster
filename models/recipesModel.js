@@ -23,24 +23,24 @@ const getById = async (id) => {
   return data;
 };
 
-// const updateRecipes = async (id, name, ingredients, preparation) => {
-//   const recipes = await connection()
-//     .then((db) =>
-//       db.collection('recipes')
-//         .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } }));
-//   return recipes;
-// };
+const updateRecipes = async (id, name, ingredients, preparation) => {
+  const recipes = await connection()
+    .then((db) =>
+      db.collection('recipes')
+        .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } }));
+  return recipes;
+};
 
-// const deleteRecipe = async (id) => {
-//   const deleteRecipes = await connection()
-//     .then((db) => db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
-//   return deleteRecipes;
-// };
+const deleteRecipe = async (id) => {
+  const deleteRecipes = await connection()
+    .then((db) => db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
+  return deleteRecipes;
+};
 
 module.exports = {
   createRecipes,
   getAllRecipes,
   getById,
-  // updateRecipes,
-  // deleteRecipe,
+  updateRecipes,
+  deleteRecipe,
 };
