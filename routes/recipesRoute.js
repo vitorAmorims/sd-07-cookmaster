@@ -7,8 +7,15 @@ const recipesRoute = Router();
 recipesRoute.post(
   '/recipes', 
   middlewares.authMiddleware,
-  middlewares.recipeMiddleware,
+  middlewares.recipeMiddleware.dataRecipeInsertCheck,
   recipesController.createRecipe,
 );
+
+recipesRoute.get(
+  '/recipes/:id',
+  middlewares.recipeMiddleware.idExistCheck,
+  recipesController.getRecipeById,
+);
+recipesRoute.get('/recipes', recipesController.getRecipes);
 
 module.exports = recipesRoute;

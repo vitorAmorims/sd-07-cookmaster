@@ -11,7 +11,7 @@ const createRecipe = async (req, res, next) => {
   }
 };
 
-const getRecipe = async (req, res, next) => {
+const getRecipes = async (req, res, next) => {
   try {
     const result = await ServicesRecipes.getRecipesList();
     return res.status(StatusCodes.OK).json(result);
@@ -21,7 +21,7 @@ const getRecipe = async (req, res, next) => {
 };
 
 const getRecipeById = async (req, res, next) => {
-  const { body: { id } } = req;
+  const { params: { id } } = req;
   try {
     const result = await ServicesRecipes.getRecipeById(id);
     return res.status(StatusCodes.OK).json(result);
@@ -33,5 +33,5 @@ const getRecipeById = async (req, res, next) => {
 module.exports = {
   createRecipe,
   getRecipeById,
-  getRecipe,
+  getRecipes,
 };
