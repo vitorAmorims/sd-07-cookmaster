@@ -1,6 +1,13 @@
 const express = require('express');
 
+const imagesRoute = require('./routes/imagesRoute');
+const usersRoute = require('./routes/usersRoute'); 
+
 const app = express();
+app.use(express.json());
+
+app.use(imagesRoute);
+app.use(usersRoute);
 
 const PORT = 3000;
 
