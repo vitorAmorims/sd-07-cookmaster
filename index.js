@@ -1,6 +1,9 @@
 const express = require('express');
+const path = require('path');
 
 const app = express();
+
+const routes = require('./routes');
 
 const PORT = 3000;
 
@@ -9,4 +12,10 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.listen(PORT, () => { console.log('API rodando na porta 3000'); });
+app.use(express.json());
+app.use('/images', express.static(path.join(__dirname, 'uploads')));
+app.use(routes);
+
+app.listen(PORT, () => {
+  console.log('API rodando na porta 3000');
+});
