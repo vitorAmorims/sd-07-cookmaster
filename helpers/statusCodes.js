@@ -9,7 +9,13 @@ const invalidData = {
 const userAlredyExists = {
   isError: true,
   code: StatusCodes.UNAUTHORIZED,
-  message: { message: 'Email already registered' },
+  message: { message: 'All fields must be filled' },
+};
+
+const loginUserAlredyVerify = {
+  isError: true,
+  code: StatusCodes.UNAUTHORIZED,
+  message: { message: 'Incorrect username or password' },
 };
 
 const invalidToken = {
@@ -63,4 +69,5 @@ module.exports = {
   conflict,
   unprocessableEntity,
   serverError,
+  loginUserAlredyVerify,
 };
