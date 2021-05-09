@@ -3,6 +3,8 @@ const validName = require('./validName');
 const validPassword = require('./validPassword');
 const validEmailExist = require('./validEmailExist');
 const validUserLogin = require('./validLogin');
+const validIngredients = require('./validIngredients');
+const validPreparation = require('./validPreparation');
 const status = require('./statusCodes');
 
 module.exports = {
@@ -11,5 +13,7 @@ module.exports = {
   validPassword,
   validEmailExist,
   validUserLogin,
+  validIngredients,
+  validPreparation,
   status,
 };

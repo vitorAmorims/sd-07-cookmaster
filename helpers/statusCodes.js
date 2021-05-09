@@ -21,7 +21,7 @@ const loginUserAlredyVerify = {
 const invalidToken = {
   isError: true,
   code: StatusCodes.UNAUTHORIZED,
-  message: 'Token invalido',
+  message: { message: 'jwt malformed' },
 };
 
 const ok = {
