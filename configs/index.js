@@ -1,5 +1,3 @@
 const connection = require('./dbConnection');
 
-module.exports = {
-  connection,
-};
+module.exports = connection;
