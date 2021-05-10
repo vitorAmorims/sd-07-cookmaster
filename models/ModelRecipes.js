@@ -21,4 +21,16 @@ const findRecipesById = async (id) => {
   return db.collection(collectionInUse).findOne(ObjectId(id));
 };
 
-module.exports = { createRecipe, findRecipes, findRecipesById };
+const updateById = async (data) => {
+  const { _id, userId, name, ingredients, preparation } = data;
+  const db = await connect();
+  const recipeOld = findRecipesById(_id);
+  db.collection(collectionInUse).updateOne(
+    { _id: ObjectId(_id), userId },
+    { $set: { ...recipeOld, name, ingredients, preparation } },
+  );
+  const getRecipe = await findRecipesById(_id);
+  return getRecipe;
+};
+
+module.exports = { createRecipe, findRecipes, findRecipesById, updateById };

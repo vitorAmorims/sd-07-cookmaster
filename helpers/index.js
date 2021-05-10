@@ -5,6 +5,7 @@ const validEmailExist = require('./validEmailExist');
 const validUserLogin = require('./validLogin');
 const validIngredients = require('./validIngredients');
 const validPreparation = require('./validPreparation');
+const validUpdateRecipes = require('./validUpdateRecipes');
 const status = require('./statusCodes');
 
 module.exports = {
@@ -15,5 +16,6 @@ module.exports = {
   validUserLogin,
   validIngredients,
   validPreparation,
+  validUpdateRecipes,
   status,
 };

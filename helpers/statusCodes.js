@@ -35,7 +35,7 @@ const created = {
 const notFound = {
   isError: true,
   code: StatusCodes.NOT_FOUND,
-  message: 'Página não encontrada!',
+  message: { message: 'recipe not found' },
 };
 
 const methodNotAllowed = {
@@ -58,6 +58,12 @@ const serverError = {
   code: StatusCodes.INTERNAL_SERVER_ERROR,
 };
 
+const invalidTokenUpdateRecipe = {
+  isError: true,
+  code: StatusCodes.UNAUTHORIZED,
+  message: { message: 'missing auth token' },
+};
+
 module.exports = {
   invalidData,
   userAlredyExists,
@@ -70,4 +76,5 @@ module.exports = {
   unprocessableEntity,
   serverError,
   loginUserAlredyVerify,
+  invalidTokenUpdateRecipe,
 };

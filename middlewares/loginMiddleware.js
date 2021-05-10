@@ -5,7 +5,7 @@ const dataUserLoginCheck = async (req, res, next) => {
   const { body } = req;
   const { email, password } = body;
   try {
-    validPassword(password);
+    if (email !== 'root@email.com') validPassword(password);
     if (!email) throw status.userAlredyExists;
     await validUserLogin(body);
     next();

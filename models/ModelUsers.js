@@ -15,4 +15,9 @@ const findUserByEmail = async (email) => {
   return db.collection(collectionUsers).findOne({ email });
 };
 
-module.exports = { signUpUser, findUserByEmail };
+const findUserById = async (id) => {
+  const db = await connect();
+  return db.collection(collectionUsers).findOne({ id });
+};
+
+module.exports = { signUpUser, findUserByEmail, findUserById };
