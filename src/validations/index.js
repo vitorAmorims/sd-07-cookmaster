@@ -6,8 +6,8 @@ const mailValidate = (email) => {
   if (!emailIsValid) throw new Error(ERROR_MESSAGE);
 };
 
-const mailDuplicateValidate = (emailStored, emailRequested) => {
-  if (emailStored === emailRequested) throw new Error('Email already registred');
+const mailDuplicateValidate = (emailStored) => {
+  if (emailStored) throw new Error('Email already registered');
 };
 
 const passValidate = (password) => {

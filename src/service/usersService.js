@@ -1,4 +1,4 @@
-const usersModel = require('../models/usersModel');
+const { usersModel } = require('../models');
 
 const { mailValidate, nameValidate } = require('../validations');
 
@@ -9,7 +9,7 @@ const creatUser = async (user) => {
   const haveRole = Object.keys(user).find((element) => element === 'role');
   const newUser = user;
   if (!haveRole) newUser.role = 'user';
-  const createdUser = await usersModel(user);
+  const createdUser = await usersModel.createUser(user);
   return createdUser;
 };
 
