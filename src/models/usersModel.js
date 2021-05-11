@@ -11,7 +11,6 @@ const findUserByEmail = async (email) => {
   const foundedUser = await connection()
     .then((db) => db.collection('users')
       .findOne({ email }));
-  console.log('founded User: ', foundedUser);
   return foundedUser;
 };
 
