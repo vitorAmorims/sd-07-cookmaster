@@ -17,10 +17,11 @@ const creatUser = async (req, res, next) => {
   }
 };
 
-const userLogin = (req, res, next) => {
+const userLogin = async (req, res, next) => {
   const user = req.body;
   try {
     loginValidate(user);
+    await usersService.authLogin(user);    
     const token = tokenGenerete(user);
     return res.status(httpStatusCode.OK).json({ token });
   } catch (error) {
