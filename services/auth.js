@@ -20,7 +20,7 @@ const createToken = ({ _id, email, role }) => {
 const authorizeToken = (request, response, next) => {
   const { authorization } = request.headers;
 
-  if (!authorization) return response.status(401).send({ message: 'missing auth token' });
+  if (!authorization) return next({ status: 401, message: 'missing auth token' });
 
   try {
     const { _id, email, role } = jwt.verify(authorization, INTERNAL_KEY);
