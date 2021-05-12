@@ -9,4 +9,8 @@ app.get('/', (request, response) => {
   response.send();
 });
 
+app.use('/teste', (request, response) => {
+  response.send('tudo funcionando por aqui');
+});
+
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });
