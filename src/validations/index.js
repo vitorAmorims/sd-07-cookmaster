@@ -23,10 +23,15 @@ const passValidate = (password) => {
 };
 
 const nameValidate = (name) => {
-  if (name === '' || name === undefined) {
-    throw new Error(ERROR_MESSAGE_01);
-  }
-  if (name.length < 3) throw new Error(ERROR_MESSAGE_01);
+  if (!name) throw new Error(ERROR_MESSAGE_01);
+};
+
+const ingredientsValidate = (ingredients) => {
+  if (!ingredients) throw new Error(ERROR_MESSAGE_01);
+};
+
+const preparetionValidate = (preparetion) => {
+  if (!preparetion) throw new Error(ERROR_MESSAGE_01);
 };
 
 const loginValidate = (user) => {
@@ -41,6 +46,8 @@ module.exports = {
   mailValidate,
   nameValidate,
   passValidate,
-  mailDuplicateValidate,
   loginValidate,
+  ingredientsValidate,
+  preparetionValidate,
+  mailDuplicateValidate,
 };

@@ -20,7 +20,13 @@ const authLogin = async (user) => {
   }
 };
 
+const findUserByEmail = async (email) => {
+  const userFound = await usersModel.findUserByEmail(email);
+  return userFound;
+};
+
 module.exports = {
   creatUser,
   authLogin,
+  findUserByEmail,
 };

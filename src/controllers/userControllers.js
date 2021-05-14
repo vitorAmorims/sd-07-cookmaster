@@ -18,10 +18,14 @@ const creatUser = async (req, res, next) => {
 };
 
 const userLogin = async (req, res, next) => {
-  const user = req.body;
+  let user = req.body;
   try {
     loginValidate(user);
-    await usersService.authLogin(user);    
+    await usersService.authLogin(user);
+    const { _id, name, email, role } = await usersService.findUserByEmail(user.email);
+    user = {
+      userId: _id, name, email, role,
+    };
     const token = tokenGenerete(user);
     return res.status(httpStatusCode.OK).json({ token });
   } catch (error) {

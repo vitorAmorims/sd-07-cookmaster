@@ -7,7 +7,7 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
-const { users, login } = require('./src/routes');
+const { users, login, recipes } = require('./src/routes');
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
@@ -16,6 +16,7 @@ app.get('/', (request, response) => {
 
 app.use(login);
 app.use(users);
+app.use(recipes);
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
