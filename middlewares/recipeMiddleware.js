@@ -44,4 +44,5 @@ const dataUpdateRecipeCheck = async (req, res, next) => {
   }
 };
 
-module.exports = { dataRecipeInsertCheck, idExistCheck, dataUpdateRecipeCheck };
+module.exports = {
+  dataRecipeInsertCheck, idExistCheck, dataUpdateRecipeCheck };

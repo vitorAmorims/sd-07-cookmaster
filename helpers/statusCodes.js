@@ -64,6 +64,24 @@ const invalidTokenUpdateRecipe = {
   message: { message: 'missing auth token' },
 };
 
+const isNotAdmin = {
+  isError: true,
+  code: StatusCodes.UNAUTHORIZED,
+  message: { message: 'Você não é admin' },
+};
+
+const notFoundFile = {
+  isError: true,
+  code: StatusCodes.NOT_FOUND,
+  message: { message: 'Not Found' },
+};
+
+const notUserAdmin = {
+  isError: true,
+  code: StatusCodes.FORBIDDEN,
+  message: { message: 'Only admins can register new admins' },
+};
+
 module.exports = {
   invalidData,
   userAlredyExists,
@@ -77,4 +95,7 @@ module.exports = {
   serverError,
   loginUserAlredyVerify,
   invalidTokenUpdateRecipe,
+  isNotAdmin,
+  notFoundFile,
+  notUserAdmin,
 };

@@ -3,6 +3,8 @@ const {
   findRecipes,
   findRecipesById,
   updateById,
+  deleteById,
+  insertImageRecipe,
 } = require('../models/ModelRecipes');
 
 async function createNewRecipe(data) {
@@ -25,9 +27,21 @@ const updateRecipeById = async (data) => {
   return result;
 };
 
+const deleteRecipe = async (id) => {
+  const result = await deleteById(id);
+  return result;
+};
+
+const insertImagedb = async (data) => {
+  const result = await insertImageRecipe(data);
+  return result;
+};
+
 module.exports = {
   createNewRecipe,
   getRecipesList,
   getRecipeById,
   updateRecipeById,
+  deleteRecipe,
+  insertImagedb,
 };

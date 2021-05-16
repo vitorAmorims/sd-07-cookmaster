@@ -21,6 +21,11 @@ const findRecipesById = async (id) => {
   return db.collection(collectionInUse).findOne(ObjectId(id));
 };
 
+const deleteById = async (id) => {
+  const db = await connect();
+  return db.collection(collectionInUse).deleteOne({ _id: ObjectId(id) });
+};
+
 const updateById = async (data) => {
   const { _id, userId, name, ingredients, preparation } = data;
   const db = await connect();
@@ -33,4 +38,23 @@ const updateById = async (data) => {
   return getRecipe;
 };
 
-module.exports = { createRecipe, findRecipes, findRecipesById, updateById };
+const insertImageRecipe = async (data) => {
+  const { id, imagePath } = data;
+
+  const db = await connect();
+  db
+    .collection(collectionInUse)
+    .updateOne({ _id: ObjectId(id) }, { $set: { image: imagePath } });
+  
+  const result = await findRecipesById(id);
+  return result;
+};
+
+module.exports = {
+  createRecipe,
+  findRecipes,
+  findRecipesById,
+  updateById,
+  deleteById,
+  insertImageRecipe,
+};
