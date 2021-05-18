@@ -15,6 +15,19 @@ const creatRecipe = async (req, res, next) => {
   }
 };
 
+const getAllRecipes = async (req, res, next) => {
+  try {
+    const recipesListed = await recipesService.getAllRecipes();
+    return res.status(httpStatusCode.OK).json(recipesListed);
+  } catch (error) {
+    return next({
+      message: error.message,
+      status: httpStatusCode.BAD_REQUEST,
+    });
+  }
+};
+
 module.exports = {
   creatRecipe,
+  getAllRecipes,
 };
