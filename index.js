@@ -17,8 +17,23 @@ app.get('/', (request, response) => {
 app.use(login);
 app.use(users);
 app.use(recipes);
-
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
+// app.get('/images/:id', async (req, res, next) => {
+//   const { id } = req.params;
+//   try {
+//     const image = await getRecipesById(id);
+//     console.log('image: ', image);
+//     idValidate(id);
+//     res.status(200).json(image);
+//   } catch (error) {
+//     return next({
+//       message: error.message,
+//       status: 404,
+//     });
+//   }
+//   next();
+// });
 
 app.use((err, _req, res, _next) => {
   const { message, status = 401 } = err;

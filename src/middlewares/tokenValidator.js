@@ -8,14 +8,14 @@ const tokenValidator = (req, res, next) => {
   if (!token) throw new Error('missing auth token');
   try {
     const decoded = jwt.verify(token, secret);
-    req.user = decoded.userId;
+    req.user = decoded;
   } catch (error) {
     return next({
       message: 'jwt malformed',
       status: httpStatusCode.UNAUTHORIZED,
     });
   }
-  next();
+  return next();
 };
 
 module.exports = tokenValidator;

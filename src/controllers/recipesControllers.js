@@ -3,7 +3,7 @@ const { httpStatusCode } = require('../../constants');
 
 const creatRecipe = async (req, res, next) => {
   const recipe = req.body;
-  recipe.userId = req.user;
+  recipe.userId = req.user.userId;
   try {
     const creadtedRecipe = await recipesService.creatRecipe(recipe);
     return res.status(httpStatusCode.CREATED).json({ recipe: creadtedRecipe });
