@@ -56,8 +56,22 @@ const editRecipe = async (req, res, next) => {
   }
 };
 
+const deletRecipe = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await recipesService.deletRecipe(id);
+    return res.status(httpStatusCode.NO_CONTENT).send();
+  } catch (error) {
+    return next({
+      message: error.message,
+      status: httpStatusCode.NOT_FOUND,
+    });
+  }
+};
+
 module.exports = {
   editRecipe,
+  deletRecipe,
   creatRecipe,
   getAllRecipes,
   getRecipesById,

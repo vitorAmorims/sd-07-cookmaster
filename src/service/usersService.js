@@ -9,7 +9,7 @@ const creatUser = async (user) => {
   const haveRole = Object.keys(user).find((element) => element === 'role');
   const newUser = user;
   if (!haveRole) newUser.role = 'user';
-  const createdUser = await usersModel.createUser(user);
+  const createdUser = await usersModel.createUser(newUser);
   return createdUser;
 };
 
