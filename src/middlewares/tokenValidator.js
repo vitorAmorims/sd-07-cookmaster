@@ -3,9 +3,9 @@ const { httpStatusCode } = require('../../constants');
 
 const secret = 'E5teEm3uSu73rP@ssU0rd1';
 
-const tokenValidator = async (req, res, next) => {
+const tokenValidator = (req, res, next) => {
   const token = req.headers.authorization;
-  if (!token) throw new Error('Invalid entries. Try again.');
+  if (!token) throw new Error('missing auth token');
   try {
     const decoded = jwt.verify(token, secret);
     req.user = decoded.userId;

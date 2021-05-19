@@ -33,7 +33,22 @@ const getRecipesById = async (req, res, next) => {
     const recipeFound = await recipesService.getRecipesById(id);
     return res.status(httpStatusCode.OK).json(recipeFound);
   } catch (error) {
-    console.log(error.message);
+    return next({
+      message: error.message,
+      status: httpStatusCode.NOT_FOUND,
+    });
+  }
+};
+
+const editRecipe = async (req, res, next) => {
+  const { id } = req.params;
+  const recipe = req.body;
+  const { name, ingredients, preparation } = recipe;
+  let editedRecipe = { name, ingredients, preparation, recipeId: id, userId: req.user };
+  try {
+    editedRecipe = await recipesService.editRecipe(editedRecipe);
+    return res.status(httpStatusCode.OK).json(editedRecipe);
+  } catch (error) {
     return next({
       message: error.message,
       status: httpStatusCode.NOT_FOUND,
@@ -42,6 +57,7 @@ const getRecipesById = async (req, res, next) => {
 };
 
 module.exports = {
+  editRecipe,
   creatRecipe,
   getAllRecipes,
   getRecipesById,

@@ -21,7 +21,7 @@ app.use(recipes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use((err, _req, res, _next) => {
-  const { message, status } = err;
+  const { message, status = 401 } = err;
   res.status(status).json({ message });
 });
 
