@@ -1,3 +1,5 @@
+const { ObjectID } = require('bson');
+
 const ERROR_MESSAGE_01 = 'Invalid entries. Try again.';
 const ERROR_MESSAGE_02 = 'All fields must be filled';
 const ERROR_MESSAGE_03 = 'Incorrect username or password';
@@ -42,7 +44,12 @@ const loginValidate = (user) => {
   if (user.password < 6) throw new Error(ERROR_MESSAGE_03);
 };
 
+const idValidate = (id) => {
+  if (!ObjectID.isValid(id)) throw new Error('recipe not found');
+};
+
 module.exports = {
+  idValidate,
   mailValidate,
   nameValidate,
   passValidate,

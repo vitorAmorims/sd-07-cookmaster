@@ -1,5 +1,6 @@
 const { recipesModel } = require('../models');
 const {
+  idValidate,
   nameValidate,
   preparetionValidate,
   ingredientsValidate,
@@ -19,7 +20,14 @@ const getAllRecipes = async () => {
   return recipesListed;
 };
 
+const getRecipesById = async (id) => {
+  idValidate(id);
+  const recipeFound = await recipesModel.getRecipesById(id);
+  return recipeFound;
+};
+
 module.exports = {
   creatRecipe,
   getAllRecipes,
+  getRecipesById,
 };
