@@ -69,10 +69,25 @@ const deletRecipe = async (req, res, next) => {
   }
 };
 
+const addImageRecipe = async (req, res, next) => {
+  const { id } = req.params;
+  const image = `localhost:3000/images/${id}.jpeg`;
+  try {
+    const insertedImag = await recipesService.addImageRecipe(id, image);
+    return res.status(httpStatusCode.OK).json(insertedImag);
+  } catch (error) {
+    return next({
+      message: error.message,
+      status: httpStatusCode.NOT_FOUND,
+    });
+  }
+};
+
 module.exports = {
   editRecipe,
   deletRecipe,
   creatRecipe,
   getAllRecipes,
   getRecipesById,
+  addImageRecipe,
 };
