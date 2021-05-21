@@ -20,7 +20,7 @@ const app = express();
 
 const storage = multer.diskStorage({
   destination: (_request, _file, callback) => {
-    callback(null, 'images/');
+    callback(null, 'uploads/');
   },
   filename: (request, _file, callback) => {
     callback(null, `${request.params.id}.jpeg`);
