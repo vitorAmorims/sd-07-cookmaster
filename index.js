@@ -17,7 +17,7 @@ app.get('/', (request, response) => {
 app.use(login);
 app.use(users);
 app.use(recipes);
-app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/images', express.static(path.join(__dirname, 'uploads')));
 
 // app.get('/images/:id', async (req, res, next) => {
 //   const { id } = req.params;
