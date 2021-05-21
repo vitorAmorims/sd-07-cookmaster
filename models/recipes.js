@@ -19,7 +19,7 @@ const createRecipe = async (recipe) => connection()
     .then((result) => ({ _id: result.insertedId, ...recipe }));
 
 const updateRecipe = async (id, recipe) => {
-  connection()
+  await connection()
     .then((db) => db.collection(col)
       .updateOne(
         { _id: ObjectId(id) },
@@ -31,7 +31,7 @@ const updateRecipe = async (id, recipe) => {
 };
 
 const addImage = async (id, fileName) => {
-  connection()
+  await connection()
     .then((db) => db.collection(col)
       .updateOne(
         { _id: ObjectId(id) },
