@@ -1,0 +1,1 @@
+const RecipesModel = require('../models/RecipesModel');
