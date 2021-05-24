@@ -6,8 +6,6 @@ const middleware = require('../middlewares');
 const router = express.Router();
 const recipeURL = '/recipes';
 
-router.use(express.static(`${__dirname}uploads/`));
-
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, 'uploads/');
