@@ -1,4 +1,4 @@
-const userValidation = require('./userValidation');
+const validation = require('./validation');
 const errorHandler = require('./errorHandler');
 
-module.exports = { userValidation, errorHandler };
+module.exports = { validation, errorHandler };

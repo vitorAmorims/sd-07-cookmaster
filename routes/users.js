@@ -5,7 +5,7 @@ const middleware = require('../middlewares');
 const userRouter = express.Router();
 
 userRouter.route('/')
-  .post(middleware.userValidation, controller.users.create);
+  .post(middleware.validation.user, controller.users.create);
 
 userRouter.use(middleware.errorHandler);
 
