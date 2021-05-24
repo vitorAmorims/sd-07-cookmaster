@@ -1,16 +1,21 @@
-const { httpStatus } = require('../utils');
+const { httpStatus, errorMessages } = require('../utils');
+
+const { USERNAME_OR_PASSWORD, FIELDS_FILLED, INVALID_TOKEN } = errorMessages;
+const unauthorized = [USERNAME_OR_PASSWORD, FIELDS_FILLED, INVALID_TOKEN];
+const conflict = errorMessages.EMAIL_REGISTERED;
+const badRequest = errorMessages.INVALID_ENTRIES;
 
 module.exports = ({ message }, _req, response, _next) => {
-  if (message.includes('Invalid entries')) {
+  if (message.includes(badRequest)) {
     response.status(httpStatus.BAD_REQUEST)
-    .json({ message });
-  } else if (message.includes('already registered')) {
+      .json({ message });
+      return;
+  } if (message.includes(conflict)) {
     response.status(httpStatus.CONFLICT)
-    .json({ message });
-  } else if (
-    message.includes('Incorrect username or password') || message.includes('All fields must')
-  ) {
+      .json({ message });
+      return;
+  } if (unauthorized.includes(message)) {
     response.status(httpStatus.UNAUTHORIZED)
-    .json({ message });
+      .json({ message });
   }
 };

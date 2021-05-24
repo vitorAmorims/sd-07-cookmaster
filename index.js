@@ -12,6 +12,7 @@ app.get('/', (request, response) => {
 
 app.use('/users', route.users);
 app.use('/login', route.login);
+app.use('/recipes', route.recipes);
 
 const PORT = 3000;
 
