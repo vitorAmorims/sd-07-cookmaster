@@ -3,12 +3,12 @@ const connection = require('./connection');
 const createUser = async (userData) => {
   const userInfo = {...userData, role: 'user'}
   const user = await connection()
-    .then((db) => db.collection('users').insetOne(userInfo));
-    return { _id: user.insertedId, userInfo}
+    .then((db) => db.collection('users').insertOne(userInfo));
+    return {user: userInfo}
 }
 
 const getAllUsers = async () => {
-  return await connection
+  return await connection()
     .then((db) => db.collection('users').find().toArray());
 }
 

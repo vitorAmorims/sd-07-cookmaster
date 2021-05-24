@@ -4,9 +4,9 @@ const middleware = require('../middlewares');
 
 const usersRoutes = express.Router();
 
-usersRoutes.route('/')
-  .post(middleware.userInfoMiddleware);
+usersRoutes.route('/users')
+  .post(middleware.userInfoMiddleware, controller.userController.createUserController);
 
-userRouter.use(middleware.errorsMiddleware);
+usersRoutes.use(middleware.errorsMiddleware);
 
 module.exports = usersRoutes;

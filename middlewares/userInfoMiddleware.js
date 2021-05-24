@@ -12,10 +12,7 @@ const userInfoMiddleware = rescue(async (req, _res, next) => {
   if (allUsers.find((user) => user.email === email)) {
     throw new Error(statusMessages.EMAIL_REGISTERED)
   }
-
   next();
 });
 
-module.exports = {
-  userInfoMiddleware,
-}
+module.exports = userInfoMiddleware;
