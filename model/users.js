@@ -3,8 +3,11 @@ const connection = require('./connection');
 const collection = require('./collections');
 
 const create = (newUser) => connection()
-    .then((db) => db.collection(collection.USERS).insertOne({ ...newUser, role: 'user' }))
-    .then((result) => ({ user: { _id: result.insertedId, ...newUser, role: 'user' } }));
+    .then((db) => db.collection(collection.USERS)
+    .insertOne({ ...newUser, role: newUser.role || 'user' }))
+    .then((result) => (
+        { user: { _id: result.insertedId, ...newUser, role: newUser.role || 'user' } }
+    ));
 
 const findByEmail = (email) => connection()
     .then((db) => db.collection(collection.USERS).findOne({ email }));
