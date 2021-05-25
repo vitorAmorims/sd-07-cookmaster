@@ -16,6 +16,12 @@ const create = (userId, name, ingredients, preparation) =>
       userId,
     }));
 
+const getAll = () => 
+    connection()
+      .then((db) => db.collection('recipes').find().toArray())
+      .then((recipe) => recipe);
+
 module.exports = {
   create,
+  getAll,
 };

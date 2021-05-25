@@ -12,9 +12,10 @@ const create = async (req, res) => {
   res.status(201).send({ recipe });
 };
 
-// const getAll = (req, res) => {
-
-// };
+const getAll = async (_req, res) => {
+  const recipes = await RecipesService.getAll();
+  res.status(200).send(recipes);
+};
 
 // const getById = (req, res) => {
 
@@ -38,7 +39,7 @@ const create = async (req, res) => {
 
 module.exports = {
   create,
-  // getAll,
+  getAll,
   // getById,
   // updateById,
   // deleteById,

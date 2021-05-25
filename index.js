@@ -20,8 +20,8 @@ app.post('/users', UsersController.create);
 app.post('/login', UsersController.login);
 
 app.route('/recipes')
-  .post(tokenValidation, RecipesController.create);
-  // .get(RecipesController.getAll);
+  .post(tokenValidation, RecipesController.create)
+  .get(RecipesController.getAll);
 
 // app.route('/recipes/:id')
 //   .get(RecipesController.getById)
