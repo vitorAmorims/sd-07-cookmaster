@@ -1,4 +1,4 @@
-const userInfoMiddleware = require('./userInfoMiddleware');
+const jwtMiddleware = require('./jwtMiddleware');
 const errorsMiddleware = require('./errorsMiddleware');
 
-module.exports = { userInfoMiddleware, errorsMiddleware };
+module.exports = { jwtMiddleware, errorsMiddleware };

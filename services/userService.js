@@ -1,7 +1,7 @@
 const model = require('../models');
 const validateUser = require('./validateUser');
 
-const createUserService = async (user) => {
+module.exports = async (user) => {
   const { name, email, password } = user;
   validateUser.nameValidation(name);
   validateUser.passwordValidation(password);
@@ -9,8 +9,4 @@ const createUserService = async (user) => {
   await validateUser.emailValidations(email);
   const newUser = await model.usersModel.createUser({ name, email, password });
   return newUser;
-};
-
-module.exports = {
-  createUserService,
 };

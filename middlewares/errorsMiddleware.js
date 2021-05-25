@@ -1,5 +1,4 @@
-const statusMessages = require('../utils/statusMessages'); // criar index
-const statusCodes = require('../utils/statusCodes');
+const { statusMessages, statusCodes } = require('../utils');
 
 const {
   USERNAME_OR_PASSWORD_INCORRECT,
@@ -10,6 +9,7 @@ const {
 const unauthorized = [USERNAME_OR_PASSWORD_INCORRECT, FIELDS_REQUIRED, INVALID_TOKEN, MISSING_AUTH];
 
 module.exports = (error, _req, res, _next) => {
+  console.log('erro middleware: ', error.message);
   if (error.message === statusMessages.INVALID_ENTRIES) {
     res.status(statusCodes.BAD_REQUEST)
       .send({ message: error.message });
