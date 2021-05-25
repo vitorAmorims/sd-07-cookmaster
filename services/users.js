@@ -9,7 +9,7 @@ const { code, message } = require('../helpers/messages');
 const emailIsRequired = (email) => {
   if (!email) {
     const error = { code: code[40], message: message.invalidEntries };
-    return error;
+    throw error;
   }
 };
 
@@ -24,7 +24,7 @@ const emailIsInvalid = (email) => {
 const emailAlreadyExists = async (email) => {
   const userExists = await findUserByEmail(email);
   if (userExists) {
-    const error = { code: code[21], message: message.emailAlreadyExists };
+    const error = { code: code[49], message: message.emailAlreadyExists };
     throw error;
   }
 };
@@ -35,10 +35,10 @@ const verifyEmail = async (email) => {
   await emailAlreadyExists(email);
 };
 
-const passwordIsRequired = async (password) => {
+const passwordIsRequired = (password) => {
   if (!password) {
     const error = { code: code[40], message: message.invalidEntries };
-    return error;
+    throw error;
   }
 };
 
@@ -49,7 +49,7 @@ const verifyPassword = (password) => {
 const nameIsRequired = (name) => {
   if (!name) {
     const error = { code: code[40], message: message.invalidEntries };
-    return error;
+    throw error;
   }
 };
 
@@ -58,12 +58,12 @@ const verifyName = (name) => {
 };
 
 const addUserService = async (name, email, password) => {
-  verifyName(name);
-  verifyPassword(password);
-  verifyEmail(email);
+    verifyName(name);
+    verifyPassword(password);
+    await verifyEmail(email);
 
-  const newUser = await addUserModel(name, email, password);
-  return newUser;
+    const newUser = await addUserModel(name, email, password);
+    return newUser;
 };
 
 const getAllUsersService = async () => {

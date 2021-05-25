@@ -6,9 +6,10 @@ const addUser = async (req, res) => {
     console.log(req.body);
     const { name, email, password } = req.body;
     const newUser = await addUserService(name, email, password);
-    res.status(code[21]).json(newUser);
+    console.log('newUser', newUser);
+    return res.status(code[21]).json(newUser);
   } catch (error) {
-    res.status(code[50]).json({ message: error.message });
+    return res.status(error.code).json({ message: error.message });
   }
 };
 
