@@ -4,4 +4,5 @@ module.exports = {
   FIELDS_FILLED: 'All fields must be filled',
   USERNAME_OR_PASSWORD: 'Incorrect username or password',
   INVALID_TOKEN: 'jwt malformed',
+  NOT_FOUND: 'recipe not found',
 };
