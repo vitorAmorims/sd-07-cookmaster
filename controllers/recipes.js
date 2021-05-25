@@ -30,4 +30,10 @@ const update = rescue(async (request, response) => {
   response.status(httpStatus.SUCCESS).send(result);
 });
 
-module.exports = { create, getAll, getById, update };
+const exclude = rescue(async (request, response) => {
+  const { id } = request.params;
+  const result = await model.recipes.exclude(id);
+  response.status(httpStatus.NO_CONTENT).send(result);
+});
+
+module.exports = { create, getAll, getById, update, exclude };

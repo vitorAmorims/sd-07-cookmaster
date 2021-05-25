@@ -10,7 +10,8 @@ recipesRouter.route('/')
 
 recipesRouter.route('/:id')
   .get(controller.recipes.getById)
-  .put(middleware.validation.JWT, controller.recipes.update);
+  .put(middleware.validation.JWT, controller.recipes.update)
+  .delete(middleware.validation.JWT, controller.recipes.exclude);
 
 recipesRouter.use(middleware.errorHandler);
 
