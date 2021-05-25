@@ -13,14 +13,12 @@ const OPTION = {
   useUnifiedTopology: true,
 };
 
-const connection = async () => {
-  return MongoClient
+const connection = async () => MongoClient
     .connect(MONGO_DB_URL, OPTION)
-    .then((connection) => connection.db(DB_NAME))
+    .then((conn) => conn.db(DB_NAME))
     .catch((err) => {
       console.error(err.message);
       process.exit();
     });
-};
 
 module.exports = connection;

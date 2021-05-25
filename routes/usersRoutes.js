@@ -5,7 +5,10 @@ const middleware = require('../middlewares');
 const usersRoutes = express.Router();
 
 usersRoutes.route('/users')
-  .post(middleware.userInfoMiddleware, controller.userController.createUserController);
+  .post(controller.userController.createUserController);
+
+// usersRoutes.route('/login')
+//   .post(middleware.userInfoMiddleware, controller.userController.loginController);
 
 usersRoutes.use(middleware.errorsMiddleware);
 
