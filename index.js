@@ -16,7 +16,7 @@ app.get('/', (request, response) => {
 
 app.post('/users', UsersController.create);
 
-// app.post('/login', UsersController.login);
+app.post('/login', UsersController.login);
 
 // app.route('/recipes')
 //   .post(RecipesController.create)

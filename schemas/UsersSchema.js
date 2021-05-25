@@ -2,6 +2,7 @@ const UsersModel = require('../models/UsersModel');
 
 const userMessageError = 'Invalid entries. Try again.';
 const emailRegisteredError = 'Email already registered';
+const loginErrorMessage = 'All fields must be filled';
 
 const validUserData = (name, email, password) => {
   if (!name) return ({ code: 400, message: userMessageError });
@@ -21,7 +22,15 @@ const validUserEmail = async (email) => {
   return {};
 };
 
+const validLogin = (email, password) => {
+  if (!email) return ({ code: 401, message: loginErrorMessage });
+  if (!password) return ({ code: 401, message: loginErrorMessage });
+
+  return {};
+};
+
 module.exports = {
   validUserData,
   validUserEmail,
+  validLogin,
 };

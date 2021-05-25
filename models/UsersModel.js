@@ -1,6 +1,6 @@
 const connection = require('./connection');
 
-const create = async (name, email, password) =>
+const create = (name, email, password) =>
   connection()
     .then((db) => db.collection('users').insertOne({
       name,
@@ -16,7 +16,7 @@ const create = async (name, email, password) =>
         role: 'user',
       }));
 
-const findByEmail = async (email) =>
+const findByEmail = (email) =>
   connection()
     .then((db) => db.collection('users').findOne({ email }));
 
