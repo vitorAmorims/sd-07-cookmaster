@@ -1,7 +1,7 @@
 const {
-  addUser,
+  addUserModel,
   findUserByEmail,
-  getAllUsers,
+  getAllUsersModel,
 } = require('../models/users');
 
 const { code, message } = require('../helpers/messages');
@@ -62,12 +62,12 @@ const addUserService = async (name, email, password) => {
   verifyPassword(password);
   verifyEmail(email);
 
-  const newUser = await addUser(name, email, password);
+  const newUser = await addUserModel(name, email, password);
   return newUser;
 };
 
 const getAllUsersService = async () => {
-  const results = await getAllUsers();
+  const results = await getAllUsersModel();
   return results;
 };
 
