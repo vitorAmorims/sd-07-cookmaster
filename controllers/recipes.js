@@ -36,4 +36,13 @@ const exclude = rescue(async (request, response) => {
   response.status(httpStatus.NO_CONTENT).send(result);
 });
 
-module.exports = { create, getAll, getById, update, exclude };
+const addImage = rescue(async (request, response) => {
+  const { id } = request.params;
+  const { filename } = request.file;
+  const image = `localhost:3000/images/${filename}`;
+  const recipe = await model.recipes.getById(id);
+  const result = await model.recipes.update(id, { ...recipe, image });
+  response.status(httpStatus.SUCCESS).send(result);
+});
+
+module.exports = { create, getAll, getById, update, exclude, addImage };
