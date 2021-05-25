@@ -6,7 +6,7 @@ const { jwt } = require('../../service');
 module.exports = rescue(async (request, _response, next) => {
   const token = request.headers.authorization;
 
-  if (!token) throw new Error(error.INVALID_TOKEN);
+  if (!token) throw new Error(error.MISSING_AUTH);
 
   const { data } = jwt.decode(token);
 

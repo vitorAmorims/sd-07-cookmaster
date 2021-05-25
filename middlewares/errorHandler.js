@@ -1,7 +1,7 @@
 const { httpStatus, errorMessages } = require('../utils');
 
-const { USERNAME_OR_PASSWORD, FIELDS_FILLED, INVALID_TOKEN } = errorMessages;
-const unauthorized = [USERNAME_OR_PASSWORD, FIELDS_FILLED, INVALID_TOKEN];
+const { USERNAME_OR_PASSWORD, FIELDS_FILLED, INVALID_TOKEN, MISSING_AUTH } = errorMessages;
+const unauthorized = [USERNAME_OR_PASSWORD, FIELDS_FILLED, INVALID_TOKEN, MISSING_AUTH];
 const conflict = errorMessages.EMAIL_REGISTERED;
 const badRequest = errorMessages.INVALID_ENTRIES;
 const notFound = errorMessages.NOT_FOUND;

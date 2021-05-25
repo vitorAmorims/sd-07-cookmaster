@@ -22,4 +22,12 @@ const getAll = rescue(async (_request, response) => {
   response.status(httpStatus.SUCCESS).send(result);
 });
 
-module.exports = { create, getAll, getById };
+const update = rescue(async (request, response) => {
+  const { id } = request.params;
+  const { _id: userId } = request.user;
+  const { name, ingredients, preparation } = request.body;
+  const result = await model.recipes.update(id, { userId, name, ingredients, preparation });
+  response.status(httpStatus.SUCCESS).send(result);
+});
+
+module.exports = { create, getAll, getById, update };
