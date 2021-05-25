@@ -24,9 +24,9 @@ app.route('/recipes')
   .get(RecipesController.getAll);
 
 app.route('/recipes/:id')
-  .get(RecipesController.findById);
-//   .put(RecipesController.updateById)
-//   .delete(RecipesController.deleteById);
+  .get(RecipesController.findById)
+  .put(tokenValidation, RecipesController.updateById);
+  // .delete(RecipesController.deleteById);
 
 // app.get('/images/:id', RecipesController.showImages);
 

@@ -25,9 +25,17 @@ const findById = async (req, res) => {
   res.status(200).send(recipe);
 };
 
-// const updateById = (req, res) => {
+const updateById = async (req, res) => {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
 
-// };
+  const { code, message, recipe } = await RecipesService
+    .updateById(id, name, ingredients, preparation);
+
+  if (message) return res.status(code).send({ message });
+
+  res.status(200).send(recipe);
+};
 
 // const deleteById = (req, res) => {
 
@@ -45,7 +53,7 @@ module.exports = {
   create,
   getAll,
   findById,
-  // updateById,
+  updateById,
   // deleteById,
   // showImages,
   // updateImageById,
