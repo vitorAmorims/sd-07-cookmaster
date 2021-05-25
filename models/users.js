@@ -12,7 +12,7 @@ const getAllUsers = async () => {
     .then((db) => db.collection('users').find().toArray());
 };
 
-const getUserByEmail = async (email) => await connection()
+const getUserByEmail = async (email) => connection()
     .then((db) => db.collection('users').findOne({ email }));
 
 module.exports = {
