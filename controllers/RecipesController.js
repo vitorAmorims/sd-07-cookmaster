@@ -17,9 +17,13 @@ const getAll = async (_req, res) => {
   res.status(200).send(recipes);
 };
 
-// const getById = (req, res) => {
+const findById = async (req, res) => {
+  const { id } = req.params;
+  const { code, message, recipe } = await RecipesService.findById(id);
+  if (message) res.status(code).send({ message });
 
-// };
+  res.status(200).send(recipe);
+};
 
 // const updateById = (req, res) => {
 
@@ -40,7 +44,7 @@ const getAll = async (_req, res) => {
 module.exports = {
   create,
   getAll,
-  // getById,
+  findById,
   // updateById,
   // deleteById,
   // showImages,

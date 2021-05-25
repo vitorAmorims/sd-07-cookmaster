@@ -1,3 +1,4 @@
+const { ObjectId } = require('bson');
 const connection = require('./connection');
 
 const create = (userId, name, ingredients, preparation) =>
@@ -19,9 +20,15 @@ const create = (userId, name, ingredients, preparation) =>
 const getAll = () => 
     connection()
       .then((db) => db.collection('recipes').find().toArray())
+      .then((recipes) => recipes);
+
+const findById = (id) =>
+    connection()
+      .then((db) => db.collection('recipes').findOne(ObjectId(id)))
       .then((recipe) => recipe);
 
 module.exports = {
   create,
   getAll,
+  findById,
 };

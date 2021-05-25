@@ -23,8 +23,8 @@ app.route('/recipes')
   .post(tokenValidation, RecipesController.create)
   .get(RecipesController.getAll);
 
-// app.route('/recipes/:id')
-//   .get(RecipesController.getById)
+app.route('/recipes/:id')
+  .get(RecipesController.findById);
 //   .put(RecipesController.updateById)
 //   .delete(RecipesController.deleteById);
 
