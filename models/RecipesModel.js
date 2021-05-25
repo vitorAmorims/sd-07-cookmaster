@@ -40,9 +40,23 @@ const updateById = (id, name, ingredients, preparation) =>
       preparation,
     }));
 
+const deleteByIdUser = (id, userId) =>
+    connection()
+      .then((db) => db.collection('recipes')
+        .deleteOne({ _id: ObjectId(id), userId: ObjectId(userId) }))
+      .then((response) => response.deletedCount);
+
+const deleteByIdAdmin = (id) =>
+connection()
+  .then((db) => db.collection('recipes')
+    .deleteOne({ _id: ObjectId(id) }))
+  .then((response) => response.deletedCount);
+
 module.exports = {
   create,
   getAll,
   findById,
   updateById,
+  deleteByIdAdmin,
+  deleteByIdUser,
 };
