@@ -9,4 +9,9 @@ const create = rescue(async (request, response) => {
   response.status(httpStatus.CREATED).send(result);
 });
 
-module.exports = { create };
+const getAll = rescue(async (_request, response) => {
+  const result = await model.recipes.getAll();
+  response.status(httpStatus.SUCCESS).send(result);
+});
+
+module.exports = { create, getAll };
