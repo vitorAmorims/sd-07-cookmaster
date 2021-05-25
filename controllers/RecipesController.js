@@ -1,8 +1,16 @@
-// const RecipesService = require('../services/RecipesService');
+const RecipesService = require('../services/RecipesService');
 
-// const create = (req, res) => {
+const create = async (req, res) => {
+  const { name, ingredients, preparation } = req.body;
+  const { _id: userId } = req.user;
 
-// };
+  const { code, message, recipe } = await RecipesService
+    .create(userId, name, ingredients, preparation);
+
+  if (message) return res.status(code).send({ message });
+
+  res.status(201).send({ recipe });
+};
 
 // const getAll = (req, res) => {
 
@@ -28,12 +36,12 @@
 
 // };
 
-// module.exports = {
-//   create,
-//   getAll,
-//   getById,
-//   updateById,
-//   deleteById,
-//   showImages,
-//   updateImageById,
-// };
+module.exports = {
+  create,
+  // getAll,
+  // getById,
+  // updateById,
+  // deleteById,
+  // showImages,
+  // updateImageById,
+};

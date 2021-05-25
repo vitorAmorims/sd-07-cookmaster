@@ -1,8 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const tokenValidation = require('./auth/tokenValidation');
 const UsersController = require('./controllers/UsersController');
-// const RecipesController = require('./controllers/RecipesController');
+const RecipesController = require('./controllers/RecipesController');
 
 const app = express();
 app.use(bodyParser.json());
@@ -18,9 +19,9 @@ app.post('/users', UsersController.create);
 
 app.post('/login', UsersController.login);
 
-// app.route('/recipes')
-//   .post(RecipesController.create)
-//   .get(RecipesController.getAll);
+app.route('/recipes')
+  .post(tokenValidation, RecipesController.create);
+  // .get(RecipesController.getAll);
 
 // app.route('/recipes/:id')
 //   .get(RecipesController.getById)

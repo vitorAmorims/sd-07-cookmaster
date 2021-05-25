@@ -9,12 +9,12 @@ const create = (name, email, password) =>
       role: 'user',
     }))
     .then((result) => ({
-        _id: result.insertedId,
-        name,
-        email,
-        password,
-        role: 'user',
-      }));
+      _id: result.insertedId,
+      name,
+      email,
+      password,
+      role: 'user',
+    }));
 
 const findByEmail = (email) =>
   connection()
