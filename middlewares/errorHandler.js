@@ -24,4 +24,5 @@ module.exports = ({ message }, _req, response, _next) => {
   } else {
     response.status(status(message)).json({ message });
   }
+  console.log(message);
 };
