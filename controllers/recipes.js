@@ -2,6 +2,7 @@ const rescue = require('express-rescue');
 const { httpStatus } = require('../utils');
 const model = require('../model');
 const { errorMessages: error } = require('../utils');
+const { multer } = require('../service');
 
 const create = rescue(async (request, response) => {
   const { _id: userId } = request.user;
@@ -43,6 +44,7 @@ const addImage = rescue(async (request, response) => {
   const recipe = await model.recipes.getById(id);
   const result = await model.recipes.update(id, { ...recipe, image });
   response.status(httpStatus.SUCCESS).send(result);
+  return multer('image');
 });
 
 module.exports = { create, getAll, getById, update, exclude, addImage };
