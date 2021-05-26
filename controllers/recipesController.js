@@ -27,27 +27,29 @@ const getRecipesByIdController = rescue(async (req, res) => {
 });
 
 const updateRecipeController = rescue(async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { name, ingredients, preparation } = req.body;
-    const updatedRecipe = await model
-      .recipesModel.updateRecipe({ id, name, ingredients, preparation });
-    return res.status(statusCodes.SUCCESS).send(updatedRecipe);
-  } catch (err) {
-    return res.status(statusCodes.BAD_REQUEST).send({ message: err.message });
-  }
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const updatedRecipe = await model
+    .recipesModel.updateRecipe({ id, name, ingredients, preparation });
+  return res.status(statusCodes.SUCCESS).send(updatedRecipe);
 });
 
-const deleteRecipeController = async (req, res) => {
-  try {
-    const { id } = req.params;
-    await model
-    .recipesModel.deleteRecipe(id);
-    return res.status(statusCodes.NO_CONTENT).send();
-  } catch (err) {
-    console.error(err);
-  }
-};
+const deleteRecipeController = rescue(async (req, res) => {
+  const { id } = req.params;
+  await model
+  .recipesModel.deleteRecipe(id);
+  return res.status(statusCodes.NO_CONTENT).send();
+});
+
+const addImageController = rescue(async (req, res) => {
+  const { id } = req.params;
+  const { filename } = req.file;
+  const image = `localhost:3000/images/${filename}`;
+  const recipe = await model
+  .recipesModel.getRecipeById(id);
+  const updatedRecipe = await model.recipesModel.updateRecipe({ id, recipe, image });
+  return res.status(statusCodes.SUCCESS).send(updatedRecipe);
+});
 
 module.exports = {
   addRecipeController,
@@ -55,4 +57,5 @@ module.exports = {
   getRecipesByIdController,
   updateRecipeController,
   deleteRecipeController,
+  addImageController,
 };
