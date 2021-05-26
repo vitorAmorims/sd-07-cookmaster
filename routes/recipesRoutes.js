@@ -11,7 +11,9 @@ recipesRoutes.post('/recipes',
 recipesRoutes.get('/recipes', controller.recipesController.getAllRecipesController);
 
 recipesRoutes.route('/recipes/:id')
-  .get(controller.recipesController.getRecipesByIdController);
+  .get(controller.recipesController.getRecipesByIdController)
+  .put(middleware.jwtMiddleware, controller.recipesController.updateRecipeController)
+  .delete(middleware.jwtMiddleware, controller.recipesController.deleteRecipeController);
 
 recipesRoutes.use(middleware.errorsMiddleware);
 

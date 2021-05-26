@@ -26,8 +26,33 @@ const getRecipesByIdController = rescue(async (req, res) => {
   return res.status(statusCodes.SUCCESS).send(recipeById);
 });
 
+const updateRecipeController = rescue(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, ingredients, preparation } = req.body;
+    const updatedRecipe = await model
+      .recipesModel.updateRecipe(id, name, ingredients, preparation);
+    return res.status(statusCodes.SUCCESS).send(updatedRecipe);
+  } catch (err) {
+    return res.status(statusCodes.BAD_REQUEST).send({ message: err.message });
+  }
+});
+
+const deleteRecipeController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await model
+    .recipesModel.deleteRecipe(id);
+    return res.status(statusCodes.NO_CONTENT).send();
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 module.exports = {
   addRecipeController,
   getAllRecipesController,
   getRecipesByIdController,
+  updateRecipeController,
+  deleteRecipeController,
 };
