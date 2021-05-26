@@ -1,13 +1,9 @@
 const connection = require('./conn');
 
 const findUserByEmail = async (email) => {
-  try {
-    const db = await connection();
-    const result = await db.collection('users').findOne({ email });
-    return result;  
-  } catch (error) {
-    console.error('model find user:', error.message);
-  }
+  const db = await connection();
+  const result = await db.collection('users').findOne({ email });
+  return result;  
 };
 
 const addUserModel = async (name, email, password) => {
