@@ -4,6 +4,7 @@ module.exports = {
     21: 201,
     40: 400,
     41: 401,
+    43: 403,
     49: 409,
     50: 500,
   },
@@ -13,5 +14,7 @@ module.exports = {
     usernameOrPasswordInvalid: 'Incorrect username or password',
     loginIsRequired: 'All fields must be filled',
     loginIsInvalid: 'Incorrect username or password',
+    tokenMissing: 'missing auth token',
+    tokenMalformed: 'jwt malformed',
   },
 };

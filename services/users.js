@@ -91,14 +91,16 @@ const loginIsValid = async (email, password) => {
   }
 };
 
-const loginService = async (email, password) => {
+const loginService = async (email, password, role, _id) => {
   loginIsRequired(email, password);
   await loginIsValid(email, password);
-  return generateToken({ email, password });
+  return generateToken({ email, role, _id });
 };
 
 module.exports = {
   addUserService,
   getAllUsersService,
   loginService,
+  nameIsRequired,
+  findUserByEmail,
 };
