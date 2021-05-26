@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const tokenValidation = require('./auth/tokenValidation');
+const isAdmin = require('./auth/isAdmin');
 const UsersController = require('./controllers/UsersController');
 const RecipesController = require('./controllers/RecipesController');
 
@@ -32,6 +33,6 @@ app.route('/recipes/:id')
 
 // app.put('/recipes/:id/image/', RecipesController.updateImageById);
 
-// app.post('/users/admin', UsersController.createAdmin);
+app.post('/users/admin', tokenValidation, isAdmin, UsersController.createAdmin);
 
 app.listen(PORT, () => { console.log('API rodando na porta 3000'); });

@@ -39,7 +39,20 @@ const login = async (email, password) => {
   return ({ token });
 };
 
+const createAdmin = async (name, email, password) => {
+  const validUserData = UsersSchema.validUserData(name, email, password);
+  if (validUserData.message) return validUserData;
+
+  const validEmail = await UsersSchema.validUserEmail(email);
+  if (validEmail.message) return validEmail;
+
+  const user = await UsersModel.createAdmin(name, email, password);
+
+  return ({ user: { user } });
+};
+
 module.exports = {
   create,
   login,
+  createAdmin,
 };

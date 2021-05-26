@@ -39,7 +39,6 @@ const updateById = async (req, res) => {
 
 const deleteById = async (req, res) => {
   const { id } = req.params;
-  console.log(req.user);
   const { _id: userId, role } = req.user;
 
   const { code, message } = await RecipesService
