@@ -31,7 +31,7 @@ const updateRecipeController = rescue(async (req, res) => {
     const { id } = req.params;
     const { name, ingredients, preparation } = req.body;
     const updatedRecipe = await model
-      .recipesModel.updateRecipe(id, name, ingredients, preparation);
+      .recipesModel.updateRecipe({ id, name, ingredients, preparation });
     return res.status(statusCodes.SUCCESS).send(updatedRecipe);
   } catch (err) {
     return res.status(statusCodes.BAD_REQUEST).send({ message: err.message });
