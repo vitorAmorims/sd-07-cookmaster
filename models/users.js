@@ -18,8 +18,16 @@ const getAllUsersModel = async () => {
   return db.collection('users').find().toArray();
 };
 
+const findEmailAndPassword = async (email, password) => {
+  const db = await connection();
+  const result = await db.collection('users').findOne({ email, password });
+  console.log('olha o model', result);
+  return result;
+};
+
 module.exports = {
   addUserModel,
   findUserByEmail,
   getAllUsersModel,
+  findEmailAndPassword,
 };
