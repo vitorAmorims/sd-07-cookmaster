@@ -17,12 +17,12 @@ let db = null;
 const connection = () => (
   db 
     ? Promise.resolve(db)
-    : MongoClient.connect(config.evaluator.MONGO_DB_URL, {
+    : MongoClient.connect(config.local.MONGO_DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,  
     })
       .then((conn) => {
-        db = conn.db(config.evaluator.DB_NAME);
+        db = conn.db(config.local.DB_NAME);
         return db;
       })
       .catch((err) => {

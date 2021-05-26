@@ -3,6 +3,8 @@ const path = require('path');
 
 const route = require('./routes');
 
+const UPLOADS = path.join(__dirname, 'uploads/');
+
 const app = express();
 
 app.use(express.json());
@@ -12,10 +14,9 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.use('/images', express.static(path.join(__dirname, 'uploads/')));
-
 app.use('/users', route.users);
 app.use('/login', route.login);
+app.use('/images', express.static(UPLOADS));
 app.use('/recipes', route.recipes);
 
 const PORT = 3000;
