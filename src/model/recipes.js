@@ -6,8 +6,8 @@ const register = async (recipe) => {
   await connection()
     .then((db) => db.collection('recipes').insertOne(recipe))
     .then((result) => {
-      // eslint-disable-next-line prefer-destructuring
-      response = result.ops[0];
+      const [ops] = result.ops;
+      response = ops;
     });
     return response;
 };

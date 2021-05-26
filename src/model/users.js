@@ -6,8 +6,8 @@ const register = async (user) => {
   await connection()
     .then((db) => db.collection('users').insertOne(user))
     .then((result) => {
-      // eslint-disable-next-line prefer-destructuring
-      response = result.ops[0];
+      const [ops] = result.ops;
+      response = ops;
     });
     return response;
 };
@@ -16,8 +16,8 @@ const findByEmail = async (email) => {
   await connection()
     .then((db) => db.collection('users').find({ email }).toArray())
     .then((result) => {
-      // eslint-disable-next-line prefer-destructuring
-      response = result[0];
+      const [output] = result;
+      response = output;
     });
     return response;
 };
