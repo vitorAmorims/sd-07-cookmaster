@@ -7,6 +7,6 @@ module.exports = async (user) => {
   validateUser.passwordValidation(password);
   validateUser.emailFormatValidation(email);
   await validateUser.emailValidations(email);
-  const newUser = await model.usersModel.createUser({ name, email, password });
+  const newUser = await model.usersModel.createUser(user);
   return newUser;
 };

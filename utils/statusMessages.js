@@ -6,4 +6,5 @@ module.exports = {
   INVALID_TOKEN: 'jwt malformed',
   NOT_FOUND: 'recipe not found',
   MISSING_AUTH: 'missing auth token',
+  FORBIDDEN: 'Only admins can register new admins',
 };
