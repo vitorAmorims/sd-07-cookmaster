@@ -11,8 +11,9 @@ const findUserByEmail = async (email) => {
 };
 
 const addUserModel = async (name, email, password) => {
+  const user = { name, email, password, role: 'user' };
   const db = await connection();
-  const product = await db.collection('users').insertOne({ name, email, password, role: 'user' });
+  const product = await db.collection('users').insertOne(user);
   return product.ops[0];
 };
 

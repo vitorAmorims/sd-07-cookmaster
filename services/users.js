@@ -23,6 +23,7 @@ const emailIsInvalid = (email) => {
 
 const emailAlreadyExists = async (email) => {
   const userExists = await findUserByEmail(email);
+  console.log('service userExists:', userExists);
   if (userExists) {
     const error = { code: code[49], message: message.emailAlreadyExists };
     throw error;
@@ -58,12 +59,12 @@ const verifyName = (name) => {
 };
 
 const addUserService = async (name, email, password) => {
-    verifyName(name);
-    verifyPassword(password);
-    await verifyEmail(email);
+  verifyName(name);
+  verifyPassword(password);
+  await verifyEmail(email);
 
-    const newUser = await addUserModel(name, email, password);
-    return newUser;
+  const newUser = await addUserModel(name, email, password);
+  return newUser;
 };
 
 const getAllUsersService = async () => {
