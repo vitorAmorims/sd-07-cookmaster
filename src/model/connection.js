@@ -17,6 +17,7 @@ const DB_NAME = 'Cookmaster';
 const connection = async () => MongoClient.connect(MONGO_DB_URL, OPTIONS)
     .then((conn) => conn.db(DB_NAME))
     .catch((err) => {
+       console.log(err);
       process.exit(1);
     });
 

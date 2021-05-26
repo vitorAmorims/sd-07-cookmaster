@@ -3,6 +3,6 @@ const { register, login } = require('../controller/user');
 const { userInfoTest, userEmailExists, loginInfoTest } = require('../middlewares/user');
 
 Router.post('/users', userInfoTest, userEmailExists, register);
-Router.get('/login', loginInfoTest, login);
+Router.post('/login', loginInfoTest, login);
 
 module.exports = Router;

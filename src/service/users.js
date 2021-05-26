@@ -1,23 +1,18 @@
 const JWT = require('jsonwebtoken');
 const userModel = require('../model/users');
 
-const SECRET = process.env.SECRET_JWT || 'trybeer';
+const SECRET = 'cookmaster';
 const JWT_CONFIG = {
   expiresIn: 60 * 20,
   algorithm: 'HS256',
 };
 
-const register = (user) => {
-  return userModel.register(user);
-};
+const register = (user) => userModel.register(user);
 
-const findByEmail = (email) => {
-  return userModel.findByEmail(email);
-};
+const findByEmail = (email) => userModel.findByEmail(email);
 
 const login = async (userEmail, password) => {
   const user = await userModel.findByEmail(userEmail);
-  console.log('serviceUser', user);
   if (!user || user.password !== password) {
     return undefined;
   }
