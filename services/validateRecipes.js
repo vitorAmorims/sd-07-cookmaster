@@ -16,4 +16,9 @@ module.exports = {
       throw new Error(statusMessages.INVALID_ENTRIES);
     }
   },
+  recipeValidation: (recipe) => {
+    if (!recipe) {
+      throw new Error(statusMessages.NOT_FOUND);
+    }
+  },
 };

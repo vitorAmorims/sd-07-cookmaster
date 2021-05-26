@@ -10,8 +10,8 @@ recipesRoutes.post('/recipes',
 
 recipesRoutes.get('/recipes', controller.recipesController.getAllRecipesController);
 
-// recipesRoutes.route('/recipes/:id')
-//   .post(controller.loginController);
+recipesRoutes.route('/recipes/:id')
+  .get(controller.recipesController.getRecipesByIdController);
 
 recipesRoutes.use(middleware.errorsMiddleware);
 

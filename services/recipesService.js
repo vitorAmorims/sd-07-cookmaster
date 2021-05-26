@@ -1,7 +1,16 @@
-const validateRecipePost = require('./validateRecipePost');
+const validateRecipe = require('./validateRecipes');
 
-module.exports = (name, ingredients, preparation) => {
-  validateRecipePost.nameValidation(name);
-  validateRecipePost.ingredientsValidation(ingredients);
-  validateRecipePost.preparationValidation(preparation);
+const recipePostService = (name, ingredients, preparation) => {
+  validateRecipe.nameValidation(name);
+  validateRecipe.ingredientsValidation(ingredients);
+  validateRecipe.preparationValidation(preparation);
+};
+
+const recipesListService = (recipe) => {
+  validateRecipe.recipeValidation(recipe);
+};
+
+module.exports = {
+  recipePostService,
+  recipesListService,
 };
