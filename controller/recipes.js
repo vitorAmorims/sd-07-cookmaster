@@ -1,6 +1,5 @@
 const rec = require('../services/recipes');
 const { code } = require('../helpers/messages');
-const { deleteRecipeModel } = require('../models/recipes');
 
 const addRecipes = async (req, res) => {
   try {
@@ -8,7 +7,7 @@ const addRecipes = async (req, res) => {
     const recipe = await rec.addRecipesService(name, ingredients, preparation);
     return res.status(code[21]).json({ recipe });
   } catch (error) {
-    return res.status(error.code).json({
+    return res.status(error.code || code[50]).json({
       message: error.message,
     });
   }
@@ -19,7 +18,7 @@ const getAllRecipes = async (_req, res) => {
     const recipes = await rec.getAllRecipesService();
     return res.status(code[20]).json(recipes);
   } catch (error) {
-    return res.status(error.code).json({
+    return res.status(error.code || code[50]).json({
       message: error.message,
     });
   }
@@ -31,7 +30,7 @@ const getById = async (req, res) => {
     const recipe = await rec.getByIdService(id);
     return res.status(code[20]).json(recipe);
   } catch (error) {
-    return res.status(error.code).json({
+    return res.status(error.code || code[50]).json({
       message: error.message,
     });
   }
@@ -44,7 +43,7 @@ const editRecipes = async (req, res) => {
     const editRecipe = await rec.editRecipeService(id, name, ingredients, preparation);
     return res.status(code[20]).json(editRecipe);
   } catch (error) {
-    return res.status(error.code).json({
+    return res.status(error.code || code[50]).json({
       message: error.message,
     });
   }
@@ -53,7 +52,7 @@ const editRecipes = async (req, res) => {
 const deleteRecipe = async (req, res) => {
   try {
     const { id } = req.params;
-    await deleteRecipeModel(id);
+    await rec.deleteRecipeService(id);
     return res.status(code[24]).end();
   } catch (error) {
     return res.status(error.code || code[50]).json({
@@ -62,4 +61,20 @@ const deleteRecipe = async (req, res) => {
   }
 };
 
-module.exports = { addRecipes, getAllRecipes, getById, editRecipes, deleteRecipe };
+const uploadImage = (req, res) => {
+  try {
+    const { id } = req.params;
+    const { filename } = req.file;
+    console.log(req.file);
+    const image = `localhost:3000/images/${filename}`;
+    const recipe = rec.getByIdService(id);
+    const editedRecipe = rec.uploadImageService(id, recipe, image);
+    return res.status(code[20]).json(editedRecipe);
+  } catch (error) {
+    return res.status(error.code || code[50]).json({
+      message: error.message,
+    });
+  }
+};
+
+module.exports = { addRecipes, getAllRecipes, getById, editRecipes, deleteRecipe, uploadImage };

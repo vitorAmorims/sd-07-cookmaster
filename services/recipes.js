@@ -4,6 +4,7 @@ const {
   getByIdModel,
   editRecipeModel,
   deleteRecipeModel,
+  uploadRecipeModel,
 } = require('../models/recipes');
 const { nameIsRequired } = require('./users');
 const { code, message } = require('../helpers/messages');
@@ -42,16 +43,22 @@ const editRecipeService = async (id, name, ingredients, preparation) => {
   return editRecipe;
 };
 
-// const deleteRecipeService = async (id) => {
-//   const deletedRecipe = await deleteRecipeModel(id);
-//   return deletedRecipe;
-// };
+const deleteRecipeService = async (id) => {
+  const deletedRecipe = await deleteRecipeModel(id);
+  return deletedRecipe;
+};
+
+const uploadImageService = async (recipe) => {
+  const editRecipe = await uploadRecipeModel(recipe);
+  return editRecipe;
+};
 
 module.exports = {
   addRecipesService,
   getAllRecipesService,
   getByIdService,
   editRecipeService,
-  // deleteRecipeService,
+  deleteRecipeService,
   deleteRecipeModel,
+  uploadImageService,
 };

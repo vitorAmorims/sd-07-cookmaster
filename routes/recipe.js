@@ -1,6 +1,7 @@
 const express = require('express');
 
 const tokenMiddleware = require('../middlewares/tokenAuth');
+const multerMiddleware = require('../middlewares/multer');
 
 const recipe = require('../controller/recipes');
 
@@ -12,5 +13,7 @@ recipeRoute
   .post('/', tokenMiddleware, recipe.addRecipes)
   .put('/:id', tokenMiddleware, recipe.editRecipes)
   .delete('/:id', tokenMiddleware, recipe.deleteRecipe);
+
+recipeRoute.put('/:id/image', tokenMiddleware, multerMiddleware, recipe.uploadImage);
 
 module.exports = recipeRoute;

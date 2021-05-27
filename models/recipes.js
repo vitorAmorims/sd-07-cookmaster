@@ -46,10 +46,25 @@ const deleteRecipeModel = async (id) => {
   }
 };
 
+const uploadRecipeModel = async (recipe) => {
+  try {
+    const { id } = recipe;
+    const db = await connection();
+    await db.collection('recipes').updateOne(
+      { _id: ObjectId(id) }, 
+      { $set: { ...recipe } }, 
+    );
+    return { ...recipe };
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 module.exports = {
   addRecipesModel,
   getAllRecipesModel,
   getByIdModel,
   editRecipeModel,
   deleteRecipeModel,
+  uploadRecipeModel,
 };
