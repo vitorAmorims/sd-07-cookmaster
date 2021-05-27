@@ -6,9 +6,9 @@ const addRecipes = async (req, res) => {
   try {
     const { name, ingredients, preparation } = req.body;
     const recipe = await rec.addRecipesService(name, ingredients, preparation);
-    res.status(code[21]).json({ recipe });
+    return res.status(code[21]).json({ recipe });
   } catch (error) {
-    res.status(error.code).json({
+    return res.status(error.code).json({
       message: error.message,
     });
   }
@@ -17,9 +17,9 @@ const addRecipes = async (req, res) => {
 const getAllRecipes = async (_req, res) => {
   try {
     const recipes = await rec.getAllRecipesService();
-    res.status(code[20]).json(recipes);
+    return res.status(code[20]).json(recipes);
   } catch (error) {
-    res.status(error.code).json({
+    return res.status(error.code).json({
       message: error.message,
     });
   }
@@ -29,9 +29,9 @@ const getById = async (req, res) => {
   try {
     const { id } = req.params;
     const recipe = await rec.getByIdService(id);
-    res.status(code[20]).json(recipe);
+    return res.status(code[20]).json(recipe);
   } catch (error) {
-    res.status(error.code).json({
+    return res.status(error.code).json({
       message: error.message,
     });
   }
@@ -43,9 +43,9 @@ const editRecipes = async (req, res) => {
     const { name, ingredients, preparation } = req.body;
     console.log('editRecipe', req.body);
     const editRecipe = await rec.editRecipeService(id, name, ingredients, preparation);
-    res.status(code[20]).json(editRecipe);
+    return res.status(code[20]).json(editRecipe);
   } catch (error) {
-    res.status(error.code).json({
+    return res.status(error.code).json({
       message: error.message,
     });
   }
@@ -57,9 +57,9 @@ const deleteRecipe = async (req, res) => {
     console.log({ id });
     const deleted = await deleteRecipeModel(id);
     console.log({ deleted });
-    res.status(code[24]).end();
+    return res.status(code[24]).end();
   } catch (error) {
-    res.status(error.code).json({
+    return res.status(error.code || code[50]).json({
       message: error.message,
     });
   }

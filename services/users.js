@@ -76,7 +76,9 @@ const getAllUsersService = async () => {
 };
 
 const loginIsRequired = (email, password) => {
+  console.log('loginIsRequired', email, password);
   if (!email || !password) {
+    console.log('olha o loginIsRequired');
     const error = { code: code[41], message: message.loginIsRequired };
     throw error;
   }
@@ -84,22 +86,34 @@ const loginIsRequired = (email, password) => {
 
 const loginIsValid = async (email, password) => {
   const isValid = await findEmailAndPassword(email, password);
-  console.log('service loginIsValid:', isValid);
   if (!isValid) {
     const error = { code: code[41], message: message.loginIsInvalid };
     throw error;
   }
 };
 
+const findUserByEmailService = async (email) => {
+  const user = await findUserByEmail(email);
+  if (!user) {
+    const error = { code: code[41], message: message.loginIsInvalid };
+    throw error;
+  }
+  return user;
+};
+
 const loginService = async (email, password, role, _id) => {
-  loginIsRequired(email, password);
+  console.log('entra no service');
+  // loginIsRequired(email, password);
   await loginIsValid(email, password);
+  emailIsInvalid(email);
   return generateToken({ email, role, _id });
 };
 
 module.exports = {
   addUserService,
   getAllUsersService,
+  findUserByEmailService,
+  loginIsRequired,
   loginService,
   nameIsRequired,
   findUserByEmail,

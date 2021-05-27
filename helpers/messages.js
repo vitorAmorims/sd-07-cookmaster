@@ -13,7 +13,6 @@ module.exports = {
   message: {
     invalidEntries: 'Invalid entries. Try again.',
     emailAlreadyExists: 'Email already registered',
-    usernameOrPasswordInvalid: 'Incorrect username or password',
     loginIsRequired: 'All fields must be filled',
     loginIsInvalid: 'Incorrect username or password',
     tokenMissing: 'missing auth token',
