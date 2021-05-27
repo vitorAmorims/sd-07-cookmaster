@@ -8,7 +8,7 @@ const addUser = async (req, res) => {
     console.log('newUser', newUser);
     return res.status(code[21]).json({ user: newUser });
   } catch (error) {
-    return res.status(error.code || code[50]).json({ message: error.message });
+    return res.status(error.code).json({ message: error.message });
   }
 };
 

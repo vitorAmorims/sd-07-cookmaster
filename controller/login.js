@@ -9,7 +9,7 @@ const login = async (req, res) => {
     console.log('loginUser', token);
     return res.status(code[20]).json({ token });
   } catch (error) {
-    return res.status(error.code || code[50]).json({ message: error.message });
+    return res.status(error.code).json({ message: error.message });
   }
 };
 

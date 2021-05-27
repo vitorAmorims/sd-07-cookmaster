@@ -8,7 +8,7 @@ const addRecipes = async (req, res) => {
     const recipe = await rec.addRecipesService(name, ingredients, preparation);
     res.status(code[21]).json({ recipe });
   } catch (error) {
-    res.status(error.code || code[50]).json({
+    res.status(error.code).json({
       message: error.message,
     });
   }
@@ -19,7 +19,7 @@ const getAllRecipes = async (_req, res) => {
     const recipes = await rec.getAllRecipesService();
     res.status(code[20]).json(recipes);
   } catch (error) {
-    res.status(error.code || code[50]).json({
+    res.status(error.code).json({
       message: error.message,
     });
   }
@@ -31,7 +31,7 @@ const getById = async (req, res) => {
     const recipe = await rec.getByIdService(id);
     res.status(code[20]).json(recipe);
   } catch (error) {
-    res.status(error.code || code[50]).json({
+    res.status(error.code).json({
       message: error.message,
     });
   }
@@ -45,7 +45,7 @@ const editRecipes = async (req, res) => {
     const editRecipe = await rec.editRecipeService(id, name, ingredients, preparation);
     res.status(code[20]).json(editRecipe);
   } catch (error) {
-    res.status(error.code || code[50]).json({
+    res.status(error.code).json({
       message: error.message,
     });
   }
@@ -59,7 +59,7 @@ const deleteRecipe = async (req, res) => {
     console.log({ deleted });
     res.status(code[24]).end();
   } catch (error) {
-    res.status(error.code || code[50]).json({
+    res.status(error.code).json({
       message: error.message,
     });
   }
