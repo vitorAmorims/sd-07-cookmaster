@@ -5,6 +5,7 @@ const app = express();
 
 app.use(express.json());
 app.use(routes.userRoute);
+app.use(routes.loginRoute);
 
 const PORT = 3000;
 
