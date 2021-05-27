@@ -16,7 +16,7 @@ const recipeInfoTest = (req, res, next) => {
 const tokenValidation = (req, res, next) => {
   try {
     const { authorization } = req.headers;
-    const formated = authorization.replace(/['"]+/g, '');
+    const formated = authorization;
     const token = JWT(formated);
     if (!token) {
       return res.status(UNAUTHORIZED).send({

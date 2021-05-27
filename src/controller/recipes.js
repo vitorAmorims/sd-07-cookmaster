@@ -42,6 +42,7 @@ const getRecipe = async (req, res) => {
         message: 'recipe not found',
       });
     }
+    console.log('idcontroler', recipes);
     return res.status(OK).send(recipes);
   } catch (error) {
     console.log(error);
