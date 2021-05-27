@@ -6,7 +6,7 @@ module.exports = () => {
       callback(null, 'uploads');
     },
     filename: (req, file, callback) => {
-      callback(null, `${req.params.id}.jpg`);
+      callback(null, `${req.params.id}.jpeg`);
     } });
   
   const upload = multer({ storage });

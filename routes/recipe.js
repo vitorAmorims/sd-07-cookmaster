@@ -14,6 +14,6 @@ recipeRoute
   .put('/:id', tokenMiddleware, recipe.editRecipes)
   .delete('/:id', tokenMiddleware, recipe.deleteRecipe);
 
-recipeRoute.put('/:id/image', tokenMiddleware, multerMiddleware, recipe.uploadImage);
+recipeRoute.put('/:id/image', tokenMiddleware, multerMiddleware(), recipe.uploadImage);
 
 module.exports = recipeRoute;

@@ -61,14 +61,14 @@ const deleteRecipe = async (req, res) => {
   }
 };
 
-const uploadImage = (req, res) => {
+const uploadImage = async (req, res) => {
   try {
     const { id } = req.params;
     const { filename } = req.file;
     console.log(req.file);
     const image = `localhost:3000/images/${filename}`;
-    const recipe = rec.getByIdService(id);
-    const editedRecipe = rec.uploadImageService(id, recipe, image);
+    const recipe = await rec.getByIdService(id);
+    const editedRecipe = await rec.uploadImageService({ id, recipe, image });
     return res.status(code[20]).json(editedRecipe);
   } catch (error) {
     return res.status(error.code || code[50]).json({
