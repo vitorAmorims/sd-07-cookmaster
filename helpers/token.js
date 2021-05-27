@@ -16,7 +16,9 @@ const generateToken = ({ email, role, _id }) => {
 
 const verifyToken = (token) => {
   const isValid = jwt.verify(token, secret);
-  if (isValid) return true;
+  console.log('isValid', isValid);
+  console.log('payload', isValid.payload);
+  return isValid.payload;
 };
 
 module.exports = { generateToken, verifyToken };

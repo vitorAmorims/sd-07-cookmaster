@@ -1,4 +1,10 @@
-const { addRecipesModel } = require('../models/recipes');
+const {
+  addRecipesModel,
+  getAllRecipesModel,
+  getByIdModel,
+  editRecipeModel,
+  deleteRecipeModel,
+} = require('../models/recipes');
 const { nameIsRequired } = require('./users');
 const { code, message } = require('../helpers/messages');
 
@@ -16,6 +22,36 @@ const addRecipesService = async (name, ingredients, preparation) => {
   return newRecipe;
 };
 
+const getAllRecipesService = async () => {
+  const getRecipes = await getAllRecipesModel();
+  return getRecipes;
+};
+
+const getByIdService = async (id) => {
+  const user = await getByIdModel(id);
+  if (!user) {
+    const error = { code: code[44], message: message.recipeNotFound };
+    throw error;
+  }
+  return user;
+};
+
+const editRecipeService = async (id, name, ingredients, preparation) => {
+  const editRecipe = await editRecipeModel(id, name, ingredients, preparation);
+  console.log('service edit', editRecipe);
+  return editRecipe;
+};
+
+// const deleteRecipeService = async (id) => {
+//   const deletedRecipe = await deleteRecipeModel(id);
+//   return deletedRecipe;
+// };
+
 module.exports = {
   addRecipesService,
+  getAllRecipesService,
+  getByIdService,
+  editRecipeService,
+  // deleteRecipeService,
+  deleteRecipeModel,
 };

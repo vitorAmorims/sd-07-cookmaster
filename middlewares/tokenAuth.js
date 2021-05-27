@@ -1,17 +1,20 @@
+const { findUserByEmail } = require('../models/users');
 const { code, message } = require('../helpers/messages');
 const { verifyToken } = require('../helpers/token');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
     console.log('token', token);
     if (!token) {
-      res.status(code[43]).json({ message: message.tokenMissing });
+      res.status(code[41]).json({ message: message.tokenMissing });
     }
 
     const userLogged = verifyToken(token);
     console.log('userLogged', userLogged);
-    if (userLogged) next();
+    const user = await findUserByEmail(userLogged.email);
+    
+    if (user) next();
   } catch (error) {
     res.status(code[41]).json({ message: message.tokenMalformed });
   }

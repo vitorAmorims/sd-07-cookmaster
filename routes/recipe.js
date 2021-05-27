@@ -6,6 +6,11 @@ const recipe = require('../controller/recipes');
 
 const recipeRoute = express.Router();
 
-recipeRoute.post('/', tokenMiddleware, recipe.addRecipesController);
+recipeRoute
+  .get('/', recipe.getAllRecipes)
+  .get('/:id', recipe.getById)
+  .post('/', tokenMiddleware, recipe.addRecipes)
+  .put('/:id', tokenMiddleware, recipe.editRecipes)
+  .delete('/:id', tokenMiddleware, recipe.deleteRecipe);
 
 module.exports = recipeRoute;
