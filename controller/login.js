@@ -8,7 +8,6 @@ const login = async (req, res) => {
     const user = await log.findUserByEmailService(email);
     const { _id: id, role } = user;
     const token = await log.loginService(email, password, role, id);
-    console.log('loginUser', token);
     return res.status(code[20]).json({ token });
   } catch (error) {
     return res.status(error.code || code[50]).json({ message: error.message });

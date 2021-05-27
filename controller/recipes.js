@@ -41,7 +41,6 @@ const editRecipes = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, ingredients, preparation } = req.body;
-    console.log('editRecipe', req.body);
     const editRecipe = await rec.editRecipeService(id, name, ingredients, preparation);
     return res.status(code[20]).json(editRecipe);
   } catch (error) {
@@ -54,9 +53,7 @@ const editRecipes = async (req, res) => {
 const deleteRecipe = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log({ id });
-    const deleted = await deleteRecipeModel(id);
-    console.log({ deleted });
+    await deleteRecipeModel(id);
     return res.status(code[24]).end();
   } catch (error) {
     return res.status(error.code || code[50]).json({

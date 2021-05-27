@@ -21,7 +21,6 @@ const getAllUsersModel = async () => {
 const findEmailAndPassword = async (email, password) => {
   const db = await connection();
   const result = await db.collection('users').findOne({ email, password });
-  console.log('olha o model', result);
   return result;
 };
 

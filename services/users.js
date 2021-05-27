@@ -26,7 +26,6 @@ const emailIsInvalid = (email) => {
 
 const emailAlreadyExists = async (email) => {
   const userExists = await findUserByEmail(email);
-  console.log('service userExists:', userExists);
   if (userExists) {
     const error = { code: code[49], message: message.emailAlreadyExists };
     throw error;
@@ -76,9 +75,7 @@ const getAllUsersService = async () => {
 };
 
 const loginIsRequired = (email, password) => {
-  console.log('loginIsRequired', email, password);
   if (!email || !password) {
-    console.log('olha o loginIsRequired');
     const error = { code: code[41], message: message.loginIsRequired };
     throw error;
   }
@@ -102,7 +99,6 @@ const findUserByEmailService = async (email) => {
 };
 
 const loginService = async (email, password, role, _id) => {
-  console.log('entra no service');
   // loginIsRequired(email, password);
   await loginIsValid(email, password);
   emailIsInvalid(email);
