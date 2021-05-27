@@ -1,9 +1,8 @@
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
-let response = null;
-
 const register = async (recipe) => {
+  let response = null;
   await connection()
     .then((db) => db.collection('recipes').insertOne(recipe))
     .then((result) => {
@@ -14,6 +13,7 @@ const register = async (recipe) => {
 };
 
 const getAll = async () => {
+  let response = null;
   await connection()
     .then((db) => db.collection('recipes').find().toArray())
     .then((result) => {
@@ -23,6 +23,7 @@ const getAll = async () => {
 };
 
 const getRecipe = async (id) => {
+  let response = null;
   if (!ObjectId.isValid(id)) {
     return response;
   }
