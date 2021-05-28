@@ -43,8 +43,22 @@ const getById = async (request, response) => {
   }
 };
 
+const update = async (request, response) => {
+  try {
+    const token = request.headers.authorization;
+    const { id } = request.params;
+    const { name, ingredients, preparation } = request.body;
+    const data = { id, name, ingredients, preparation };
+    const recipe = await recipesService.update(data, token);
+    return response.status(OK).json(recipe);
+  } catch (error) {
+    response.status(NOTFOUND).json({ message: error.message });
+  }
+};
+
 module.exports = {
     recipesCreate,
     getAll,
     getById,
+    update,
 };
