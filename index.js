@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const routes = require('./routes');
 
 const app = express();
@@ -7,6 +8,7 @@ app.use(express.json());
 app.use(routes.userRoute);
 app.use(routes.loginRoute);
 app.use(routes.recipesRoute);
+app.use('/images', express.static(path.join(__dirname, 'uploads'))); // req. 10
 
 const PORT = 3000;
 
