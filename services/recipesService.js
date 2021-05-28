@@ -67,9 +67,27 @@ const update = async (data, token) => {
   return null;
 };
 
+const remove = async (id, token) => {
+  const userIdToken = getUserIdByToken(token);
+  const { _id: idToken } = userIdToken;
+  if (userIdToken.role === 'admin') {
+    const resultRemove = await recipesModel.remove(id);
+    return resultRemove.result;
+  }
+  if (idToken) {
+    const resultRemove = await recipesModel.remove(id);
+    return resultRemove.result;
+  }
+  return null;
+
+// const response = await recipesModel.remove(id);
+// return response;
+};
+
 module.exports = {
   createRecipes,
   getAll,
   getById,
   update,
+  remove,
 };

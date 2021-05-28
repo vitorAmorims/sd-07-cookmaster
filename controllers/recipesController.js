@@ -2,6 +2,7 @@ const recipesService = require('../services/recipesService');
 
 const OK = 200;
 const CREATE = 201;
+const SUCCESS = 204;
 const ERROR = 400;
 const NOTFOUND = 404;
 const CONFLICT = 409;
@@ -56,9 +57,20 @@ const update = async (request, response) => {
   }
 };
 
+const remove = async (request, response) => {
+    const { id } = request.params;
+  try {
+    await recipesService.remove(id);
+    return response.status(SUCCESS).json();
+  } catch (error) {
+    response.status(ERROR).json({ message: error.message });
+  }
+};
+
 module.exports = {
     recipesCreate,
     getAll,
     getById,
     update,
+    remove,
 };
