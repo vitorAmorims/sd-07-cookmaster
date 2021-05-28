@@ -36,10 +36,21 @@ const create = async (name, ingredients, preparation, userId) => {
     return removed;
   };
 
+  const addImage = async (data) => {
+    const { id, name, ingredients, preparation } = data;
+  
+    await connect().then((db) => db.collection('recipes')
+    .updateOne({ _id: ObjectId(id) },
+    { $set: { name, ingredients, preparation, image: `localhost:3000/images/${id}.jpeg` } }));
+  
+    return { _id: id, name, ingredients, preparation, image: `localhost:3000/images/${id}.jpeg` };
+  };
+  
 module.exports = {
   create,
   getAll,
   getById,
   update,
   remove,
+  addImage,
 };

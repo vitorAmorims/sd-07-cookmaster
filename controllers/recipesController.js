@@ -68,10 +68,19 @@ const remove = async (request, response) => {
   }
 };
 
+const addImage = async (request, response) => {
+  const { id } = request.params;
+  const { name, ingredients, preparation } = request.body;
+  const data = { id, name, ingredients, preparation };
+  const added = await recipesService.addImage(data);
+  response.status(OK).json(added);
+};
+
 module.exports = {
     recipesCreate,
     getAll,
     getById,
     update,
     remove,
+    addImage,
 };

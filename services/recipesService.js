@@ -81,10 +81,16 @@ const remove = async (id, token) => {
   return null;
 };
 
+const addImage = async (data) => {
+  const result = await recipesModel.addImage(data);
+  return result;
+};
+
 module.exports = {
   createRecipes,
   getAll,
   getById,
   update,
   remove,
+  addImage,
 };
