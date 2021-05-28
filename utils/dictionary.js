@@ -9,7 +9,7 @@ const code400 = 400;
 const code409 = 409;
 
 const message = {
-  tryAgain: 'invalid entries. Try again.',
+  tryAgain: 'Invalid entries. Try again.',
   emailRegistered: 'Email already registered',
 };
 
