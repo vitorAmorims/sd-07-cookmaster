@@ -1,4 +1,4 @@
-const userRoute = require('./users');
+const userRoute = require('./usersAdmin');
 const loginRoute = require('./login');
 const recipeRoute = require('./recipe');
 

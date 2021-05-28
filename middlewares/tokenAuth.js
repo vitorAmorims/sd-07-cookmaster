@@ -11,7 +11,8 @@ module.exports = async (req, res, next) => {
     const userLogged = verifyToken(token);
     const user = await findUserByEmail(userLogged.email);
     
-    if (user) next();
+    req.user = user;
+    next();
   } catch (error) {
     return res.status(code[41]).json({ message: message.tokenMalformed });
   }
