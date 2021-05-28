@@ -1,5 +1,6 @@
 const recipesService = require('../services/recipesService');
 
+const OK = 200;
 const CREATE = 201;
 const ERROR = 400;
 const CONFLICT = 409;
@@ -14,9 +15,7 @@ const recipesCreate = async (request, response) => {
     
     return response.status(CREATE).json({ recipe });
   } catch (error) {
-    console.error(error);
-
-    const { message } = error;
+      const { message } = error;
     if (message.includes('registered')) {
       return response.status(CONFLICT).json({ message });
     }
@@ -24,6 +23,16 @@ const recipesCreate = async (request, response) => {
   }
 };
 
+const getAll = async (request, response) => {
+  try {
+    const recipesAll = await recipesService.getAll();
+    return response.status(OK).json(recipesAll);
+  } catch (error) {
+    response.status(ERROR).json({ message: error.message });
+  }
+};
+
 module.exports = {
     recipesCreate,
+    getAll,
 };

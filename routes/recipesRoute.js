@@ -5,5 +5,6 @@ const validateTokenMid = require('../middlewares/validateTokenMid');
 const router = express.Router();
 
 router.post('/recipes', validateTokenMid, recipesController.recipesCreate);
+router.get('/recipes', recipesController.getAll);
 
 module.exports = router;
