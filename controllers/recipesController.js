@@ -58,9 +58,10 @@ const update = async (request, response) => {
 };
 
 const remove = async (request, response) => {
+    const token = request.headers.authorization;
     const { id } = request.params;
   try {
-    await recipesService.remove(id);
+    await recipesService.remove(id, token);
     return response.status(SUCCESS).json();
   } catch (error) {
     return response.status(ERROR).json({ message: error.message });
