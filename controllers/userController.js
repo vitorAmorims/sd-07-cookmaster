@@ -21,7 +21,7 @@ const userCreate = async (request, response) => {
     if (message.includes('registered')) {
       return response.status(CONFLICT).json({ message });
     }
-    response.status(ERROR).json({ message: error.message });
+    return response.status(ERROR).json({ message: error.message });
   }
 };
 

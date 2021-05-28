@@ -21,7 +21,7 @@ const recipesCreate = async (request, response) => {
     if (message.includes('registered')) {
       return response.status(CONFLICT).json({ message });
     }
-    response.status(ERROR).json({ message: error.message });
+    return response.status(ERROR).json({ message: error.message });
   }
 };
 
@@ -30,7 +30,7 @@ const getAll = async (request, response) => {
     const recipesAll = await recipesService.getAll();
     return response.status(OK).json(recipesAll);
   } catch (error) {
-    response.status(ERROR).json({ message: error.message });
+    return response.status(ERROR).json({ message: error.message });
   }
 };
 
@@ -40,7 +40,7 @@ const getById = async (request, response) => {
     const recipe = await recipesService.getById(id);
     return response.status(OK).json(recipe);
   } catch (error) {
-    response.status(NOTFOUND).json({ message: error.message });
+    return response.status(NOTFOUND).json({ message: error.message });
   }
 };
 
@@ -53,7 +53,7 @@ const update = async (request, response) => {
     const recipe = await recipesService.update(data, token);
     return response.status(OK).json(recipe);
   } catch (error) {
-    response.status(NOTFOUND).json({ message: error.message });
+    return response.status(NOTFOUND).json({ message: error.message });
   }
 };
 
@@ -63,7 +63,7 @@ const remove = async (request, response) => {
     await recipesService.remove(id);
     return response.status(SUCCESS).json();
   } catch (error) {
-    response.status(ERROR).json({ message: error.message });
+    return response.status(ERROR).json({ message: error.message });
   }
 };
 
