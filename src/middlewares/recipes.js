@@ -1,5 +1,8 @@
 const JWT = require('jwt-decode');
-const { StatusCodes: { BAD_REQUEST, UNAUTHORIZED } } = require('http-status-codes');
+const { StatusCodes: {
+  BAD_REQUEST,
+  UNAUTHORIZED,
+  INTERNAL_SERVER_ERROR } } = require('http-status-codes');
 
 const recipeInfoTest = (req, res, next) => {
   const { name, ingredients, preparation } = req.body;
@@ -31,7 +34,23 @@ const tokenValidation = (req, res, next) => {
   }
 };
 
+const tokenExists = (req, res, next) => {
+  try {
+    const { authorization } = req.headers;
+    if (!authorization) {
+      return res.status(UNAUTHORIZED).send({
+        message: 'missing auth token',
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+    return res.status(INTERNAL_SERVER_ERROR).send(error);
+  }
+};
+
 module.exports = {
   recipeInfoTest,
   tokenValidation,
+  tokenExists,
 };

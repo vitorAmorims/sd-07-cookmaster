@@ -4,7 +4,8 @@ const {
     INTERNAL_SERVER_ERROR,
     CREATED,
     OK,
-    NOT_FOUND } } = require('http-status-codes');
+    NOT_FOUND,
+    NO_CONTENT } } = require('http-status-codes');
 const recipesService = require('../service/recipes');
 const userServices = require('../service/users');
 
@@ -50,8 +51,45 @@ const getRecipe = async (req, res) => {
   }
 };
 
+const editRecipe = async (req, res) => {
+  try {
+    const { name, ingredients, preparation } = req.body;
+    const { id } = req.params;
+    const payload = JWT(req.headers.authorization);
+    const recipe = await recipesService.getRecipe(id);
+    const { _id } = await userServices.findByEmail(payload.email);
+    if (payload.role === 'admin' || toString(recipe.userId) === toString(_id)) {
+      await recipesService.updateRecipe(id, name, ingredients, preparation);
+      return res.status(OK).send(
+        { _id: id, name, ingredients, preparation, userId: recipe.userId },
+        );
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(INTERNAL_SERVER_ERROR).send(error);
+  }
+};
+
+const deleteRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const payload = JWT(req.headers.authorization);
+    const recipe = await recipesService.getRecipe(id);
+    const { _id } = await userServices.findByEmail(payload.email);
+    if (payload.role === 'admin' || toString(recipe.userId) === toString(_id)) {
+      await recipesService.deleteRecipe(id);
+      return res.status(NO_CONTENT).send();
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(INTERNAL_SERVER_ERROR).send(error);
+  }
+};
+
 module.exports = {
   getRecipe,
   register,
   getAll,
+  editRecipe,
+  deleteRecipe,
 };

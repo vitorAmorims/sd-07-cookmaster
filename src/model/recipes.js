@@ -35,9 +35,41 @@ const getRecipe = async (id) => {
     });
     return response;
 };
+const updateRecipe = async (id, newName, newIngredients, newPreparation) => {
+  let response = null;
+  await connection()
+    .then((db) => db.collection('recipes').aggregate([
+      { $match: {
+        _id: ObjectId(id),
+      } },
+      { $set: {
+        name: newName,
+        ingredients: newIngredients,
+        preparation: newPreparation,
+      },
+    }]))
+    .then((result) => {
+      response = result;
+    });
+    return response;
+};
+const deleteRecipe = async (id) => {
+  let response = null;
+  if (!ObjectId.isValid(id)) {
+    return response;
+  }
+  await connection()
+    .then((db) => db.collection('recipes').deleteOne({ _id: ObjectId(id) }))
+    .then((result) => {
+      response = result;
+    });
+    return response;
+};
 
 module.exports = {
   register,
   getAll,
   getRecipe,
+  updateRecipe,
+  deleteRecipe,
 };
