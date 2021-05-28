@@ -4,7 +4,8 @@ const {
     INTERNAL_SERVER_ERROR,
     CREATED,
     UNAUTHORIZED,
-    OK } } = require('http-status-codes');
+    OK,
+    FORBIDDEN } } = require('http-status-codes');
 const userService = require('../service/users');
 
 const register = async (req, res) => {
@@ -49,6 +50,9 @@ const adminRegister = async (req, res) => {
         user: { name, email, role, _id },
       });
     }
+    return res.status(FORBIDDEN).send({
+      message: 'Only admins can register new admins',
+    });
   } catch (error) {
     console.log(error);
     return res.status(INTERNAL_SERVER_ERROR).send(error);
