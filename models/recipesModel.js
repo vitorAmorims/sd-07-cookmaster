@@ -31,7 +31,9 @@ const create = async (name, ingredients, preparation, userId) => {
   };
 
   const remove = async (id) => {
-    await connect().then((db) => db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
+    const removed = await connect()
+    .then((db) => db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
+    return removed;
   };
 
 module.exports = {

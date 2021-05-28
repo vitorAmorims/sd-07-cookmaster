@@ -79,9 +79,6 @@ const remove = async (id, token) => {
     return resultRemove.result;
   }
   return null;
-
-// const response = await recipesModel.remove(id);
-// return response;
 };
 
 module.exports = {
