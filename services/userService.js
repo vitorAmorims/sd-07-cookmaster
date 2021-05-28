@@ -1,4 +1,5 @@
 const userModel = require('../models/userModel');
+const recipesService = require('./recipesService');
 
 const ERR_MESSAGE = 'Invalid entries. Try again.';
 
@@ -44,6 +45,20 @@ const createUser = async (name, email, password) => {
   return user;
 };
 
+const createAdmin = async (name, email, password, token) => {
+  const userIdToken = await recipesService.getUserIdByToken(token);
+  if (userIdToken.role === 'admin') {
+    validateName(name);
+    validateEmail(email);
+    validatePassword(password);
+    await checkingEmailExists(email);
+    const user = await userModel.createAdmin(name, email, password);
+    return user;
+  }
+   throw new Error('role invalid');
+};
+
 module.exports = {
   createUser,
+  createAdmin,
 };

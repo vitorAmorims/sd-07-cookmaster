@@ -18,8 +18,16 @@ const create = async (name, email, password) => {
     return { _id: insertedId, name, email, password, role };
   };
 
+  const createAdmin = async (name, email, password) => {
+    const role = 'admin';
+    const { insertedId } = await connect().then((db) =>
+      db.collection('users').insertOne({ name, email, password, role }));
+    return { _id: insertedId, name, email, password, role };
+  };
+
 module.exports = {
   getByEmail,
   create,
   getAll, 
+  createAdmin,
 };

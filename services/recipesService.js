@@ -93,4 +93,5 @@ module.exports = {
   update,
   remove,
   addImage,
+  getUserIdByToken,
 };
