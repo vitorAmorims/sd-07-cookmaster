@@ -3,6 +3,7 @@ const modelUser = require('../models/userModel');
 const recipesModel = require('../models/recipesModel');
 
 const ERR_MESSAGE = 'Invalid entries. Try again.';
+const ERR_NOT_FOUND = 'recipe not found';
 
 const validateName = (name) => {
   if (!name) {
@@ -46,7 +47,15 @@ const getAll = async () => {
   return recipesAll;
 };
 
+const getById = async (id) => {
+  const recipe = await recipesModel.getById(id);
+  console.log(recipe);
+  if (recipe === null) { throw new Error(ERR_NOT_FOUND); }
+  return recipe;
+};
+
 module.exports = {
   createRecipes,
   getAll,
+  getById,
 };
