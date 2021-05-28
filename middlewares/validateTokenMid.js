@@ -10,8 +10,8 @@ const validateToken = async (request, response, next) => {
     return response.status(ERROR).json({ message: 'missing auth token' });
   }
   try {
-    const decoded = jwt.verify(token, process.env.SECRET || newSecret);
-    const user = await modelUser.getById(decoded.id);
+    const decoded = jwt.verify(token, newSecret);
+    const user = await modelUser.getByEmail(decoded.email);
 
     if (!user) {
       const ERROR = 401;
