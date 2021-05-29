@@ -10,6 +10,6 @@ router.put('/recipes/:id/image/',
   middlewares.isLogged,
   middlewares.multer.single('image'),
   imageController.addImageRecipe);
-router.get('/images/:id', middlewares.token, middlewares.isLogged, imageController.getImageId);
+router.get('/images/:id', middlewares.token, imageController.getImageId);
 
 module.exports = router;

@@ -5,14 +5,16 @@ const isLogged = async (req, res, next) => {
   const { id } = req.params;
   const { email, role } = req.user;
   const recipe = await recipesModel.getRecipeById(id);
-  const { userId } = recipe;
+  console.log('recipe', recipe)
+  //const { userId } = recipe;
+  //console.log(userId)
   if (!recipe) {
     res.status(401).json({ message: 'recipe not found' });
   }
   const loggedTrue = await userModel.findEmail(email);
 
   const { _id: logindId } = loggedTrue;
-  if (logindId.toString() === userId.toString() || role === 'admin') {
+  if (logindId.toString() === recipe.userId.toString() || role === 'admin') {
     return next();
   }
 
