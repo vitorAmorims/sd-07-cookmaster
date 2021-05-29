@@ -65,6 +65,22 @@ const deleteRecipe = async (id) => {
     });
     return response;
 };
+const setImage = async (id, path) => {
+  let response = null;
+  await connection()
+    .then((db) => db.collection('recipes').aggregate([
+      { $match: {
+        _id: ObjectId(id),
+      } },
+      { $set: {
+        image: path,
+      },
+    }]))
+    .then((result) => {
+      response = result;
+    });
+    return response;
+};
 
 module.exports = {
   register,
@@ -72,4 +88,5 @@ module.exports = {
   getRecipe,
   updateRecipe,
   deleteRecipe,
+  setImage,
 };

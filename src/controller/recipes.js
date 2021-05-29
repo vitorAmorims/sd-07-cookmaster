@@ -86,7 +86,23 @@ const deleteRecipe = async (req, res) => {
   }
 };
 
+const addImage = async (req, res) => {
+  const recipe = await recipesService.getRecipe(req.params.id);
+  const path = `localhost:3000/images/${req.params.id}.jpeg`;
+  await recipesService.setImage(req.params.id, path);
+  const { _id } = recipe; 
+  return res.status(200).send({
+    id: _id,
+    name: recipe.name,
+    ingredients: recipe.ingredients,
+    preparation: recipe.preparation,
+    userId: recipe.userId,
+    image: path,
+  });
+};
+
 module.exports = {
+  addImage,
   getRecipe,
   register,
   getAll,

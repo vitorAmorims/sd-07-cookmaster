@@ -9,8 +9,10 @@ const updateRecipe = (
     id, name, ingredients, preparation,
 );
 const deleteRecipe = (id) => recipesModel.deleteRecipe(id);
+const setImage = (id, path) => recipesModel.setImage(id, path);
 
 module.exports = {
+  setImage,
   register,
   getAll,
   getRecipe,
