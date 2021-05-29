@@ -14,6 +14,7 @@ app.get('/', (request, response) => {
 
 app.use(routes.userRoute);
 app.use(routes.recipeRoute);
+app.use(routes.imageRoute);
 
 app.use(errorMiddleware);
 

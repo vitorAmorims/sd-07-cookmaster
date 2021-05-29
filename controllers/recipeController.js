@@ -1,3 +1,4 @@
+const path = require('path');
 const recipeService = require('../services/recipeService');
 
 const entriesMessage = { message: 'Invalid entries. Try again.' };
@@ -38,8 +39,47 @@ const getRecipeById = async (req, res) => {
   res.status(200).json(recipeId);
 };
 
+const updateRecipe = async (req, res) => {
+  const reqBody = req.body;
+  const { id } = req.params;
+  const modifyRecipe = await recipeService.updateRecipe({ id, reqBody });
+  res.status(200).json(modifyRecipe);
+};
+
+const deleRecipe = async (req, res) => {
+  const { id } = req.params;
+  const deleted = await recipeService.deleteRecipe(id);
+  if (!id) {
+    return res.status(500).json(errorMessage);
+  }
+  res.status(204).json(deleted);
+};
+
+const addImageRecipe = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const image = `${req.hostname}:3000/images/${id}.jpeg`;
+      const recipeWithImage = await recipeService.addImageRecipe(id, image);
+      
+        res.status(200).json(recipeWithImage);
+    } catch (error) {
+      res.status(404).json(error);
+    }
+};
+
+const getImageId = (req, res) => {
+  const { id } = req.params;
+  const imagesPath = path.join(__dirname, `../uploads/${id}`);
+
+  res.status(200).sendFile(imagesPath);
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
+  updateRecipe,
+  deleRecipe,
+  addImageRecipe,
+  getImageId,
 };

@@ -8,4 +8,3 @@ router.post('/users', userController.createUser);
 router.post('/login', userController.newLogin);
 
 module.exports = router;
-// falta criar o index e capturar
