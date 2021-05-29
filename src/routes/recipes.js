@@ -9,7 +9,8 @@ const {
   addImage } = require('../controller/recipes');
 const { recipeInfoTest, tokenValidation, tokenExists } = require('../middlewares/recipes');
 
-const path = '/home/marcio/Documents/VSC/sd-07-cookmaster/src/image/';
+const dir = __dirname.replace('/src/routes', '');
+const path = `${dir}/image/`;
 const RECIPE_ID = '/recipes/:id';
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
