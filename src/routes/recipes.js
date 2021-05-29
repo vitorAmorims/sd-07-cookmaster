@@ -9,7 +9,7 @@ const {
   addImage } = require('../controller/recipes');
 const { recipeInfoTest, tokenValidation, tokenExists } = require('../middlewares/recipes');
 
-const dir = __dirname.replace('/src/routes', '');
+const dir = __dirname.replace('/routes', '');
 const path = `${dir}/image/`;
 const RECIPE_ID = '/recipes/:id';
 const storage = multer.diskStorage({
