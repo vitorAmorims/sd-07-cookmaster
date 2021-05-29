@@ -5,9 +5,7 @@ const isLogged = async (req, res, next) => {
   const { id } = req.params;
   const { email, role } = req.user;
   const recipe = await recipesModel.getRecipeById(id);
-  console.log('recipe', recipe)
-  //const { userId } = recipe;
-  //console.log(userId)
+  console.log('recipe', recipe);
   if (!recipe) {
     res.status(401).json({ message: 'recipe not found' });
   }
