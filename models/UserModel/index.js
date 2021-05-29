@@ -1,0 +1,48 @@
+const connection = require('../../config/conn');
+
+const createUser = async (name, email, password, role) => {
+  const newUser = {
+    name,
+    email,
+    password,
+    role,
+  };
+  const emailRegistered = await connection().then((db) =>
+    db.collection('users').find({ email }).count());
+  if (emailRegistered >= 1) return null;
+  const insert = await connection().then((db) =>
+    db.collection('users').insertOne(newUser));
+  const result = insert.ops[0];
+  delete result.password;
+  return result;
+};
+
+const login = async (email, password) => {
+  const user = await connection().then((db) =>
+    db.collection('users').find({ email, password }).toArray());
+  if (user.length === 0) return {};
+  return user[0];
+};
+
+const createAdmin = async (name, email, password, role) => {
+  const newUser = {
+    name,
+    email,
+    password,
+    role,
+  };
+  if (role === 'admin') {
+    const insert = await connection().then((db) =>
+      db.collection('users').insertOne(newUser));
+    const result = insert.ops[0];
+    delete result.password;
+    return result;
+  }
+  return null;
+};
+
+module.exports = {
+  createUser,
+  login,
+  createAdmin,
+};
