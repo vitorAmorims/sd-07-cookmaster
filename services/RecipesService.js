@@ -56,10 +56,24 @@ const deleteById = async (id, userId, role) => {
   return {};
 };
 
+const updateImageById = async (id, filePathName) => {
+  if (id.length !== 24) return (recipeNotFoundMessage);
+
+  const validRecipe = await RecipesModel.findById(id);
+  if (!validRecipe) return (recipeNotFoundMessage);
+
+  await RecipesModel.updateImageByIdAdmin(id, filePathName);
+
+  const recipe = await RecipesModel.findById(id);
+  console.log(recipe);
+  return ({ recipe });
+};
+
 module.exports = {
   create,
   getAll,
   findById,
   updateById,
   deleteById,
+  updateImageById,
 };

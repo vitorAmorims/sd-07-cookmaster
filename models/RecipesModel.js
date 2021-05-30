@@ -18,14 +18,14 @@ const create = (userId, name, ingredients, preparation) =>
     }));
 
 const getAll = () => 
-    connection()
-      .then((db) => db.collection('recipes').find().toArray())
-      .then((recipes) => recipes);
+  connection()
+    .then((db) => db.collection('recipes').find().toArray())
+    .then((recipes) => recipes);
 
 const findById = (id) =>
-    connection()
-      .then((db) => db.collection('recipes').findOne(ObjectId(id)))
-      .then((recipe) => recipe);
+  connection()
+    .then((db) => db.collection('recipes').findOne(ObjectId(id)))
+    .then((recipe) => recipe);
 
 const updateById = (id, name, ingredients, preparation) =>
   connection()
@@ -41,16 +41,33 @@ const updateById = (id, name, ingredients, preparation) =>
     }));
 
 const deleteByIdUser = (id, userId) =>
-    connection()
-      .then((db) => db.collection('recipes')
-        .deleteOne({ _id: ObjectId(id), userId: ObjectId(userId) }))
-      .then((response) => response.deletedCount);
+  connection()
+    .then((db) => db.collection('recipes')
+      .deleteOne({ _id: ObjectId(id), userId: ObjectId(userId) }))
+    .then((response) => response.deletedCount);
 
 const deleteByIdAdmin = (id) =>
-connection()
-  .then((db) => db.collection('recipes')
-    .deleteOne({ _id: ObjectId(id) }))
-  .then((response) => response.deletedCount);
+  connection()
+    .then((db) => db.collection('recipes')
+      .deleteOne({ _id: ObjectId(id) }))
+    .then((response) => response.deletedCount);
+
+const updateImageByIdUser = async (id, userId, filePathName) => {
+  await connection()
+    .then((db) => db.collection('recipes').updateOne(
+      { _id: ObjectId(id), id: ObjectId(userId) },
+      { $set: { image: filePathName } },
+    ))
+    .then(() => {});
+};
+
+const updateImageByIdAdmin = (id, filePathName) =>
+  connection()
+    .then((db) => db.collection('recipes').updateOne(
+      { _id: ObjectId(id) },
+      { $set: { image: filePathName } },
+    ))
+    .then(() => {});
 
 module.exports = {
   create,
@@ -59,4 +76,6 @@ module.exports = {
   updateById,
   deleteByIdAdmin,
   deleteByIdUser,
+  updateImageByIdUser,
+  updateImageByIdAdmin,
 };

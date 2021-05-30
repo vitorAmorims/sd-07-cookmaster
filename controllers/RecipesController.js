@@ -53,9 +53,17 @@ const deleteById = async (req, res) => {
 
 // };
 
-// const updateImageById = (req, res) => {
+const updateImageById = async (req, res) => {
+  const { filePathName } = req;
+  const { id } = req.params;
+  const { _id: userId, role } = req.user;
+  const { code, message, recipe } = await RecipesService
+    .updateImageById(id, filePathName, userId, role);
 
-// };
+  if (message) return res.status(code).send({ message });
+
+  res.status(200).send(recipe);
+};
 
 module.exports = {
   create,
@@ -64,5 +72,5 @@ module.exports = {
   updateById,
   deleteById,
   // showImages,
-  // updateImageById,
+  updateImageById,
 };
