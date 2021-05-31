@@ -1,5 +1,6 @@
 const express = require('express');
 const userController = require('./controllers/userController');
+const loginController = require('./controllers/loginController');
 
 const app = express();
 const PORT = 3000;
@@ -12,6 +13,7 @@ app.get('/', (request, response) => {
 });
 
 app.use('/users', userController);
+app.use('/login', loginController);
 
 // app.use('/teste', (request, response) => {
 //   response.send('tudo funcionando por aqui');

@@ -7,7 +7,7 @@ const addUser = async (name, email, password) => connection()
   .insertOne({ name, email, password, role: 'user' }));
 
 const userByEmail = async (email) => connection()
-  .then((db) => db.collection(COLL_NAME).findOne({ email }));
+    .then((db) => db.collection(COLL_NAME).findOne({ email }));
 
 module.exports = {
   addUser,
