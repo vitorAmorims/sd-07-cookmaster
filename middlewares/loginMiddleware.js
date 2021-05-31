@@ -28,8 +28,8 @@ const validatingEmail = async (request, response, next) => {
 const checkingValidPassword = async (request, response, next) => {
   const { email, password } = request.body;
   const user = await userModel.userByEmail(email);
-  console.log('password', password);
-  console.log('user', user.password);
+  // console.log('password', password);
+  // console.log('user', user.password);
 
   if (password !== user.password) {
     return response.status(code401).json({ message: message.incorrectInfo });
