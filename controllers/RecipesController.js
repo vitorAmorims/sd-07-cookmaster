@@ -54,9 +54,9 @@ const deleteById = async (req, res) => {
 // };
 
 const updateImageById = async (req, res) => {
-  const { filePathName } = req;
   const { id } = req.params;
   const { _id: userId, role } = req.user;
+  const filePathName = `localhost:3000/images/${id}.jpeg`;
   const { code, message, recipe } = await RecipesService
     .updateImageById(id, filePathName, userId, role);
 

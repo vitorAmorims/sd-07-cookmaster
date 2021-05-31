@@ -33,19 +33,16 @@ app.delete(recipeID, tokenValidation, RecipesController.deleteById);
 
 // router.get('/images/:id', RecipesController.showImages);
 
-app.use(express.static(`${__dirname}/images`));
+app.use(express.static(path.join(__dirname, '/uploads')));
 
-app.use('/images', express.static(path.join(__dirname, '/images')));
+app.use('/images', express.static(path.join(__dirname, '/uploads')));
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, 'images');
+    callback(null, 'uploads');
   },
   filename: (req, file, callback) => {
     const { id } = req.params;
-    const filePathName = `localhost:3000/images/${id}.jpeg`;
-    req.filePathName = filePathName;
-    console.log(filePathName);
     callback(null, `${id}.jpeg`);
   },
 });

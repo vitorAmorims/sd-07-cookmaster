@@ -65,7 +65,6 @@ const updateImageById = async (id, filePathName) => {
   await RecipesModel.updateImageByIdAdmin(id, filePathName);
 
   const recipe = await RecipesModel.findById(id);
-  console.log(recipe);
   return ({ recipe });
 };
 

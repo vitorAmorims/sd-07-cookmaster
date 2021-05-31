@@ -55,7 +55,7 @@ const deleteByIdAdmin = (id) =>
 const updateImageByIdUser = async (id, userId, filePathName) => {
   await connection()
     .then((db) => db.collection('recipes').updateOne(
-      { _id: ObjectId(id), id: ObjectId(userId) },
+      { _id: ObjectId(id), userId: ObjectId(userId) },
       { $set: { image: filePathName } },
     ))
     .then(() => {});
