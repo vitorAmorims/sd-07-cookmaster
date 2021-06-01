@@ -16,8 +16,7 @@ app.get('/', (request, response) => {
 app.use('/users', userController);
 app.use('/login', loginController);
 app.use('/recipes', recipesController);
+// solução encontrada nessa pesquisa: https://expressjs.com/en/starter/static-files.html
+app.use('/images', express.static(`${__dirname}/uploads`));
 
-// app.use('/teste', (request, response) => {
-//   response.send('tudo funcionando por aqui');
-// });
 app.listen(PORT, () => { console.log(`API rodando na porta ${PORT}`); });
