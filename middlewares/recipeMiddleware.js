@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const { code400, code401, message, encryptSecret } = require('../utils/dictionary');
+const { ObjectId } = require('mongodb');
+const { code400, code404, code401, message, encryptSecret } = require('../utils/dictionary');
 
 const validatingFields = (request, response, next) => {
   const { name, ingredients, preparation } = request.body;
@@ -20,8 +21,33 @@ const validatingToken = (request, response, next) => {
   }
 };
 
+const validatingAuth = (request, response, next) => {
+  const { authorization } = request.headers;
+
+  if (!authorization) {
+    return response.status(code401).send({ message: message.missingAuth });
+  }
+
+  next();
+};
+
+const validatingId = (request, response, next) => {
+  const { id } = request.params;
+
+  if (!ObjectId.isValid(id)) {
+    return response.status(code404).send({ message: message.noRecipe });
+  }
+
+  next();
+};
+
 const addValidations = [
   validatingFields,
+  validatingToken,
+];
+
+const updateValidation = [
+  validatingAuth,
   validatingToken,
 ];
 
@@ -29,4 +55,7 @@ module.exports = {
   validatingFields,
   validatingToken,
   addValidations,
+  validatingId,
+  updateValidation,
+  validatingAuth,
 };

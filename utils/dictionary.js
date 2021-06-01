@@ -13,6 +13,7 @@ const message = {
   incorrectInfo: 'Incorrect username or password',
   tokenError: 'jwt malformed',
   noRecipe: 'recipe not found',
+  missingAuth: 'missing auth token',
 };
 
 const encryptSecret = 'qu3r0v3rde5c08r!r';

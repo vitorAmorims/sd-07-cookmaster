@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
-const { ObjectId } = require('mongodb');
+// const { ObjectId } = require('mongodb');
 const recipesModel = require('../models/recipesModel');
-const { code200, code201, code404, message } = require('../utils/dictionary');
+const { code200, code201 } = require('../utils/dictionary');
 
 const addRecipe = async (request, response) => {
   const { authorization } = request.headers;
@@ -31,16 +31,32 @@ const getAll = async (request, response) => {
 const getById = async (request, response) => {
   const { id } = request.params;
 
-  if (!ObjectId.isValid(id)) {
-    return response.status(code404).send({ message: message.noRecipe });
-  }
-
   const recipe = await recipesModel.getById(id);
   return response.status(code200).send(recipe);  
+};
+
+const updateById = async (request, response) => {
+  const { authorization } = request.headers;
+  const { id } = request.params;
+  const { name, ingredients, preparation } = request.body;
+  const { _id: userId } = jwt.decode(authorization);
+
+  await recipesModel.updateById(id, name, ingredients, preparation);
+  
+  const updatedRecipe = {
+    id,
+    name,
+    ingredients,
+    preparation,
+    userId,
+  };
+
+  return response.status(code200).send(updatedRecipe);
 };
 
 module.exports = {
   addRecipe,
   getAll,
   getById,
+  updateById,
 };
