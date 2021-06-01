@@ -18,14 +18,6 @@ const validatingToken = (request, response, next) => {
   } catch (error) {
     return response.status(code401).send({ message: message.tokenError });
   }
-  // const { authorization } = request.headers;
-  // const user = jwt.verify(authorization, encryptSecret);
-
-  // if (!user) {
-  //   return response.status(code401).send({ message: message.tokenError });
-  // }
-
-  // next();
 };
 
 const addValidations = [

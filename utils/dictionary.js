@@ -3,6 +3,7 @@ const code201 = 201;
 const code204 = 204;
 const code400 = 400;
 const code401 = 401;
+const code404 = 404;
 const code409 = 409;
 
 const message = {
@@ -11,6 +12,7 @@ const message = {
   mustBeFilled: 'All fields must be filled',
   incorrectInfo: 'Incorrect username or password',
   tokenError: 'jwt malformed',
+  noRecipe: 'recipe not found',
 };
 
 const encryptSecret = 'qu3r0v3rde5c08r!r';
@@ -26,6 +28,7 @@ module.exports = {
   code204,
   code400,
   code401,
+  code404,
   code409,
   message,
   encryptSecret,
