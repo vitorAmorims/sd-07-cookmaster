@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { ObjectId } = require('mongodb');
+const multer = require('multer');
+
 const { code400, code404, code401, message, encryptSecret } = require('../utils/dictionary');
 
 const validatingFields = (request, response, next) => {
@@ -40,6 +42,19 @@ const validatingId = (request, response, next) => {
 
   next();
 };
+
+// const uploadFile = (request, response) => {
+//   const storage = multer.diskStorage({
+//     destination: (request, file, callback) => {
+//       callback(null, 'uploads');
+//     },
+//     filename: (request, file, callback) => {
+//       callback(null, `${request.params.id}.jpeg`);
+//     },
+//   });
+  
+//   const upload = multer({ storage });
+// }
 
 const addValidations = [
   validatingFields,

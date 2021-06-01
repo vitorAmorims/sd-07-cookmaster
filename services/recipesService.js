@@ -62,10 +62,22 @@ const removeById = async (request, response) => {
   return response.status(code204).end();
 };
 
+const uploadImage = async (request, response) => {
+  const { id } = request.params;
+
+  const image = `localhost:3000/images/${id}.jpeg`;
+
+  const currentRecipe = await recipesModel.getById(id);
+  const updatedRecipe = { ...currentRecipe, image };
+
+  return response.status(code200).json(updatedRecipe);
+};
+
 module.exports = {
   addRecipe,
   getAll,
   getById,
   updateById,
   removeById,
+  uploadImage,
 };
