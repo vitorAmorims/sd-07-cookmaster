@@ -21,6 +21,13 @@ const addRecipe = async (request, response) => {
   return response.status(code201).send({ recipe: addedRecipe });
 };
 
+const getAll = async (request, response) => {
+  const allRecipes = await recipesModel.getAll();
+
+  return response.status(code200).json(allRecipes);
+};
+
 module.exports = {
   addRecipe,
+  getAll,
 };

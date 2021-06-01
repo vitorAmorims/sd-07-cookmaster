@@ -6,5 +6,6 @@ const routes = Router();
 const recipeService = require('../services/recipesService');
 
 routes.post('/', addValidations, recipeService.addRecipe);
+routes.get('/', recipeService.getAll);
 
 module.exports = routes;
