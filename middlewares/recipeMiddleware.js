@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const { ObjectId } = require('mongodb');
-const multer = require('multer');
 
 const { code400, code404, code401, message, encryptSecret } = require('../utils/dictionary');
 
