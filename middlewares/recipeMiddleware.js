@@ -51,6 +51,11 @@ const updateValidation = [
   validatingToken,
 ];
 
+const removeValidation = [
+  validatingAuth,
+  validatingId,
+];
+
 module.exports = {
   validatingFields,
   validatingToken,
@@ -58,4 +63,5 @@ module.exports = {
   validatingId,
   updateValidation,
   validatingAuth,
+  removeValidation,
 };

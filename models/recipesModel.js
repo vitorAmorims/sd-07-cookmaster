@@ -17,9 +17,13 @@ const updateById = async (id, name, ingredients, preparation) => connection()
   .then((db) => db.collection(COLL_NAME)
   .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } }));
 
+const removeById = async (id) => connection()
+  .then((db) => db.collection(COLL_NAME).deleteOne({ _id: ObjectId(id) }));
+
 module.exports = {
   addRecipe,
   getAll,
   getById,
   updateById,
+  removeById,
 };

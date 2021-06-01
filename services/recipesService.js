@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 // const { ObjectId } = require('mongodb');
 const recipesModel = require('../models/recipesModel');
-const { code200, code201 } = require('../utils/dictionary');
+const { code200, code201, code204 } = require('../utils/dictionary');
 
 const addRecipe = async (request, response) => {
   const { authorization } = request.headers;
@@ -54,9 +54,18 @@ const updateById = async (request, response) => {
   return response.status(code200).send(updatedRecipe);
 };
 
+const removeById = async (request, response) => {
+  const { id } = request.params;
+
+  await recipesModel.removeById(id);
+
+  return response.status(code204).end();
+};
+
 module.exports = {
   addRecipe,
   getAll,
   getById,
   updateById,
+  removeById,
 };
