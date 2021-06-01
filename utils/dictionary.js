@@ -2,6 +2,7 @@ const code200 = 200;
 const code201 = 201;
 const code204 = 204;
 const code400 = 400;
+const code403 = 403;
 const code401 = 401;
 const code404 = 404;
 const code409 = 409;
@@ -14,6 +15,7 @@ const message = {
   tokenError: 'jwt malformed',
   noRecipe: 'recipe not found',
   missingAuth: 'missing auth token',
+  onlyAdmin: 'Only admins can register new admins',
 };
 
 const encryptSecret = 'qu3r0v3rde5c08r!r';
@@ -29,6 +31,7 @@ module.exports = {
   code204,
   code400,
   code401,
+  code403,
   code404,
   code409,
   message,
