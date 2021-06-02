@@ -1,9 +1,21 @@
 const express = require('express');
 
 const routes = express.Router();
+const multer = require('multer');
 
 const userController = require('./controllers/UserController');
 const recipeController = require('./controllers/RecipesController');
+
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, 'uploads/');
+  },
+  filename: (req, file, callback) => {
+    callback(null, `${req.params.id}.jpeg`);
+  },
+});
+
+const upload = multer({ storage });
 
 const {
   validateCreateUser,
@@ -26,5 +38,12 @@ routes.route('/recipes/:id')
   .get(recipeController.getById)
   .put(validateCreateRecipe, recipeController.update)
   .delete(validateDeleteRecipe, recipeController.delete);
+
+  router.put(
+    '/recipes/:id/image/',
+    authorizationMiddleware,
+    upload.single('image'),
+    rescue(recipeController.pictureUpload),
+  );
 
 module.exports = routes;
